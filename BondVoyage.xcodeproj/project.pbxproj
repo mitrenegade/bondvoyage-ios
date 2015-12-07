@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A071C1539CF00D23C26 /* AppDelegate.swift */; };
+		E5508A0A1C1539CF00D23C26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A091C1539CF00D23C26 /* ViewController.swift */; };
+		E5508A0D1C1539CF00D23C26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0B1C1539CF00D23C26 /* Main.storyboard */; };
+		E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0E1C1539CF00D23C26 /* Assets.xcassets */; };
+		E5508A121C1539CF00D23C26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */; };
+		E5508A1D1C1539CF00D23C26 /* BondVoyageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A1C1C1539CF00D23C26 /* BondVoyageTests.swift */; };
+		E5508A281C1539CF00D23C26 /* BondVoyageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E5508A191C1539CF00D23C26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E55089FC1C1539CF00D23C26 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5508A031C1539CF00D23C26;
+			remoteInfo = BondVoyage;
+		};
+		E5508A241C1539CF00D23C26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E55089FC1C1539CF00D23C26 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5508A031C1539CF00D23C26;
+			remoteInfo = BondVoyage;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E5508A041C1539CF00D23C26 /* BondVoyage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondVoyage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5508A071C1539CF00D23C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E5508A091C1539CF00D23C26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E5508A0C1C1539CF00D23C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E5508A0E1C1539CF00D23C26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E5508A111C1539CF00D23C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E5508A131C1539CF00D23C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5508A181C1539CF00D23C26 /* BondVoyageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BondVoyageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5508A1C1C1539CF00D23C26 /* BondVoyageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BondVoyageTests.swift; sourceTree = "<group>"; };
+		E5508A1E1C1539CF00D23C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5508A231C1539CF00D23C26 /* BondVoyageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BondVoyageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BondVoyageUITests.swift; sourceTree = "<group>"; };
+		E5508A291C1539CF00D23C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E5508A011C1539CF00D23C26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5508A151C1539CF00D23C26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5508A201C1539CF00D23C26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E55089FB1C1539CF00D23C26 = {
+			isa = PBXGroup;
+			children = (
+				E5508A061C1539CF00D23C26 /* BondVoyage */,
+				E5508A1B1C1539CF00D23C26 /* BondVoyageTests */,
+				E5508A261C1539CF00D23C26 /* BondVoyageUITests */,
+				E5508A051C1539CF00D23C26 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E5508A051C1539CF00D23C26 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E5508A041C1539CF00D23C26 /* BondVoyage.app */,
+				E5508A181C1539CF00D23C26 /* BondVoyageTests.xctest */,
+				E5508A231C1539CF00D23C26 /* BondVoyageUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E5508A061C1539CF00D23C26 /* BondVoyage */ = {
+			isa = PBXGroup;
+			children = (
+				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
+				E5508A091C1539CF00D23C26 /* ViewController.swift */,
+				E5508A0B1C1539CF00D23C26 /* Main.storyboard */,
+				E5508A0E1C1539CF00D23C26 /* Assets.xcassets */,
+				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
+				E5508A131C1539CF00D23C26 /* Info.plist */,
+			);
+			path = BondVoyage;
+			sourceTree = "<group>";
+		};
+		E5508A1B1C1539CF00D23C26 /* BondVoyageTests */ = {
+			isa = PBXGroup;
+			children = (
+				E5508A1C1C1539CF00D23C26 /* BondVoyageTests.swift */,
+				E5508A1E1C1539CF00D23C26 /* Info.plist */,
+			);
+			path = BondVoyageTests;
+			sourceTree = "<group>";
+		};
+		E5508A261C1539CF00D23C26 /* BondVoyageUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */,
+				E5508A291C1539CF00D23C26 /* Info.plist */,
+			);
+			path = BondVoyageUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E5508A031C1539CF00D23C26 /* BondVoyage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5508A2C1C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyage" */;
+			buildPhases = (
+				E5508A001C1539CF00D23C26 /* Sources */,
+				E5508A011C1539CF00D23C26 /* Frameworks */,
+				E5508A021C1539CF00D23C26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BondVoyage;
+			productName = BondVoyage;
+			productReference = E5508A041C1539CF00D23C26 /* BondVoyage.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E5508A171C1539CF00D23C26 /* BondVoyageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5508A2F1C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyageTests" */;
+			buildPhases = (
+				E5508A141C1539CF00D23C26 /* Sources */,
+				E5508A151C1539CF00D23C26 /* Frameworks */,
+				E5508A161C1539CF00D23C26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5508A1A1C1539CF00D23C26 /* PBXTargetDependency */,
+			);
+			name = BondVoyageTests;
+			productName = BondVoyageTests;
+			productReference = E5508A181C1539CF00D23C26 /* BondVoyageTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E5508A221C1539CF00D23C26 /* BondVoyageUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5508A321C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyageUITests" */;
+			buildPhases = (
+				E5508A1F1C1539CF00D23C26 /* Sources */,
+				E5508A201C1539CF00D23C26 /* Frameworks */,
+				E5508A211C1539CF00D23C26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5508A251C1539CF00D23C26 /* PBXTargetDependency */,
+			);
+			name = BondVoyageUITests;
+			productName = BondVoyageUITests;
+			productReference = E5508A231C1539CF00D23C26 /* BondVoyageUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E55089FC1C1539CF00D23C26 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = RenderApps;
+				TargetAttributes = {
+					E5508A031C1539CF00D23C26 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					E5508A171C1539CF00D23C26 = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = E5508A031C1539CF00D23C26;
+					};
+					E5508A221C1539CF00D23C26 = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = E5508A031C1539CF00D23C26;
+					};
+				};
+			};
+			buildConfigurationList = E55089FF1C1539CF00D23C26 /* Build configuration list for PBXProject "BondVoyage" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E55089FB1C1539CF00D23C26;
+			productRefGroup = E5508A051C1539CF00D23C26 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E5508A031C1539CF00D23C26 /* BondVoyage */,
+				E5508A171C1539CF00D23C26 /* BondVoyageTests */,
+				E5508A221C1539CF00D23C26 /* BondVoyageUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E5508A021C1539CF00D23C26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5508A121C1539CF00D23C26 /* LaunchScreen.storyboard in Resources */,
+				E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */,
+				E5508A0D1C1539CF00D23C26 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5508A161C1539CF00D23C26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5508A211C1539CF00D23C26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E5508A001C1539CF00D23C26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5508A0A1C1539CF00D23C26 /* ViewController.swift in Sources */,
+				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5508A141C1539CF00D23C26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5508A1D1C1539CF00D23C26 /* BondVoyageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5508A1F1C1539CF00D23C26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5508A281C1539CF00D23C26 /* BondVoyageUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E5508A1A1C1539CF00D23C26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5508A031C1539CF00D23C26 /* BondVoyage */;
+			targetProxy = E5508A191C1539CF00D23C26 /* PBXContainerItemProxy */;
+		};
+		E5508A251C1539CF00D23C26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5508A031C1539CF00D23C26 /* BondVoyage */;
+			targetProxy = E5508A241C1539CF00D23C26 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E5508A0B1C1539CF00D23C26 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E5508A0C1C1539CF00D23C26 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E5508A111C1539CF00D23C26 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E5508A2A1C1539CF00D23C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E5508A2B1C1539CF00D23C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E5508A2D1C1539CF00D23C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BondVoyage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E5508A2E1C1539CF00D23C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BondVoyage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E5508A301C1539CF00D23C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BondVoyageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BondVoyage.app/BondVoyage";
+			};
+			name = Debug;
+		};
+		E5508A311C1539CF00D23C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BondVoyageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BondVoyage.app/BondVoyage";
+			};
+			name = Release;
+		};
+		E5508A331C1539CF00D23C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BondVoyageUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyageUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BondVoyage;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		E5508A341C1539CF00D23C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BondVoyageUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyageUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BondVoyage;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E55089FF1C1539CF00D23C26 /* Build configuration list for PBXProject "BondVoyage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5508A2A1C1539CF00D23C26 /* Debug */,
+				E5508A2B1C1539CF00D23C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5508A2C1C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5508A2D1C1539CF00D23C26 /* Debug */,
+				E5508A2E1C1539CF00D23C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E5508A2F1C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5508A301C1539CF00D23C26 /* Debug */,
+				E5508A311C1539CF00D23C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E5508A321C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyageUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5508A331C1539CF00D23C26 /* Debug */,
+				E5508A341C1539CF00D23C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E55089FC1C1539CF00D23C26 /* Project object */;
+}
