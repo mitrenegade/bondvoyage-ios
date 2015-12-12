@@ -13,6 +13,8 @@
 		E5508A121C1539CF00D23C26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */; };
 		E5508A1D1C1539CF00D23C26 /* BondVoyageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A1C1C1539CF00D23C26 /* BondVoyageTests.swift */; };
 		E5508A281C1539CF00D23C26 /* BondVoyageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */; };
+		E56A2B171C1C833D003E585B /* ItineraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A2B161C1C833D003E585B /* ItineraryViewController.swift */; };
+		E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +48,8 @@
 		E5508A231C1539CF00D23C26 /* BondVoyageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BondVoyageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BondVoyageUITests.swift; sourceTree = "<group>"; };
 		E5508A291C1539CF00D23C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E56A2B161C1C833D003E585B /* ItineraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItineraryViewController.swift; path = ViewControllers/ItineraryViewController.swift; sourceTree = "<group>"; };
+		E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItineraryTableViewController.swift; path = ViewControllers/ItineraryTableViewController.swift; sourceTree = "<group>"; };
 		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,6 +134,8 @@
 			isa = PBXGroup;
 			children = (
 				E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */,
+				E56A2B161C1C833D003E585B /* ItineraryViewController.swift */,
+				E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -272,8 +278,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56A2B171C1C833D003E585B /* ItineraryViewController.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
 				E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */,
+				E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
