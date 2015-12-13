@@ -21,6 +21,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)!
+        cell.adjustTableViewCellSeparatorInsets(cell)
         return cell
     }
     
@@ -29,7 +30,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 5
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
