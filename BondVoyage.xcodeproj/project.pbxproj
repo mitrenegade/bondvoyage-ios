@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62223C5E02C10845D64B6A0B /* Pods.framework */; };
 		AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1698451C1C7AB200E3DAAE /* UserRequest.swift */; };
 		AC1698491C1C7ACA00E3DAAE /* BVUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1698481C1C7ACA00E3DAAE /* BVUser.swift */; };
 		AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC75B88D1C232C5F00D74F8E /* Constants.swift */; };
@@ -20,7 +21,6 @@
 		E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */; };
 		E5E3CB741C1DE18100974060 /* UITableViewCell+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
-		F32990FB54B28F941049BFD5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3333E792060FE815FBD272 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,7 @@
 /* Begin PBXFileReference section */
 		1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2852CA77D6571005D3434276 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		9E3333E792060FE815FBD272 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1698451C1C7AB200E3DAAE /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		AC1698481C1C7ACA00E3DAAE /* BVUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVUser.swift; sourceTree = "<group>"; };
 		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F32990FB54B28F941049BFD5 /* libPods.a in Frameworks */,
+				38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +94,7 @@
 		29A4A41598D70F96FD1D17F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9E3333E792060FE815FBD272 /* libPods.a */,
+				62223C5E02C10845D64B6A0B /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -531,6 +531,10 @@
 			baseConfigurationReference = 2852CA77D6571005D3434276 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BondVoyage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyage;
@@ -543,6 +547,10 @@
 			baseConfigurationReference = 1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BondVoyage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyage;
