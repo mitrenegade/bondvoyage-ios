@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "BondVoyage": {
+      "applicationId": "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
+    },
+    "_default": {
+      "link": "BondVoyage"
+    }
+  }
+}

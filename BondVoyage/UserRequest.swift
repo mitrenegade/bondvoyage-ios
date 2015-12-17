@@ -7,30 +7,22 @@
 //
 
 import UIKit
-
-var _userTable: [BVUser]?
+import Parse
 
 class UserRequest: NSObject {
-    private class func seed() {
-        _userTable = [BVUser]()
+    class func seed() {
         self.createUsers()
     }
     
     private class func createUsers() {
-        let usersDict = [
-            ["id": 1, "name": "Amy", "interests": self.randomInterests()],
-            ["id": 1, "name": "Bobby", "interests":  self.randomInterests() ],
-            ["id": 1, "name": "Chris", "interests":  self.randomInterests() ],
-            ["id": 1, "name": "Danielle", "interests":  self.randomInterests()],
-            ["id": 1, "name": "Erica", "interests":  self.randomInterests() ],
-            ["id": 1, "name": "Fredson", "interests": self.randomInterests() ],
-            ["id": 1, "name": "Ginger", "interests":  self.randomInterests() ],
-            ["id": 1, "name": "Irene", "interests":  self.randomInterests() ],
-            ["id": 1, "name": "Jake", "interests": self.randomInterests() ],
-            ["id": 1, "name": "Kyle", "interests": self.randomInterests() ]
-        ]
-        
-        // TODO: create users on parse
+        PFCloud.callFunctionInBackground("seedTestUsers", withParameters: nil) { (results, error) -> Void in
+            if error != nil {
+                print("seedTestUsers error: \(error)")
+            }
+            else {
+                print("seedTestUSers results: \(results)")
+            }
+        }
     }
     
     private class func randomInterests() -> [String]{

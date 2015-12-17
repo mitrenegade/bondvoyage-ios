@@ -10,16 +10,12 @@ import UIKit
 
 let kEmbedItineraryTableViewSegue:String = "embedItineraryTableViewSegue"
 
-
-
 class ItineraryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-
-
+        UserRequest.seed()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
