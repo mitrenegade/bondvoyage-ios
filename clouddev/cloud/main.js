@@ -55,3 +55,11 @@ var randomInterests = function() {
     } while (newInterests.length < total)
     return newInterests
 }
+
+Parse.Cloud.define("queryUsersWithInterests", function(request, response) {
+    var interests = request.params.interests
+
+    console.log("searching for " + interests.length + " interests: " + interests)
+    response.success("done")
+});
+

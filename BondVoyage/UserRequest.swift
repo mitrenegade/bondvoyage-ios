@@ -25,21 +25,11 @@ class UserRequest: NSObject {
         }
     }
     
-    private class func randomInterests() -> [String]{
-        let interests = ["video games", "taekwondo", "surfing", "beer", "modern art", "dancing", "classical music", "rock music", "hiphop", "basketball", "hiking", "painting", "books", "web design", "hacking", "cooking"]
-        let total: Int = Int(arc4random_uniform(UInt32(interests.count))) + 1
-        var generated: [String] = [String]()
-        while generated.count < total {
-            let index: Int = Int(arc4random_uniform(UInt32(interests.count)))
-            let interest: String = interests[index]
-            if !generated.contains(interest) {
-                generated.append(interest)
-            }
-        }
-        return generated
-    }
-    
-    func usersMatchingInterests(interests: [String]?, completion: ((results: [BVUser]?, error: NSError)->Void)) {
+    class func usersMatchingInterests(interests: [String], completion: ((results: [BVUser]?, error: NSError?)->Void)) {
         // TODO: query for all users on Parse with given interests
+        
+        PFCloud.callFunctionInBackground("queryUsersWithInterests", withParameters: ["interests": interests]) { (results, error) -> Void in
+            completion(results: [BVUser](), error: error)
+        }
     }
 }

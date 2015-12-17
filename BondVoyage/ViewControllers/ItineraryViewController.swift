@@ -15,7 +15,14 @@ class ItineraryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UserRequest.seed()
+        UserRequest.usersMatchingInterests(["books", "music"]) { (results, error) -> Void in
+            if error != nil {
+                print("user match error: \(error)")
+            }
+            else {
+                print("user match results: \(results)")
+            }
+        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
