@@ -18,41 +18,40 @@ Parse.Cloud.define("seedTestUsers", function(request, response) {
             {"email": "jake@bondvoyage.com", "name": "Jake", "interests": randomInterests(), password: "test"},
             {"email": "kyle@bondvoyage.com", "name": "Kyle", "interests": randomInterests(), password: "test"}
             ]
+    var total = 0
     for(var i=0; i < userDicts.length; i++) {
         var dict = userDicts[i]
         var user = new Parse.User(dict)
         user.set("username", user.get("email"))
 
-        
-        console.log("creating user for " + dict['email'] + " email " + user.get("username") + " " + user.get("email") + " " + user.get("password"))
+        // try to create demo user.
+        console.log("creating user for " + dict["email"] + " email " + user.get("username") + " " + user.get("email") + " " + user.get("password"))
         user.signUp(null, {
             success: function(createdUser) {
-                console.log("User " + createdUser.id + " created");
+                total = total + 1
+                if (total == userDicts.length) {
+                    response.success("seedTestUsers completed with " + total + " new users created")
+                }
             },
             error: function(user, error) {
-                console.log("parse error: couldn't create user " + user + " error: " + error.message)
+                total = total + 1
+                if (total == userDicts.length) {
+                    response.success("seedTestUsers completed with " + total + " new users created")
+                }
             }
         })
     }
-    response.success("seedTestUsers seed process started");
 });
 
 var randomInterests = function() {
 	var interests = ["video games", "taekwondo", "surfing", "beer", "modern art", "dancing", "classical music", "rock music", "hiphop", "basketball", "hiking", "painting", "books", "web design", "hacking", "cooking"]
 	var total = Math.floor(Math.random() * interests.length)
-    console.log("Generating " + total + " interests")
     var newInterests = []
     do {
 	    var index = Math.floor(Math.random() * interests.length)
-//    	console.log("random index " + index + " interest " + interests[index])
     	if (newInterests.indexOf(interests[index]) == -1) {
     		newInterests.push(interests[index])
-//            console.log("added interest " + interests[index])
-    	}
-    	else {
-//    		console.log("existing array contains " + interests[index])
     	}
     } while (newInterests.length < total)
-    console.log("Generated interests: " + newInterests)
     return newInterests
 }
