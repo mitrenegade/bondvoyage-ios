@@ -34,7 +34,7 @@ class UserRequest: NSObject {
     // query for all users on Parse with given interests
     class func userQuery(interests: [String], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
         // TODO: call queryUsers; handle nil or unspecified default search criteria
-        PFCloud.callFunctionInBackground("queryUsersWithInterests", withParameters: ["interests": interests]) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interests]) { (results, error) -> Void in
             print("results: \(results)")
             let users: [PFUser]? = results as? [PFUser]
             completion(results: users, error: error)

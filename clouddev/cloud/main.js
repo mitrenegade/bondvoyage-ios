@@ -60,55 +60,52 @@ var toLowerCase = function(w) {
     return w.toLowerCase(); 
 };
 
-Parse.Cloud.define("queryUsersWithInterests", function(request, response) {
-    var interests = request.params.interests
-
-    console.log("searching for " + interests.length + " interests: " + interests)
-    var query = new Parse.Query(Parse.User)
-    query.containsAll("interests", interests)
-    query.find().then(function(users) {
-        response.success(users)
-    }, function(error) {
-        response.error(error)
-    });
-});
-
 Parse.Cloud.define("queryUsers", function(request, response) {
     var interests = request.params.interests
 
     var genderOptions = request.params.gender
-    if (genderOptions.length == 0) {
-        genderOptions = ["male", "female"]
+    if (genderOptions != undefined) {
+        if (genderOptions.length == 0) {
+            genderOptions = ["male", "female"]
+        }
+        // TODO: error if gender options are invalid. or, ignore?
     }
-    // TODO: error if gender options are invalid. or, ignore?
 
     var ageOptions = request.params.age // can be a single number or a range
-    if (ageOptions.length == 0) {
-        ageOptions = [0, 99]
+    if (ageOptions != undefined) {
+        if (ageOptions.length == 0) {
+            ageOptions = [0, 99]
+        }
+        else if (ageOptions.length == 1) {
+            var age = ageOptions[0]
+            ageOptions = [age - 2, age + 2]
+        }
+        // TODO: error if age range is invalid
     }
-    else if (ageOptions.length == 1) {
-        var age = ageOptions[0]
-        ageOptions = [age - 2, age + 2]
-    }
-    // TODO: error if age range is invalid
 
     // only relevant for events or groups...not search results
     var numberOptions = request.params.number // can be a single number or a range
-    if (numberOptions.length == 0) {
-        numberOptions = [99]
+    if (numberOptions != undefined) {
+        if (numberOptions.length == 0) {
+            numberOptions = [99]
+        }
+        var max = numberOptions[0]
+        if (numberOptions.length > 1) {
+            max = numberOptions[1]
+        }
+        // TODO: error if number range is invalid
     }
-    var max = numberOptions[0]
-    if (numberOptions.length > 1) {
-        max = numberOptions[1]
-    }
-    // TODO: error if number range is invalid
 
     console.log("searching for " + interests.length + " interests")
     var query = new Parse.Query(Parse.User)
     query.containsAll("interests", interests)
-    query.containedIn("gender", genderOptions)
-    query.greaterThanOrEqualTo("age", ageOptions[0])
-    query.lessThanOrEqualTo("age", ageOptions[1])
+    if (genderOptions != undefined) {
+        query.containedIn("gender", genderOptions)
+    }
+    if (ageOptions != undefined) {
+        query.greaterThanOrEqualTo("age", ageOptions[0])
+        query.lessThanOrEqualTo("age", ageOptions[1])
+    }
     query.find().then(function(users) {
         response.success(users)
     }, function(error) {
