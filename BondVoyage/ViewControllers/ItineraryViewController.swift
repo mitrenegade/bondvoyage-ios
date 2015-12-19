@@ -16,7 +16,11 @@ class ItineraryViewController: UIViewController {
         super.viewDidLoad()
 
         // use this example query
-        UserRequest.usersMatchingInterests(["books", "cooking"]) { (results, error) -> Void in
+        let interests: [String] = ["books", "cooking"]
+        let gender: [Gender] = [.Male]
+        let ageRange: [Int] = [24, 36]
+        let numRange: [Int] = [] // not used
+        UserRequest.userQuery(interests, gender: gender, ageRange: ageRange, numRange: numRange) { (results, error) -> Void in
             if error != nil {
                 print("user match error: \(error)")
             }
