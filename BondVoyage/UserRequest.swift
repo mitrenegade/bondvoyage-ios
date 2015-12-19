@@ -11,10 +11,6 @@ import Parse
 
 class UserRequest: NSObject {
     class func seed() {
-        self.createUsers()
-    }
-    
-    private class func createUsers() {
         PFCloud.callFunctionInBackground("seedTestUsers", withParameters: nil) { (results, error) -> Void in
             if error != nil {
                 print("seedTestUsers error: \(error)")
@@ -25,12 +21,13 @@ class UserRequest: NSObject {
         }
     }
     
-    class func usersMatchingInterests(interests: [String], completion: ((results: [BVUser]?, error: NSError?)->Void)) {
-        // TODO: query for all users on Parse with given interests
+    class func usersMatchingInterests(interests: [String], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
+        // query for all users on Parse with given interests
         
         PFCloud.callFunctionInBackground("queryUsersWithInterests", withParameters: ["interests": interests]) { (results, error) -> Void in
             print("results: \(results)")
-            completion(results: [BVUser](), error: error)
+            let users: [PFUser]? = results as? [PFUser]
+            completion(results: users, error: error)
         }
     }
 }
