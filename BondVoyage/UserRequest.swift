@@ -29,6 +29,7 @@ class UserRequest: NSObject {
         // TODO: query for all users on Parse with given interests
         
         PFCloud.callFunctionInBackground("queryUsersWithInterests", withParameters: ["interests": interests]) { (results, error) -> Void in
+            print("results: \(results)")
             completion(results: [BVUser](), error: error)
         }
     }

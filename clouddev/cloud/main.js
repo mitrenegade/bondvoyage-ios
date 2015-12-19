@@ -56,10 +56,20 @@ var randomInterests = function() {
     return newInterests
 }
 
+var toLowerCase = function(w) { 
+    return w.toLowerCase(); 
+};
+
 Parse.Cloud.define("queryUsersWithInterests", function(request, response) {
     var interests = request.params.interests
 
     console.log("searching for " + interests.length + " interests: " + interests)
-    response.success("done")
+    var query = new Parse.Query(Parse.User)
+    query.containsAll("interests", interests)
+    query.find().then(function(users) {
+        response.success(users)
+    }, function(error) {
+        response.error(error)
+    });
 });
 

@@ -15,7 +15,7 @@ class ItineraryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UserRequest.usersMatchingInterests(["books", "music"]) { (results, error) -> Void in
+        UserRequest.usersMatchingInterests(["books"]) { (results, error) -> Void in
             if error != nil {
                 print("user match error: \(error)")
             }
