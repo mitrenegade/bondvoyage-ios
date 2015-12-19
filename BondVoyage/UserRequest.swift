@@ -21,6 +21,9 @@ class UserRequest: NSObject {
         }
     }
     
+    // TODO: here are the interests currently in the database. Just FYI, for testing purposes
+    // 	var interests = ["video games", "taekwondo", "surfing", "beer", "modern art", "dancing", "classical music", "rock music", "hiphop", "basketball", "hiking", "painting", "books", "web design", "hacking", "cooking"]
+    
     class func usersMatchingInterests(interests: [String], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
         // query for all users on Parse with given interests
         
