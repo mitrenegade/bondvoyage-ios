@@ -30,6 +30,11 @@ class ItineraryViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == kEmbedItineraryTableViewSegue {
             // Get the new view controller using segue.destinationViewController.

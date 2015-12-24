@@ -8,20 +8,56 @@
 
 import UIKit
 
-class SearchResultsViewController: UIViewController {
+let kSearchResultCellIdentifier = "searchResultCell"
+
+class ActivitySearchResultCell: UITableViewCell {
+
+    @IBOutlet weak var searchResultTitleLabel: UILabel!
+    @IBOutlet weak var peopleCollectionView: UICollectionView!
+
+    func configureCellForSearchResult() {
+        //TODO: give this cell a better name
+        //TODO: configure the label
+        //TODO: configure collection view
+    }
+}
+
+class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
-    /*
+    // MARK: - UITableViewDelegate
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
+    }
+
+    // MARK: - UITableViewDataSource
+
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)!
+        cell.adjustTableViewCellSeparatorInsets(cell)
+        return cell
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
 
 }
