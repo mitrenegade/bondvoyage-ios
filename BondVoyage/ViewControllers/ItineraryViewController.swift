@@ -10,16 +10,24 @@ import UIKit
 
 let kEmbedItineraryTableViewSegue:String = "embedItineraryTableViewSegue"
 
-
-
 class ItineraryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-
-
+        // use this example query
+        let interests: [String] = ["books", "cooking"]
+        let gender: [Gender] = [.Male]
+        let ageRange: [Int] = [24, 36]
+        let numRange: [Int] = [] // not used
+        UserRequest.userQuery(interests, gender: gender, ageRange: ageRange, numRange: numRange) { (results, error) -> Void in
+            if error != nil {
+                print("user match error: \(error)")
+            }
+            else {
+                print("user match results: \(results)")
+            }
+        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62223C5E02C10845D64B6A0B /* Pods.framework */; };
+		AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1698451C1C7AB200E3DAAE /* UserRequest.swift */; };
+		AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC75B88D1C232C5F00D74F8E /* Constants.swift */; };
 		E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A071C1539CF00D23C26 /* AppDelegate.swift */; };
 		E5508A0D1C1539CF00D23C26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0B1C1539CF00D23C26 /* Main.storyboard */; };
 		E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0E1C1539CF00D23C26 /* Assets.xcassets */; };
@@ -37,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2852CA77D6571005D3434276 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC1698451C1C7AB200E3DAAE /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
+		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E5508A041C1539CF00D23C26 /* BondVoyage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondVoyage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A071C1539CF00D23C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5508A0C1C1539CF00D23C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -60,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +89,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29A4A41598D70F96FD1D17F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				62223C5E02C10845D64B6A0B /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5D16A3486127141311118C52 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2852CA77D6571005D3434276 /* Pods.debug.xcconfig */,
+				1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				AC1698451C1C7AB200E3DAAE /* UserRequest.swift */,
+			);
+			name = DataSource;
+			sourceTree = "<group>";
+		};
 		E55089FB1C1539CF00D23C26 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +121,8 @@
 				E5508A1B1C1539CF00D23C26 /* BondVoyageTests */,
 				E5508A261C1539CF00D23C26 /* BondVoyageUITests */,
 				E5508A051C1539CF00D23C26 /* Products */,
+				5D16A3486127141311118C52 /* Pods */,
+				29A4A41598D70F96FD1D17F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,7 +141,9 @@
 			children = (
 				E5E3CB721C1DE0FB00974060 /* Categories */,
 				E5E4E51B1C1BD6EE003C4A90 /* Models */,
+				AC1698441C1C7A9C00E3DAAE /* DataSource */,
 				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
+				AC75B88D1C232C5F00D74F8E /* Constants.swift */,
 				E5508A0B1C1539CF00D23C26 /* Main.storyboard */,
 				E5508A0E1C1539CF00D23C26 /* Assets.xcassets */,
 				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
@@ -165,9 +203,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5508A2C1C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyage" */;
 			buildPhases = (
+				578615F32298A917364F83DA /* Check Pods Manifest.lock */,
 				E5508A001C1539CF00D23C26 /* Sources */,
 				E5508A011C1539CF00D23C26 /* Frameworks */,
 				E5508A021C1539CF00D23C26 /* Resources */,
+				FC4C72E67EA62AF01E533F6B /* Embed Pods Frameworks */,
+				0CB379730C72B13FF1AD1190 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -284,6 +325,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0CB379730C72B13FF1AD1190 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		578615F32298A917364F83DA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FC4C72E67EA62AF01E533F6B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E5508A001C1539CF00D23C26 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -294,6 +383,8 @@
 				E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */,
 				E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */,
 				E5E3CB741C1DE18100974060 /* UITableViewCell+Utils.swift in Sources */,
+				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
+				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,8 +524,13 @@
 		};
 		E5508A2D1C1539CF00D23C26 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2852CA77D6571005D3434276 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BondVoyage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyage;
@@ -444,8 +540,13 @@
 		};
 		E5508A2E1C1539CF00D23C26 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BondVoyage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RenderApps.BondVoyage;
