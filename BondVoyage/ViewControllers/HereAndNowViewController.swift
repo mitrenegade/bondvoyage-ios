@@ -35,7 +35,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
         // configure search bar
         self.searchBar.delegate = self;
-        self.searchBar.tintColor = UIColor.whiteColor()
 
         // configure search results view controller
         self.searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier(kSearchResultsViewControllerID)

@@ -24,7 +24,6 @@ class ActivitySearchResultCell: UITableViewCell {
 
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
