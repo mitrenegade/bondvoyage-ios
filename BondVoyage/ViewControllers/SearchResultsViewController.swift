@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 let kSearchResultCellIdentifier = "searchResultCell"
 
@@ -15,7 +16,8 @@ class ActivitySearchResultCell: UITableViewCell {
     @IBOutlet weak var searchResultTitleLabel: UILabel!
     @IBOutlet weak var peopleCollectionView: UICollectionView!
 
-    func configureCellForSearchResult() {
+    func configureCellForSearchResult(person: PFUser) {
+        self.searchResultTitleLabel.text = person.username
         //TODO: give this cell a better name
         //TODO: configure the label
         //TODO: configure collection view
@@ -25,9 +27,12 @@ class ActivitySearchResultCell: UITableViewCell {
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    var users: [PFUser]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.users = [PFUser]() //Not sure if the array needs to be initialized
     }
 
     // MARK: - UITableViewDelegate
@@ -49,7 +54,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if let numUsers: Int = users?.count {
+            return numUsers
+        }
+        else {
+            print("No users found")
+            return 0
+        }
     }
 
     // MARK: - Navigation

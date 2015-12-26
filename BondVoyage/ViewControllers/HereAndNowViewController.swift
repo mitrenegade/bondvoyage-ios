@@ -81,7 +81,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 // TODO: return count of nearby events
+        return 5 //TODO: return actual number of nearby Events
     }
 
     // MARK: - UITableViewDelegate
@@ -91,6 +91,19 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     // MARK: - UISearchBarDelegate
+
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if let searchText: String = searchBar.text! {
+            [UserRequest .userQuery([searchText], completion: { (results, error) -> Void in
+                if error != nil {
+                    print("ERROR: \(error)")
+                }
+                else {
+//                    self.searchResultsVC.users = results TODO: this line causes an error
+                }
+            })];
+        }
+    }
 
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         self.displaySearchResultsViewController()
