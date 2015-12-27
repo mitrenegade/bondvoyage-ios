@@ -23,7 +23,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    var searchResultsVC: UIViewController!
+    var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool! {
         get {
             return self.searchResultsVC.view.isDescendantOfView(self.view)
@@ -37,7 +37,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.searchBar.delegate = self;
 
         // configure search results view controller
-        self.searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier(kSearchResultsViewControllerID)
+        self.searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier(kSearchResultsViewControllerID) as? SearchResultsViewController
         self.addChildViewController(self.searchResultsVC)
     }
 
@@ -94,14 +94,16 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let searchText: String = searchBar.text! {
-            [UserRequest .userQuery([searchText], completion: { (results, error) -> Void in
+            //TODO: parse searchText
+            UserRequest.userQuery([searchText], completion: { (results, error) -> Void in
                 if error != nil {
                     print("ERROR: \(error)")
                 }
                 else {
-//                    self.searchResultsVC.users = results TODO: this line causes an error
+                    self.searchResultsVC.users = results
+                    self.searchResultsVC.tableView.reloadData()
                 }
-            })];
+            });
         }
     }
 

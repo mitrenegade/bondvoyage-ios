@@ -31,8 +31,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.users = [PFUser]() //Not sure if the array needs to be initialized
     }
 
     // MARK: - UITableViewDelegate
@@ -48,8 +46,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)!
+        let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)! as! ActivitySearchResultCell
         cell.adjustTableViewCellSeparatorInsets(cell)
+        cell.configureCellForSearchResult(users![indexPath.row])
         return cell
     }
 
