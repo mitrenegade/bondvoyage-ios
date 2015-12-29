@@ -21,6 +21,7 @@ class NearbyEventCell: UITableViewCell {
 
 class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var searchResultsVC: SearchResultsViewController!
@@ -36,9 +37,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         // configure search bar
         self.searchBar.delegate = self;
 
-        // configure search results view controller
         self.searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier(kSearchResultsViewControllerID) as? SearchResultsViewController
-        self.addChildViewController(self.searchResultsVC)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -50,21 +49,20 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         if !self.searchResultsShowing {
             self.searchBar.showsCancelButton = true
             self.searchResultsVC.view.alpha = 0
-            self.searchResultsVC.view.frame = self.tableView.frame
-            self.view.addSubview(self.searchResultsVC.view)
-            UIView.animateWithDuration(0.25) { () -> Void in
+            self.view.bringSubviewToFront(self.containerView)
+            UIView.animateWithDuration(10, animations: { () -> Void in
                 self.searchResultsVC.view.alpha = 1
-            }
+            })
         }
     }
 
     func removeSearchResultsViewController() {
         self.searchBar.showsCancelButton = false
         self.searchBar.text = ""
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        UIView.animateWithDuration(10, animations: { () -> Void in
             self.searchResultsVC.view.alpha = 0
             }) { (Bool) -> Void in
-                self.searchResultsVC.view.removeFromSuperview()
+                self.view.bringSubviewToFront(self.tableView)
         }
     }
 
