@@ -25,11 +25,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var searchResultsVC: SearchResultsViewController!
-    var searchResultsShowing: Bool! {
-        get {
-            return self.searchResultsVC.view.isDescendantOfView(self.view)
-        }
-    }
+    var searchResultsShowing: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +33,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         // configure search bar
         self.searchBar.delegate = self;
 
-        self.searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier(kSearchResultsViewControllerID) as? SearchResultsViewController
+        self.searchResultsShowing = false
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -48,21 +44,36 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func displaySearchResultsViewController() {
         if !self.searchResultsShowing {
             self.searchBar.showsCancelButton = true
-            self.searchResultsVC.view.alpha = 0
+            self.containerView.alpha = 0
             self.view.bringSubviewToFront(self.containerView)
-            UIView.animateWithDuration(10, animations: { () -> Void in
-                self.searchResultsVC.view.alpha = 1
-            })
+            UIView.animateWithDuration(0.15,
+                animations: { () -> Void in
+                    self.containerView.alpha = 1
+                },
+                completion: { (Bool) -> Void in
+                    self.searchResultsShowing = true
+                }
+            )
         }
     }
 
     func removeSearchResultsViewController() {
         self.searchBar.showsCancelButton = false
         self.searchBar.text = ""
-        UIView.animateWithDuration(10, animations: { () -> Void in
-            self.searchResultsVC.view.alpha = 0
-            }) { (Bool) -> Void in
+        UIView.animateWithDuration(0.18,
+            animations: { () -> Void in
+                self.containerView.alpha = 0
+            },
+            completion: { (Bool) -> Void in
                 self.view.bringSubviewToFront(self.tableView)
+                self.searchResultsShowing = false
+            }
+        )
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "embedSearchResultsVCSegue") {
+            self.searchResultsVC = segue.destinationViewController as! SearchResultsViewController
         }
     }
 

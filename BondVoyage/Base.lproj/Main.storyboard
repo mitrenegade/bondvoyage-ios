@@ -480,7 +480,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgF-1w-5sR">
                                 <rect key="frame" x="0.0" y="60" width="320" height="420"/>
                                 <connections>
-                                    <segue destination="nEB-Q9-aK5" kind="embed" id="Dtd-x6-ts1"/>
+                                    <segue destination="nEB-Q9-aK5" kind="embed" identifier="embedSearchResultsVCSegue" id="Dtd-x6-ts1"/>
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4on-aK-7kU">
