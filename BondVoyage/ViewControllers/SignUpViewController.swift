@@ -11,12 +11,28 @@ import UIKit
 var kInputCellIdentifier = "InputCell"
 let genders = ["Select gender", "Male", "Female", "Other"]
 
-class SignUpViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
+    @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    @IBOutlet weak var constraintSignUpHeight: NSLayoutConstraint!
+    @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var currentInput: UITextField!
+    @IBOutlet weak var inputEmail: UITextField!
+    @IBOutlet weak var inputPassword: UITextField!
+    @IBOutlet weak var inputConfirmation: UITextField!
+    @IBOutlet weak var inputFirstName: UITextField!
+    @IBOutlet weak var inputLastName: UITextField!
+    @IBOutlet weak var inputGender: UITextField!
+    @IBOutlet weak var inputBirthYear: UITextField!
+    
+    var cancelEditing: Bool = false
+    
     var pickerGender: UIPickerView = UIPickerView()
-    var pickerBirthdate: UIPickerView = UIPickerView()
+    var pickerBirthYear: UIPickerView = UIPickerView()
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
     
     var email: String?
@@ -33,6 +49,9 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "signUp")
+        
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Year], fromDate: date)
@@ -41,15 +60,37 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         // pickers for age and gender
         pickerGender.delegate = self
         pickerGender.dataSource = self
-        pickerBirthdate.delegate = self
-        pickerBirthdate.dataSource = self
+        self.inputGender.inputView = pickerGender
+        pickerBirthYear.delegate = self
+        pickerBirthYear.dataSource = self
+        self.inputBirthYear.inputView = pickerBirthYear
 
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.Black
         keyboardDoneButtonView.tintColor = UIColor.whiteColor()
         let button: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: "dismissKeyboard")
+        let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        keyboardDoneButtonView.setItems([flex, button], animated: true)
+        keyboardDoneButtonView.setItems([close, flex, button], animated: true)
+        for input: UITextField in [inputEmail, inputPassword, inputConfirmation, inputFirstName, inputLastName, inputGender, inputBirthYear] {
+            input.inputAccessoryView = keyboardDoneButtonView
+        }
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        self.inputEmail.placeholder = "Enter your email"
+        self.inputPassword.placeholder = "Enter a new password"
+        self.inputConfirmation.placeholder = "Enter password again"
+        self.inputFirstName.placeholder = "Enter your first name"
+        self.inputLastName.placeholder = "Enter your last name"
+        self.inputGender.placeholder = "Select your gender"
+        self.inputBirthYear.placeholder = "Select your birth year"
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.constraintContentWidth.constant = self.view.frame.size.width
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,101 +98,13 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    func dismissKeyboard() {
+    func close() {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func signUp() {
         self.view.endEditing(true)
-    }
-    
-    // MARK: - UITableViewDataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // sign up, profile info
-        return 2;
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 3
-        }
-        return 4
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view: UIView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 60))
-        view.backgroundColor = UIColor.blueColor()
-        let label: UILabel = UILabel(frame: CGRectMake(8, 0, self.tableView.frame.size.width - 16, 60))
-        label.textAlignment = .Left
-        label.font = UIFont(name: "Lato-Medium", size: 20)
-        label.textColor = UIColor.whiteColor()
-        view.addSubview(label)
-        if section == 0 {
-            label.text = "New User"
-        }
-        else if section == 1 {
-            label.text = "Current User: "
-        }
-        
-        return view
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let row: Int = indexPath.row
-        let section: Int = indexPath.section
-        
-        let cell: UITableViewCell
-        
-        if section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier(kInputCellIdentifier, forIndexPath: indexPath)
-            let label: UILabel = cell.viewWithTag(1) as! UILabel
-            let input: UITextField = cell.viewWithTag(2) as! UITextField
-            input.inputView = nil
-            input.inputAccessoryView = self.keyboardDoneButtonView
-            
-            if row == 0 {
-                input.keyboardType = .EmailAddress
-                label.text = "Email"
-                input.placeholder = "Enter your email"
-            }
-            else if row == 1 {
-                input.secureTextEntry = true
-                label.text = "Password"
-                input.placeholder = "Enter a new password"
-            }
-            else if row == 2 {
-                input.secureTextEntry = true
-                label.text = "Confirmation"
-                input.placeholder = "Enter password again"
-            }
-        }
-        else {
-            cell = tableView.dequeueReusableCellWithIdentifier(kInputCellIdentifier, forIndexPath: indexPath)
-            let label: UILabel = cell.viewWithTag(1) as! UILabel
-            let input: UITextField = cell.viewWithTag(2) as! UITextField
-            input.inputView = nil
-            input.inputAccessoryView = self.keyboardDoneButtonView
-            
-            if row == 0 {
-                label.text = "First Name"
-                input.placeholder = "Enter your first name"
-            }
-            else if row == 1 {
-                label.text = "Last Name"
-                input.placeholder = "Enter your last name"
-            }
-            else if row == 2 {
-                label.text = "Gender"
-                input.inputView = self.pickerGender
-                input.placeholder = "Select your gender"
-            }
-            else if row == 3 {
-                label.text = "Age"
-                input.inputView = self.pickerBirthdate
-                input.placeholder = "Select your birth year"
-            }
-        }
-        return cell
+        print("Signing up with email \(self.email) password \(self.password) confirmation \(self.confirmation) name \(self.firstName) \(self.lastName) gender \(self.gender) year \(self.birthYear)")
     }
     
     // MARK: UIPickerViewDataSource
@@ -188,11 +141,100 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
             if row == 0 {
                 self.gender = nil
             }
-            self.gender = genders[row]
+            else {
+                self.gender = genders[row]
+                self.inputGender.text = self.gender
+            }
         }
         else {
             self.birthYear = currentYear - row
+            self.inputBirthYear.text = "\(self.birthYear!)"
         }
+    }
+
+    // MARK: - TextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        if cancelEditing {
+            return true
+        }
+        
+        if textField == self.inputEmail {
+            self.inputPassword.becomeFirstResponder()
+            self.email = self.inputEmail.text
+        }
+        else if textField == self.inputPassword {
+            self.inputConfirmation.becomeFirstResponder()
+            self.password = self.inputPassword.text
+        }
+        else if textField == self.inputConfirmation {
+            self.confirmation = self.inputConfirmation.text
+            textField.resignFirstResponder()
+            return true
+        }
+        else if textField == self.inputFirstName {
+            self.inputLastName.becomeFirstResponder()
+            self.firstName = self.inputFirstName.text
+        }
+        else if textField == self.inputLastName {
+            self.inputGender.becomeFirstResponder()
+            self.lastName = self.inputLastName.text
+        }
+        else if textField == self.inputGender {
+            self.inputBirthYear.becomeFirstResponder()
+            if self.inputGender.text != "Select gender" {
+                self.gender = self.inputGender.text
+            }
+        }
+        else if textField == self.inputBirthYear {
+            if self.inputBirthYear.text != "Select your birth year" {
+                self.birthYear = Int(self.inputBirthYear.text!)
+            }
+            textField.resignFirstResponder()
+            return true
+        }
+        return false
+    }
+
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        self.currentInput = textField
+        let view: UIView = self.currentInput.superview!
+        var rect: CGRect = view.frame
+        rect.origin.y = view.superview!.frame.origin.y
+        self.scrollView.scrollRectToVisible(rect, animated: true)
+        return true
+    }
+
+    func dismissKeyboard() {
+        cancelEditing = false
+        self.currentInput.resignFirstResponder()
+    }
+    
+    func endEditing() {
+        cancelEditing = true
+        self.view.endEditing(true)
+    }
+    
+    // MARK: - keyboard notifications
+    func keyboardWillShow(n: NSNotification) {
+        let size = n.userInfo![UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size
+        self.constraintBottomOffset.constant = size!.height
+
+        self.view.layoutIfNeeded()
+
+        let view: UIView = self.currentInput.superview!
+        var rect: CGRect = view.frame
+        rect.origin.y = view.superview!.frame.origin.y
+        self.scrollView.scrollRectToVisible(rect, animated: true)
+    }
+    
+    func keyboardWillHide(n: NSNotification) {
+        self.constraintBottomOffset.constant = 0
+        self.view.layoutIfNeeded()
     }
 
 }
