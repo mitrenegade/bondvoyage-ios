@@ -34,11 +34,13 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.searchBar.delegate = self;
 
         self.searchResultsShowing = false
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
+        //self.navigationController?.navigationBarHidden = true
     }
 
     func displaySearchResultsViewController() {
@@ -136,4 +138,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
 
+    func goToSettings() {
+        // go to signup view
+        let nav: UINavigationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("SignUpNavigationController") as! UINavigationController
+        let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
 }
