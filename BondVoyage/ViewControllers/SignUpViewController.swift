@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 var kInputCellIdentifier = "InputCell"
 let genders = ["Select gender", "Male", "Female", "Other"]
@@ -50,7 +51,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
         // Do any additional setup after loading the view.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "signUp")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
         
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
@@ -100,11 +101,6 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     
     func close() {
         self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func signUp() {
-        self.view.endEditing(true)
-        print("Signing up with email \(self.email) password \(self.password) confirmation \(self.confirmation) name \(self.firstName) \(self.lastName) gender \(self.gender) year \(self.birthYear)")
     }
     
     // MARK: UIPickerViewDataSource
@@ -237,4 +233,69 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         self.view.layoutIfNeeded()
     }
 
+    func validateFields() {
+        cancelEditing = true
+        self.view.endEditing(true)
+        print("Signing up with email \(self.email) password \(self.password) confirmation \(self.confirmation) name \(self.firstName) \(self.lastName) gender \(self.gender) year \(self.birthYear)")
+        
+        if self.email?.characters.count == 0 {
+            self.simpleAlert("Please enter your email as a username", message: nil)
+            return
+        }
+        if !self.isValidEmail(self.email!) {
+            self.simpleAlert("Please enter a valid email address", message: nil)
+            return
+        }
+        if self.password?.characters.count == 0 {
+            self.simpleAlert("Please enter a password", message: nil)
+            return
+        }
+        if self.confirmation?.characters.count == 0 {
+            self.simpleAlert("Please enter a password confirmation", message: nil)
+            return
+        }
+        if self.confirmation != self.password {
+            self.simpleAlert("Please make sure password matches confirmation", message: nil)
+            return
+        }
+        if self.firstName?.characters.count == 0 || self.lastName?.characters.count == 0 {
+            self.simpleAlert("Please enter a name", message: nil)
+            return
+        }
+        if self.gender == nil {
+            self.simpleAlert("Please select your gender", message: nil)
+            return
+        }
+        if self.birthYear == nil {
+            self.simpleAlert("Please select your birth year", message: nil)
+            return
+        }
+        
+        self.signUp()
+    }
+    
+    func signUp() {
+        let user = PFUser()
+        user.username = self.email!
+        user.email = self.email!
+        user.password = self.password!
+        user.setValue(self.firstName, forKey: "firstName")
+        user.setValue(self.lastName, forKey: "lastName")
+        user.setValue(self.gender, forKey: "gender")
+        user.setValue(self.birthYear, forKey: "birthYear")
+        user.signUpInBackgroundWithBlock { (success, error) -> Void in
+            if success {
+                print("User signed up successfully")
+                self.close()
+            }
+            else {
+                print("Error signing up")
+                var message = "There was an error signing up as a new user."
+                if let msg = error!.localizedDescription as? String {
+                    message = msg
+                }
+                self.simpleAlert("Could not sign up", message: message, completion: nil)
+            }
+        }
+    }
 }
