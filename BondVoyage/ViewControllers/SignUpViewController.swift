@@ -12,15 +12,29 @@ import Parse
 var kInputCellIdentifier = "InputCell"
 let genders = ["Select gender", "Male", "Female", "Other"]
 
+enum SignupSectionType: Int {
+    case Login
+    case Signup
+    case ProfileOnly
+}
+
 class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
+    var type: SignupSectionType = .ProfileOnly
+    
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
+    @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
     @IBOutlet weak var constraintLoginHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintSignUpHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    
+    @IBOutlet weak var buttonLogin: UIButton!
+    @IBOutlet weak var buttonSignup: UIButton!
+    @IBOutlet weak var buttonProfile: UIButton!
     
     var currentInput: UITextField?
     @IBOutlet weak var inputLoginEmail: UITextField!
@@ -84,11 +98,25 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        // initial constraints
+        if self.type == .Signup {
+            self.toggleSection(.Login, show: true, showHeader: true, animated: false)
+        }
+        else if self.type == .Login {
+            self.toggleSection(.Signup, show: true, showHeader: true, animated: false)
+            self.toggleSection(.ProfileOnly, show: false, showHeader: false, animated: false)
+        }
+        else if self.type == .ProfileOnly {
+            self.toggleSection(.Login, show: false, showHeader: false, animated: false)
+            self.toggleSection(.Signup, show: false, showHeader: false, animated: false)
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.constraintContentWidth.constant = self.view.frame.size.width
+        self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,6 +126,67 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     
     func close() {
         self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    func toggleSection(section: SignupSectionType, show: Bool, showHeader: Bool, animated: Bool) {
+        // showHeader is only used if show = false
+        
+        var height: CGFloat = 0
+        var constraint: NSLayoutConstraint = constraintLoginHeight
+        if section == .Login {
+            // login
+            height = 168
+            constraint = constraintLoginHeight
+        }
+        else if section == .Signup {
+            // signup
+            height = 216
+            constraint = constraintSignUpHeight
+        }
+        else if section == .ProfileOnly {
+            // profile
+            height = 264
+            constraint = constraintProfileHeight
+        }
+
+        if !show {
+            height = 0
+            if showHeader {
+                height = 60
+            }
+        }
+        
+        constraint.constant = height
+        self.view.setNeedsUpdateConstraints()
+        if animated {
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            }, completion: { (done) -> Void in
+                self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
+
+            })
+        }
+        else {
+            self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
+        }
+    }
+    @IBAction func didClickButton(sender: UIButton) {
+        // toggles login/signup sections
+        if sender == self.buttonLogin {
+            self.toggleSection(.Login, show: true, showHeader: false, animated: true)
+            self.toggleSection(.Signup, show: false, showHeader: true, animated: true)
+            self.toggleSection(.ProfileOnly, show: false, showHeader: true, animated: true)
+        }
+        else if sender == self.buttonSignup {
+            self.toggleSection(.Login, show: false, showHeader: true, animated: true)
+            self.toggleSection(.Signup, show: true, showHeader: false, animated: true)
+            self.toggleSection(.ProfileOnly, show: false, showHeader: true, animated: true)
+        }
+        else if sender == self.buttonProfile {
+            self.toggleSection(.Login, show: false, showHeader: true, animated: true)
+            self.toggleSection(.Signup, show: false, showHeader: true, animated: true)
+            self.toggleSection(.ProfileOnly, show: true, showHeader: false, animated: true)
+        }
     }
     
     // MARK: UIPickerViewDataSource

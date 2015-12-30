@@ -144,6 +144,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 //        if PFUser.currentUser() == nil {
             let nav: UINavigationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("SignUpNavigationController") as! UINavigationController
             let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
+        controller.type = .Signup
             self.presentViewController(nav, animated: true, completion: nil)
         /*
         }
