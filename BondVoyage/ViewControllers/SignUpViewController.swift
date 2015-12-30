@@ -16,14 +16,17 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    @IBOutlet weak var constraintLoginHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintSignUpHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var currentInput: UITextField!
-    @IBOutlet weak var inputEmail: UITextField!
-    @IBOutlet weak var inputPassword: UITextField!
+    var currentInput: UITextField?
+    @IBOutlet weak var inputLoginEmail: UITextField!
+    @IBOutlet weak var inputLoginPassword: UITextField!
+    @IBOutlet weak var inputSignupEmail: UITextField!
+    @IBOutlet weak var inputSignupPassword: UITextField!
     @IBOutlet weak var inputConfirmation: UITextField!
     @IBOutlet weak var inputFirstName: UITextField!
     @IBOutlet weak var inputLastName: UITextField!
@@ -36,8 +39,10 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     var pickerBirthYear: UIPickerView = UIPickerView()
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
     
-    var email: String?
-    var password: String?
+    var loginEmail: String?
+    var loginPassword: String?
+    var signupEmail: String?
+    var signupPassword: String?
     var confirmation: String?
     var firstName: String?
     var lastName: String?
@@ -73,20 +78,12 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputEmail, inputPassword, inputConfirmation, inputFirstName, inputLastName, inputGender, inputBirthYear] {
+        for input: UITextField in [inputSignupEmail, inputSignupPassword, inputConfirmation, inputFirstName, inputLastName, inputGender, inputBirthYear] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        
-        self.inputEmail.placeholder = "Enter your email"
-        self.inputPassword.placeholder = "Enter a new password"
-        self.inputConfirmation.placeholder = "Enter password again"
-        self.inputFirstName.placeholder = "Enter your first name"
-        self.inputLastName.placeholder = "Enter your last name"
-        self.inputGender.placeholder = "Select your gender"
-        self.inputBirthYear.placeholder = "Select your birth year"
     }
     
     override func viewDidLayoutSubviews() {
@@ -159,13 +156,13 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             return true
         }
         
-        if textField == self.inputEmail {
-            self.inputPassword.becomeFirstResponder()
-            self.email = self.inputEmail.text
+        if textField == self.inputSignupEmail {
+            self.inputSignupPassword.becomeFirstResponder()
+            self.signupEmail = self.inputSignupEmail.text
         }
-        else if textField == self.inputPassword {
+        else if textField == self.inputSignupPassword {
             self.inputConfirmation.becomeFirstResponder()
-            self.password = self.inputPassword.text
+            self.signupPassword = self.inputSignupPassword.text
         }
         else if textField == self.inputConfirmation {
             self.confirmation = self.inputConfirmation.text
@@ -198,7 +195,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         self.currentInput = textField
-        let view: UIView = self.currentInput.superview!
+        let view: UIView = self.currentInput!.superview!
         var rect: CGRect = view.frame
         rect.origin.y = view.superview!.frame.origin.y
         self.scrollView.scrollRectToVisible(rect, animated: true)
@@ -207,7 +204,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
     func dismissKeyboard() {
         cancelEditing = false
-        self.currentInput.resignFirstResponder()
+        self.currentInput!.resignFirstResponder()
     }
     
     func endEditing() {
@@ -222,7 +219,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
         self.view.layoutIfNeeded()
 
-        let view: UIView = self.currentInput.superview!
+        let view: UIView = self.currentInput!.superview!
         var rect: CGRect = view.frame
         rect.origin.y = view.superview!.frame.origin.y
         self.scrollView.scrollRectToVisible(rect, animated: true)
@@ -236,17 +233,17 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     func validateFields() {
         cancelEditing = true
         self.view.endEditing(true)
-        print("Signing up with email \(self.email) password \(self.password) confirmation \(self.confirmation) name \(self.firstName) \(self.lastName) gender \(self.gender) year \(self.birthYear)")
+        print("Signing up with email \(self.signupEmail) password \(self.signupPassword) confirmation \(self.confirmation) name \(self.firstName) \(self.lastName) gender \(self.gender) year \(self.birthYear)")
         
-        if self.email?.characters.count == 0 {
+        if self.signupEmail?.characters.count == 0 {
             self.simpleAlert("Please enter your email as a username", message: nil)
             return
         }
-        if !self.isValidEmail(self.email!) {
+        if !self.isValidEmail(self.signupEmail!) {
             self.simpleAlert("Please enter a valid email address", message: nil)
             return
         }
-        if self.password?.characters.count == 0 {
+        if self.signupPassword?.characters.count == 0 {
             self.simpleAlert("Please enter a password", message: nil)
             return
         }
@@ -254,7 +251,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             self.simpleAlert("Please enter a password confirmation", message: nil)
             return
         }
-        if self.confirmation != self.password {
+        if self.confirmation != self.signupPassword {
             self.simpleAlert("Please make sure password matches confirmation", message: nil)
             return
         }
@@ -276,9 +273,9 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     
     func signUp() {
         let user = PFUser()
-        user.username = self.email!
-        user.email = self.email!
-        user.password = self.password!
+        user.username = self.signupEmail!
+        user.email = self.signupEmail!
+        user.password = self.signupPassword!
         user.setValue(self.firstName, forKey: "firstName")
         user.setValue(self.lastName, forKey: "lastName")
         user.setValue(self.gender, forKey: "gender")
