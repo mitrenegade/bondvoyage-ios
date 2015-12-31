@@ -195,46 +195,30 @@ Parse.Cloud.define("queryUsers", function(request, response) {
         // TODO: error if number range is invalid
     }
  
-    var results = []
     interests = interests.map(toLowerCase)
     console.log("searching for " + interests.length + " interests: " + interests)
 
-    if (interests.length > 1 && interests.length < 4) {
-        interests.push(interests) // include a search for all the interests combined
+    var query = new Parse.Query(Parse.User)
+    query.containsAll("interests", interests)
+
+    if (genderOptions != undefined) {
+        query.containedIn("gender", genderOptions)
     }
-    for(var i=0; i < interests.length; i++) {
-        var query = new Parse.Query(Parse.User)
-        var criteria = interests[i] // may be an individual interest or an array
-        if (typeof criteria == 'string') {
-            criteria = [criteria] // convert to an array of 1
-        }
-        name = "People interested in "
-        for (var j=0; j < criteria.length; j++) {
-            name = name + criteria[j]
-            if (j < criteria.length - 1) {
-                name = name + ", "
-            }
-        }            
-        console.log("Criteria " + i + ": " + criteria)
-        query.containsAll("interests", criteria)
- 
-        if (genderOptions != undefined) {
-            query.containedIn("gender", genderOptions)
-        }
-        if (ageOptions != undefined) {
-            query.greaterThanOrEqualTo("age", ageOptions[0])
-            query.lessThanOrEqualTo("age", ageOptions[1])
-        }
-        query.find().then(function(users) {
-            console.log("Results count " + results.length + " criteria " + interests.length)
-            var resultDict = {"name": name, "interests": criteria, "users": users}
-            results.push(resultDict)
-            if (results.length == interests.length) {
-                response.success(results)
-            }
-        }, function(error) {
+    if (ageOptions != undefined) {
+        query.greaterThanOrEqualTo("age", ageOptions[0])
+        query.lessThanOrEqualTo("age", ageOptions[1])
+    }
+
+    console.log("calling query.find")
+    query.find({
+        success: function(users) {
+            console.log("Results count " + users.length)
+            var resultDict = {"interests": interests, "users": users}
+            response.success(resultDict)
+        },
+        error: function(error) {
             console.log("query failed: error " + error)
             response.error(error)
-        });
-    }
+        }         
+    })
 });
