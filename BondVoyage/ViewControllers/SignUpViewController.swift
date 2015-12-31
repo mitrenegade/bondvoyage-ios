@@ -70,7 +70,6 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
 
         // Do any additional setup after loading the view.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
         
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
@@ -100,12 +99,15 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
         // initial constraints
-        if self.type == .Signup {
-            self.toggleSection(.Login, show: true, showHeader: true, animated: false)
-        }
-        else if self.type == .Login {
-            self.toggleSection(.Signup, show: true, showHeader: true, animated: false)
+        if self.type == .Login {
+            // show login; show signup header
+            self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
             self.toggleSection(.ProfileOnly, show: false, showHeader: false, animated: false)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .Done, target: self, action: "validateFields")
+        }
+        else if self.type == .Signup {
+            self.toggleSection(.Login, show: true, showHeader: true, animated: false)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
         }
         else if self.type == .ProfileOnly {
             self.toggleSection(.Login, show: false, showHeader: false, animated: false)
@@ -157,13 +159,14 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         }
         
         constraint.constant = height
+        self.constraintContentHeight.constant = self.constraintLoginHeight.constant + self.constraintSignUpHeight.constant + self.constraintProfileHeight.constant
         self.view.setNeedsUpdateConstraints()
+        
         if animated {
             UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.view.layoutIfNeeded()
             }, completion: { (done) -> Void in
                 self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
-
             })
         }
         else {
@@ -173,18 +176,20 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     @IBAction func didClickButton(sender: UIButton) {
         // toggles login/signup sections
         if sender == self.buttonLogin {
-            self.toggleSection(.Login, show: true, showHeader: false, animated: true)
-            self.toggleSection(.Signup, show: false, showHeader: true, animated: true)
-            self.toggleSection(.ProfileOnly, show: false, showHeader: true, animated: true)
+            self.toggleSection(.Login, show: true, showHeader: false, animated: false)
+            self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
+            self.toggleSection(.ProfileOnly, show: false, showHeader: false, animated: true)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .Done, target: self, action: "validateFields")
         }
         else if sender == self.buttonSignup {
-            self.toggleSection(.Login, show: false, showHeader: true, animated: true)
-            self.toggleSection(.Signup, show: true, showHeader: false, animated: true)
+            self.toggleSection(.Login, show: false, showHeader: true, animated: false)
+            self.toggleSection(.Signup, show: true, showHeader: false, animated: false)
             self.toggleSection(.ProfileOnly, show: false, showHeader: true, animated: true)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
         }
         else if sender == self.buttonProfile {
-            self.toggleSection(.Login, show: false, showHeader: true, animated: true)
-            self.toggleSection(.Signup, show: false, showHeader: true, animated: true)
+            self.toggleSection(.Login, show: false, showHeader: true, animated: false)
+            self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
             self.toggleSection(.ProfileOnly, show: true, showHeader: false, animated: true)
         }
     }
