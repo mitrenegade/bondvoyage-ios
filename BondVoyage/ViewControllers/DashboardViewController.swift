@@ -8,7 +8,7 @@
 
 import UIKit
 
-let kCellIdentifier:String = "activityCell"
+let kCellIdentifier:String = "activityCell" //TODO: this might be a NearbyEventCell, depending on whether we keep the "dashboard" view
 
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 

@@ -10,7 +10,7 @@ import UIKit
 
 extension UITableViewCell {
 
-    func adjustTableViewCellSeparatorInsets(cell :UITableViewCell) {
+    func adjustTableViewCellSeparatorInsets(cell: UITableViewCell) {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsetsZero
         cell.layoutMargins = UIEdgeInsetsZero
