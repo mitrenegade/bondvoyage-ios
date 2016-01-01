@@ -26,6 +26,8 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
 
     var pickerGender: UIPickerView = UIPickerView()
     var pickerBirthYear: UIPickerView = UIPickerView()
+    
+    var isSignup: Bool = false
 
     var firstName: String?
     var lastName: String?
@@ -40,6 +42,12 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if self.isSignup {
+            // comes from signing up
+            self.navigationItem.hidesBackButton = true
+        }
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Done, target: self, action: "validateFields")
+        
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Year], fromDate: date)
