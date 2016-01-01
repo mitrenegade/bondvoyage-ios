@@ -297,7 +297,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     }
     
     // MARK: - Photo
-    @IBAction func didClickAddPhoto(sender: UIButton) {
+    func addPhoto(sender: UIButton) {
         let picker: UIImagePickerController = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
@@ -365,6 +365,13 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    // MARK: Interests
+    @IBAction func didClickButton(sender: UIButton) {
+        if sender == self.buttonPhoto {
+            self.addPhoto(sender)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

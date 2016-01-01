@@ -104,6 +104,7 @@
                     <connections>
                         <segue destination="RlX-hR-DMK" kind="show" identifier="toSignup" id="Mzm-JK-u8t"/>
                         <segue destination="VU4-AG-LNB" kind="show" identifier="toProfile" id="shf-P5-iYt"/>
+                        <segue destination="85b-X6-Cfa" kind="show" identifier="toInterests" id="Ih7-La-PMB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FSU-Px-Z8e" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -467,7 +468,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="27F-Po-G1Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-296" y="1850"/>
+            <point key="canvasLocation" x="-296" y="1890"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="dZg-9R-5wU">
@@ -646,7 +647,7 @@
                                                             <constraint firstAttribute="height" constant="40" id="we7-q3-2Ps"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Nb-vX-0qO" userLabel="View - birth year">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Nb-vX-0qO" userLabel="View - photo">
                                                         <rect key="frame" x="0.0" y="252" width="600" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgL-Bj-gZx">
@@ -666,7 +667,7 @@
                                                                 </constraints>
                                                                 <state key="normal" image="profile-icon"/>
                                                                 <connections>
-                                                                    <action selector="didClickAddPhoto:" destination="VU4-AG-LNB" eventType="touchUpInside" id="ylk-U3-hA3"/>
+                                                                    <action selector="didClickButton:" destination="VU4-AG-LNB" eventType="touchUpInside" id="bhD-H2-o7H"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -752,14 +753,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fs8-ct-DZf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="467" y="1466"/>
+            <point key="canvasLocation" x="431" y="1890"/>
+        </scene>
+        <!--Interests View Controller-->
+        <scene sceneID="mQr-tQ-2HR">
+            <objects>
+                <viewController id="85b-X6-Cfa" customClass="InterestsViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TGa-OO-bx3"/>
+                        <viewControllerLayoutGuide type="bottom" id="ccY-m9-EwR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vve-G6-LDj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qvr-kV-scK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="431" y="1096"/>
         </scene>
     </scenes>
     <resources>
         <image name="profile-icon" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NTU-i5-hgN"/>
+        <segue reference="Mzm-JK-u8t"/>
         <segue reference="w8r-Cn-hqy"/>
     </inferredMetricsTieBreakers>
 </document>
