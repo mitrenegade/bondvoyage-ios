@@ -191,6 +191,21 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
         }
         else if self.type == .ProfileOnly {
+            if PFUser.currentUser() != nil {
+                let user: PFUser = PFUser.currentUser()!
+                if let firstName: String = user.objectForKey("firstName") as? String{
+                    self.inputFirstName.text = firstName
+                }
+                if let lastName: String = user.objectForKey("lastName") as? String{
+                    self.inputLastName.text = lastName
+                }
+                if let gender: String = user.objectForKey("gender") as? String{
+                    self.inputGender.text = gender
+                }
+                if let birthYear: Int = user.objectForKey("birthYear") as? Int{
+                    self.inputBirthYear.text = "\(birthYear)"
+                }
+            }
             self.toggleSection(.Login, show: false, showHeader: false, animated: false)
             self.toggleSection(.Signup, show: false, showHeader: false, animated: false)
             self.toggleSection(.ProfileOnly, show: true, showHeader: false, animated: animated)
@@ -380,25 +395,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             self.signUp()
         }
         else if self.type == .ProfileOnly {
-            if self.firstName?.characters.count == 0 || self.lastName?.characters.count == 0 {
-                self.simpleAlert("Please enter a name", message: nil)
-                return
-            }
-            if self.gender == nil {
-                self.simpleAlert("Please select your gender", message: nil)
-                return
-            }
-            if self.birthYear == nil {
-                self.simpleAlert("Please select your birth year", message: nil)
-                return
-            }
-            
-            if self.signupEmail != nil {
-                self.signUp()
-            }
-            else {
-                self.updateProfile()
-            }
+            self.updateProfile()
         }
     }
     
@@ -449,15 +446,19 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         if self.firstName != nil {
             user!.setValue(self.firstName, forKey: "firstName")
         }
+        
         if self.lastName != nil {
             user!.setValue(self.lastName, forKey: "lastName")
         }
+        
         if self.gender != nil {
             user!.setValue(self.gender, forKey: "gender")
         }
+        
         if self.birthYear != nil {
             user!.setValue(self.birthYear, forKey: "birthYear")
         }
+        
         user?.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
                 self.close()
