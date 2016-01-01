@@ -69,7 +69,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "close")
         
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
@@ -91,7 +91,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputSignupEmail, inputSignupPassword, inputConfirmation, inputFirstName, inputLastName, inputGender, inputBirthYear] {
+        for input: UITextField in [inputLoginEmail, inputLoginPassword, inputSignupEmail, inputSignupPassword, inputConfirmation, inputFirstName, inputLastName, inputGender, inputBirthYear] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
 
@@ -99,20 +99,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
         // initial constraints
-        if self.type == .Login {
-            // show login; show signup header
-            self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
-            self.toggleSection(.ProfileOnly, show: false, showHeader: false, animated: false)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .Done, target: self, action: "validateFields")
-        }
-        else if self.type == .Signup {
-            self.toggleSection(.Login, show: true, showHeader: true, animated: false)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
-        }
-        else if self.type == .ProfileOnly {
-            self.toggleSection(.Login, show: false, showHeader: false, animated: false)
-            self.toggleSection(.Signup, show: false, showHeader: false, animated: false)
-        }
+        self.refreshForType(false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -173,24 +160,41 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
         }
     }
+    
+    
     @IBAction func didClickButton(sender: UIButton) {
         // toggles login/signup sections
         if sender == self.buttonLogin {
-            self.toggleSection(.Login, show: true, showHeader: false, animated: false)
-            self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
-            self.toggleSection(.ProfileOnly, show: false, showHeader: false, animated: true)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .Done, target: self, action: "validateFields")
+            self.type = .Login
         }
         else if sender == self.buttonSignup {
-            self.toggleSection(.Login, show: false, showHeader: true, animated: false)
-            self.toggleSection(.Signup, show: true, showHeader: false, animated: false)
-            self.toggleSection(.ProfileOnly, show: false, showHeader: true, animated: true)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
+            self.type = .Signup
         }
         else if sender == self.buttonProfile {
-            self.toggleSection(.Login, show: false, showHeader: true, animated: false)
+            self.type = .ProfileOnly
+        }
+        self.refreshForType(true)
+    }
+    
+    func refreshForType(animated: Bool) {
+        if self.type == .Login {
+            // show login; show signup header
             self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
-            self.toggleSection(.ProfileOnly, show: true, showHeader: false, animated: true)
+            self.toggleSection(.ProfileOnly, show: false, showHeader: false, animated: false)
+            self.toggleSection(.Login, show: true, showHeader: false, animated: animated)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .Done, target: self, action: "validateFields")
+        }
+        else if self.type == .Signup {
+            self.toggleSection(.Login, show: false, showHeader: true, animated: false)
+            self.toggleSection(.ProfileOnly, show: false, showHeader: false, animated: false)
+            self.toggleSection(.Signup, show: true, showHeader: false, animated: animated)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
+        }
+        else if self.type == .ProfileOnly {
+            self.toggleSection(.Login, show: false, showHeader: false, animated: false)
+            self.toggleSection(.Signup, show: false, showHeader: false, animated: false)
+            self.toggleSection(.ProfileOnly, show: true, showHeader: false, animated: animated)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .Done, target: self, action: "validateFields")
         }
     }
     
@@ -250,37 +254,33 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
             return true
         }
         
-        if textField == self.inputSignupEmail {
+        if textField == self.inputLoginEmail {
+            self.inputLoginPassword.becomeFirstResponder()
+        }
+        else if textField == self.inputLoginPassword {
+            textField.resignFirstResponder()
+            return true
+        }
+        else if textField == self.inputSignupEmail {
             self.inputSignupPassword.becomeFirstResponder()
-            self.signupEmail = self.inputSignupEmail.text
         }
         else if textField == self.inputSignupPassword {
             self.inputConfirmation.becomeFirstResponder()
-            self.signupPassword = self.inputSignupPassword.text
         }
         else if textField == self.inputConfirmation {
-            self.confirmation = self.inputConfirmation.text
             textField.resignFirstResponder()
             return true
         }
         else if textField == self.inputFirstName {
             self.inputLastName.becomeFirstResponder()
-            self.firstName = self.inputFirstName.text
         }
         else if textField == self.inputLastName {
             self.inputGender.becomeFirstResponder()
-            self.lastName = self.inputLastName.text
         }
         else if textField == self.inputGender {
             self.inputBirthYear.becomeFirstResponder()
-            if self.inputGender.text != "Select gender" {
-                self.gender = self.inputGender.text
-            }
         }
         else if textField == self.inputBirthYear {
-            if self.inputBirthYear.text != "Select your birth year" {
-                self.birthYear = Int(self.inputBirthYear.text!)
-            }
             textField.resignFirstResponder()
             return true
         }
@@ -309,7 +309,7 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     // MARK: - keyboard notifications
     func keyboardWillShow(n: NSNotification) {
         let size = n.userInfo![UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size
-        self.constraintBottomOffset.constant = size!.height
+        self.constraintBottomOffset.constant = size!.height + 20
 
         self.view.layoutIfNeeded()
 
@@ -327,42 +327,92 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     func validateFields() {
         cancelEditing = true
         self.view.endEditing(true)
+        self.loginEmail = self.inputLoginEmail.text
+        self.loginPassword = self.inputLoginPassword.text
+        self.signupEmail = self.inputSignupEmail.text
+        self.signupPassword = self.inputSignupPassword.text
+        self.confirmation = self.inputConfirmation.text
+        self.firstName = self.inputFirstName.text
+        self.lastName = self.inputLastName.text
+        if self.inputGender.text != "Select gender" {
+            self.gender = self.inputGender.text
+        }
+        if self.inputBirthYear.text != "Select your birth year" {
+            self.birthYear = Int(self.inputBirthYear.text!)
+        }
+
         print("Signing up with email \(self.signupEmail) password \(self.signupPassword) confirmation \(self.confirmation) name \(self.firstName) \(self.lastName) gender \(self.gender) year \(self.birthYear)")
         
-        if self.signupEmail?.characters.count == 0 {
-            self.simpleAlert("Please enter your email as a username", message: nil)
-            return
+        if self.type == .Login {
+            if self.loginEmail?.characters.count == 0 {
+                self.simpleAlert("Please enter your login email", message: nil)
+                return
+            }
+            if self.loginPassword?.characters.count == 0 {
+                self.simpleAlert("Please your password", message: nil)
+                return
+            }
+            
+            self.login()
         }
-        if !self.isValidEmail(self.signupEmail!) {
-            self.simpleAlert("Please enter a valid email address", message: nil)
-            return
+        else if self.type == .Signup {
+            if self.signupEmail?.characters.count == 0 {
+                self.simpleAlert("Please enter your email as a username", message: nil)
+                return
+            }
+            if !self.isValidEmail(self.signupEmail!) {
+                self.simpleAlert("Please enter a valid email address", message: nil)
+                return
+            }
+            if self.signupPassword?.characters.count == 0 {
+                self.simpleAlert("Please enter a password", message: nil)
+                return
+            }
+            if self.confirmation?.characters.count == 0 {
+                self.simpleAlert("Please enter a password confirmation", message: nil)
+                return
+            }
+            if self.confirmation != self.signupPassword {
+                self.simpleAlert("Please make sure password matches confirmation", message: nil)
+                return
+            }
+
+            self.signUp()
         }
-        if self.signupPassword?.characters.count == 0 {
-            self.simpleAlert("Please enter a password", message: nil)
-            return
+        else if self.type == .ProfileOnly {
+            if self.firstName?.characters.count == 0 || self.lastName?.characters.count == 0 {
+                self.simpleAlert("Please enter a name", message: nil)
+                return
+            }
+            if self.gender == nil {
+                self.simpleAlert("Please select your gender", message: nil)
+                return
+            }
+            if self.birthYear == nil {
+                self.simpleAlert("Please select your birth year", message: nil)
+                return
+            }
+            
+            if self.signupEmail != nil {
+                self.signUp()
+            }
+            else {
+                self.updateProfile()
+            }
         }
-        if self.confirmation?.characters.count == 0 {
-            self.simpleAlert("Please enter a password confirmation", message: nil)
-            return
+    }
+    
+    func login() {
+        PFUser.logInWithUsernameInBackground(self.loginEmail!, password: self.loginPassword!) { (user, error) -> Void in
+            if user != nil {
+                // login successful
+                self.type = .ProfileOnly
+                self.refreshForType(true)
+            }
+            else {
+                self.simpleAlert("Invalid login", defaultMessage: "There was an issue logging you in.", error: error)
+            }
         }
-        if self.confirmation != self.signupPassword {
-            self.simpleAlert("Please make sure password matches confirmation", message: nil)
-            return
-        }
-        if self.firstName?.characters.count == 0 || self.lastName?.characters.count == 0 {
-            self.simpleAlert("Please enter a name", message: nil)
-            return
-        }
-        if self.gender == nil {
-            self.simpleAlert("Please select your gender", message: nil)
-            return
-        }
-        if self.birthYear == nil {
-            self.simpleAlert("Please select your birth year", message: nil)
-            return
-        }
-        
-        self.signUp()
     }
     
     func signUp() {
@@ -370,14 +420,11 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         user.username = self.signupEmail!
         user.email = self.signupEmail!
         user.password = self.signupPassword!
-        user.setValue(self.firstName, forKey: "firstName")
-        user.setValue(self.lastName, forKey: "lastName")
-        user.setValue(self.gender, forKey: "gender")
-        user.setValue(self.birthYear, forKey: "birthYear")
         user.signUpInBackgroundWithBlock { (success, error) -> Void in
             if success {
                 print("User signed up successfully")
-                self.close()
+                self.type = .ProfileOnly
+                self.refreshForType(true)
             }
             else {
                 print("Error signing up")
@@ -388,5 +435,40 @@ class SignUpViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
                 self.simpleAlert("Could not sign up", message: message, completion: nil)
             }
         }
+    }
+    
+    func updateProfile() {
+        let user = PFUser.currentUser()
+        if user == nil {
+            self.simpleAlert("Could not update profile", message: "Please log in or sign up")
+            self.type = .Login
+            self.refreshForType(true)
+            return
+        }
+        
+        if self.firstName != nil {
+            user!.setValue(self.firstName, forKey: "firstName")
+        }
+        if self.lastName != nil {
+            user!.setValue(self.lastName, forKey: "lastName")
+        }
+        if self.gender != nil {
+            user!.setValue(self.gender, forKey: "gender")
+        }
+        if self.birthYear != nil {
+            user!.setValue(self.birthYear, forKey: "birthYear")
+        }
+        user?.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if success {
+                self.close()
+            }
+            else {
+                var message = "There was an error updating your profile."
+                if let msg = error!.localizedDescription as? String {
+                    message = msg
+                }
+                self.simpleAlert("Could not update profile", message: message, completion: nil)
+            }
+        })
     }
 }
