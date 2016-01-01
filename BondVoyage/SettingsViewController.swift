@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import Parse
 
 class SettingsViewController: UITableViewController {
 
@@ -19,11 +20,16 @@ class SettingsViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "close")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func close() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
     }
 
     // MARK: - Table view data source
@@ -38,6 +44,8 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        cell.textLabel?.font = UIFont(name: "Lato-Regular", size: 15.0)
+        
         let row: Int = indexPath.row
         
         // Configure the cell...
@@ -55,6 +63,20 @@ class SettingsViewController: UITableViewController {
         }
 
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let row: Int = indexPath.row
+        if row == 0 {
+            self.performSegueWithIdentifier("toProfile", sender: nil)
+        }
+        else if row == 1 {
+            self.simpleAlert("Default preferences editing coming soon", message: nil)
+        }
+        else if row == 2 {
+            PFUser.logOut()
+            self.close()
+        }
     }
 
     // MARK: - Navigation
