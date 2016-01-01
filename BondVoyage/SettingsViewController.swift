@@ -43,9 +43,7 @@ class SettingsViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel?.font = UIFont(name: "Lato-Regular", size: 15.0)
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)        
         let row: Int = indexPath.row
         
         // Configure the cell...
