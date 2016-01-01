@@ -8,8 +8,9 @@
 
 import UIKit
 import Parse
+import Photos
 
-class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate  {
+class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
     @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
@@ -24,10 +25,13 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var inputGender: UITextField!
     @IBOutlet weak var inputBirthYear: UITextField!
 
+    @IBOutlet weak var buttonPhoto: UIButton!
+    
     var pickerGender: UIPickerView = UIPickerView()
     var pickerBirthYear: UIPickerView = UIPickerView()
     
     var isSignup: Bool = false
+    var selectedPhoto: UIImage?
 
     var firstName: String?
     var lastName: String?
@@ -77,6 +81,19 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
         if PFUser.currentUser() != nil {
             let user: PFUser = PFUser.currentUser()!
+            user.fetchInBackgroundWithBlock({ (result, error) -> Void in
+                if result != nil {
+                    if let file = result!.objectForKey("photo") as? PFFile {
+                        file.getDataInBackgroundWithBlock { (data, error) -> Void in
+                            if data != nil {
+                                let photo: UIImage = UIImage(data: data!)!
+                                self.buttonPhoto.setImage(photo, forState: .Normal)
+                            }
+                        }
+                    }
+                }
+            })
+                
             if let firstName: String = user.objectForKey("firstName") as? String{
                 self.inputFirstName.text = firstName
             }
@@ -90,6 +107,10 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 self.inputBirthYear.text = "\(birthYear)"
             }
         }
+        
+        self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
+        self.buttonPhoto.layer.borderColor = UIColor(red: 79.0/255.0, green: 129.0/255.0, blue: 170.0/255.0, alpha: 1).CGColor
+        self.buttonPhoto.layer.borderWidth = 2
     }
 
     override func didReceiveMemoryWarning() {
@@ -255,7 +276,13 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             user!.setValue(self.birthYear, forKey: "birthYear")
         }
         
-        user?.saveInBackgroundWithBlock({ (success, error) -> Void in
+        if self.selectedPhoto != nil {
+            let data: NSData = UIImageJPEGRepresentation(self.selectedPhoto!, 0.8)!
+            let file: PFFile = PFFile(name: "profile.jpg", data: data)!
+            user!.setObject(file, forKey: "photo")
+        }
+        
+        user!.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
                 self.close()
             }
@@ -269,6 +296,75 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         })
     }
     
+    // MARK: - Photo
+    @IBAction func didClickAddPhoto(sender: UIButton) {
+        let picker: UIImagePickerController = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        alert.view.tintColor = UIColor.blackColor()
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            alert.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { (action) -> Void in
+                let cameraStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                if cameraStatus == .Denied {
+                    self.warnForCameraAccess()
+                }
+                else {
+                    // go to camera
+                    picker.sourceType = .Camera
+                    self.presentViewController(picker, animated: true, completion: nil)
+                }
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Photo library", style: .Default, handler: { (action) -> Void in
+            let libraryStatus = PHPhotoLibrary.authorizationStatus()
+            if libraryStatus == .Denied {
+                self.warnForLibraryAccess()
+            }
+            else {
+                // go to library
+                picker.sourceType = .PhotoLibrary
+                self.presentViewController(picker, animated: true, completion: nil)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    
+    func warnForLibraryAccess() {
+        let message: String = "WeTrain needs photo library access to load your profile picture. Would you like to go to your phone settings to enable the photo library?"
+        let alert: UIAlertController = UIAlertController(title: "Could not access photos", message: message, preferredStyle: .Alert)
+        alert.view.tintColor = UIColor.blackColor()
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func warnForCameraAccess() {
+        let message: String = "WeTrain needs camera access to take your profile photo. Would you like to go to your phone settings to enable the camera?"
+        let alert: UIAlertController = UIAlertController(title: "Could not access camera", message: message, preferredStyle: .Alert)
+        alert.view.tintColor = UIColor.blackColor()
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        self.buttonPhoto.setImage(image, forState: .Normal)
+        self.selectedPhoto = image
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     /*
     // MARK: - Navigation
 
