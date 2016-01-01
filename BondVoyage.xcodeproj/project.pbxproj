@@ -19,6 +19,7 @@
 		C55D92591C34412900970123 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C55D92551C34412900970123 /* Lato-Regular.ttf */; };
 		C55D925B1C3451A800970123 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55D925A1C3451A800970123 /* UIViewController+Utils.swift */; };
 		C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094351C3651E800CABC51 /* SettingsViewController.swift */; };
+		C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094371C3703CA00CABC51 /* ProfileViewController.swift */; };
 		E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A071C1539CF00D23C26 /* AppDelegate.swift */; };
 		E5508A0D1C1539CF00D23C26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0B1C1539CF00D23C26 /* Main.storyboard */; };
 		E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0E1C1539CF00D23C26 /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		C55D92551C34412900970123 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		C55D925A1C3451A800970123 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		C5E094351C3651E800CABC51 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		C5E094371C3703CA00CABC51 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = ViewControllers/ProfileViewController.swift; sourceTree = "<group>"; };
 		E5508A041C1539CF00D23C26 /* BondVoyage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondVoyage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A071C1539CF00D23C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5508A0C1C1539CF00D23C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
 				C518526F1C3420BB00EA2328 /* SignUpViewController.swift */,
+				C5E094371C3703CA00CABC51 /* ProfileViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* GroupSizeFilterView.swift in Sources */,
 				E5C836691C38BF05003BD54F /* AgeRangeFilterView.swift in Sources */,
+				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,
 				E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */,
 				C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */,
 			);

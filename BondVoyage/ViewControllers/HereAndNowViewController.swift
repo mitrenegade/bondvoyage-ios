@@ -142,9 +142,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func goToSettings() {
         // go to signup view
         if PFUser.currentUser() == nil {
-            let controller: SignUpViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
+            let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
+            let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
             controller.type = .Login
-            let nav: UINavigationController = UINavigationController(rootViewController: controller)
             self.presentViewController(nav, animated: true, completion: nil)
         }
         else {
