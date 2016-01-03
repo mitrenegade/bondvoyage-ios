@@ -11,6 +11,12 @@ import Parse
 
 let kSearchResultCellIdentifier = "searchResultCell"
 
+enum filterButtonTag: Int {
+    case genderTag = 1 // Tags are set in storyboard
+    case groupSizeTag = 2
+    case ageRangeTag = 3
+}
+
 class ActivitySearchResultCell: UITableViewCell {
 
     @IBOutlet weak var searchResultTitleLabel: UILabel!
@@ -27,11 +33,71 @@ class ActivitySearchResultCell: UITableViewCell {
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var filterViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var filterView: UIView!
     var users: [PFUser]?
+    var currentFilterOpenTag: filterButtonTag?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.filterViewHeightConstraint.constant = 0
     }
+
+    @IBAction func filterGenderButtonPressed(sender: UIButton) {
+        self.toggleFilterViewForHeight(sender.tag, height: 44)
+        self.currentFilterOpenTag = filterButtonTag.genderTag
+    }
+
+    func toggleFilterViewForHeight(filterButtonTag: Int, height: CGFloat) {
+        let filterViewIsShowing = self.filterView.frame.height != 0
+
+        if (filterButtonTag == self.currentFilterOpenTag?.rawValue) {
+            if (filterViewIsShowing) {
+                // the user wants to close what is already open
+                self.closeFilterView()
+                return // the user wants to open what is already open, so return
+            }
+
+        }
+
+        // else the user wants to open a different one filter.
+        // if a filter is currently showing, you want to close it.
+        if filterViewIsShowing {
+           self.closeFilterView()
+        }
+
+        self.filterViewHeightConstraint.constant = height
+        UIView.animateWithDuration(0.5) { () -> Void in
+            self.view.layoutIfNeeded()
+        }
+        print ("filter view open")
+    }
+
+    func closeFilterView() {
+        self.filterViewHeightConstraint.constant = 0
+        UIView.animateWithDuration(0.5, // animate the closing of the filter
+            animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            },
+            completion: { (Bool) -> Void in
+                print("filter view closed")
+            }
+        )
+    }
+
+    @IBAction func filterAgeRangeButtonPressed(sender: UIButton) {
+        self.toggleFilterViewForHeight(sender.tag, height: 60)
+        self.currentFilterOpenTag = filterButtonTag.ageRangeTag
+
+    }
+
+    @IBAction func filterGroupSizeButtonPressed(sender: UIButton) {
+        self.toggleFilterViewForHeight(sender.tag, height: 100)
+        self.currentFilterOpenTag = filterButtonTag.groupSizeTag
+
+    }
+
 
     // MARK: - UITableViewDelegate
 
