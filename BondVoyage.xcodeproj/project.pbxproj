@@ -31,6 +31,7 @@
 		E5C836641C38BEB9003BD54F /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836631C38BEB9003BD54F /* GenderFilterView.swift */; };
 		E5C836671C38BEF5003BD54F /* GroupSizeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* GroupSizeFilterView.swift */; };
 		E5C836691C38BF05003BD54F /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836681C38BF05003BD54F /* AgeRangeFilterView.swift */; };
+		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
 		E5E3CB741C1DE18100974060 /* UITableViewCell+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		E5C836631C38BEB9003BD54F /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenderFilterView.swift; path = Views/GenderFilterView.swift; sourceTree = "<group>"; };
 		E5C836661C38BEF5003BD54F /* GroupSizeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSizeFilterView.swift; path = Views/GroupSizeFilterView.swift; sourceTree = "<group>"; };
 		E5C836681C38BF05003BD54F /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgeRangeFilterView.swift; path = Views/AgeRangeFilterView.swift; sourceTree = "<group>"; };
+		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
 		E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Utils.swift"; sourceTree = SOURCE_ROOT; };
 		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -233,6 +235,7 @@
 				E5C836631C38BEB9003BD54F /* GenderFilterView.swift */,
 				E5C836661C38BEF5003BD54F /* GroupSizeFilterView.swift */,
 				E5C836681C38BF05003BD54F /* AgeRangeFilterView.swift */,
+				E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 			files = (
 				E56A2B171C1C833D003E585B /* ItineraryViewController.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
+				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
 				E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */,
 				E5C836641C38BEB9003BD54F /* GenderFilterView.swift in Sources */,
 				E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */,

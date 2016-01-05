@@ -8,6 +8,12 @@
 
 import UIKit
 
-class GenderFilterView: UIView {
+class GenderFilterView: BaseFilterView {
+
+    override convenience init(frame: CGRect) {
+        self.init(frame: frame)
+        self.buttonTag = 1
+        self.height = 40
+    }
 
 }

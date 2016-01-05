@@ -8,6 +8,12 @@
 
 import UIKit
 
-class GroupSizeFilterView: UIView {
+class GroupSizeFilterView: BaseFilterView {
 
+    override convenience init(frame: CGRect) {
+        self.init(frame: frame)
+        self.buttonTag = 2
+        self.height = 60
+    }
+    
 }

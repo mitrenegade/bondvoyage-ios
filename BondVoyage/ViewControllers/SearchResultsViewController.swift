@@ -11,12 +11,6 @@ import Parse
 
 let kSearchResultCellIdentifier = "searchResultCell"
 
-enum filterButtonTag: Int {
-    case genderTag = 1 // Tags are set in storyboard
-    case groupSizeTag = 2
-    case ageRangeTag = 3
-}
-
 class ActivitySearchResultCell: UITableViewCell {
 
     @IBOutlet weak var searchResultTitleLabel: UILabel!
@@ -30,82 +24,117 @@ class ActivitySearchResultCell: UITableViewCell {
     }
 }
 
+
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var filterViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var filterView: UIView!
+
     var users: [PFUser]?
-    var currentFilterOpenTag: filterButtonTag?
+
+    var currentFilterView: BaseFilterView?
+
+    @IBOutlet weak var genderFilterView: GenderFilterView!
+    @IBOutlet weak var groupSizeFilterView: GroupSizeFilterView!
+    @IBOutlet weak var ageRangeFilterView: AgeRangeFilterView!
+    
+    @IBOutlet weak var genderViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var groupSizeViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ageRangeViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTopSpacingConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.filterViewHeightConstraint.constant = 0
+        // Initialize filter view heights to 0.
+        self.genderViewHeightConstraint.constant = 0
+        self.groupSizeViewHeightConstraint.constant = 0
+        self.ageRangeViewHeightConstraint.constant = 0
+        self.tableViewTopSpacingConstraint.constant = 0
     }
 
-    @IBAction func filterGenderButtonPressed(sender: UIButton) {
-        self.toggleFilterViewForHeight(filterButtonTag: sender.tag, height: 44)
-        self.currentFilterOpenTag = filterButtonTag.genderTag
-    }
+    // MARK: Filter View Methods
 
-    func toggleFilterViewForHeight(filterButtonTag tag: Int, height: CGFloat) {
-        let filterViewIsShowing = self.filterView.frame.height != 0
-
-        if tag == self.currentFilterOpenTag?.rawValue {
-            if filterViewIsShowing {
-                // the user wants to close what is already open
-                self.closeFilterView(nil)
-                return
-            }
+    @IBAction func filterButtonPressed(sender: UIButton) {
+        var filterToOpen: BaseFilterView?
+        switch sender.tag {
+        case 1:
+            filterToOpen = self.genderFilterView
+            break
+        case 2:
+            filterToOpen = self.groupSizeFilterView
+            break
+        case 3:
+            filterToOpen = self.ageRangeFilterView
+            break
+        default:
+            return // Should not reach here
         }
+        self.toggleFilterView(filterToOpen!)
+    }
 
-        // else the user wants to open a different one filter.
-        // if a filter is currently showing, you want to close it.
-        if filterViewIsShowing {
-            self.closeFilterView({ () -> Void in
-                self.openFilterView(height)
+    func toggleFilterView(filterToOpen: BaseFilterView) {
+        // If there is no filter open at all, simply open filterToOpen.
+        if self.currentFilterView == nil {
+            self.openFilterView(filterToOpen)
+        }
+        // If the filter to open is already open, close the current filter view.
+        else if self.currentFilterView == filterToOpen {
+            self.closeFilterViewWithCompletion(nil)
+        }
+        // If there is a filter opened already, close it, and open the other one.
+        else if self.currentFilterView != filterToOpen {
+            self.closeFilterViewWithCompletion({ () -> Void in
+                self.openFilterView(filterToOpen)
             })
         }
-        else {
-            self.openFilterView(height)
-        }
     }
 
-    func openFilterView(height: CGFloat) {
-        self.filterViewHeightConstraint.constant = height
-        UIView.animateWithDuration(0.5) { () -> Void in
-            self.view.layoutIfNeeded()
-        }
-        print("filter view open")
-    }
-    
-    func closeFilterView(completion: (() -> Void)?) {
-        self.filterViewHeightConstraint.constant = 0
+    func openFilterView(filterToOpen: BaseFilterView) {
+        let height = filterToOpen.height
+        self.heightConstraint(filterToOpen).constant = height
+        self.tableViewTopSpacingConstraint.constant = height
+
         UIView.animateWithDuration(0.5,
             animations: { () -> Void in
                 self.view.layoutIfNeeded()
             },
             completion: { (Bool) -> Void in
-                print("filter view closed")
-                if completion != nil {
-                    completion!()
-                }
+                self.currentFilterView = filterToOpen
+                print("Filter view \(self.currentFilterView) opened")
             }
         )
     }
 
-    //TODO: consolidate these filter buttons into one action
-    @IBAction func filterAgeRangeButtonPressed(sender: UIButton) {
-        self.toggleFilterViewForHeight(filterButtonTag: sender.tag, height: 60)
-        self.currentFilterOpenTag = filterButtonTag.ageRangeTag
+    func closeFilterViewWithCompletion(completion: (() -> Void)?) {
+        if self.currentFilterView != nil {
+            self.heightConstraint(self.currentFilterView!).constant = 0
+            self.tableViewTopSpacingConstraint.constant = 0
+            UIView.animateWithDuration(0.5,
+                animations: { () -> Void in
+                    self.view.layoutIfNeeded()
+                },
+                completion: { (Bool) -> Void in
+                    print("Filter view \(self.currentFilterView) was closed")
+                    self.currentFilterView = nil
+                    if completion != nil {
+                        completion!()
+                    }
+                }
+            )
+        }
     }
 
-    @IBAction func filterGroupSizeButtonPressed(sender: UIButton) {
-        self.toggleFilterViewForHeight(filterButtonTag: sender.tag, height: 100)
-        self.currentFilterOpenTag = filterButtonTag.groupSizeTag
+    //Helper method to get the height constraint of the filterView that is to be toggled
+    func heightConstraint(filterView: BaseFilterView) -> NSLayoutConstraint {
+        switch filterView.buttonTag {
+        case 1:
+            return self.genderViewHeightConstraint
+        case 2:
+            return self.groupSizeViewHeightConstraint
+        default: // case 3:
+            return self.ageRangeViewHeightConstraint
+        }
     }
-
 
     // MARK: - UITableViewDelegate
 
