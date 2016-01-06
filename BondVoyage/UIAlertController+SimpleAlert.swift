@@ -1,5 +1,5 @@
 //
-//  UIAlertController+Utils.swift
+//  UIAlertController+SimpleAlert.swift
 //  BondVoyage
 //
 //  Created by Bobby Ren on 1/5/16.
