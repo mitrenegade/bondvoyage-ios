@@ -12,6 +12,7 @@
 		AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC75B88D1C232C5F00D74F8E /* Constants.swift */; };
 		C518526E1C341ACA00EA2328 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C518526D1C341ACA00EA2328 /* Login.storyboard */; };
 		C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C518526F1C3420BB00EA2328 /* SignUpViewController.swift */; };
+		C5467E331C3C94C8001A0B82 /* UIAlertController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5467E321C3C94C7001A0B82 /* UIAlertController+Utils.swift */; };
 		C55D92561C34412900970123 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C55D92521C34412900970123 /* Lato-Bold.ttf */; };
 		C55D92571C34412900970123 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C55D92531C34412900970123 /* Lato-Italic.ttf */; };
 		C55D92581C34412900970123 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C55D92541C34412900970123 /* Lato-Light.ttf */; };
@@ -56,6 +57,7 @@
 		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C518526D1C341ACA00EA2328 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		C518526F1C3420BB00EA2328 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ViewControllers/SignUpViewController.swift; sourceTree = "<group>"; };
+		C5467E321C3C94C7001A0B82 /* UIAlertController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utils.swift"; sourceTree = "<group>"; };
 		C55D92521C34412900970123 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		C55D92531C34412900970123 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
 		C55D92541C34412900970123 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			children = (
 				E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */,
 				C55D925A1C3451A800970123 /* UIViewController+Utils.swift */,
+				C5467E321C3C94C7001A0B82 /* UIAlertController+Utils.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				E5E3CB741C1DE18100974060 /* UITableViewCell+Utils.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
+				C5467E331C3C94C8001A0B82 /* UIAlertController+Utils.swift in Sources */,
 				E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

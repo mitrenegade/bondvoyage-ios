@@ -9,18 +9,6 @@
 import UIKit
 
 extension UIViewController {
-    // for other classes that are not UIViewControllers like AppDelegate
-    class func simpleAlert(title: String, message: String?, completion: (() -> Void)?) -> UIAlertController {
-        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.view.tintColor = UIColor.blackColor()
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            print("cancel")
-            if completion != nil {
-                completion!()
-            }
-        }))
-        return alert
-    }
     
     func simpleAlert(title: String, defaultMessage: String?, error: NSError?) {
         if error != nil {
@@ -37,14 +25,7 @@ extension UIViewController {
     }
     
     func simpleAlert(title: String, message: String?, completion: (() -> Void)?) {
-        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.view.tintColor = UIColor.blackColor()
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            print("cancel")
-            if completion != nil {
-                completion!()
-            }
-        }))
+        let alert: UIAlertController = UIAlertController.simpleAlert(title, message: message, completion: completion)
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
