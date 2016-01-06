@@ -5,19 +5,22 @@ Parse.Cloud.define("hello", function(request, response) {
 });
  
 Parse.Cloud.define("seedTestUsers", function(request, response) {
-    var userDicts = [{"email": "amy@bondvoyage.com", "name": "Amy", "interests": randomInterests(), password: "test", age: 21, gender: "female"},
-            {"email": "bobby@bondvoyage.com", "name": "Bobby", "interests":  randomInterests(), password: "test", age: 32, gender: "male"},
-            {"email": "chris@bondvoyage.com", "name": "Chris", "interests":  randomInterests(), password: "test", age: 29, gender: "male"},
-            {"email": "danielle@bondvoyage.com", "name": "Danielle", "interests":  randomInterests(), password: "test", age: 45, gender: "female"},
-            {"email": "erica@bondvoyage.com", "name": "Erica", "interests":  randomInterests(), password: "test", age: 28, gender: "female"},
-            {"email": "fredson@bondvoyage.com", "name": "Fredson", "interests": randomInterests(), password: "test", age: 32, gender: "male"},
-            {"email": "ginger@bondvoyage.com", "name": "Ginger", "interests":  randomInterests(), password: "test", age: 26, gender: "female"},
-            {"email": "henry@bondvoyage.com", "name": "Henry", "interests":  randomInterests(), password: "test", age: 14, gender: "male"},
-            {"email": "irene@bondvoyage.com", "name": "Irene", "interests":  randomInterests(), password: "test", age: 22, gender: "female"},
-            {"email": "jake@bondvoyage.com", "name": "Jake", "interests": randomInterests(), password: "test", age: 42, gender: "male"},
-            {"email": "kyle@bondvoyage.com", "name": "Kyle", "interests": randomInterests(), password: "test", age: 18, gender: "male"}
+    var userDicts = [{"email": "amy@bondvoyage.com", "firstName": "Amy", "interests": randomInterests(), password: "test", birthYear: 2016 - 21, gender: "female"},
+            {"email": "bobby@bondvoyage.com", "firstName": "Bobby", "interests":  randomInterests(), password: "test", birthYear: 2016 - 32, gender: "male"},
+            {"email": "chris@bondvoyage.com", "firstName": "Chris", "interests":  randomInterests(), password: "test", birthYear: 2016 - 29, gender: "male"},
+            {"email": "danielle@bondvoyage.com", "firstName": "Danielle", "interests":  randomInterests(), password: "test", birthYear: 2016 - 45, gender: "female"},
+            {"email": "erica@bondvoyage.com", "firstName": "Erica", "interests":  randomInterests(), password: "test", birthYear: 2016 - 28, gender: "female"},
+            {"email": "fredson@bondvoyage.com", "firstName": "Fredson", "interests": randomInterests(), password: "test", birthYear: 2016 - 32, gender: "male"},
+            {"email": "ginger@bondvoyage.com", "firstName": "Ginger", "interests":  randomInterests(), password: "test", birthYear: 2016 - 26, gender: "female"},
+            {"email": "henry@bondvoyage.com", "firstName": "Henry", "interests":  randomInterests(), password: "test", birthYear: 2016 - 14, gender: "male"},
+            {"email": "irene@bondvoyage.com", "firstName": "Irene", "interests":  randomInterests(), password: "test", birthYear: 2016 - 22, gender: "female"},
+            {"email": "jake@bondvoyage.com", "firstName": "Jake", "interests": randomInterests(), password: "test", birthYear: 2016 - 42, gender: "male"},
+            {"email": "kyle@bondvoyage.com", "firstName": "Kyle", "interests": randomInterests(), password: "test", birthYear: 2016 - 18, gender: "male"}
             ]
     var total = 0
+
+    Parse.Cloud.useMasterKey()
+
     for(var i=0; i < userDicts.length; i++) {
         var dict = userDicts[i]
         var user = new Parse.User(dict)
