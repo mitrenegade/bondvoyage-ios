@@ -10,17 +10,29 @@ import UIKit
 import Parse
 
 let kSearchResultCellIdentifier = "searchResultCell"
+let date = NSDate()
+let calendar = NSCalendar.currentCalendar()
+let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
-class ActivitySearchResultCell: UITableViewCell {
+class UserSearchResultCell: UITableViewCell {
 
-    @IBOutlet weak var searchResultTitleLabel: UILabel!
-    @IBOutlet weak var peopleCollectionView: UICollectionView!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var genderAndAgeLabel: UILabel!
 
-    func configureCellForSearchResult(person: PFUser) {
-        self.searchResultTitleLabel.text = person.username
-        //TODO: give this cell a better name
-        //TODO: configure the label
-        //TODO: configure collection view
+    func configureCellForUser(user: PFUser) {
+        let currentYear = components.year
+        let age = currentYear - (user.valueForKey("birthYear") as! Int)
+        self.usernameLabel.text = user.username
+        self.genderAndAgeLabel.text = "\(user.valueForKey("gender")!), age: \(age)"
+
+        if let userPicture = user.valueForKey("photo") as! PFFile? {
+            userPicture.getDataInBackgroundWithBlock({ (imageData: NSData?, error: NSError?) -> Void in
+                if error == nil {
+                    self.imageView?.image = UIImage(data:imageData!)
+                }
+            })
+        }
     }
 }
 
@@ -224,10 +236,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)! as! ActivitySearchResultCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)! as! UserSearchResultCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         if users != nil {
-            cell.configureCellForSearchResult(users![indexPath.row])
+            cell.configureCellForUser(users![indexPath.row])
         }
         return cell
     }
@@ -238,7 +250,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         }
         else {
             print("No users found")
-            return 5
+            return 0
         }
     }
 
