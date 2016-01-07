@@ -17,7 +17,6 @@ class InterestsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         self.inputInterests.layer.cornerRadius = 5
         self.inputInterests.layer.borderWidth = 2
         self.inputInterests.layer.borderColor = UIColor(red: 79.0/255.0, green: 129.0/255.0, blue: 170.0/255.0, alpha: 1).CGColor

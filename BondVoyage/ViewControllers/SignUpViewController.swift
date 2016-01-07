@@ -32,7 +32,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var buttonLogin: UIButton!
     @IBOutlet weak var buttonSignup: UIButton!
-//    @IBOutlet weak var buttonProfile: UIButton!
     
     var currentInput: UITextField?
     @IBOutlet weak var inputLoginEmail: UITextField!
@@ -54,7 +53,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "close")
         
         keyboardDoneButtonView.sizeToFit()

@@ -45,7 +45,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         if self.isSignup {
             // comes from signing up
             self.navigationItem.hidesBackButton = true
