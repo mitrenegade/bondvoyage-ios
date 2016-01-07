@@ -216,8 +216,7 @@ Parse.Cloud.define("queryUsers", function(request, response) {
     query.find({
         success: function(users) {
             console.log("Results count " + users.length)
-            var resultDict = {"interests": interests, "users": users}
-            response.success(resultDict)
+            response.success(users)
         },
         error: function(error) {
             console.log("query failed: error " + error)
