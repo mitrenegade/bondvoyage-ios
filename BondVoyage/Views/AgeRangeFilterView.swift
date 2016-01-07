@@ -10,9 +10,9 @@ import UIKit
 
 class AgeRangeFilterView: BaseFilterView {
 
-    override convenience init(frame: CGRect) {
-        self.init(frame: frame)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         self.buttonTag = 3
-        self.height = 80
+        self.height = 70
     }
 }
