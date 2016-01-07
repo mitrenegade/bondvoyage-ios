@@ -124,7 +124,7 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ebj-7n-DOv">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ebj-7n-DOv">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="584"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2o4-S5-glx">
@@ -420,10 +420,10 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="584" id="Lp0-JB-zfl"/>
+                                            <constraint firstAttribute="height" priority="999" constant="584" id="Lp0-JB-zfl"/>
                                             <constraint firstItem="sqE-BV-PgG" firstAttribute="leading" secondItem="2o4-S5-glx" secondAttribute="leading" id="N99-ey-9b3"/>
                                             <constraint firstItem="qaA-lm-Vsj" firstAttribute="leading" secondItem="2o4-S5-glx" secondAttribute="leading" id="PhK-Yx-2aK"/>
-                                            <constraint firstAttribute="width" constant="600" id="Xaz-x9-g8l"/>
+                                            <constraint firstAttribute="width" priority="999" constant="600" id="Xaz-x9-g8l"/>
                                             <constraint firstItem="sqE-BV-PgG" firstAttribute="top" secondItem="qaA-lm-Vsj" secondAttribute="bottom" id="hhI-JQ-cNl"/>
                                             <constraint firstItem="qaA-lm-Vsj" firstAttribute="top" secondItem="2o4-S5-glx" secondAttribute="top" id="jeH-Tu-dsg"/>
                                             <constraint firstAttribute="trailing" secondItem="sqE-BV-PgG" secondAttribute="trailing" id="n4n-IV-eeG"/>
@@ -432,6 +432,7 @@
                                     </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="2o4-S5-glx" secondAttribute="bottom" id="GF9-st-F1f"/>
                                     <constraint firstAttribute="trailing" secondItem="2o4-S5-glx" secondAttribute="trailing" id="cIl-vm-TIJ"/>
                                     <constraint firstItem="2o4-S5-glx" firstAttribute="leading" secondItem="Ebj-7n-DOv" secondAttribute="leading" id="ukt-wq-5Hi"/>
                                     <constraint firstItem="2o4-S5-glx" firstAttribute="top" secondItem="Ebj-7n-DOv" secondAttribute="top" id="xHP-5N-nmf"/>
@@ -483,11 +484,11 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2ei-Yp-jVg">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ei-Yp-jVg">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="584"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdT-OZ-BkG">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="648"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="584"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fOw-hN-Z2b" userLabel="View - profile container">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="312"/>
@@ -715,15 +716,16 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="fOw-hN-Z2b" secondAttribute="trailing" id="3ef-eZ-deB"/>
                                             <constraint firstItem="fOw-hN-Z2b" firstAttribute="leading" secondItem="bdT-OZ-BkG" secondAttribute="leading" id="Gxy-Pj-UKn"/>
-                                            <constraint firstAttribute="width" constant="600" id="Hyy-Z0-tnG"/>
+                                            <constraint firstAttribute="width" priority="999" constant="600" id="Hyy-Z0-tnG"/>
                                             <constraint firstItem="fOw-hN-Z2b" firstAttribute="top" secondItem="bdT-OZ-BkG" secondAttribute="top" id="KXU-TL-pOB"/>
-                                            <constraint firstAttribute="height" constant="648" id="gJO-js-Rfc"/>
+                                            <constraint firstAttribute="height" priority="999" constant="584" id="gJO-js-Rfc"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="bdT-OZ-BkG" firstAttribute="top" secondItem="2ei-Yp-jVg" secondAttribute="top" id="3FN-Ot-Tgl"/>
                                     <constraint firstItem="bdT-OZ-BkG" firstAttribute="leading" secondItem="2ei-Yp-jVg" secondAttribute="leading" id="JQA-rf-1TW"/>
+                                    <constraint firstAttribute="bottom" secondItem="bdT-OZ-BkG" secondAttribute="bottom" id="XUY-n1-4JA"/>
                                     <constraint firstAttribute="trailing" secondItem="bdT-OZ-BkG" secondAttribute="trailing" id="c9f-s4-rYj"/>
                                 </constraints>
                             </scrollView>
@@ -774,7 +776,7 @@
                                     <constraint firstAttribute="height" constant="36" id="HdQ-XW-M4p"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SGs-Pj-Nx4">
