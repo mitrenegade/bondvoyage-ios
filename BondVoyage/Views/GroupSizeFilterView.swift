@@ -12,7 +12,6 @@ class GroupSizeFilterView: BaseFilterView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.buttonTag = 2
         self.height = 60
     }
 

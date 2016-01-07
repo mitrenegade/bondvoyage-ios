@@ -12,7 +12,7 @@ class GenderFilterView: BaseFilterView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.buttonTag = 1
         self.height = 50
     }
+    
 }

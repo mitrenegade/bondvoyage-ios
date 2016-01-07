@@ -574,7 +574,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B5J-tD-T32">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-Su-cBm">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-Su-cBm">
                                         <rect key="frame" x="0.0" y="0.0" width="107" height="50"/>
                                         <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Gender"/>
@@ -582,7 +582,7 @@
                                             <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="eC2-2Y-NFE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvj-lc-cFz">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvj-lc-cFz">
                                         <rect key="frame" x="107" y="0.0" width="106" height="50"/>
                                         <color key="backgroundColor" red="0.65690445026178013" green="0.46842706321614019" blue="0.50924692019280404" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Group Size"/>
@@ -590,7 +590,7 @@
                                             <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="khh-wW-eNE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJ5-MZ-rCd">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJ5-MZ-rCd">
                                         <rect key="frame" x="213" y="0.0" width="107" height="50"/>
                                         <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Age Range"/>
@@ -738,10 +738,13 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="ageRangeButton" destination="iJ5-MZ-rCd" id="zeD-mh-c0L"/>
                         <outlet property="ageRangeFilterView" destination="mqs-hS-T4G" id="OWi-Wd-Hb0"/>
                         <outlet property="ageRangeViewHeightConstraint" destination="Skm-6f-9dE" id="Wnm-GG-LAH"/>
+                        <outlet property="genderButton" destination="BrB-Su-cBm" id="FrK-08-kns"/>
                         <outlet property="genderFilterView" destination="HYp-Ju-nld" id="fhu-Z5-ksl"/>
                         <outlet property="genderViewHeightConstraint" destination="TqG-4x-Hf4" id="7UD-lF-rYV"/>
+                        <outlet property="groupSizeButton" destination="Kvj-lc-cFz" id="MmZ-Zl-6GG"/>
                         <outlet property="groupSizeFilterView" destination="g46-Mm-OD5" id="9ZV-gN-6vo"/>
                         <outlet property="groupSizeViewHeightConstraint" destination="PRW-Vk-izi" id="X63-1N-ZHX"/>
                         <outlet property="tableView" destination="cTU-h3-6Gk" id="5r7-rF-0nq"/>

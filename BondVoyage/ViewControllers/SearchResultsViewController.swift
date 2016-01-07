@@ -33,6 +33,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 
     var currentFilterView: BaseFilterView?
 
+    @IBOutlet weak var genderButton: UIButton!
+    @IBOutlet weak var groupSizeButton: UIButton!
+    @IBOutlet weak var ageRangeButton: UIButton!
+
     @IBOutlet weak var genderFilterView: GenderFilterView!
     @IBOutlet weak var groupSizeFilterView: GroupSizeFilterView!
     @IBOutlet weak var ageRangeFilterView: AgeRangeFilterView!
@@ -56,14 +60,14 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 
     @IBAction func filterButtonPressed(sender: UIButton) {
         var filterToOpen: BaseFilterView?
-        switch sender.tag {
-        case 1:
+        switch sender {
+        case self.genderButton:
             filterToOpen = self.genderFilterView
             break
-        case 2:
+        case self.groupSizeButton:
             filterToOpen = self.groupSizeFilterView
             break
-        case 3:
+        case self.ageRangeButton:
             filterToOpen = self.ageRangeFilterView
             break
         default:
@@ -126,12 +130,12 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 
     //Helper method to get the height constraint of the filterView that is to be toggled
     func heightConstraint(filterView: BaseFilterView) -> NSLayoutConstraint {
-        switch filterView.buttonTag {
-        case 1:
+        switch filterView {
+        case self.genderFilterView:
             return self.genderViewHeightConstraint
-        case 2:
+        case self.groupSizeFilterView:
             return self.groupSizeViewHeightConstraint
-        default: // case 3:
+        default: // case self.ageRangeFilterView:
             return self.ageRangeViewHeightConstraint
         }
     }

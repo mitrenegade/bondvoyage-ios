@@ -12,7 +12,7 @@ class AgeRangeFilterView: BaseFilterView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.buttonTag = 3
         self.height = 70
     }
+    
 }
