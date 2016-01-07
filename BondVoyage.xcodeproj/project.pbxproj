@@ -209,7 +209,6 @@
 			children = (
 				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
 				AC75B88D1C232C5F00D74F8E /* Constants.swift */,
-				E5FF8BE31C3CCEF00080C195 /* RangeSlider.swift */,
 				E5E3CB721C1DE0FB00974060 /* Categories */,
 				E5E4E51B1C1BD6EE003C4A90 /* Models */,
 				AC1698441C1C7A9C00E3DAAE /* DataSource */,
@@ -244,6 +243,7 @@
 		E5C836651C38BEC1003BD54F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E5FF8BE31C3CCEF00080C195 /* RangeSlider.swift */,
 				E5C836631C38BEB9003BD54F /* GenderFilterView.swift */,
 				E5C836661C38BEF5003BD54F /* GroupSizeFilterView.swift */,
 				E5C836681C38BF05003BD54F /* AgeRangeFilterView.swift */,
