@@ -226,19 +226,20 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)! as! ActivitySearchResultCell
         cell.adjustTableViewCellSeparatorInsets(cell)
-//        cell.configureCellForSearchResult(users![indexPath.row])
+        if users != nil {
+            cell.configureCellForSearchResult(users![indexPath.row])
+        }
         return cell
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if let numUsers: Int = users?.count {
-//            return numUsers
-//        }
-//        else {
-//            print("No users found")
-//            return 0
-//        }
-        return 5
+        if let numUsers: Int = users?.count {
+            return numUsers
+        }
+        else {
+            print("No users found")
+            return 5
+        }
     }
 
     // MARK: - Navigation
