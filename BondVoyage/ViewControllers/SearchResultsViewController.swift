@@ -24,13 +24,120 @@ class ActivitySearchResultCell: UITableViewCell {
     }
 }
 
+
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+
     var users: [PFUser]?
+
+    var currentFilterView: BaseFilterView?
+
+    @IBOutlet weak var genderButton: UIButton!
+    @IBOutlet weak var groupSizeButton: UIButton!
+    @IBOutlet weak var ageRangeButton: UIButton!
+
+    @IBOutlet weak var genderFilterView: GenderFilterView!
+    @IBOutlet weak var groupSizeFilterView: GroupSizeFilterView!
+    @IBOutlet weak var ageRangeFilterView: AgeRangeFilterView!
+    
+    @IBOutlet weak var genderViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var groupSizeViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ageRangeViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTopSpacingConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Initialize filter view heights to 0.
+        self.genderViewHeightConstraint.constant = 0
+        self.groupSizeViewHeightConstraint.constant = 0
+        self.ageRangeViewHeightConstraint.constant = 0
+        self.tableViewTopSpacingConstraint.constant = 0
+    }
+
+    // MARK: Filter View Methods
+
+    @IBAction func filterButtonPressed(sender: UIButton) {
+        var filterToOpen: BaseFilterView?
+        switch sender {
+        case self.genderButton:
+            filterToOpen = self.genderFilterView
+            break
+        case self.groupSizeButton:
+            filterToOpen = self.groupSizeFilterView
+            break
+        case self.ageRangeButton:
+            filterToOpen = self.ageRangeFilterView
+            break
+        default:
+            return // Should not reach here
+        }
+        self.toggleFilterView(filterToOpen!)
+    }
+
+    func toggleFilterView(filterToOpen: BaseFilterView) {
+        // If there is no filter open at all, simply open filterToOpen.
+        if self.currentFilterView == nil {
+            self.openFilterView(filterToOpen)
+        }
+        // If the filter to open is already open, close the current filter view.
+        else if self.currentFilterView == filterToOpen {
+            self.closeFilterViewWithCompletion(nil)
+        }
+        // If there is a filter opened already, close it, and open the other one.
+        else if self.currentFilterView != filterToOpen {
+            self.closeFilterViewWithCompletion({ () -> Void in
+                self.openFilterView(filterToOpen)
+            })
+        }
+    }
+
+    func openFilterView(filterToOpen: BaseFilterView) {
+        let height = filterToOpen.height
+        self.heightConstraint(filterToOpen).constant = height
+        self.tableViewTopSpacingConstraint.constant = height
+
+        UIView.animateWithDuration(0.5,
+            animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            },
+            completion: { (Bool) -> Void in
+                self.currentFilterView = filterToOpen
+                print("Filter view \(self.currentFilterView) opened")
+            }
+        )
+    }
+
+    func closeFilterViewWithCompletion(completion: (() -> Void)?) {
+        if self.currentFilterView != nil {
+            self.heightConstraint(self.currentFilterView!).constant = 0
+            self.tableViewTopSpacingConstraint.constant = 0
+            UIView.animateWithDuration(0.5,
+                animations: { () -> Void in
+                    self.view.layoutIfNeeded()
+                },
+                completion: { (Bool) -> Void in
+                    print("Filter view \(self.currentFilterView) was closed")
+                    self.currentFilterView = nil
+                    if completion != nil {
+                        completion!()
+                    }
+                }
+            )
+        }
+    }
+
+    //Helper method to get the height constraint of the filterView that is to be toggled
+    func heightConstraint(filterView: BaseFilterView) -> NSLayoutConstraint {
+        switch filterView {
+        case self.genderFilterView:
+            return self.genderViewHeightConstraint
+        case self.groupSizeFilterView:
+            return self.groupSizeViewHeightConstraint
+        default: // case self.ageRangeFilterView:
+            return self.ageRangeViewHeightConstraint
+        }
     }
 
     // MARK: - UITableViewDelegate

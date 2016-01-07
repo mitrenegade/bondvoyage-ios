@@ -28,8 +28,13 @@
 		E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */; };
 		E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */; };
 		E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */; };
+		E5C836641C38BEB9003BD54F /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836631C38BEB9003BD54F /* GenderFilterView.swift */; };
+		E5C836671C38BEF5003BD54F /* GroupSizeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* GroupSizeFilterView.swift */; };
+		E5C836691C38BF05003BD54F /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836681C38BF05003BD54F /* AgeRangeFilterView.swift */; };
+		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
 		E5E3CB741C1DE18100974060 /* UITableViewCell+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
+		E5FF8BE41C3CCEF00080C195 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* RangeSlider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,12 +62,12 @@
 		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C518526D1C341ACA00EA2328 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		C518526F1C3420BB00EA2328 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ViewControllers/SignUpViewController.swift; sourceTree = "<group>"; };
-		C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+SimpleAlert.swift"; sourceTree = "<group>"; };
+		C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIAlertController+SimpleAlert.swift"; path = "Categories/UIAlertController+SimpleAlert.swift"; sourceTree = "<group>"; };
 		C55D92521C34412900970123 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		C55D92531C34412900970123 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
 		C55D92541C34412900970123 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		C55D92551C34412900970123 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
-		C55D925A1C3451A800970123 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
+		C55D925A1C3451A800970123 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Utils.swift"; path = "Categories/UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		E5508A041C1539CF00D23C26 /* BondVoyage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondVoyage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A071C1539CF00D23C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5508A0C1C1539CF00D23C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,8 +84,13 @@
 		E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItineraryTableViewController.swift; path = ViewControllers/ItineraryTableViewController.swift; sourceTree = "<group>"; };
 		E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HereAndNowViewController.swift; path = ViewControllers/HereAndNowViewController.swift; sourceTree = "<group>"; };
 		E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultsViewController.swift; path = ViewControllers/SearchResultsViewController.swift; sourceTree = "<group>"; };
+		E5C836631C38BEB9003BD54F /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenderFilterView.swift; path = Views/GenderFilterView.swift; sourceTree = "<group>"; };
+		E5C836661C38BEF5003BD54F /* GroupSizeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSizeFilterView.swift; path = Views/GroupSizeFilterView.swift; sourceTree = "<group>"; };
+		E5C836681C38BF05003BD54F /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgeRangeFilterView.swift; path = Views/AgeRangeFilterView.swift; sourceTree = "<group>"; };
+		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
 		E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Utils.swift"; sourceTree = SOURCE_ROOT; };
 		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
+		E5FF8BE31C3CCEF00080C195 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,16 +198,18 @@
 		E5508A061C1539CF00D23C26 /* BondVoyage */ = {
 			isa = PBXGroup;
 			children = (
+				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
+				AC75B88D1C232C5F00D74F8E /* Constants.swift */,
+				E5FF8BE31C3CCEF00080C195 /* RangeSlider.swift */,
 				E5E3CB721C1DE0FB00974060 /* Categories */,
 				E5E4E51B1C1BD6EE003C4A90 /* Models */,
 				AC1698441C1C7A9C00E3DAAE /* DataSource */,
-				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
-				AC75B88D1C232C5F00D74F8E /* Constants.swift */,
 				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5508A0E1C1539CF00D23C26 /* Assets.xcassets */,
 				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
 				E5508A131C1539CF00D23C26 /* Info.plist */,
 				E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */,
+				E5C836651C38BEC1003BD54F /* Views */,
 			);
 			path = BondVoyage;
 			sourceTree = "<group>";
@@ -218,6 +230,17 @@
 				E5508A291C1539CF00D23C26 /* Info.plist */,
 			);
 			path = BondVoyageUITests;
+			sourceTree = "<group>";
+		};
+		E5C836651C38BEC1003BD54F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E5C836631C38BEB9003BD54F /* GenderFilterView.swift */,
+				E5C836661C38BEF5003BD54F /* GroupSizeFilterView.swift */,
+				E5C836681C38BF05003BD54F /* AgeRangeFilterView.swift */,
+				E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		E5E3CB721C1DE0FB00974060 /* Categories */ = {
@@ -439,7 +462,10 @@
 			files = (
 				E56A2B171C1C833D003E585B /* ItineraryViewController.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
+				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
 				E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */,
+				E5C836641C38BEB9003BD54F /* GenderFilterView.swift in Sources */,
+				E5FF8BE41C3CCEF00080C195 /* RangeSlider.swift in Sources */,
 				E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */,
 				C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */,
 				E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */,
@@ -448,6 +474,8 @@
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,
+				E5C836671C38BEF5003BD54F /* GroupSizeFilterView.swift in Sources */,
+				E5C836691C38BF05003BD54F /* AgeRangeFilterView.swift in Sources */,
 				E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

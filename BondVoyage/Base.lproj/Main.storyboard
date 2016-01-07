@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u5m-vY-rgh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u5m-vY-rgh">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -571,8 +571,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B5J-tD-T32">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-Su-cBm">
+                                        <rect key="frame" x="0.0" y="0.0" width="107" height="50"/>
+                                        <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Gender"/>
+                                        <connections>
+                                            <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="eC2-2Y-NFE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvj-lc-cFz">
+                                        <rect key="frame" x="107" y="0.0" width="106" height="50"/>
+                                        <color key="backgroundColor" red="0.65690445026178013" green="0.46842706321614019" blue="0.50924692019280404" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Group Size"/>
+                                        <connections>
+                                            <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="khh-wW-eNE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJ5-MZ-rCd">
+                                        <rect key="frame" x="213" y="0.0" width="107" height="50"/>
+                                        <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Age Range"/>
+                                        <connections>
+                                            <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="gYz-vS-Qnp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.37919257200000001" green="0.1660417122" blue="0.19238156940000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="BrB-Su-cBm" firstAttribute="leading" secondItem="B5J-tD-T32" secondAttribute="leading" id="DaY-zP-bXz"/>
+                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="leading" secondItem="BrB-Su-cBm" secondAttribute="trailing" id="LLV-aZ-Yhr"/>
+                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="height" secondItem="Kvj-lc-cFz" secondAttribute="height" id="U6t-CJ-F3x"/>
+                                    <constraint firstAttribute="trailing" secondItem="iJ5-MZ-rCd" secondAttribute="trailing" id="Vnx-LO-oVe"/>
+                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="width" secondItem="BrB-Su-cBm" secondAttribute="width" id="aPt-Ge-Qk2"/>
+                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="centerY" secondItem="BrB-Su-cBm" secondAttribute="centerY" id="aew-qc-laf"/>
+                                    <constraint firstAttribute="height" constant="50" id="dfz-YU-0QV"/>
+                                    <constraint firstItem="BrB-Su-cBm" firstAttribute="height" secondItem="B5J-tD-T32" secondAttribute="height" id="hQu-Yd-CP2"/>
+                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="centerY" secondItem="B5J-tD-T32" secondAttribute="centerY" id="kHc-Vb-2nQ"/>
+                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="width" secondItem="Kvj-lc-cFz" secondAttribute="width" id="muz-B3-1aT"/>
+                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="leading" secondItem="Kvj-lc-cFz" secondAttribute="trailing" id="qKu-sz-47z"/>
+                                    <constraint firstItem="BrB-Su-cBm" firstAttribute="centerY" secondItem="B5J-tD-T32" secondAttribute="centerY" id="smf-Uq-f8b"/>
+                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="height" secondItem="BrB-Su-cBm" secondAttribute="height" id="voP-hB-lUW"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="112" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cTU-h3-6Gk">
-                                <rect key="frame" x="0.0" y="50" width="320" height="430"/>
+                                <rect key="frame" x="0.0" y="130" width="320" height="350"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="searchResultCell" rowHeight="112" id="kGa-e7-btX" customClass="ActivitySearchResultCell" customModule="BondVoyage" customModuleProvider="target">
@@ -633,56 +678,77 @@
                                     <outlet property="delegate" destination="nEB-Q9-aK5" id="cm5-if-ttu"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B5J-tD-T32">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-Su-cBm">
-                                        <rect key="frame" x="0.0" y="10" width="107" height="30"/>
-                                        <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Gender"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvj-lc-cFz">
-                                        <rect key="frame" x="107" y="10" width="106" height="30"/>
-                                        <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Group Size"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJ5-MZ-rCd">
-                                        <rect key="frame" x="213" y="10" width="107" height="30"/>
-                                        <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Age Range"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.37919257200000001" green="0.1660417122" blue="0.19238156940000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g46-Mm-OD5" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="320" height="60"/>
+                                <color key="backgroundColor" red="0.091921356900000001" green="0.1509909388" blue="0.19875518110000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="BrB-Su-cBm" firstAttribute="leading" secondItem="B5J-tD-T32" secondAttribute="leading" id="DaY-zP-bXz"/>
-                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="leading" secondItem="BrB-Su-cBm" secondAttribute="trailing" id="LLV-aZ-Yhr"/>
-                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="height" secondItem="Kvj-lc-cFz" secondAttribute="height" id="U6t-CJ-F3x"/>
-                                    <constraint firstAttribute="trailing" secondItem="iJ5-MZ-rCd" secondAttribute="trailing" id="Vnx-LO-oVe"/>
-                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="width" secondItem="BrB-Su-cBm" secondAttribute="width" id="aPt-Ge-Qk2"/>
-                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="centerY" secondItem="BrB-Su-cBm" secondAttribute="centerY" id="aew-qc-laf"/>
-                                    <constraint firstAttribute="height" constant="50" id="dfz-YU-0QV"/>
-                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="centerY" secondItem="B5J-tD-T32" secondAttribute="centerY" id="kHc-Vb-2nQ"/>
-                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="width" secondItem="Kvj-lc-cFz" secondAttribute="width" id="muz-B3-1aT"/>
-                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="leading" secondItem="Kvj-lc-cFz" secondAttribute="trailing" id="qKu-sz-47z"/>
-                                    <constraint firstItem="BrB-Su-cBm" firstAttribute="centerY" secondItem="B5J-tD-T32" secondAttribute="centerY" id="smf-Uq-f8b"/>
-                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="height" secondItem="BrB-Su-cBm" secondAttribute="height" id="voP-hB-lUW"/>
+                                    <constraint firstAttribute="height" priority="999" constant="60" id="PRW-Vk-izi"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HYp-Ju-nld" customClass="GenderFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="320" height="40"/>
+                                <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="40" id="TqG-4x-Hf4"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mqs-hS-T4G" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="320" height="80"/>
+                                <color key="backgroundColor" red="1" green="0.90925292163949445" blue="0.22215021729248741" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="80" id="Skm-6f-9dE"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="mqs-hS-T4G" secondAttribute="bottom" id="0wJ-Ps-M5J"/>
+                            <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="B5J-tD-T32" secondAttribute="bottom" priority="999" constant="80" id="4Rw-xB-w4c"/>
                             <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="B5J-tD-T32" secondAttribute="bottom" id="4vJ-H9-F6s"/>
                             <constraint firstAttribute="trailing" secondItem="B5J-tD-T32" secondAttribute="trailing" id="9dZ-GV-EWo"/>
+                            <constraint firstAttribute="trailing" secondItem="g46-Mm-OD5" secondAttribute="trailing" id="AI7-bz-zFN"/>
+                            <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="HYp-Ju-nld" secondAttribute="bottom" id="B6B-Jh-2ha"/>
+                            <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="HYp-Ju-nld" secondAttribute="bottom" constant="40" id="Ivy-nm-JWa"/>
                             <constraint firstItem="B5J-tD-T32" firstAttribute="leading" secondItem="EIy-5s-cys" secondAttribute="leading" id="OHm-DK-2F4"/>
+                            <constraint firstItem="mqs-hS-T4G" firstAttribute="leading" secondItem="EIy-5s-cys" secondAttribute="leading" id="Ofv-Nz-khZ"/>
                             <constraint firstItem="riJ-3K-SgT" firstAttribute="top" secondItem="cTU-h3-6Gk" secondAttribute="bottom" id="RSy-0U-wVy"/>
+                            <constraint firstAttribute="trailing" secondItem="mqs-hS-T4G" secondAttribute="trailing" id="WP7-1C-Khy"/>
+                            <constraint firstItem="HYp-Ju-nld" firstAttribute="leading" secondItem="EIy-5s-cys" secondAttribute="leading" id="XU8-x2-uY5"/>
+                            <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="g46-Mm-OD5" secondAttribute="bottom" constant="20" id="ZGS-B5-vpa"/>
                             <constraint firstItem="B5J-tD-T32" firstAttribute="top" secondItem="EIy-5s-cys" secondAttribute="top" id="cMo-3U-UWG"/>
+                            <constraint firstItem="mqs-hS-T4G" firstAttribute="top" secondItem="B5J-tD-T32" secondAttribute="bottom" id="dqh-HL-7Lf"/>
+                            <constraint firstItem="g46-Mm-OD5" firstAttribute="top" secondItem="B5J-tD-T32" secondAttribute="bottom" id="fRN-6Y-NFy"/>
+                            <constraint firstItem="HYp-Ju-nld" firstAttribute="top" secondItem="B5J-tD-T32" secondAttribute="bottom" id="gRn-My-3Tq"/>
+                            <constraint firstItem="g46-Mm-OD5" firstAttribute="leading" secondItem="EIy-5s-cys" secondAttribute="leading" id="jZK-1N-KG6"/>
+                            <constraint firstItem="g46-Mm-OD5" firstAttribute="bottom" secondItem="cTU-h3-6Gk" secondAttribute="bottom" id="k7l-TB-hBb"/>
+                            <constraint firstAttribute="trailing" secondItem="HYp-Ju-nld" secondAttribute="trailing" id="pZi-MG-F41"/>
                             <constraint firstItem="cTU-h3-6Gk" firstAttribute="leading" secondItem="EIy-5s-cys" secondAttribute="leading" id="wfV-XQ-TV3"/>
                             <constraint firstAttribute="trailing" secondItem="cTU-h3-6Gk" secondAttribute="trailing" id="yQT-pH-Kem"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="k7l-TB-hBb"/>
+                                <exclude reference="0wJ-Ps-M5J"/>
+                                <exclude reference="4vJ-H9-F6s"/>
+                                <exclude reference="B6B-Jh-2ha"/>
+                                <exclude reference="Ivy-nm-JWa"/>
+                                <exclude reference="ZGS-B5-vpa"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="ageRangeButton" destination="iJ5-MZ-rCd" id="zeD-mh-c0L"/>
+                        <outlet property="ageRangeFilterView" destination="mqs-hS-T4G" id="OWi-Wd-Hb0"/>
+                        <outlet property="ageRangeViewHeightConstraint" destination="Skm-6f-9dE" id="Wnm-GG-LAH"/>
+                        <outlet property="genderButton" destination="BrB-Su-cBm" id="FrK-08-kns"/>
+                        <outlet property="genderFilterView" destination="HYp-Ju-nld" id="fhu-Z5-ksl"/>
+                        <outlet property="genderViewHeightConstraint" destination="TqG-4x-Hf4" id="7UD-lF-rYV"/>
+                        <outlet property="groupSizeButton" destination="Kvj-lc-cFz" id="MmZ-Zl-6GG"/>
+                        <outlet property="groupSizeFilterView" destination="g46-Mm-OD5" id="9ZV-gN-6vo"/>
+                        <outlet property="groupSizeViewHeightConstraint" destination="PRW-Vk-izi" id="X63-1N-ZHX"/>
                         <outlet property="tableView" destination="cTU-h3-6Gk" id="5r7-rF-0nq"/>
+                        <outlet property="tableViewTopSpacingConstraint" destination="4Rw-xB-w4c" id="Z4l-Y9-oLI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i33-6g-VdO" userLabel="First Responder" sceneMemberID="firstResponder"/>
