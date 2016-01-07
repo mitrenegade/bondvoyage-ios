@@ -76,7 +76,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.constraintContentWidth.constant = self.view.frame.size.width
+        self.contentView.layoutSubviews()
         self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,16 +114,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         constraint.constant = height
         self.constraintContentHeight.constant = self.constraintLoginHeight.constant + self.constraintSignUpHeight.constant
-        self.view.setNeedsUpdateConstraints()
         
         if animated {
+            self.view.setNeedsUpdateConstraints()
             UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.view.layoutIfNeeded()
+                self.contentView.layoutIfNeeded()
             }, completion: { (done) -> Void in
                 self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
             })
         }
         else {
+            self.view.layoutSubviews()
+            self.contentView.layoutSubviews()
             self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
         }
     }
@@ -143,7 +148,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             // show login; show signup header
             self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
             self.toggleSection(.Login, show: true, showHeader: false, animated: animated)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Login", style: .Done, target: self, action: "validateFields")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log in", style: .Done, target: self, action: "validateFields")
         }
         else if self.type == .Signup {
             self.toggleSection(.Login, show: false, showHeader: true, animated: false)

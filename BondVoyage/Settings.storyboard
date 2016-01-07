@@ -176,6 +176,7 @@
                                                             </label>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your email" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTF-5P-uPS">
                                                                 <rect key="frame" x="166" y="5" width="426" height="30"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="76H-qk-ehs"/>
                                                                 </constraints>
@@ -420,10 +421,10 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" priority="999" constant="584" id="Lp0-JB-zfl"/>
+                                            <constraint firstAttribute="height" constant="584" id="Lp0-JB-zfl"/>
                                             <constraint firstItem="sqE-BV-PgG" firstAttribute="leading" secondItem="2o4-S5-glx" secondAttribute="leading" id="N99-ey-9b3"/>
                                             <constraint firstItem="qaA-lm-Vsj" firstAttribute="leading" secondItem="2o4-S5-glx" secondAttribute="leading" id="PhK-Yx-2aK"/>
-                                            <constraint firstAttribute="width" priority="999" constant="600" id="Xaz-x9-g8l"/>
+                                            <constraint firstAttribute="width" constant="600" id="Xaz-x9-g8l"/>
                                             <constraint firstItem="sqE-BV-PgG" firstAttribute="top" secondItem="qaA-lm-Vsj" secondAttribute="bottom" id="hhI-JQ-cNl"/>
                                             <constraint firstItem="qaA-lm-Vsj" firstAttribute="top" secondItem="2o4-S5-glx" secondAttribute="top" id="jeH-Tu-dsg"/>
                                             <constraint firstAttribute="trailing" secondItem="sqE-BV-PgG" secondAttribute="trailing" id="n4n-IV-eeG"/>
@@ -459,6 +460,7 @@
                         <outlet property="constraintContentWidth" destination="Xaz-x9-g8l" id="iUI-z6-fIs"/>
                         <outlet property="constraintLoginHeight" destination="K9c-kP-sus" id="NGn-mq-6Sf"/>
                         <outlet property="constraintSignUpHeight" destination="zk6-Pu-Ur0" id="X67-wn-oIE"/>
+                        <outlet property="contentView" destination="2o4-S5-glx" id="lDo-Rf-D6s"/>
                         <outlet property="inputConfirmation" destination="dIc-xb-zLi" id="NXh-Ey-qSW"/>
                         <outlet property="inputLoginEmail" destination="eTF-5P-uPS" id="Gv5-2f-DPU"/>
                         <outlet property="inputLoginPassword" destination="X36-xP-Jw3" id="15B-IS-ppK"/>
@@ -716,9 +718,9 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="fOw-hN-Z2b" secondAttribute="trailing" id="3ef-eZ-deB"/>
                                             <constraint firstItem="fOw-hN-Z2b" firstAttribute="leading" secondItem="bdT-OZ-BkG" secondAttribute="leading" id="Gxy-Pj-UKn"/>
-                                            <constraint firstAttribute="width" priority="999" constant="600" id="Hyy-Z0-tnG"/>
+                                            <constraint firstAttribute="width" constant="600" id="Hyy-Z0-tnG"/>
                                             <constraint firstItem="fOw-hN-Z2b" firstAttribute="top" secondItem="bdT-OZ-BkG" secondAttribute="top" id="KXU-TL-pOB"/>
-                                            <constraint firstAttribute="height" priority="999" constant="584" id="gJO-js-Rfc"/>
+                                            <constraint firstAttribute="height" constant="584" id="gJO-js-Rfc"/>
                                         </constraints>
                                     </view>
                                 </subviews>
