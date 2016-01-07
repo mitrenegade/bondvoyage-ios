@@ -48,7 +48,7 @@ class UserSearchResultCell: UITableViewCell {
             }
         }
         self.infoLabel.text = info
-        
+
         if let photoURL: String = user.valueForKey("photoUrl") as? String {
             self.profileImage.imageURL = NSURL(string: photoURL)
         }
@@ -79,7 +79,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var genderFilterView: GenderFilterView!
     @IBOutlet weak var groupSizeFilterView: GroupSizeFilterView!
     @IBOutlet weak var ageRangeFilterView: AgeRangeFilterView!
-    
+
     @IBOutlet weak var genderViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var groupSizeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var ageRangeViewHeightConstraint: NSLayoutConstraint!
@@ -103,10 +103,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.genderFilterView.configure(GenderPrefs.Male)
             self.configuredFilters = true
         }
-        
+
         self.loadPreferences()
     }
-    
+
     // MARK: - Preferences
     func loadPreferences() {
         if PFUser.currentUser() != nil {
@@ -128,10 +128,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
     }
-    
+
     func refresh() {
         if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
-            
+
             // gender preferences
             if let genderPrefs: [String] = prefObject.objectForKey("gender") as? [String] {
                 if genderPrefs.count == 1 {
@@ -141,7 +141,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                     self.genderFilterView.setSliderSelection(GenderPrefs.All.rawValue)
                 }
             }
-            
+
             // age preferences
             var ageMin = Int(self.ageRangeFilterView.rangeSlider!.minimumValue)
             var ageMax = Int(self.ageRangeFilterView.rangeSlider!.maximumValue)
@@ -152,7 +152,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 ageMax = upper
             }
             self.ageRangeFilterView.setSliderValues(lower: ageMin, upper: ageMax)
-            
+
             // group size preferences
             var groupMin = Int(self.groupSizeFilterView.rangeSlider!.minimumValue)
             var groupMax = Int(self.groupSizeFilterView.rangeSlider!.maximumValue)
@@ -165,13 +165,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.groupSizeFilterView.setSliderValues(lower: groupMin, upper: groupMax)
         }
     }
-    
+
     func enableButtons(enabled: Bool) {
         for button: UIButton in [self.genderButton, self.ageRangeButton, self.groupSizeButton] {
             button.enabled = enabled
         }
     }
-    
+
     // MARK: Filter View Methods
 
     @IBAction func filterButtonPressed(sender: UIButton) {
@@ -194,9 +194,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 
     func toggleFilterView(filterToOpen: BaseFilterView) {
         self.enableButtons(false)
-        
+
         // If there is no filter open at all, simply open filterToOpen.
-        
+
         if self.currentFilterView == nil {
             self.openFilterViewWithCompletion(filterToOpen, completion: { () -> Void in
                 self.enableButtons(true)
