@@ -306,6 +306,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "showUserDetailsSegue" {
+//            let vc = segue.destinationViewController as! UserDetailsViewController
+//
+//            vc.scrollViewContainer.topAnchor.constraintEqualToAnchor(self.parentViewController?.topLayoutGuide.topAnchor)
+//        }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }

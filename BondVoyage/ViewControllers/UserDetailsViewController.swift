@@ -11,13 +11,25 @@ import Parse
 
 class UserDetailsViewController: UIViewController {
 
+    @IBOutlet weak var scrollViewContainerTopConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var scrollViewContainer: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.title = "INVITE"
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        // TODO: this view is pushed from an embedded view controller, and therefore will take the height of its container view. Therefore, there is a giant white gap that is the height of the navigation bar + search bar in the hereandnow viewcontroller that embedded the view controller. Must figure out a way to get around this--either by reconstraining the top of the scroll view to the navigation bar's bottom in view will appear (doesnt work because the scroll view and the nav bar are in different hierarchies), or making the constant of the scroll view's top constraint to the difference between the containerview and the top layout guide in the parent vc that embedded them. no other ways come to mind so far but i'm sure they exist
+
+        //self.scrollViewContainer.topAnchor.constraintEqualToAnchor(self.navigationController?.navigationBar.topAnchor).active = true
+
+        // the above doesnt work because the nav bar and the scroll view is in a diff hierarchy, the constraint cannot be done
     }
 
     func configureDetailsForUser(user: PFUser) {
-        print("configure details for user \(user)")
-        
+
     }
 
 }
