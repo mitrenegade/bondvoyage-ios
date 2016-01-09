@@ -728,6 +728,7 @@
                                             <outlet property="infoLabel" destination="eRU-5e-4fQ" id="tWB-59-Qoi"/>
                                             <outlet property="profileImage" destination="X1a-ST-hWC" id="Ofz-U2-vnP"/>
                                             <outlet property="usernameLabel" destination="26f-Nx-O6c" id="45c-wE-TbG"/>
+                                            <segue destination="kYs-rw-dsY" kind="show" identifier="showUserDetailsSegue" id="IfN-Jx-1Ik"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -812,6 +813,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i33-6g-VdO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1769" y="-163"/>
+        </scene>
+        <!--User Details View Controller-->
+        <scene sceneID="jZv-gK-TaP">
+            <objects>
+                <viewController storyboardIdentifier="userDetailsID" id="kYs-rw-dsY" customClass="UserDetailsViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZmY-cK-3ui"/>
+                        <viewControllerLayoutGuide type="bottom" id="NCC-0y-kZ8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Pb-Ph-wM3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fSC-O3-f06" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2203" y="-157"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sjZ-E8-yNI">

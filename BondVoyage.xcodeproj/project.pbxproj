@@ -42,6 +42,7 @@
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
 		E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */; };
+		E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
 		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
+		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +285,7 @@
 				E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */,
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
 				E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */,
+				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */,
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */,
+				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
 				E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* InterestsViewController.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,

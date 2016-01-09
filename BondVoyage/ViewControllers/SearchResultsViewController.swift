@@ -271,7 +271,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let detailsVC = storyboard.instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+        let user = users![indexPath.row]
+        detailsVC.configureDetailsForUser(user)
+        print("the detailsvc is \(detailsVC)")
     }
 
     // MARK: - UITableViewDataSource
@@ -305,5 +309,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
+
+
 
 }
