@@ -37,9 +37,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var groupSizeButton: UIButton!
     @IBOutlet weak var ageRangeButton: UIButton!
 
-    @IBOutlet weak var genderFilterView: GenderFilterView!
-    @IBOutlet weak var groupSizeFilterView: GroupSizeFilterView!
-    @IBOutlet weak var ageRangeFilterView: AgeRangeFilterView!
+    @IBOutlet weak var genderFilterView: SingleFilterView!
+    @IBOutlet weak var groupSizeFilterView: RangeFilterView!
+    @IBOutlet weak var ageRangeFilterView: RangeFilterView!
     
     @IBOutlet weak var genderViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var groupSizeViewHeightConstraint: NSLayoutConstraint!

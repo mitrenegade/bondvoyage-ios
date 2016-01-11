@@ -12,19 +12,13 @@ import UIKit
 
 class BaseFilterView: UIView {
     
-    var slider: RangeSlider
+    var slider: BVSlider
     var label: UILabel
 
     required init?(coder aDecoder: NSCoder) {
-        self.slider = RangeSlider()
+        self.slider = BVSlider()
         self.label = UILabel()
         super.init(coder: aDecoder)
-        
-        self.addSubview(self.slider)
-        self.label.font = UIFont(name: "Lato-Regular", size: 17.0)
-        self.label.textColor = UIColor.whiteColor()
-        self.label.textAlignment = .Center
-        self.addSubview(self.label)
     }
 
     func openHeight() -> CGFloat {
@@ -32,22 +26,21 @@ class BaseFilterView: UIView {
     }
     
     func setupSlider() {
-        
-        self.slider.trackHighlightTintColor = Constants.rangeSliderHighlightColor()
+        self.addSubview(self.slider)
+        self.label.font = UIFont(name: "Lato-Regular", size: 17.0)
+        self.label.textColor = UIColor.whiteColor()
+        self.label.textAlignment = .Center
+        self.addSubview(self.label)
+
         self.slider.trackTintColor = Constants.rangeSliderTrackColor()
         self.slider.thumbTintColor = Constants.rangeSliderThumbColor()
 
-        self.slider.addTarget(self, action: "rangeSliderValueChanged:",
+        self.slider.addTarget(self, action: "sliderValueChanged:",
             forControlEvents: .ValueChanged)
-        self.slider.addTarget(self, action: "rangeSliderValueEnded:",
+        self.slider.addTarget(self, action: "sliderValueEnded:",
             forControlEvents: .TouchUpInside)
     }
 
-    func setSliderValues(lower lower: Int, upper: Int) {
-        self.slider.lowerValue = Double(lower)
-        self.slider.upperValue = Double(upper)
-    }
-    
     func setSliderRange(min min: Int, max: Int) {
         self.slider.maximumValue = Double(max) // must setup max value first
         self.slider.minimumValue = Double(min)
