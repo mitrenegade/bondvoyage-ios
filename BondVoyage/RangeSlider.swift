@@ -139,7 +139,7 @@ class RangeSlider: UIControl {
     private let upperThumbLayer = RangeSliderThumbLayer()
     
     private var thumbWidth: CGFloat {
-        return CGFloat(bounds.height * 3.0)
+        return CGFloat(bounds.height * 3.0) / 2.0
     }
     
     override var frame: CGRect {
@@ -164,7 +164,7 @@ class RangeSlider: UIControl {
         upperThumbLayer.rangeSlider = self
         upperThumbLayer.contentsScale = UIScreen.mainScreen().scale
         layer.addSublayer(upperThumbLayer)
-        
+
         updateLayerFrames()
     }
     
@@ -180,19 +180,18 @@ class RangeSlider: UIControl {
         trackLayer.setNeedsDisplay()
         
         let lowerThumbCenter = CGFloat(positionForValue(lowerValue))
-        lowerThumbLayer.frame = CGRect(x: lowerThumbCenter - thumbWidth/2.0, y: -4.0, width: thumbWidth / 2.0, height: thumbWidth / 2.0)
+        lowerThumbLayer.frame = CGRect(x: lowerThumbCenter - thumbWidth/2.0, y: -4.0, width: thumbWidth, height: thumbWidth)
         lowerThumbLayer.setNeedsDisplay()
         
         let upperThumbCenter = CGFloat(positionForValue(upperValue))
-        upperThumbLayer.frame = CGRect(x: upperThumbCenter - thumbWidth/2.0, y: -4.0, width: thumbWidth / 2.0, height: thumbWidth / 2.0)
+        upperThumbLayer.frame = CGRect(x: upperThumbCenter - thumbWidth/2.0, y: -4.0, width: thumbWidth, height: thumbWidth)
         upperThumbLayer.setNeedsDisplay()
         
         CATransaction.commit()
     }
     
     func positionForValue(value: Double) -> Double {
-//        let widthDouble = Double(thumbWidth / 3.0)
-        return Double(bounds.width - thumbWidth / 2.0) * (value - minimumValue) /
+        return Double(bounds.width - thumbWidth) * (value - minimumValue) /
             (maximumValue - minimumValue) + Double(thumbWidth / 2.0)
     }
     

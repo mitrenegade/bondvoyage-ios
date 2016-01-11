@@ -94,7 +94,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func openFilterView(filterToOpen: BaseFilterView) {
-        let height = filterToOpen.height
+        let height = filterToOpen.openHeight()
         self.heightConstraint(filterToOpen).constant = height
         self.tableViewTopSpacingConstraint.constant = height
 

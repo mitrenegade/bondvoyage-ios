@@ -11,7 +11,6 @@ import UIKit
 class GroupSizeFilterView: BaseFilterView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.height = 60
         
         self.setupSlider()
     }
@@ -20,6 +19,8 @@ class GroupSizeFilterView: BaseFilterView {
         super.setupSlider()
         self.setSliderRange(min: GROUP_SIZE_MIN, max: GROUP_SIZE_MAX)
         self.setSliderValues(lower: GROUP_SIZE_MIN, upper: GROUP_SIZE_MAX)
+        
+        self.label.text = "Group size"
     }
     
     func rangeSliderValueChanged(rangeSlider: RangeSlider) {

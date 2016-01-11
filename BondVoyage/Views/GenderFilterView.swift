@@ -12,13 +12,14 @@ class GenderFilterView: BaseFilterView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.height = 50
 
         self.setupSlider()
     }
  
     override func setupSlider() {
         super.setupSlider()
+
+        self.label.text = "Gender"
     }
 
 }

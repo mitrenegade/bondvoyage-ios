@@ -12,18 +12,26 @@ import UIKit
 
 class BaseFilterView: UIView {
     
-    var height: CGFloat! // TODO: don't need this, use frame.height
     var slider: RangeSlider
+    var label: UILabel
 
     required init?(coder aDecoder: NSCoder) {
-        self.height = 0
         self.slider = RangeSlider()
+        self.label = UILabel()
         super.init(coder: aDecoder)
+        
+        self.addSubview(self.slider)
+        self.label.font = UIFont(name: "Lato-Regular", size: 17.0)
+        self.label.textColor = UIColor.whiteColor()
+        self.label.textAlignment = .Center
+        self.addSubview(self.label)
     }
 
+    func openHeight() -> CGFloat {
+        return 80
+    }
+    
     func setupSlider() {
-        self.slider.frame = CGRectZero
-        self.addSubview(self.slider)
         
         self.slider.trackHighlightTintColor = Constants.rangeSliderHighlightColor()
         self.slider.trackTintColor = Constants.rangeSliderTrackColor()
@@ -47,6 +55,7 @@ class BaseFilterView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.slider.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 3 / 8.0, self.frame.size.width * 0.8, self.frame.size.height / 4.0)
+        self.slider.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 2 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
+        self.label.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 4 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
     }
 }
