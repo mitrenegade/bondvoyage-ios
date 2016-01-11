@@ -11,8 +11,6 @@ import Parse
 import Photos
 
 class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
-    @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
 
@@ -119,8 +117,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.constraintContentWidth.constant = self.view.frame.size.width
-        self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
     }
 
     func close() {

@@ -132,12 +132,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func refreshForType(animated: Bool) {
         if self.type == .Login {
             // show login; show signup header
-            self.toggleSection(.Signup, show: false, showHeader: true, animated: false)
+            self.toggleSection(.Signup, show: false, showHeader: true, animated: animated)
             self.toggleSection(.Login, show: true, showHeader: false, animated: animated)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log in", style: .Done, target: self, action: "validateFields")
         }
         else if self.type == .Signup {
-            self.toggleSection(.Login, show: false, showHeader: true, animated: false)
+            self.toggleSection(.Login, show: false, showHeader: true, animated: animated)
             self.toggleSection(.Signup, show: true, showHeader: false, animated: animated)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign up", style: .Done, target: self, action: "validateFields")
         }
