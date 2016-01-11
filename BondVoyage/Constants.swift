@@ -13,8 +13,12 @@ let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
 
 // search options
-var RANGE_SELECTOR_MAX = 85
+var RANGE_SELECTOR_MAX = 100
 var RANGE_SELECTOR_MIN = 1
+
+enum Gender: String {
+    case Female, Male, Other
+}
 
 class Constants: NSObject {
     class func rangeSliderTrackColor() -> UIColor{

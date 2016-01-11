@@ -678,21 +678,21 @@
                                     <outlet property="delegate" destination="nEB-Q9-aK5" id="cm5-if-ttu"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g46-Mm-OD5" customClass="RangeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g46-Mm-OD5" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="320" height="60"/>
                                 <color key="backgroundColor" red="0.091921356900000001" green="0.1509909388" blue="0.19875518110000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="60" id="PRW-Vk-izi"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HYp-Ju-nld" customClass="SingleFilterView" customModule="BondVoyage" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HYp-Ju-nld" customClass="GenderFilterView" customModule="BondVoyage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="320" height="40"/>
                                 <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="40" id="TqG-4x-Hf4"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mqs-hS-T4G" userLabel="Age Filter View" customClass="RangeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mqs-hS-T4G" userLabel="Age Filter View" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="320" height="80"/>
                                 <color key="backgroundColor" red="1" green="0.90925292163949445" blue="0.22215021729248741" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>

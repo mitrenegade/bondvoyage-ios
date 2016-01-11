@@ -9,18 +9,13 @@
 import UIKit
 
 class RangeFilterView: BaseFilterView {
-    var rangeSlider: RangeSlider?
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.slider = RangeSlider()
-        self.rangeSlider = self.slider as? RangeSlider
-
-        self.setupSlider()
-    }
+    var rangeSlider: BVRangeSlider?
     
     override func setupSlider() {
+        self.slider = BVRangeSlider()
         super.setupSlider()
+        self.rangeSlider = self.slider as? BVRangeSlider
+
         self.setSliderRange(min: RANGE_SELECTOR_MIN, max: RANGE_SELECTOR_MAX)
         self.rangeSlider?.lowerValue = Double(RANGE_SELECTOR_MIN)
         self.rangeSlider?.upperValue = Double(RANGE_SELECTOR_MAX)
@@ -29,7 +24,7 @@ class RangeFilterView: BaseFilterView {
     }
     
     func sliderValueChanged(sender: UIControl) {
-        if let slider: RangeSlider = sender as? RangeSlider {
+        if let slider: BVRangeSlider = sender as? BVRangeSlider {
             print("Range slider value changed: (\(slider.lowerValue) \(slider.upperValue))")
             let min:Int = Int(round(slider.lowerValue))
             let max:Int = Int(round(slider.upperValue))

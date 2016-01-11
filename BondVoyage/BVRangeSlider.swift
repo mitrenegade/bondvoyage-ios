@@ -5,9 +5,9 @@
 import UIKit
 import QuartzCore
 
-class RangeSliderTrackLayer: BVSliderTrackLayer {
+class BVRangeSliderTrackLayer: BVSliderTrackLayer {
     override func drawInContext(ctx: CGContext) {
-        if let rangeSlider = self.slider as? RangeSlider {
+        if let rangeSlider = self.slider as? BVRangeSlider {
             super.drawInContext(ctx)
             
             // Fill the highlighted range
@@ -20,7 +20,7 @@ class RangeSliderTrackLayer: BVSliderTrackLayer {
     }
 }
 
-class RangeSlider: BVSlider {
+class BVRangeSlider: BVSlider {
     var lowerValue: Double = 0.2 {
         didSet {
             updateLayerFrames()
@@ -50,7 +50,7 @@ class RangeSlider: BVSlider {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.trackLayer = RangeSliderTrackLayer()
+        self.trackLayer = BVRangeSliderTrackLayer()
 
         trackLayer.slider = self
         trackLayer.contentsScale = UIScreen.mainScreen().scale

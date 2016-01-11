@@ -10,6 +10,8 @@ import UIKit
 import Parse
 import Photos
 
+var genders = ["Select a gender", Gender.Male.rawValue, Gender.Female.rawValue, Gender.Other.rawValue]
+
 class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!

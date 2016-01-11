@@ -11,11 +11,6 @@
 import UIKit
 import Parse
 
-enum Gender: String {
-    case Male = "male"
-    case Female = "female"
-}
-
 class UserRequest: NSObject {
     class func seed() {
         // private function for testing purposes only
@@ -47,7 +42,7 @@ class UserRequest: NSObject {
 
         // converts enum to strings
         let genderString: [String] = gender.map { (g) -> String in
-            return g.rawValue
+            return g.rawValue.lowercaseString
         }
         
         PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interests, "gender": genderString, "age": ageRange, "number": numRange]) { (results, error) -> Void in

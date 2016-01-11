@@ -9,20 +9,17 @@
 import UIKit
 
 class SingleFilterView: BaseFilterView {
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setupSlider()
-    }
  
     override func setupSlider() {
+        self.slider = BVSlider()
         super.setupSlider()
+        
         self.setSliderRange(min: 0, max: 2)
-        self.slider.currentValue = Double(self.slider.minimumValue + self.slider.maximumValue) / 2
+        self.slider!.currentValue = Double(self.slider!.minimumValue + self.slider!.maximumValue) / 2
 
-        self.label.text = "Gender"
+        self.label.text = "Select"
     }
-
+    
     func sliderValueChanged(sender: UIControl) {
         if let slider: BVSlider = sender as? BVSlider {
             print("Range slider value changed: \(slider.currentValue)")

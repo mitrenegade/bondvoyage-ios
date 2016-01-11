@@ -32,14 +32,15 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     var users: [PFUser]?
 
     var currentFilterView: BaseFilterView?
+    var configuredFilters: Bool = false
 
     @IBOutlet weak var genderButton: UIButton!
     @IBOutlet weak var groupSizeButton: UIButton!
     @IBOutlet weak var ageRangeButton: UIButton!
 
-    @IBOutlet weak var genderFilterView: SingleFilterView!
-    @IBOutlet weak var groupSizeFilterView: RangeFilterView!
-    @IBOutlet weak var ageRangeFilterView: RangeFilterView!
+    @IBOutlet weak var genderFilterView: GenderFilterView!
+    @IBOutlet weak var groupSizeFilterView: GroupSizeFilterView!
+    @IBOutlet weak var ageRangeFilterView: AgeRangeFilterView!
     
     @IBOutlet weak var genderViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var groupSizeViewHeightConstraint: NSLayoutConstraint!
@@ -56,6 +57,17 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableViewTopSpacingConstraint.constant = 0
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if (!self.configuredFilters) {
+            self.ageRangeFilterView.configure(16, maxAge: 85, lower: 16, upper: 85)
+            self.groupSizeFilterView.configure(1, maxSize: 10, lower: 1, upper: 10)
+            let genders = [Gender.Male.rawValue, Gender.Female.rawValue, Gender.Other.rawValue]
+            self.genderFilterView.configure(genders, currentSelection: Gender.Male.rawValue)
+            self.configuredFilters = true
+        }
+    }
+    
     // MARK: Filter View Methods
 
     @IBAction func filterButtonPressed(sender: UIButton) {
