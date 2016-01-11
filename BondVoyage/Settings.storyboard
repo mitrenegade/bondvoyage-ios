@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -80,11 +80,11 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SsY-te-IP6" id="oTs-ER-B6Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K4F-hc-oTQ">
-                                            <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="550" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -421,10 +421,8 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="584" id="Lp0-JB-zfl"/>
                                             <constraint firstItem="sqE-BV-PgG" firstAttribute="leading" secondItem="2o4-S5-glx" secondAttribute="leading" id="N99-ey-9b3"/>
                                             <constraint firstItem="qaA-lm-Vsj" firstAttribute="leading" secondItem="2o4-S5-glx" secondAttribute="leading" id="PhK-Yx-2aK"/>
-                                            <constraint firstAttribute="width" constant="600" id="Xaz-x9-g8l"/>
                                             <constraint firstItem="sqE-BV-PgG" firstAttribute="top" secondItem="qaA-lm-Vsj" secondAttribute="bottom" id="hhI-JQ-cNl"/>
                                             <constraint firstItem="qaA-lm-Vsj" firstAttribute="top" secondItem="2o4-S5-glx" secondAttribute="top" id="jeH-Tu-dsg"/>
                                             <constraint firstAttribute="trailing" secondItem="sqE-BV-PgG" secondAttribute="trailing" id="n4n-IV-eeG"/>
@@ -443,9 +441,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Ebj-7n-DOv" secondAttribute="trailing" id="8fJ-EW-gvm"/>
+                            <constraint firstItem="2o4-S5-glx" firstAttribute="width" secondItem="kdo-WR-EKH" secondAttribute="width" id="OUf-On-5Lp"/>
                             <constraint firstItem="Ebj-7n-DOv" firstAttribute="leading" secondItem="kdo-WR-EKH" secondAttribute="leading" id="Vb4-HX-OLd"/>
                             <constraint firstItem="Ebj-7n-DOv" firstAttribute="top" secondItem="9lW-nQ-7Xw" secondAttribute="bottom" id="Zdx-Fx-519"/>
                             <constraint firstItem="Izc-jY-sEb" firstAttribute="top" secondItem="Ebj-7n-DOv" secondAttribute="bottom" id="dDB-ah-dHd"/>
+                            <constraint firstItem="2o4-S5-glx" firstAttribute="height" secondItem="kdo-WR-EKH" secondAttribute="height" id="fTR-jr-TqA"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -456,8 +456,6 @@
                         <outlet property="buttonLogin" destination="XJw-ri-RDZ" id="KeB-c1-ZAA"/>
                         <outlet property="buttonSignup" destination="Ekt-R5-NoE" id="Njs-UY-6cl"/>
                         <outlet property="constraintBottomOffset" destination="dDB-ah-dHd" id="Hj2-zj-KnD"/>
-                        <outlet property="constraintContentHeight" destination="Lp0-JB-zfl" id="ah0-EM-vbg"/>
-                        <outlet property="constraintContentWidth" destination="Xaz-x9-g8l" id="iUI-z6-fIs"/>
                         <outlet property="constraintLoginHeight" destination="K9c-kP-sus" id="NGn-mq-6Sf"/>
                         <outlet property="constraintSignUpHeight" destination="zk6-Pu-Ur0" id="X67-wn-oIE"/>
                         <outlet property="contentView" destination="2o4-S5-glx" id="lDo-Rf-D6s"/>
@@ -718,9 +716,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="fOw-hN-Z2b" secondAttribute="trailing" id="3ef-eZ-deB"/>
                                             <constraint firstItem="fOw-hN-Z2b" firstAttribute="leading" secondItem="bdT-OZ-BkG" secondAttribute="leading" id="Gxy-Pj-UKn"/>
-                                            <constraint firstAttribute="width" constant="600" id="Hyy-Z0-tnG"/>
                                             <constraint firstItem="fOw-hN-Z2b" firstAttribute="top" secondItem="bdT-OZ-BkG" secondAttribute="top" id="KXU-TL-pOB"/>
-                                            <constraint firstAttribute="height" constant="584" id="gJO-js-Rfc"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -734,6 +730,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="bdT-OZ-BkG" firstAttribute="width" secondItem="zpk-ZN-6VV" secondAttribute="width" id="238-DX-JOo"/>
+                            <constraint firstItem="bdT-OZ-BkG" firstAttribute="height" secondItem="zpk-ZN-6VV" secondAttribute="height" id="ES6-q5-5jZ"/>
                             <constraint firstAttribute="trailing" secondItem="2ei-Yp-jVg" secondAttribute="trailing" id="NDX-t2-Q8w"/>
                             <constraint firstItem="2ei-Yp-jVg" firstAttribute="top" secondItem="NxJ-jJ-kwc" secondAttribute="bottom" id="Y9o-Bl-1Gn"/>
                             <constraint firstItem="9dE-68-rAy" firstAttribute="top" secondItem="2ei-Yp-jVg" secondAttribute="bottom" id="bdN-BL-gPF"/>
@@ -747,8 +745,6 @@
                     <connections>
                         <outlet property="buttonPhoto" destination="Xi5-VC-Dvu" id="Zo0-PY-Tej"/>
                         <outlet property="constraintBottomOffset" destination="bdN-BL-gPF" id="6pg-a0-FSk"/>
-                        <outlet property="constraintContentHeight" destination="gJO-js-Rfc" id="JYn-on-XJA"/>
-                        <outlet property="constraintContentWidth" destination="Hyy-Z0-tnG" id="H0F-b1-OHb"/>
                         <outlet property="inputBirthYear" destination="nov-ec-bdW" id="Xh3-1i-WK0"/>
                         <outlet property="inputFirstName" destination="Aa8-ek-Btu" id="bP7-cz-bLm"/>
                         <outlet property="inputGender" destination="5ye-Qh-K88" id="5hJ-sd-grW"/>

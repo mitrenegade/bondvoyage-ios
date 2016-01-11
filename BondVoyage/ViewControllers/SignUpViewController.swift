@@ -21,8 +21,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     var type: SignupSectionType = .Login
     
-    @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
-    @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
     @IBOutlet weak var constraintLoginHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintSignUpHeight: NSLayoutConstraint!
@@ -72,14 +70,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         // initial constraints
         self.refreshForType(false)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.constraintContentWidth.constant = self.view.frame.size.width
-        self.contentView.layoutSubviews()
-        self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
-        
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -113,21 +103,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         
         constraint.constant = height
-        self.constraintContentHeight.constant = self.constraintLoginHeight.constant + self.constraintSignUpHeight.constant
-        
         if animated {
             self.view.setNeedsUpdateConstraints()
             UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.view.layoutIfNeeded()
                 self.contentView.layoutIfNeeded()
             }, completion: { (done) -> Void in
-                self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
             })
         }
         else {
             self.view.layoutSubviews()
             self.contentView.layoutSubviews()
-            self.scrollView.contentSize = CGSizeMake(self.constraintContentWidth.constant, self.constraintContentHeight.constant)
         }
     }
     
