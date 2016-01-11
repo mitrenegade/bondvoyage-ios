@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import AsyncImageView
 
 let kSearchResultCellIdentifier = "searchResultCell"
 let date = NSDate()
@@ -16,7 +17,7 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 class UserSearchResultCell: UITableViewCell {
 
-    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileImage: AsyncImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
 
@@ -26,12 +27,8 @@ class UserSearchResultCell: UITableViewCell {
         self.usernameLabel.text = user.username
         self.genderAndAgeLabel.text = "\(user.valueForKey("gender")!), age: \(age)"
 
-        if let userPicture = user.valueForKey("photo") as! PFFile? {
-            userPicture.getDataInBackgroundWithBlock({ (imageData: NSData?, error: NSError?) -> Void in
-                if error == nil {
-                    self.imageView?.image = UIImage(data:imageData!)
-                }
-            })
+        if let photoURL: String = user.valueForKey("photoUrl") as? String {
+            self.profileImage.imageURL = NSURL(string: photoURL)
         }
     }
 }
