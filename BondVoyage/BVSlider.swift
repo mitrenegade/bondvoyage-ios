@@ -196,7 +196,9 @@ class BVSlider: UIControl {
         
         // Update the values
         if thumbLayer.highlighted {
-            currentValue = currentValue + deltaValue
+            if currentValue + deltaValue >= self.minimumValue && currentValue + deltaValue <= self.maximumValue {
+                currentValue = currentValue + deltaValue
+            }
         }
         print("updated value \(currentValue) deltaLocation \(deltaLocation)")
 

@@ -12,14 +12,13 @@ class SingleFilterView: BaseFilterView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.setSliderRange(min: 0, max: 2)
         self.setupSlider()
     }
  
     override func setupSlider() {
         super.setupSlider()
-        self.setSliderRange(min: RANGE_SELECTOR_MIN, max: RANGE_SELECTOR_MAX)
-        self.slider.currentValue = Double(RANGE_SELECTOR_MAX + RANGE_SELECTOR_MIN) / 2
+        self.setSliderRange(min: 0, max: 2)
+        self.slider.currentValue = Double(self.slider.minimumValue + self.slider.maximumValue) / 2
 
         self.label.text = "Gender"
     }
