@@ -13,6 +13,14 @@ class AgeRangeFilterView: BaseFilterView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.height = 70
+
+        self.setupSlider()
     }
     
+    override func setupSlider() {
+        super.setupSlider()
+        self.setSliderRange(min: AGE_RANGE_MIN, max: AGE_RANGE_MAX)
+        self.setSliderValues(lower: AGE_RANGE_MIN, upper: AGE_RANGE_MAX)
+    }
+
 }

@@ -7,6 +7,32 @@
 //
 
 import Foundation
+import UIKit
 
 let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
+
+// search options
+var GROUP_SIZE_MAX = 15
+var GROUP_SIZE_MIN = 1
+
+var AGE_RANGE_MAX = 85
+var AGE_RANGE_MIN = 16
+
+class Constants: NSObject {
+    class func rangeSliderTrackColor() -> UIColor{
+        return UIColor(red: 167.0/256.0, green: 168.0/256.0, blue: 171.0/256.0, alpha: 1.0)
+    }
+    
+    class func rangeSliderHighlightColor() -> UIColor{
+        return self.blueColor() //UIColor(red: 40.0/256.0, green: 175.0/256.0, blue: 163.0/256.0, alpha: 1.0)
+    }
+    
+    class func rangeSliderThumbColor() -> UIColor {
+        return UIColor(red: 212.0/256.0, green: 210.0/256.0, blue: 203.0/256.0, alpha: 1.0)
+    }
+
+    class func blueColor() -> UIColor {
+        return UIColor(red: 79.0/255.0, green: 129.0/255.0, blue: 170.0/255.0, alpha: 1)
+    }
+}
