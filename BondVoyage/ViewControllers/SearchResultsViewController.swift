@@ -62,8 +62,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         if (!self.configuredFilters) {
             self.ageRangeFilterView.configure(16, maxAge: 85, lower: 16, upper: 85)
             self.groupSizeFilterView.configure(1, maxSize: 10, lower: 1, upper: 10)
-            let genders = [Gender.Male.rawValue, Gender.Female.rawValue, Gender.Other.rawValue]
-            self.genderFilterView.configure(genders, currentSelection: Gender.Male.rawValue)
+            self.genderFilterView.configure(Gender.Male.rawValue)
             self.configuredFilters = true
         }
     }

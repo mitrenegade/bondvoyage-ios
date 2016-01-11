@@ -52,4 +52,8 @@ class BaseFilterView: UIView {
         self.slider?.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 2 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
         self.label.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 4 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
     }
+    
+    func updateLabel() {
+        preconditionFailure("Must be implemented by subclass")
+    }
 }

@@ -26,9 +26,7 @@ class RangeFilterView: BaseFilterView {
     func sliderValueChanged(sender: UIControl) {
         if let slider: BVRangeSlider = sender as? BVRangeSlider {
             print("Range slider value changed: (\(slider.lowerValue) \(slider.upperValue))")
-            let min:Int = Int(round(slider.lowerValue))
-            let max:Int = Int(round(slider.upperValue))
-            self.label.text = "\(min) - \(max)"
+            self.updateLabel()
         }
     }
     

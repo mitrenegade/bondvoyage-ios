@@ -23,9 +23,8 @@ class SingleFilterView: BaseFilterView {
     func sliderValueChanged(sender: UIControl) {
         if let slider: BVSlider = sender as? BVSlider {
             print("Range slider value changed: \(slider.currentValue)")
-            let val:Int = Int(round(slider.currentValue))
-            self.label.text = "\(val)"
         }
+        self.updateLabel()
     }
     
     func sliderValueEnded(sender: UIControl) {
