@@ -10,10 +10,11 @@ import UIKit
 import Parse
 import AsyncImageView
 
+protocol SearchResultsDelegate {
+    func showUserDetails(destinationVC: UIViewController)
+}
+
 let kSearchResultCellIdentifier = "searchResultCell"
-let date = NSDate()
-let calendar = NSCalendar.currentCalendar()
-let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 class UserSearchResultCell: UITableViewCell {
 
@@ -25,7 +26,7 @@ class UserSearchResultCell: UITableViewCell {
     func configureCellForUser(user: PFUser) {
         let currentYear = components.year
         let age = currentYear - (user.valueForKey("birthYear") as! Int)
-        
+
         var name: String? = user.valueForKey("firstName") as? String
         if name == nil {
             name = user.valueForKey("lastName") as? String
@@ -84,6 +85,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var groupSizeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var ageRangeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewTopSpacingConstraint: NSLayoutConstraint!
+
+    var delegate: SearchResultsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -276,6 +279,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         let user = users![indexPath.row]
         detailsVC.configureDetailsForUser(user)
         print("the detailsvc is \(detailsVC)")
+
+        self.delegate?.showUserDetails(detailsVC)
     }
 
     // MARK: - UITableViewDataSource

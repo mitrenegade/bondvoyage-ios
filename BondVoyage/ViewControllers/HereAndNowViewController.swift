@@ -20,7 +20,7 @@ class NearbyEventCell: UITableViewCell {
     }
 }
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, SearchResultsDelegate {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -81,6 +81,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "embedSearchResultsVCSegue") {
             self.searchResultsVC = segue.destinationViewController as! SearchResultsViewController
+            self.searchResultsVC.delegate = self
         }
     }
 
@@ -153,5 +154,16 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func goToSettings() {
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
         self.presentViewController(nav, animated: true, completion: nil)
+    }
+
+    // MARK: SearchResultsDelegate
+
+    func showUserDetails(destinationVC: UIViewController) {
+        print("showing user details")
+
+        self.performSegueWithIdentifier("showUserDetailsSegue", sender: self)
+
+//        self.navigationController?.pushViewController(destinationVC, animated: true)
+
     }
 }
