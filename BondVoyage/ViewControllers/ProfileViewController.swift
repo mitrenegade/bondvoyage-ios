@@ -271,14 +271,18 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             user!.setValue(self.birthYear, forKey: "birthYear")
         }
         
-        if self.selectedPhoto != nil {
-            let data: NSData = UIImageJPEGRepresentation(self.selectedPhoto!, 0.8)!
-            let file: PFFile = PFFile(name: "profile.jpg", data: data)!
-            user!.setObject(file, forKey: "photo")
-        }
-        
         user!.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
+                if self.selectedPhoto != nil {
+                    let data: NSData = UIImageJPEGRepresentation(self.selectedPhoto!, 0.8)!
+                    let file: PFFile = PFFile(name: "profile.jpg", data: data)!
+                    user!.setObject(file, forKey: "photo")
+                    file.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        user!.setObject(file.url!, forKey: "photoUrl")
+                        user!.saveInBackground()
+                    })
+                }
+
                 self.close()
             }
             else {
