@@ -13,7 +13,9 @@ class SingleFilterView: BaseFilterView {
     override func setupSlider() {
         self.slider = BVSlider()
         super.setupSlider()
-        
+
+        self.slider!.trackTintColor = Constants.sliderHighlightColor()
+
         self.setSliderRange(min: 0, max: 2)
         self.slider!.currentValue = Double(self.slider!.minimumValue + self.slider!.maximumValue) / 2
 

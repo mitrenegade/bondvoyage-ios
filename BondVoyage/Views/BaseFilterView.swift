@@ -33,8 +33,8 @@ class BaseFilterView: UIView {
         self.label.textAlignment = .Center
         self.addSubview(self.label)
 
-        self.slider!.trackTintColor = Constants.rangeSliderTrackColor()
-        self.slider!.thumbTintColor = Constants.rangeSliderThumbColor()
+        self.slider!.trackTintColor = Constants.sliderTrackColor()
+        self.slider!.thumbTintColor = Constants.sliderThumbColor()
 
         self.slider!.addTarget(self, action: "sliderValueChanged:",
             forControlEvents: .ValueChanged)
@@ -51,6 +51,9 @@ class BaseFilterView: UIView {
         super.layoutSubviews()
         self.slider?.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 2 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
         self.label.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 4 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
+        if self.slider != nil {
+            self.label.center = CGPointMake(self.slider!.center.x, (self.slider!.center.y + self.frame.size.height) / 2)
+        }
     }
     
     func updateLabel() {

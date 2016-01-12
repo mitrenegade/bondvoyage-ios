@@ -21,15 +21,15 @@ enum Gender: String {
 }
 
 class Constants: NSObject {
-    class func rangeSliderTrackColor() -> UIColor{
+    class func sliderTrackColor() -> UIColor{
         return UIColor(red: 167.0/256.0, green: 168.0/256.0, blue: 171.0/256.0, alpha: 1.0)
     }
     
-    class func rangeSliderHighlightColor() -> UIColor{
-        return self.blueColor()//UIColor(red: 40.0/256.0, green: 175.0/256.0, blue: 163.0/256.0, alpha: 1.0)
+    class func sliderHighlightColor() -> UIColor{
+        return self.blueColor()
     }
     
-    class func rangeSliderThumbColor() -> UIColor {
+    class func sliderThumbColor() -> UIColor {
         return UIColor(red: 212.0/256.0, green: 210.0/256.0, blue: 203.0/256.0, alpha: 1.0)
     }
 

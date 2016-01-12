@@ -116,7 +116,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
     @IBAction func didClickButton(sender: UIButton) {
         // toggles login/signup sections
         if sender == self.buttonLogin {
@@ -282,8 +281,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             else {
                 print("Error signing up")
                 var message = "There was an error signing up as a new user."
-                if let msg = error!.localizedDescription as? String {
-                    message = msg
+                if error?.localizedDescription != nil {
+                    message = error!.localizedDescription
                 }
                 self.simpleAlert("Could not sign up", message: message, completion: nil)
             }

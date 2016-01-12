@@ -92,7 +92,7 @@ class BVSlider: UIControl {
         }
     }
     
-    var trackTintColor: UIColor = UIColor.blackColor() {//UIColor(white: 0.9, alpha: 1.0) {
+    var trackTintColor: UIColor = Constants.sliderHighlightColor() {
         didSet {
             trackLayer.setNeedsDisplay()
         }
@@ -126,6 +126,8 @@ class BVSlider: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.trackTintColor = UIColor.blackColor()
+
         trackLayer.slider = self
         trackLayer.contentsScale = UIScreen.mainScreen().scale
         layer.addSublayer(trackLayer)
