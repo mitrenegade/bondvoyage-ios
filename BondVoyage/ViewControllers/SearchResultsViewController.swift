@@ -76,8 +76,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if (!self.configuredFilters) {
-            self.ageRangeFilterView.configure(16, maxAge: 85, lower: 16, upper: 85)
-            self.groupSizeFilterView.configure(1, maxSize: 10, lower: 1, upper: 10)
+            self.ageRangeFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
+            self.groupSizeFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
             self.genderFilterView.configure(GenderPrefs.Male)
             self.configuredFilters = true
         }
@@ -143,6 +143,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.groupSizeFilterView.setSliderValues(lower: groupMin, upper: groupMax)
         }
     }
+    
+    func enableButtons(enabled: Bool) {
+        for button: UIButton in [self.genderButton, self.ageRangeButton, self.groupSizeButton] {
+            button.enabled = enabled
+        }
+    }
+    
     // MARK: Filter View Methods
 
     @IBAction func filterButtonPressed(sender: UIButton) {
@@ -164,23 +171,32 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func toggleFilterView(filterToOpen: BaseFilterView) {
+        self.enableButtons(false)
+        
         // If there is no filter open at all, simply open filterToOpen.
+        
         if self.currentFilterView == nil {
-            self.openFilterView(filterToOpen)
+            self.openFilterViewWithCompletion(filterToOpen, completion: { () -> Void in
+                self.enableButtons(true)
+            })
         }
         // If the filter to open is already open, close the current filter view.
         else if self.currentFilterView == filterToOpen {
-            self.closeFilterViewWithCompletion(nil)
+            self.closeFilterViewWithCompletion({ () -> Void in
+                self.enableButtons(true)
+            })
         }
         // If there is a filter opened already, close it, and open the other one.
         else if self.currentFilterView != filterToOpen {
             self.closeFilterViewWithCompletion({ () -> Void in
-                self.openFilterView(filterToOpen)
+                self.openFilterViewWithCompletion(filterToOpen, completion: { () -> Void in
+                    self.enableButtons(true)
+                })
             })
         }
     }
 
-    func openFilterView(filterToOpen: BaseFilterView) {
+    func openFilterViewWithCompletion(filterToOpen: BaseFilterView, completion: (() -> Void)?) {
         let height = filterToOpen.openHeight()
         self.heightConstraint(filterToOpen).constant = height
         self.tableViewTopSpacingConstraint.constant = height
@@ -192,6 +208,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             completion: { (Bool) -> Void in
                 self.currentFilterView = filterToOpen
                 print("Filter view \(self.currentFilterView) opened")
+                if completion != nil {
+                    completion!()
+                }
             }
         )
     }

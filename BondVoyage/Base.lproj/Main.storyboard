@@ -575,43 +575,67 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-Su-cBm">
-                                        <rect key="frame" x="0.0" y="0.0" width="106.5" height="50"/>
-                                        <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Gender"/>
+                                        <rect key="frame" x="0.0" y="1" width="106" height="48"/>
+                                        <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Gender">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="eC2-2Y-NFE"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvj-lc-cFz">
-                                        <rect key="frame" x="106.5" y="0.0" width="107" height="50"/>
-                                        <color key="backgroundColor" red="0.65690445026178013" green="0.46842706321614019" blue="0.50924692019280404" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Group Size"/>
+                                        <rect key="frame" x="107" y="1" width="106" height="48"/>
+                                        <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Group Size">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="khh-wW-eNE"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJ5-MZ-rCd">
-                                        <rect key="frame" x="213.5" y="0.0" width="106.5" height="50"/>
-                                        <color key="backgroundColor" red="1" green="0.70907124340000005" blue="0.76369073460000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Age Range"/>
+                                        <rect key="frame" x="214" y="1" width="106" height="48"/>
+                                        <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Age Range">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="filterButtonPressed:" destination="nEB-Q9-aK5" eventType="touchUpInside" id="gYz-vS-Qnp"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.37919257200000001" green="0.1660417122" blue="0.19238156940000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="BrB-Su-cBm" firstAttribute="leading" secondItem="B5J-tD-T32" secondAttribute="leading" id="DaY-zP-bXz"/>
-                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="leading" secondItem="BrB-Su-cBm" secondAttribute="trailing" id="LLV-aZ-Yhr"/>
+                                    <constraint firstItem="Kvj-lc-cFz" firstAttribute="leading" secondItem="BrB-Su-cBm" secondAttribute="trailing" constant="1" id="LLV-aZ-Yhr"/>
                                     <constraint firstItem="iJ5-MZ-rCd" firstAttribute="height" secondItem="Kvj-lc-cFz" secondAttribute="height" id="U6t-CJ-F3x"/>
                                     <constraint firstAttribute="trailing" secondItem="iJ5-MZ-rCd" secondAttribute="trailing" id="Vnx-LO-oVe"/>
                                     <constraint firstItem="Kvj-lc-cFz" firstAttribute="width" secondItem="BrB-Su-cBm" secondAttribute="width" id="aPt-Ge-Qk2"/>
                                     <constraint firstItem="Kvj-lc-cFz" firstAttribute="centerY" secondItem="BrB-Su-cBm" secondAttribute="centerY" id="aew-qc-laf"/>
                                     <constraint firstAttribute="height" constant="50" id="dfz-YU-0QV"/>
-                                    <constraint firstItem="BrB-Su-cBm" firstAttribute="height" secondItem="B5J-tD-T32" secondAttribute="height" id="hQu-Yd-CP2"/>
+                                    <constraint firstItem="BrB-Su-cBm" firstAttribute="height" secondItem="B5J-tD-T32" secondAttribute="height" constant="-2" id="hQu-Yd-CP2"/>
                                     <constraint firstItem="iJ5-MZ-rCd" firstAttribute="centerY" secondItem="B5J-tD-T32" secondAttribute="centerY" id="kHc-Vb-2nQ"/>
                                     <constraint firstItem="iJ5-MZ-rCd" firstAttribute="width" secondItem="Kvj-lc-cFz" secondAttribute="width" id="muz-B3-1aT"/>
-                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="leading" secondItem="Kvj-lc-cFz" secondAttribute="trailing" id="qKu-sz-47z"/>
+                                    <constraint firstItem="iJ5-MZ-rCd" firstAttribute="leading" secondItem="Kvj-lc-cFz" secondAttribute="trailing" constant="1" id="qKu-sz-47z"/>
                                     <constraint firstItem="BrB-Su-cBm" firstAttribute="centerY" secondItem="B5J-tD-T32" secondAttribute="centerY" id="smf-Uq-f8b"/>
                                     <constraint firstItem="Kvj-lc-cFz" firstAttribute="height" secondItem="BrB-Su-cBm" secondAttribute="height" id="voP-hB-lUW"/>
                                 </constraints>
@@ -677,23 +701,23 @@
                                     <outlet property="delegate" destination="nEB-Q9-aK5" id="cm5-if-ttu"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g46-Mm-OD5" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g46-Mm-OD5" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="320" height="60"/>
-                                <color key="backgroundColor" red="0.091921356900000001" green="0.1509909388" blue="0.19875518110000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="60" id="PRW-Vk-izi"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HYp-Ju-nld" customClass="GenderFilterView" customModule="BondVoyage" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HYp-Ju-nld" customClass="GenderFilterView" customModule="BondVoyage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="320" height="40"/>
-                                <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="40" id="TqG-4x-Hf4"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mqs-hS-T4G" userLabel="Age Filter View" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mqs-hS-T4G" userLabel="Age Filter View" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="320" height="80"/>
-                                <color key="backgroundColor" red="1" green="0.90925292163949445" blue="0.22215021729248741" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="80" id="Skm-6f-9dE"/>
                                 </constraints>

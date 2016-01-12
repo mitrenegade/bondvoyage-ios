@@ -24,6 +24,10 @@ class SearchPreferencesViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save")
         
+        self.ageFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
+        self.groupFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
+        self.genderFilterView.configure(GenderPrefs.Male)
+
         // load preferences
         if PFUser.currentUser() == nil {
             self.simpleAlert("Error loading user", message: "You are not logged in. Please log in and try again.", completion: { () -> Void in

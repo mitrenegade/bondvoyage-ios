@@ -857,7 +857,7 @@
                                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sG-dn-Hem">
                                                                 <rect key="frame" x="8" y="8" width="584" height="44"/>
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
-                                                                <state key="normal" title="Age Range">
+                                                                <state key="normal" title="Group Size">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
                                                                 <connections>
@@ -876,7 +876,7 @@
                                                             </mask>
                                                         </variation>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vy-bi-FvY" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vy-bi-FvY" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="60" width="600" height="80"/>
                                                         <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     </view>
@@ -902,7 +902,7 @@
                                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDc-yT-6P4">
                                                                 <rect key="frame" x="8" y="8" width="584" height="44"/>
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
-                                                                <state key="normal" title="Group Size">
+                                                                <state key="normal" title="Age Range">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
                                                                 <connections>
@@ -921,7 +921,7 @@
                                                             </mask>
                                                         </variation>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDZ-kQ-UKO" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDZ-kQ-UKO" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="60" width="600" height="80"/>
                                                         <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     </view>
@@ -976,10 +976,10 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="648"/>
                     <connections>
-                        <outlet property="ageFilterView" destination="5vy-bi-FvY" id="9mU-e4-rjf"/>
+                        <outlet property="ageFilterView" destination="YDZ-kQ-UKO" id="Spc-le-ISL"/>
                         <outlet property="contentView" destination="JgP-9U-hVd" id="dBW-70-bMI"/>
                         <outlet property="genderFilterView" destination="AC5-Ri-N8U" id="nrN-DL-qFa"/>
-                        <outlet property="groupFilterView" destination="YDZ-kQ-UKO" id="YoK-gF-Wsb"/>
+                        <outlet property="groupFilterView" destination="5vy-bi-FvY" id="wX0-ru-QaJ"/>
                         <outlet property="scrollView" destination="uFk-rd-TqM" id="MS9-Zo-RPW"/>
                     </connections>
                 </viewController>
