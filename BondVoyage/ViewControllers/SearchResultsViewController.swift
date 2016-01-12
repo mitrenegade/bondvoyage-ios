@@ -30,6 +30,13 @@ class UserSearchResultCell: UITableViewCell {
         if let photoURL: String = user.valueForKey("photoUrl") as? String {
             self.profileImage.imageURL = NSURL(string: photoURL)
         }
+        else {
+            self.profileImage.image = UIImage(named: "profile-icon")
+        }
+
+        self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
+        self.profileImage.layer.borderColor = Constants.blueColor().CGColor
+        self.profileImage.layer.borderWidth = 2
     }
 }
 
