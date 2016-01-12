@@ -29,4 +29,12 @@ class GenderFilterView: SingleFilterView {
         }
         self.label.text = "Gender: \(text)"
     }
+    
+    func setSliderSelection(genderPref: String) {
+        self.configure(genderPref)
+    }
+    
+    func currentGenderPref() -> String {
+        return genderOptions[Int(self.slider!.currentValue)]
+    }
 }

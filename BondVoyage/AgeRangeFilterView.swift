@@ -12,10 +12,6 @@ class AgeRangeFilterView: RangeFilterView {
     func configure(minAge: Int, maxAge: Int, lower: Int, upper: Int) {
         self.setSliderRange(min: minAge, max: maxAge)
         self.setSliderValues(lower: lower, upper: upper)
-        self.rangeSlider?.setNeedsDisplay()
-
-        self.updateLabel()
-        self.rangeSlider?.setNeedsDisplay()
     }
     
     override func updateLabel() {

@@ -10,8 +10,6 @@ import UIKit
 import Parse
 import Photos
 
-var genders = ["Select a gender", Gender.Male.rawValue, Gender.Female.rawValue, Gender.Other.rawValue]
-
 class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
@@ -42,6 +40,8 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
     var cancelEditing: Bool = false
 
+    var genderOptions = ["Select a gender", Gender.Male.rawValue, Gender.Female.rawValue, Gender.Other.rawValue]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -139,8 +139,8 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == self.pickerGender {
             print("row: \(row)")
-            print("genders \(genders)")
-            return genders[row]
+            print("genders \(genderOptions)")
+            return genderOptions[row]
         }
         else {
             if row == 0 {
@@ -160,7 +160,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 self.gender = nil
             }
             else {
-                self.gender = genders[row]
+                self.gender = genderOptions[row]
                 self.inputGender.text = self.gender
             }
         }

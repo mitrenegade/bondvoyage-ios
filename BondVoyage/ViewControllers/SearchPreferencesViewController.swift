@@ -32,18 +32,26 @@ class SearchPreferencesViewController: UIViewController {
         }
         else {
             if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
-                prefObject.fetchInBackgroundWithBlock({ (object, error) -> Void in
-                    if error != nil {
-                        self.simpleAlert("Error loading preferences", message: "There was an error loading your search preferences. Please try logging in again.", completion: { () -> Void in
-                            self.close()
-                        })
+                // load from local store
+                prefObject.fetchFromLocalDatastoreInBackgroundWithBlock({ (object, error) -> Void in
+                    if error == nil {
+                        self.refresh()
                     }
                     else {
-                        self.refresh()
+                        // load from web
+                        prefObject.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                            if error != nil {
+                                self.simpleAlert("Error loading preferences", message: "There was an error loading your search preferences. Please try logging in again.", completion: { () -> Void in
+                                    self.close()
+                                })
+                            }
+                            else {
+                                self.refresh()
+                            }
+                        })
                     }
                 })
             }
-            self.refresh()
         }
     }
 
@@ -61,11 +69,11 @@ class SearchPreferencesViewController: UIViewController {
         if prefObject == nil {
             prefObject = PFObject(className: "SearchPreference")
         }
-        let gender = Int(self.genderFilterView.slider!.currentValue)
-        let ageMin = Int(self.ageFilterView.rangeSlider!.minimumValue)
-        let ageMax = Int(self.ageFilterView.rangeSlider!.maximumValue)
-        let groupMin = Int(self.groupFilterView.rangeSlider!.minimumValue)
-        let groupMax = Int(self.groupFilterView.rangeSlider!.maximumValue)
+        let gender = self.genderFilterView.currentGenderPref()
+        let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
+        let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
+        let groupMin = Int(self.groupFilterView.rangeSlider!.lowerValue)
+        let groupMax = Int(self.groupFilterView.rangeSlider!.upperValue)
         
         prefObject!.setValue(gender, forKey: "gender")
         prefObject!.setValue(ageMin, forKey: "ageMin")
@@ -87,8 +95,8 @@ class SearchPreferencesViewController: UIViewController {
         if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
 
             // gender preferences
-            if let gender: Int = prefObject.objectForKey("gender") as? Int {
-                self.genderFilterView.slider!.currentValue = Double(gender)
+            if let genderPref: String = prefObject.objectForKey("gender") as? String {
+                self.genderFilterView.setSliderSelection(genderPref)
             }
             
             // age preferences

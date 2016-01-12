@@ -25,6 +25,7 @@ class RangeFilterView: BaseFilterView {
     func setSliderValues(lower lower: Int, upper: Int) {
         self.rangeSlider?.lowerValue = Double(lower)
         self.rangeSlider!.upperValue = Double(upper)
+        self.updateLabel()
     }
     
     func sliderValueChanged(sender: UIControl) {
