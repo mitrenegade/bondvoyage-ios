@@ -10,7 +10,6 @@ import UIKit
 import Parse
 
 var kInputCellIdentifier = "InputCell"
-let genders = ["Select gender", "Male", "Female", "Other"]
 
 enum SignupSectionType: Int {
     case Login

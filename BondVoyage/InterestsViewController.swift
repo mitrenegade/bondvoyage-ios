@@ -19,7 +19,7 @@ class InterestsViewController: UIViewController {
 
         self.inputInterests.layer.cornerRadius = 5
         self.inputInterests.layer.borderWidth = 2
-        self.inputInterests.layer.borderColor = UIColor(red: 79.0/255.0, green: 129.0/255.0, blue: 170.0/255.0, alpha: 1).CGColor
+        self.inputInterests.layer.borderColor = Constants.blueColor().CGColor
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)

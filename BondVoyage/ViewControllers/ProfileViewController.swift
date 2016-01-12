@@ -10,6 +10,8 @@ import UIKit
 import Parse
 import Photos
 
+var genders = ["Select a gender", Gender.Male.rawValue, Gender.Female.rawValue, Gender.Other.rawValue]
+
 class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
@@ -106,7 +108,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         }
         
         self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
-        self.buttonPhoto.layer.borderColor = UIColor(red: 79.0/255.0, green: 129.0/255.0, blue: 170.0/255.0, alpha: 1).CGColor
+        self.buttonPhoto.layer.borderColor = Constants.blueColor().CGColor
         self.buttonPhoto.layer.borderWidth = 2
     }
 

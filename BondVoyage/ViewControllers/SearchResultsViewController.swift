@@ -32,6 +32,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     var users: [PFUser]?
 
     var currentFilterView: BaseFilterView?
+    var configuredFilters: Bool = false
 
     @IBOutlet weak var genderButton: UIButton!
     @IBOutlet weak var groupSizeButton: UIButton!
@@ -56,6 +57,16 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableViewTopSpacingConstraint.constant = 0
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if (!self.configuredFilters) {
+            self.ageRangeFilterView.configure(16, maxAge: 85, lower: 16, upper: 85)
+            self.groupSizeFilterView.configure(1, maxSize: 10, lower: 1, upper: 10)
+            self.genderFilterView.configure(Gender.Male.rawValue)
+            self.configuredFilters = true
+        }
+    }
+    
     // MARK: Filter View Methods
 
     @IBAction func filterButtonPressed(sender: UIButton) {
@@ -94,7 +105,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func openFilterView(filterToOpen: BaseFilterView) {
-        let height = filterToOpen.height
+        let height = filterToOpen.openHeight()
         self.heightConstraint(filterToOpen).constant = height
         self.tableViewTopSpacingConstraint.constant = height
 
