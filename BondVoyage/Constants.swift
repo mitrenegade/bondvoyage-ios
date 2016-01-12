@@ -12,12 +12,19 @@ import UIKit
 let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
 
-// search options
+// default search option min/max
 var RANGE_SELECTOR_MAX = 100
 var RANGE_SELECTOR_MIN = 1
 
+var SINGLE_SELECTOR_MAX = 3
+var SINGLE_SELECTOR_MIN = 0
+
 enum Gender: String {
     case Female, Male, Other
+}
+
+enum GenderPrefs: String {
+    case Female, Male, Other, All
 }
 
 class Constants: NSObject {

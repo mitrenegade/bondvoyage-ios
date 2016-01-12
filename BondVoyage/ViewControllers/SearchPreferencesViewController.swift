@@ -69,7 +69,7 @@ class SearchPreferencesViewController: UIViewController {
         if prefObject == nil {
             prefObject = PFObject(className: "SearchPreference")
         }
-        let gender = self.genderFilterView.currentGenderPref()
+        let gender: [String] = self.genderFilterView.currentGenderPrefs()
         let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
         let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
         let groupMin = Int(self.groupFilterView.rangeSlider!.lowerValue)
@@ -81,6 +81,8 @@ class SearchPreferencesViewController: UIViewController {
         prefObject!.setValue(groupMin, forKey: "groupMin")
         prefObject!.setValue(groupMax, forKey: "groupMax")
         prefObject!.setValue(PFUser.currentUser()!, forKey: "user")
+        prefObject!.pinInBackground()
+        
         prefObject!.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
                 PFUser.currentUser()!.setObject(prefObject!, forKey: "preferences")
@@ -95,8 +97,13 @@ class SearchPreferencesViewController: UIViewController {
         if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
 
             // gender preferences
-            if let genderPref: String = prefObject.objectForKey("gender") as? String {
-                self.genderFilterView.setSliderSelection(genderPref)
+            if let genderPrefs: [String] = prefObject.objectForKey("gender") as? [String] {
+                if genderPrefs.count == 1 {
+                    self.genderFilterView.setSliderSelection(genderPrefs[0])
+                }
+                else {
+                    self.genderFilterView.setSliderSelection(GenderPrefs.All.rawValue)
+                }
             }
             
             // age preferences

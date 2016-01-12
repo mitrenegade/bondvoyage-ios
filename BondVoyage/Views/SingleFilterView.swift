@@ -16,7 +16,7 @@ class SingleFilterView: BaseFilterView {
 
         self.slider!.trackTintColor = Constants.sliderHighlightColor()
 
-        self.setSliderRange(min: 0, max: 2)
+        self.setSliderRange(min: SINGLE_SELECTOR_MIN, max: SINGLE_SELECTOR_MAX)
         self.slider!.currentValue = Double(self.slider!.minimumValue + self.slider!.maximumValue) / 2
 
         self.label.text = "Select"
@@ -31,5 +31,10 @@ class SingleFilterView: BaseFilterView {
     
     func sliderValueEnded(sender: UIControl) {
         // TODO: make it snap
+        self.snap()
+    }
+    
+    func snap() {
+        self.slider!.currentValue = Double(Int(self.slider!.currentValue)) + 0.5
     }
 }

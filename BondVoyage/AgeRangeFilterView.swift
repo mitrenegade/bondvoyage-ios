@@ -16,8 +16,8 @@ class AgeRangeFilterView: RangeFilterView {
     
     override func updateLabel() {
         if self.rangeSlider != nil {
-            let min:Int = Int(round(self.rangeSlider!.lowerValue))
-            let max:Int = Int(round(self.rangeSlider!.upperValue))
+            let min:Int = Int(self.rangeSlider!.lowerValue)
+            let max:Int = Int(self.rangeSlider!.upperValue)
             self.label.text = "Ages \(min) to \(max)"
         }
     }
