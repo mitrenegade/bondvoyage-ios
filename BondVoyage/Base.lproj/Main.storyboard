@@ -6,6 +6,15 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Dashboard-->
         <scene sceneID="tne-QT-ifu">
@@ -652,9 +661,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26f-Nx-O6c">
-                                                    <rect key="frame" x="76" y="8" width="76" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="76" y="8" width="236" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20.5" id="8cA-K1-V7t"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X1a-ST-hWC" customClass="AsyncImageView">
@@ -665,32 +677,55 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gender, age" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkL-XL-lmP">
-                                                    <rect key="frame" x="76" y="36" width="91" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="76" y="32" width="236" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="M9m-HN-bYw"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                                                    <color key="textColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRU-5e-4fQ">
+                                                    <rect key="frame" x="76" y="56" width="236" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="FMA-JH-6pA"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.66666666666666663" green="0.031027811333207568" blue="0.40194290383117737" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.30980392159999998" green="0.50588235290000005" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="KkL-XL-lmP" firstAttribute="top" secondItem="26f-Nx-O6c" secondAttribute="bottom" constant="8" id="5GI-Er-W2m"/>
                                                 <constraint firstItem="X1a-ST-hWC" firstAttribute="top" secondItem="8H0-30-oXj" secondAttribute="top" constant="8" id="AnF-K4-eBS"/>
+                                                <constraint firstItem="26f-Nx-O6c" firstAttribute="top" secondItem="8H0-30-oXj" secondAttribute="topMargin" id="E6Q-kf-Zu4"/>
+                                                <constraint firstItem="eRU-5e-4fQ" firstAttribute="trailing" secondItem="8H0-30-oXj" secondAttribute="trailingMargin" id="Ely-Ls-ZbZ"/>
                                                 <constraint firstItem="KkL-XL-lmP" firstAttribute="leading" secondItem="X1a-ST-hWC" secondAttribute="trailing" constant="8" id="LJM-YL-cKN"/>
+                                                <constraint firstItem="KkL-XL-lmP" firstAttribute="leading" secondItem="X1a-ST-hWC" secondAttribute="trailing" constant="8" id="NMz-Nh-Kkz"/>
                                                 <constraint firstItem="26f-Nx-O6c" firstAttribute="top" secondItem="X1a-ST-hWC" secondAttribute="top" id="UMU-fk-LjA"/>
+                                                <constraint firstItem="eRU-5e-4fQ" firstAttribute="top" secondItem="KkL-XL-lmP" secondAttribute="bottom" constant="4" id="bNJ-cZ-vL3"/>
                                                 <constraint firstItem="26f-Nx-O6c" firstAttribute="leading" secondItem="8H0-30-oXj" secondAttribute="leading" constant="8" id="dd8-jQ-7dm"/>
                                                 <constraint firstItem="X1a-ST-hWC" firstAttribute="leading" secondItem="8H0-30-oXj" secondAttribute="leading" constant="8" id="ex0-nh-yeY"/>
+                                                <constraint firstItem="KkL-XL-lmP" firstAttribute="top" secondItem="26f-Nx-O6c" secondAttribute="bottom" constant="4" id="gst-Yh-Hdi"/>
+                                                <constraint firstItem="KkL-XL-lmP" firstAttribute="trailing" secondItem="8H0-30-oXj" secondAttribute="trailingMargin" id="hXl-zN-5f1"/>
+                                                <constraint firstItem="26f-Nx-O6c" firstAttribute="leading" secondItem="X1a-ST-hWC" secondAttribute="trailing" constant="8" id="mk3-o8-RJ5"/>
                                                 <constraint firstItem="26f-Nx-O6c" firstAttribute="top" secondItem="8H0-30-oXj" secondAttribute="top" constant="8" id="nF9-pP-4Xa"/>
                                                 <constraint firstItem="26f-Nx-O6c" firstAttribute="leading" secondItem="X1a-ST-hWC" secondAttribute="trailing" constant="8" id="o0G-Fh-6WQ"/>
+                                                <constraint firstItem="26f-Nx-O6c" firstAttribute="trailing" secondItem="8H0-30-oXj" secondAttribute="trailingMargin" id="t0E-uM-vUM"/>
+                                                <constraint firstItem="eRU-5e-4fQ" firstAttribute="leading" secondItem="X1a-ST-hWC" secondAttribute="trailing" constant="8" id="xig-xo-fWL"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="dd8-jQ-7dm"/>
                                                     <exclude reference="nF9-pP-4Xa"/>
+                                                    <exclude reference="5GI-Er-W2m"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="genderAndAgeLabel" destination="KkL-XL-lmP" id="pCx-Nd-ZFP"/>
+                                            <outlet property="infoLabel" destination="eRU-5e-4fQ" id="tWB-59-Qoi"/>
                                             <outlet property="profileImage" destination="X1a-ST-hWC" id="Ofz-U2-vnP"/>
                                             <outlet property="usernameLabel" destination="26f-Nx-O6c" id="45c-wE-TbG"/>
                                         </connections>
