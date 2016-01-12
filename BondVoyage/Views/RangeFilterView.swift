@@ -17,10 +17,15 @@ class RangeFilterView: BaseFilterView {
         self.rangeSlider = self.slider as? BVRangeSlider
 
         self.setSliderRange(min: RANGE_SELECTOR_MIN, max: RANGE_SELECTOR_MAX)
-        self.rangeSlider?.lowerValue = Double(RANGE_SELECTOR_MIN)
-        self.rangeSlider?.upperValue = Double(RANGE_SELECTOR_MAX)
+        self.setSliderValues(lower: RANGE_SELECTOR_MIN, upper: RANGE_SELECTOR_MAX)
 
         self.label.text = "Range"
+    }
+    
+    func setSliderValues(lower lower: Int, upper: Int) {
+        self.rangeSlider?.lowerValue = Double(lower)
+        self.rangeSlider!.upperValue = Double(upper)
+        self.updateLabel()
     }
     
     func sliderValueChanged(sender: UIControl) {

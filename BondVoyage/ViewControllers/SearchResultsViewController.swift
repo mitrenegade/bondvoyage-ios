@@ -62,11 +62,71 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         if (!self.configuredFilters) {
             self.ageRangeFilterView.configure(16, maxAge: 85, lower: 16, upper: 85)
             self.groupSizeFilterView.configure(1, maxSize: 10, lower: 1, upper: 10)
-            self.genderFilterView.configure(Gender.Male.rawValue)
+            self.genderFilterView.configure(GenderPrefs.Male)
             self.configuredFilters = true
+        }
+        
+        self.loadPreferences()
+    }
+    
+    // MARK: - Preferences
+    func loadPreferences() {
+        if PFUser.currentUser() != nil {
+            if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
+                // load from local store
+                prefObject.fetchFromLocalDatastoreInBackgroundWithBlock({ (object, error) -> Void in
+                    if error == nil {
+                        self.refresh()
+                    }
+                    else {
+                        // load from web
+                        prefObject.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                            if error == nil {
+                                self.refresh()
+                            }
+                        })
+                    }
+                })
+            }
         }
     }
     
+    func refresh() {
+        if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
+            
+            // gender preferences
+            if let genderPrefs: [String] = prefObject.objectForKey("gender") as? [String] {
+                if genderPrefs.count == 1 {
+                    self.genderFilterView.setSliderSelection(genderPrefs[0])
+                }
+                else {
+                    self.genderFilterView.setSliderSelection(GenderPrefs.All.rawValue)
+                }
+            }
+            
+            // age preferences
+            var ageMin = Int(self.ageRangeFilterView.rangeSlider!.minimumValue)
+            var ageMax = Int(self.ageRangeFilterView.rangeSlider!.maximumValue)
+            if let lower: Int = prefObject.objectForKey("ageMin") as? Int {
+                ageMin = lower
+            }
+            if let upper: Int = prefObject.objectForKey("ageMax") as? Int {
+                ageMax = upper
+            }
+            self.ageRangeFilterView.setSliderValues(lower: ageMin, upper: ageMax)
+            
+            // group size preferences
+            var groupMin = Int(self.groupSizeFilterView.rangeSlider!.minimumValue)
+            var groupMax = Int(self.groupSizeFilterView.rangeSlider!.maximumValue)
+            if let lower: Int = prefObject.objectForKey("groupMin") as? Int {
+                groupMin = lower
+            }
+            if let upper: Int = prefObject.objectForKey("groupMax") as? Int {
+                groupMax = upper
+            }
+            self.groupSizeFilterView.setSliderValues(lower: groupMin, upper: groupMax)
+        }
+    }
     // MARK: Filter View Methods
 
     @IBAction func filterButtonPressed(sender: UIButton) {

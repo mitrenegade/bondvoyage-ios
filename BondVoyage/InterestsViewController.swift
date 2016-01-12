@@ -93,8 +93,8 @@ class InterestsViewController: UIViewController {
                 }
                 else {
                     var message = "There was an error updating your profile."
-                    if let msg = error!.localizedDescription as? String {
-                        message = msg
+                    if error?.localizedDescription != nil {
+                        message = error!.localizedDescription
                     }
                     self.simpleAlert("Could not update profile", message: message, completion: nil)
                 }

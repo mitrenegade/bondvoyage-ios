@@ -73,7 +73,7 @@ class SettingsViewController: UITableViewController {
             self.performSegueWithIdentifier("toInterests", sender: nil)
         }
         else if row == 2 {
-            self.simpleAlert("Default preferences editing coming soon", message: nil)
+            self.performSegueWithIdentifier("toSearchPreferences", sender: nil)
         }
         else if row == 3 {
             PFUser.logOut()

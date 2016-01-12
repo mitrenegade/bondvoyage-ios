@@ -9,24 +9,51 @@
 import UIKit
 
 class GenderFilterView: SingleFilterView {
-    var genderOptions: [String] = [Gender.Male.rawValue, Gender.Female.rawValue, "All"]
+    var genderOptions: [GenderPrefs] = [.Male, .Female, .Other, .All]
+    
+    override func setupSlider() {
+        super.setupSlider()
 
-    func configure(currentSelection: String) {
-        self.setSliderRange(min: 0, max: self.genderOptions.count - 1)
+        // make sure slider has the right number of options; default to all search
+        self.configure(.All)
+    }
+    
+    func configure(currentSelection: GenderPrefs) {
+        self.setSliderRange(min: 0, max: self.genderOptions.count)
         if let index: Int = self.genderOptions.indexOf(currentSelection) {
             self.slider?.currentValue = Double(index)
         }
 
         self.updateLabel()
+        self.snap()
         self.slider?.setNeedsDisplay()
     }
     
     override func updateLabel() {
         var text = "Unspecified"
         if self.slider != nil {
-            let index:Int = Int(round(self.slider!.currentValue))
-            text = genderOptions[index]
+            let index:Int = Int(self.slider!.currentValue)
+            print("value \(self.slider!.currentValue) index: \(index) genderOptions: \(genderOptions[index])")
+            text = genderOptions[index].rawValue
         }
         self.label.text = "Gender: \(text)"
+    }
+    
+    func setSliderSelection(genderPref: String) {
+        for pref in self.genderOptions {
+            if pref.rawValue == genderPref {
+                self.configure(pref)
+            }
+        }
+    }
+    
+    func currentGenderPrefs() -> [String] {
+        // returns slider selection as an array of strings. if All is selected, includes all Gender types
+        let currentPref: GenderPrefs = genderOptions[Int(self.slider!.currentValue)]
+        var prefs: [String] = [currentPref.rawValue]
+        if currentPref == .All {
+            prefs = [GenderPrefs.Female.rawValue, GenderPrefs.Male.rawValue, GenderPrefs.Other.rawValue]
+        }
+        return prefs
     }
 }
