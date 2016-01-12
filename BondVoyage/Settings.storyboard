@@ -73,7 +73,6 @@
         <!--Settings View Controller-->
         <scene sceneID="S1a-I8-baL">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FSU-Px-Z8e" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="7ph-iz-hN1" customClass="SettingsViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yIP-Xt-FS2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -113,6 +112,7 @@
                         <segue destination="r9Z-No-mhl" kind="show" identifier="toSearchPreferences" id="YAb-3n-ojI"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FSU-Px-Z8e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-296" y="1096"/>
         </scene>
@@ -637,13 +637,15 @@
                                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D6c-nA-xfe" customClass="AsyncImageView">
+                                                                <rect key="frame" x="552" y="0.0" width="40" height="40"/>
+                                                            </imageView>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xi5-VC-Dvu">
                                                                 <rect key="frame" x="552" y="0.0" width="40" height="40"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="40" id="QyP-hL-5jO"/>
                                                                     <constraint firstAttribute="height" constant="40" id="RDK-HF-xDy"/>
                                                                 </constraints>
-                                                                <state key="normal" image="profile-icon"/>
                                                                 <connections>
                                                                     <action selector="didClickButton:" destination="VU4-AG-LNB" eventType="touchUpInside" id="bhD-H2-o7H"/>
                                                                 </connections>
@@ -653,9 +655,13 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="3lW-3J-BnL"/>
                                                             <constraint firstItem="Xi5-VC-Dvu" firstAttribute="centerY" secondItem="2Nb-vX-0qO" secondAttribute="centerY" id="6mv-43-KbS"/>
+                                                            <constraint firstItem="Xi5-VC-Dvu" firstAttribute="trailing" secondItem="D6c-nA-xfe" secondAttribute="trailing" id="Dis-i9-tng"/>
+                                                            <constraint firstItem="Xi5-VC-Dvu" firstAttribute="bottom" secondItem="D6c-nA-xfe" secondAttribute="bottom" id="EhX-L7-G1i"/>
                                                             <constraint firstItem="kgL-Bj-gZx" firstAttribute="leading" secondItem="2Nb-vX-0qO" secondAttribute="leading" constant="8" id="GCW-US-9T9"/>
                                                             <constraint firstAttribute="trailing" secondItem="Xi5-VC-Dvu" secondAttribute="trailing" constant="8" id="Luu-U9-Mcs"/>
                                                             <constraint firstItem="kgL-Bj-gZx" firstAttribute="centerY" secondItem="2Nb-vX-0qO" secondAttribute="centerY" id="MWX-f5-6tw"/>
+                                                            <constraint firstItem="Xi5-VC-Dvu" firstAttribute="top" secondItem="D6c-nA-xfe" secondAttribute="top" id="jSd-m7-9Gj"/>
+                                                            <constraint firstItem="Xi5-VC-Dvu" firstAttribute="leading" secondItem="D6c-nA-xfe" secondAttribute="leading" id="lln-a3-kxO"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -721,6 +727,7 @@
                     <connections>
                         <outlet property="buttonPhoto" destination="Xi5-VC-Dvu" id="Zo0-PY-Tej"/>
                         <outlet property="constraintBottomOffset" destination="bdN-BL-gPF" id="6pg-a0-FSk"/>
+                        <outlet property="imagePhoto" destination="D6c-nA-xfe" id="zQo-N5-YWU"/>
                         <outlet property="inputBirthYear" destination="nov-ec-bdW" id="Xh3-1i-WK0"/>
                         <outlet property="inputFirstName" destination="Aa8-ek-Btu" id="bP7-cz-bLm"/>
                         <outlet property="inputGender" destination="5ye-Qh-K88" id="5hJ-sd-grW"/>
@@ -850,7 +857,7 @@
                                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sG-dn-Hem">
                                                                 <rect key="frame" x="8" y="8" width="584" height="44"/>
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
-                                                                <state key="normal" title="Age Range">
+                                                                <state key="normal" title="Group Size">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
                                                                 <connections>
@@ -869,7 +876,7 @@
                                                             </mask>
                                                         </variation>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vy-bi-FvY" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vy-bi-FvY" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="60" width="600" height="80"/>
                                                         <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     </view>
@@ -895,7 +902,7 @@
                                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDc-yT-6P4">
                                                                 <rect key="frame" x="8" y="8" width="584" height="44"/>
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
-                                                                <state key="normal" title="Group Size">
+                                                                <state key="normal" title="Age Range">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
                                                                 <connections>
@@ -914,7 +921,7 @@
                                                             </mask>
                                                         </variation>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDZ-kQ-UKO" customClass="GroupSizeFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDZ-kQ-UKO" customClass="AgeRangeFilterView" customModule="BondVoyage" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="60" width="600" height="80"/>
                                                         <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     </view>
@@ -969,10 +976,10 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="648"/>
                     <connections>
-                        <outlet property="ageFilterView" destination="5vy-bi-FvY" id="9mU-e4-rjf"/>
+                        <outlet property="ageFilterView" destination="YDZ-kQ-UKO" id="Spc-le-ISL"/>
                         <outlet property="contentView" destination="JgP-9U-hVd" id="dBW-70-bMI"/>
                         <outlet property="genderFilterView" destination="AC5-Ri-N8U" id="nrN-DL-qFa"/>
-                        <outlet property="groupFilterView" destination="YDZ-kQ-UKO" id="YoK-gF-Wsb"/>
+                        <outlet property="groupFilterView" destination="5vy-bi-FvY" id="wX0-ru-QaJ"/>
                         <outlet property="scrollView" destination="uFk-rd-TqM" id="MS9-Zo-RPW"/>
                     </connections>
                 </viewController>
@@ -981,9 +988,6 @@
             <point key="canvasLocation" x="431" y="338"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="profile-icon" width="300" height="300"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="w8r-Cn-hqy"/>
         <segue reference="NTU-i5-hgN"/>

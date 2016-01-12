@@ -23,8 +23,8 @@ class RangeFilterView: BaseFilterView {
     }
     
     func setSliderValues(lower lower: Int, upper: Int) {
-        self.rangeSlider?.lowerValue = Double(lower)
-        self.rangeSlider!.upperValue = Double(upper)
+        self.rangeSlider?.lowerValue = max(self.rangeSlider!.minimumValue, Double(lower))
+        self.rangeSlider!.upperValue = min(self.rangeSlider!.maximumValue, Double(upper))
         self.updateLabel()
     }
     

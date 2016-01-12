@@ -8,19 +8,57 @@
 
 import UIKit
 import Parse
+import AsyncImageView
 
 let kSearchResultCellIdentifier = "searchResultCell"
+let date = NSDate()
+let calendar = NSCalendar.currentCalendar()
+let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
-class ActivitySearchResultCell: UITableViewCell {
+class UserSearchResultCell: UITableViewCell {
 
-    @IBOutlet weak var searchResultTitleLabel: UILabel!
-    @IBOutlet weak var peopleCollectionView: UICollectionView!
+    @IBOutlet weak var profileImage: AsyncImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var genderAndAgeLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
 
-    func configureCellForSearchResult(person: PFUser) {
-        self.searchResultTitleLabel.text = person.username
-        //TODO: give this cell a better name
-        //TODO: configure the label
-        //TODO: configure collection view
+    func configureCellForUser(user: PFUser) {
+        let currentYear = components.year
+        let age = currentYear - (user.valueForKey("birthYear") as! Int)
+        
+        var name: String? = user.valueForKey("firstName") as? String
+        if name == nil {
+            name = user.valueForKey("lastName") as? String
+        }
+        if name == nil {
+            name = user.username
+        }
+        self.usernameLabel.text = name
+        self.genderAndAgeLabel.text = "\(user.valueForKey("gender")!), age: \(age)"
+
+        var info: String? = nil
+        if let interests: [String] = user.valueForKey("interests") as? [String] {
+            if interests.count > 0 {
+                info = "Likes: \(interests[0])"
+                if interests.count > 1 {
+                    for var i=1; i < interests.count; i++ {
+                        info = "\(info!), \(interests[i])"
+                    }
+                }
+            }
+        }
+        self.infoLabel.text = info
+        
+        if let photoURL: String = user.valueForKey("photoUrl") as? String {
+            self.profileImage.imageURL = NSURL(string: photoURL)
+        }
+        else {
+            self.profileImage.image = UIImage(named: "profile-icon")
+        }
+
+        self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
+        self.profileImage.layer.borderColor = Constants.blueColor().CGColor
+        self.profileImage.layer.borderWidth = 2
     }
 }
 
@@ -60,8 +98,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if (!self.configuredFilters) {
-            self.ageRangeFilterView.configure(16, maxAge: 85, lower: 16, upper: 85)
-            self.groupSizeFilterView.configure(1, maxSize: 10, lower: 1, upper: 10)
+            self.ageRangeFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
+            self.groupSizeFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
             self.genderFilterView.configure(GenderPrefs.Male)
             self.configuredFilters = true
         }
@@ -127,6 +165,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.groupSizeFilterView.setSliderValues(lower: groupMin, upper: groupMax)
         }
     }
+    
+    func enableButtons(enabled: Bool) {
+        for button: UIButton in [self.genderButton, self.ageRangeButton, self.groupSizeButton] {
+            button.enabled = enabled
+        }
+    }
+    
     // MARK: Filter View Methods
 
     @IBAction func filterButtonPressed(sender: UIButton) {
@@ -148,23 +193,32 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func toggleFilterView(filterToOpen: BaseFilterView) {
+        self.enableButtons(false)
+        
         // If there is no filter open at all, simply open filterToOpen.
+        
         if self.currentFilterView == nil {
-            self.openFilterView(filterToOpen)
+            self.openFilterViewWithCompletion(filterToOpen, completion: { () -> Void in
+                self.enableButtons(true)
+            })
         }
         // If the filter to open is already open, close the current filter view.
         else if self.currentFilterView == filterToOpen {
-            self.closeFilterViewWithCompletion(nil)
+            self.closeFilterViewWithCompletion({ () -> Void in
+                self.enableButtons(true)
+            })
         }
         // If there is a filter opened already, close it, and open the other one.
         else if self.currentFilterView != filterToOpen {
             self.closeFilterViewWithCompletion({ () -> Void in
-                self.openFilterView(filterToOpen)
+                self.openFilterViewWithCompletion(filterToOpen, completion: { () -> Void in
+                    self.enableButtons(true)
+                })
             })
         }
     }
 
-    func openFilterView(filterToOpen: BaseFilterView) {
+    func openFilterViewWithCompletion(filterToOpen: BaseFilterView, completion: (() -> Void)?) {
         let height = filterToOpen.openHeight()
         self.heightConstraint(filterToOpen).constant = height
         self.tableViewTopSpacingConstraint.constant = height
@@ -176,6 +230,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             completion: { (Bool) -> Void in
                 self.currentFilterView = filterToOpen
                 print("Filter view \(self.currentFilterView) opened")
+                if completion != nil {
+                    completion!()
+                }
             }
         )
     }
@@ -224,21 +281,22 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)! as! ActivitySearchResultCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(kSearchResultCellIdentifier)! as! UserSearchResultCell
         cell.adjustTableViewCellSeparatorInsets(cell)
-//        cell.configureCellForSearchResult(users![indexPath.row])
+        if users != nil {
+            cell.configureCellForUser(users![indexPath.row])
+        }
         return cell
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if let numUsers: Int = users?.count {
-//            return numUsers
-//        }
-//        else {
-//            print("No users found")
-//            return 0
-//        }
-        return 5
+        if let numUsers: Int = users?.count {
+            return numUsers
+        }
+        else {
+            print("No users found")
+            return 0
+        }
     }
 
     // MARK: - Navigation

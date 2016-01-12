@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Photos
+import AsyncImageView
 
 class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
@@ -23,6 +24,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var inputGender: UITextField!
     @IBOutlet weak var inputBirthYear: UITextField!
 
+    @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
     
     var pickerGender: UIPickerView = UIPickerView()
@@ -82,13 +84,11 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             let user: PFUser = PFUser.currentUser()!
             user.fetchInBackgroundWithBlock({ (result, error) -> Void in
                 if result != nil {
-                    if let file = result!.objectForKey("photo") as? PFFile {
-                        file.getDataInBackgroundWithBlock { (data, error) -> Void in
-                            if data != nil {
-                                let photo: UIImage = UIImage(data: data!)!
-                                self.buttonPhoto.setImage(photo, forState: .Normal)
-                            }
-                        }
+                    if let photoURL: String = result!.valueForKey("photoUrl") as? String {
+                        self.imagePhoto.imageURL = NSURL(string: photoURL)
+                    }
+                    else {
+                        self.imagePhoto.image = UIImage(named: "profile-icon")
                     }
                 }
             })
@@ -107,9 +107,9 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             }
         }
         
-        self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
-        self.buttonPhoto.layer.borderColor = Constants.blueColor().CGColor
-        self.buttonPhoto.layer.borderWidth = 2
+        self.imagePhoto.layer.cornerRadius = self.imagePhoto.frame.size.width / 2
+        self.imagePhoto.layer.borderColor = Constants.blueColor().CGColor
+        self.imagePhoto.layer.borderWidth = 2
     }
 
     override func didReceiveMemoryWarning() {
@@ -357,7 +357,8 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        self.buttonPhoto.setImage(image, forState: .Normal)
+        self.imagePhoto.image = image
+        self.imagePhoto.imageURL = nil
         self.selectedPhoto = image
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
