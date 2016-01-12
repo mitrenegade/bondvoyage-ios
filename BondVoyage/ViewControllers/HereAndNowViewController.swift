@@ -35,13 +35,17 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.searchBar.delegate = self;
 
         self.searchResultsShowing = false
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //self.navigationController?.navigationBarHidden = true
+
+        if PFUser.currentUser() == nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+        }
     }
 
     func displaySearchResultsViewController() {
@@ -139,16 +143,15 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
 
-    func goToSettings() {
-        // go to signup view
-        let nav: UINavigationController = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("SignUpNavigationController") as! UINavigationController
+    func goToLogin() {
+        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
         let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
-        if PFUser.currentUser() == nil {
-            controller.type = .Login
-        }
-        else {
-            controller.type = .ProfileOnly
-        }
+        controller.type = .Login
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    func goToSettings() {
+        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
         self.presentViewController(nav, animated: true, completion: nil)
     }
 }
