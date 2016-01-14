@@ -13,10 +13,38 @@ let kSearchResultsViewControllerID = "searchResultsViewControllerID"
 let kNearbyEventCellIdentifier = "nearbyEventCell"
 
 class NearbyEventCell: UITableViewCell {
+    @IBOutlet weak var viewImage: UIImageView!
+    @IBOutlet weak var labelInfo: UILabel!
+    var gradientLayer: CAGradientLayer?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
 
-    func configureCellForNearbyEvent() {
+        self.gradientLayer = CAGradientLayer()
+        self.gradientLayer!.frame = viewImage.frame
+        self.gradientLayer!.colors = [UIColor.clearColor().CGColor, UIColor.clearColor().CGColor, UIColor.blackColor().colorWithAlphaComponent(0.75).CGColor, UIColor.blackColor().colorWithAlphaComponent(0.75).CGColor]
+        self.gradientLayer!.locations = [0, 0.25, 0.35, 1]
+        self.gradientLayer!.startPoint = CGPointMake(0, 0)
+        self.gradientLayer!.endPoint = CGPointMake(1, 0)
+        viewImage.layer.addSublayer(self.gradientLayer!)
+        
+    }
+    
+    override func layoutSublayersOfLayer(layer: CALayer) {
+        super.layoutSublayersOfLayer(layer)
+        gradientLayer!.frame = self.bounds
+    }
+    
+    func configureCellForNearbyEvent(info: [String: AnyObject]) {
         // TODO: set the image
         // TODO: set the label with activity name
+        
+        if let name: String = info["name"] as? String {
+            self.viewImage.image = UIImage(named: name)!
+        }
+        else {
+            self.viewImage.image = nil
+        }
     }
 }
 
@@ -28,6 +56,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool!
     var selectedUser: PFUser?
+    
+    var names = ["event_concert", "event_ducktours", "event_starbucks", "event_hamilton", "event_karaoke", "event_sushi", "event_salsa", "event_legalseafoods"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,8 +123,13 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     // MARK: - UITableViewDataSource
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier(kNearbyEventCellIdentifier)!
+        let cell = tableView.dequeueReusableCellWithIdentifier(kNearbyEventCellIdentifier)! as! NearbyEventCell
         cell.adjustTableViewCellSeparatorInsets(cell)
+        
+        let info = ["name": names[indexPath.row]]
+        cell.configureCellForNearbyEvent(info)
+        cell.layoutSubviews()
+        
         return cell
     }
 
