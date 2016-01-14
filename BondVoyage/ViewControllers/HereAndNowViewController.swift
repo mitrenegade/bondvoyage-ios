@@ -155,7 +155,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
         return self.recommendations!.count
     }
-
+    
     // MARK: - UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
