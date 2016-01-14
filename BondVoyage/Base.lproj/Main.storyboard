@@ -543,7 +543,6 @@
                                             <outlet property="labelInfo" destination="Y0o-Ly-QHL" id="wiz-DE-TJB"/>
                                             <outlet property="labelTitle" destination="Q8X-NO-W0r" id="9cj-bp-2rM"/>
                                             <outlet property="viewImage" destination="yLN-4m-RU1" id="MEE-gd-K7Z"/>
-                                            <segue destination="nEM-4I-gV1" kind="show" id="TQZ-ga-q8Q"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -984,7 +983,4 @@
             <point key="canvasLocation" x="882" y="-163"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="TQZ-ga-q8Q"/>
-    </inferredMetricsTieBreakers>
 </document>
