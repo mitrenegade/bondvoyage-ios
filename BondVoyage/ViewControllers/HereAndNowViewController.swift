@@ -8,12 +8,13 @@
 
 import UIKit
 import Parse
+import AsyncImageView
 
 let kSearchResultsViewControllerID = "searchResultsViewControllerID"
 let kNearbyEventCellIdentifier = "nearbyEventCell"
 
 class NearbyEventCell: UITableViewCell {
-    @IBOutlet weak var viewImage: UIImageView!
+    @IBOutlet weak var viewImage: AsyncImageView!
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelInfo: UILabel!
     var gradientLayer: CAGradientLayer?
@@ -23,8 +24,8 @@ class NearbyEventCell: UITableViewCell {
 
         self.gradientLayer = CAGradientLayer()
         self.gradientLayer!.frame = viewImage.frame
-        self.gradientLayer!.colors = [UIColor.clearColor().CGColor, UIColor.clearColor().CGColor, UIColor.blackColor().colorWithAlphaComponent(0.75).CGColor, UIColor.blackColor().colorWithAlphaComponent(0.75).CGColor]
-        self.gradientLayer!.locations = [0, 0.25, 0.35, 1]
+        self.gradientLayer!.colors = [UIColor.clearColor().CGColor, UIColor.clearColor().CGColor, UIColor.blackColor().colorWithAlphaComponent(0.5).CGColor, UIColor.blackColor().colorWithAlphaComponent(0.75).CGColor]
+        self.gradientLayer!.locations = [0, 0.25, 0.4, 1]
         self.gradientLayer!.startPoint = CGPointMake(0, 0)
         self.gradientLayer!.endPoint = CGPointMake(1, 0)
         viewImage.layer.addSublayer(self.gradientLayer!)
@@ -36,22 +37,22 @@ class NearbyEventCell: UITableViewCell {
         gradientLayer!.frame = self.bounds
     }
     
-    func configureCellForNearbyEvent(info: [String: AnyObject]) {
+    func configureCellForNearbyEvent(recommendation: PFObject) {
         // TODO: set the image
         // TODO: set the label with activity name
         
-        if let name: String = info["imageName"] as? String {
-            self.viewImage.image = UIImage(named: name)!
+        if let url: String = recommendation.objectForKey("imageURL") as? String {
+            self.viewImage.imageURL = NSURL(string: url)
         }
-        else {
-            self.viewImage.image = nil
+        else if let image: PFFile = recommendation.objectForKey("image") as? PFFile {
+            self.viewImage.imageURL = NSURL(string: image.url!)
         }
         
-        if let title: String = info["title"] as? String {
+        if let title: String = recommendation.objectForKey("name") as? String {
             self.labelTitle.text = title
         }
-        if let details: String = info["details"] as? String {
-            self.labelInfo.text = details
+        if let description: String = recommendation.objectForKey("description") as? String {
+            self.labelInfo.text = description
         }
     }
 }
@@ -64,7 +65,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool!
     var selectedUser: PFUser?
-    var recommendations: [[String: AnyObject]]?
+    var recommendations: [PFObject]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +75,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
         self.searchResultsShowing = false
         
-        RecommendationRequest.recommendationsQuery(nil, count: 20, completion: { (results, error) -> Void in
+        RecommendationRequest.recommendationsQuery(nil, interests: [], completion: { (results, error) -> Void in
             self.recommendations = results
             self.tableView.reloadData()
         })
@@ -138,8 +139,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier(kNearbyEventCellIdentifier)! as! NearbyEventCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         
-        let info:[String: AnyObject] = self.recommendations![indexPath.row]
-        cell.configureCellForNearbyEvent(info)
+        var recommendation: PFObject = self.recommendations![indexPath.row]
+        cell.configureCellForNearbyEvent(recommendation)
         cell.layoutSubviews()
         
         return cell

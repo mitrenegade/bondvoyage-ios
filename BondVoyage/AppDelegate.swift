@@ -30,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Test: seed the database with fake users
         UserRequest.seed()
         
+        // Test: seed with recommendations. Only do this once
+        //RecommendationRequest.seed()
+        
         return true
     }
 
