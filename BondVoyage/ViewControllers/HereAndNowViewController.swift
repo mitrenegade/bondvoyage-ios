@@ -29,7 +29,6 @@ class NearbyEventCell: UITableViewCell {
         self.gradientLayer!.startPoint = CGPointMake(0, 0)
         self.gradientLayer!.endPoint = CGPointMake(1, 0)
         viewImage.layer.addSublayer(self.gradientLayer!)
-        
     }
     
     override func layoutSublayersOfLayer(layer: CALayer) {
@@ -79,6 +78,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.recommendations = results
             self.tableView.reloadData()
         })
+
+        if !self.appDelegate().hasPushEnabled() {
+            self.appDelegate().registerForRemoteNotifications()
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
