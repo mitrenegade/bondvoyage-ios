@@ -14,6 +14,7 @@ let kNearbyEventCellIdentifier = "nearbyEventCell"
 
 class NearbyEventCell: UITableViewCell {
     @IBOutlet weak var viewImage: UIImageView!
+    @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelInfo: UILabel!
     var gradientLayer: CAGradientLayer?
     
@@ -39,11 +40,18 @@ class NearbyEventCell: UITableViewCell {
         // TODO: set the image
         // TODO: set the label with activity name
         
-        if let name: String = info["name"] as? String {
+        if let name: String = info["imageName"] as? String {
             self.viewImage.image = UIImage(named: name)!
         }
         else {
             self.viewImage.image = nil
+        }
+        
+        if let title: String = info["title"] as? String {
+            self.labelTitle.text = title
+        }
+        if let details: String = info["details"] as? String {
+            self.labelInfo.text = details
         }
     }
 }
@@ -56,9 +64,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool!
     var selectedUser: PFUser?
+    var recommendations: [[String: AnyObject]]?
     
-    var names = ["event_concert", "event_ducktours", "event_starbucks", "event_hamilton", "event_karaoke", "event_sushi", "event_salsa", "event_legalseafoods"]
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,6 +73,11 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.searchBar.delegate = self;
 
         self.searchResultsShowing = false
+        
+        RecommendationRequest.recommendationsQuery(nil, count: 20, completion: { (results, error) -> Void in
+            self.recommendations = results
+            self.tableView.reloadData()
+        })
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -126,7 +138,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier(kNearbyEventCellIdentifier)! as! NearbyEventCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         
-        let info = ["name": names[indexPath.row]]
+        let info:[String: AnyObject] = self.recommendations![indexPath.row]
         cell.configureCellForNearbyEvent(info)
         cell.layoutSubviews()
         
@@ -138,7 +150,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 //TODO: return actual number of nearby Events
+        if self.recommendations == nil {
+            return 0
+        }
+        return self.recommendations!.count
     }
 
     // MARK: - UITableViewDelegate
