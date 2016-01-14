@@ -15,7 +15,6 @@
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
-            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -497,28 +496,22 @@
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4on-aK-7kU">
                                 <rect key="frame" x="0.0" y="60" width="320" height="356"/>
-                                <color key="backgroundColor" red="0.30980392159999998" green="0.50588235290000005" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nearbyEventCell" rowHeight="80" id="gC5-JE-usT" customClass="NearbyEventCell" customModule="BondVoyage" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gC5-JE-usT" id="a9f-T3-EFh">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yLN-4m-RU1" customClass="AsyncImageView">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yLN-4m-RU1">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0o-Ly-QHL">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0o-Ly-QHL">
                                                     <rect key="frame" x="112" y="0.0" width="208" height="79"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8X-NO-W0r">
-                                                    <rect key="frame" x="8" y="0.0" width="96" height="79"/>
-                                                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -526,14 +519,10 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="Y0o-Ly-QHL" secondAttribute="trailing" id="GhD-bP-otE"/>
-                                                <constraint firstItem="Q8X-NO-W0r" firstAttribute="leading" secondItem="a9f-T3-EFh" secondAttribute="leading" constant="8" id="SDc-VO-wn7"/>
                                                 <constraint firstAttribute="bottom" secondItem="yLN-4m-RU1" secondAttribute="bottom" constant="0.5" id="V2r-kV-a5I"/>
                                                 <constraint firstItem="Y0o-Ly-QHL" firstAttribute="top" secondItem="a9f-T3-EFh" secondAttribute="top" id="VJ1-oU-nhA"/>
-                                                <constraint firstAttribute="bottom" secondItem="Q8X-NO-W0r" secondAttribute="bottom" constant="0.5" id="WbT-Qv-HLC"/>
                                                 <constraint firstItem="yLN-4m-RU1" firstAttribute="top" secondItem="a9f-T3-EFh" secondAttribute="top" id="e6a-Hu-VT9"/>
                                                 <constraint firstAttribute="trailing" secondItem="yLN-4m-RU1" secondAttribute="trailing" id="fM3-2J-gFT"/>
-                                                <constraint firstItem="Q8X-NO-W0r" firstAttribute="top" secondItem="a9f-T3-EFh" secondAttribute="top" id="jrG-r1-o6x"/>
-                                                <constraint firstItem="Y0o-Ly-QHL" firstAttribute="leading" secondItem="Q8X-NO-W0r" secondAttribute="trailing" constant="8" id="mAK-MJ-UWW"/>
                                                 <constraint firstItem="yLN-4m-RU1" firstAttribute="leading" secondItem="a9f-T3-EFh" secondAttribute="leading" id="q6C-f1-vOq"/>
                                                 <constraint firstAttribute="bottom" secondItem="Y0o-Ly-QHL" secondAttribute="bottom" constant="0.5" id="spN-yr-VFE"/>
                                                 <constraint firstItem="Y0o-Ly-QHL" firstAttribute="width" secondItem="a9f-T3-EFh" secondAttribute="width" multiplier="0.65" id="wWX-eZ-Gq2"/>
@@ -541,8 +530,8 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="labelInfo" destination="Y0o-Ly-QHL" id="wiz-DE-TJB"/>
-                                            <outlet property="labelTitle" destination="Q8X-NO-W0r" id="9cj-bp-2rM"/>
                                             <outlet property="viewImage" destination="yLN-4m-RU1" id="MEE-gd-K7Z"/>
+                                            <segue destination="nEM-4I-gV1" kind="show" id="TQZ-ga-q8Q"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
