@@ -257,3 +257,44 @@ Parse.Cloud.define("queryRecommendations", function(request, response) {
         }         
     })
 });
+
+Parse.Cloud.define("inviteUser", function(request, response) {
+    var fromUserId = request.user
+    var toUserId = request.params.user
+    var interests = request.params.interests
+    var query = new Parse.Query('_User')
+    query.get(toUserId).then(
+        function(result) {
+            console.log("Sending push message to user " + toUserId)
+            sendPushInviteUser(response, fromUserId, toUserId, interests)
+        },
+        function(error) {
+            console.log("Could not load user for inviting")
+            response.error("Could not find user to invite")
+        }     
+    )
+})
+var sendPushInviteUser = function(response, fromId, toId, interests) {
+    console.log("inside send push")
+    console.log("fromId " + fromId + " toId " + toId + " interests " + interests)
+    var message = "You have received an invitation to bond"
+    Parse.Push.send({
+        channels: [ toId, "bondvoyage" ],
+        data: {
+            alert: message,
+            from: fromId,
+            interests: interests,
+            sound: "default"
+        }
+    }, {
+        success: function()
+        {
+            console.log("Invite push notification sent")
+            response.success()
+            },
+        error: function(error) {
+            // Handle error
+            console.log("Invite push notification failed" + error)
+            }
+        });
+    }
