@@ -213,8 +213,10 @@ Parse.Cloud.define("queryUsers", function(request, response) {
         query.containedIn("gender", genderOptions)
     }
     if (ageOptions != undefined) {
-        query.greaterThanOrEqualTo("age", ageOptions[0])
-        query.lessThanOrEqualTo("age", ageOptions[1])
+        var yearMax = 2016 - ageOptions[0]
+        var yearMin = 2016 - ageOptions[1]
+        query.greaterThanOrEqualTo("birthYear", yearMin)
+        query.lessThanOrEqualTo("birthYear", yearMax)
     }
 
     console.log("calling query.find")
