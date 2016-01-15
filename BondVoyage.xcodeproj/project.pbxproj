@@ -40,8 +40,6 @@
 		E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836631C38BEB9003BD54F /* SingleFilterView.swift */; };
 		E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* RangeFilterView.swift */; };
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
-		E5CD98F01C42FCBE0058CABD /* PFUser+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CD98EF1C42FCBE0058CABD /* PFUser+Utils.swift */; };
-		E5E3CB741C1DE18100974060 /* UITableViewCell+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
 		E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */; };
 		E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */; };
@@ -106,8 +104,6 @@
 		E5C836631C38BEB9003BD54F /* SingleFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleFilterView.swift; path = Views/SingleFilterView.swift; sourceTree = "<group>"; };
 		E5C836661C38BEF5003BD54F /* RangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeFilterView.swift; path = Views/RangeFilterView.swift; sourceTree = "<group>"; };
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
-		E5CD98EF1C42FCBE0058CABD /* PFUser+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Utils.swift"; sourceTree = "<group>"; };
-		E5E3CB731C1DE18100974060 /* UITableViewCell+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Utils.swift"; sourceTree = SOURCE_ROOT; };
 		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
@@ -276,7 +272,6 @@
 				C5566EE71C3E105F007C22F3 /* UITableViewCell+Utils.swift */,
 				C5566EE51C3E1040007C22F3 /* UIViewController+Utils.swift */,
 				C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */,
-				E5CD98EF1C42FCBE0058CABD /* PFUser+Utils.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -502,7 +497,6 @@
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
-				E5CD98F01C42FCBE0058CABD /* PFUser+Utils.swift in Sources */,
 				E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* InterestsViewController.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,

@@ -16,20 +16,15 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 extension PFUser {
 
-    var age: Int {
-        get {
-            let currentYear = components.year
-            let age = currentYear - (self.valueForKey("birthYear") as! Int)
-            return age
-        }
+    func getGender() -> String {
+        return self.valueForKey("gender") as! String
     }
 
-    var gender: String {
-        get {
-            return self.valueForKey("gender") as! String
-        }
+    func getAge() -> Int {
+        let currentYear = components.year
+        let age = currentYear - (self.valueForKey("birthYear") as! Int)
+        return age
     }
-
 }
 
 

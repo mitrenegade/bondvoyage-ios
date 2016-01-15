@@ -27,6 +27,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     @IBOutlet weak var tableView: UITableView!
     var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool!
+    var selectedUser: PFUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,9 +80,13 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "embedSearchResultsVCSegue") {
+        if segue.identifier == "embedSearchResultsVCSegue" {
             self.searchResultsVC = segue.destinationViewController as! SearchResultsViewController
             self.searchResultsVC.delegate = self
+        }
+        else if segue.identifier == "showUserDetailsSegue" {
+            let userDetailsVC = segue.destinationViewController as! UserDetailsViewController
+            userDetailsVC.selectedUser = self.selectedUser
         }
     }
 
@@ -158,12 +163,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // MARK: SearchResultsDelegate
 
-    func showUserDetails(destinationVC: UIViewController) {
-        print("showing user details")
-
+    func showUserDetails() {
         self.performSegueWithIdentifier("showUserDetailsSegue", sender: self)
-
-//        self.navigationController?.pushViewController(destinationVC, animated: true)
-
     }
+
+
 }

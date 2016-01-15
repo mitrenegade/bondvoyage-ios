@@ -11,8 +11,12 @@ import Parse
 import AsyncImageView
 
 protocol SearchResultsDelegate {
-    func showUserDetails(destinationVC: UIViewController)
+    func showUserDetails()
 }
+
+let date = NSDate()
+let calendar = NSCalendar.currentCalendar()
+let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kSearchResultCellIdentifier = "searchResultCell"
 
@@ -274,13 +278,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let detailsVC = storyboard.instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
         let user = users![indexPath.row]
-        detailsVC.configureDetailsForUser(user)
-        print("the detailsvc is \(detailsVC)")
-
-        self.delegate?.showUserDetails(detailsVC)
+        let hereAndNowVC = self.parentViewController as! HereAndNowViewController
+        hereAndNowVC.selectedUser = user
+        self.delegate?.showUserDetails()
     }
 
     // MARK: - UITableViewDataSource
@@ -307,19 +308,4 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             return 0
         }
     }
-
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "showUserDetailsSegue" {
-//            let vc = segue.destinationViewController as! UserDetailsViewController
-//
-//            vc.scrollViewContainer.topAnchor.constraintEqualToAnchor(self.parentViewController?.topLayoutGuide.topAnchor)
-//        }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
-
-
 }

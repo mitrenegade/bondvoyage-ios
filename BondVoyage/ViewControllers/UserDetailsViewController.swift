@@ -14,12 +14,14 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
+    var selectedUser: PFUser!
 
     @IBOutlet weak var scrollViewContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.title = "INVITE"
+        self.configureDetailsForUser()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -32,8 +34,8 @@ class UserDetailsViewController: UIViewController {
         // the above doesnt work because the nav bar and the scroll view is in a diff hierarchy, the constraint cannot be done
     }
 
-    func configureDetailsForUser(user: PFUser) {
-        let firstName = user.valueForKey("firstName")
+    func configureDetailsForUser() {
+        let firstName = self.selectedUser.valueForKey("firstName")!
         self.nameLabel.text = "\(firstName)"
     }
 
