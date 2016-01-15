@@ -51,4 +51,11 @@ class UserRequest: NSObject {
             completion(results: users, error: error)
         }
     }
+    
+    class func inviteUser(user: PFUser, interests: [String], completion: ((success: Bool, error: NSError?)->Void)) {
+        PFCloud.callFunctionInBackground("inviteUser", withParameters: ["user": user.objectId!, "interests": interests]) { (results, error) -> Void in
+            print("results: \(results)")
+            completion(success: error == nil, error: error)
+        }
+    }
 }

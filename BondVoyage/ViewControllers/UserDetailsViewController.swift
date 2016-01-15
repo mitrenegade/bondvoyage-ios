@@ -39,4 +39,17 @@ class UserDetailsViewController: UIViewController {
         self.nameLabel.text = "\(firstName)"
     }
 
+    
+    // MARK: - Invite to bond
+    @IBAction func didClickInvite(sender: UIButton) {
+        UserRequest.inviteUser(self.selectedUser, interests: self.selectedUser.objectForKey("interests") as! [String]) { (success, error) -> Void in
+            if success {
+                print("Success! User was invited")
+            }
+            else {
+                print("Error! Push failed: \(error)")
+            }
+        }
+    }
+
 }

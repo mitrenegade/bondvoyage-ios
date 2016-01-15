@@ -195,7 +195,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        self.removeSearchResultsViewController()
+        //self.removeSearchResultsViewController()
     }
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -222,6 +222,5 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func showUserDetails() {
         self.performSegueWithIdentifier("showUserDetailsSegue", sender: self)
     }
-
-
+    
 }
