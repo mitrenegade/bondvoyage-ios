@@ -262,6 +262,15 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             )
         }
     }
+    
+    // MARK: - Pass on search options
+    func agePrefs() -> [Int] {
+        return self.ageRangeFilterView.currentRange()
+    }
+    
+    func genderPrefs() -> [String] {
+        return self.genderFilterView.currentGenderPrefs()
+    }
 
     //Helper method to get the height constraint of the filterView that is to be toggled
     func heightConstraint(filterView: BaseFilterView) -> NSLayoutConstraint {

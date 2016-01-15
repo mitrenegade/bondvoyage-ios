@@ -38,4 +38,8 @@ class RangeFilterView: BaseFilterView {
     func sliderValueEnded(sender: UIControl) {
         // TODO: make it snap
     }
+    
+    func currentRange() -> [Int] {
+        return [Int(self.rangeSlider!.lowerValue), Int(self.rangeSlider!.upperValue)]
+    }
 }

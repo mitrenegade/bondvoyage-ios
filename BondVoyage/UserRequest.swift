@@ -37,12 +37,12 @@ class UserRequest: NSObject {
     }
 
     // query for all users with interests, age range default
-    class func userQuery(interests: [String], gender: [Gender], ageRange: [Int], numRange: [Int], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
+    class func userQuery(interests: [String], genderPref: [String], ageRange: [Int], numRange: [Int], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
         // query for all users on Parse with given interests plus default search criteria
 
-        // converts enum to strings
-        let genderString: [String] = gender.map { (g) -> String in
-            return g.rawValue.lowercaseString
+        // converts to lowercase
+        let genderString: [String] = genderPref.map { (g) -> String in
+            return g.lowercaseString
         }
         
         PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interests, "gender": genderString, "age": ageRange, "number": numRange]) { (results, error) -> Void in

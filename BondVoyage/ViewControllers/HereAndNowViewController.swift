@@ -168,7 +168,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let searchText: String = searchBar.text! {
             let keywords = searchText.componentsSeparatedByString(" ")
-            UserRequest.userQuery(keywords, completion: { (results, error) -> Void in
+            let genderPrefs: [String] = self.searchResultsVC.genderPrefs()
+            let agePrefs: [Int] = self.searchResultsVC.agePrefs()
+            UserRequest.userQuery(keywords, genderPref: genderPrefs, ageRange: agePrefs, numRange: [], completion: { (results, error) -> Void in
                 if error != nil {
                     print("ERROR: \(error)")
                 }
