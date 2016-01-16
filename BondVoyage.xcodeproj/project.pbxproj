@@ -40,6 +40,7 @@
 		E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836631C38BEB9003BD54F /* SingleFilterView.swift */; };
 		E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* RangeFilterView.swift */; };
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
+		E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
 		E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */; };
 		E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */; };
@@ -104,6 +105,7 @@
 		E5C836631C38BEB9003BD54F /* SingleFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleFilterView.swift; path = Views/SingleFilterView.swift; sourceTree = "<group>"; };
 		E5C836661C38BEF5003BD54F /* RangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeFilterView.swift; path = Views/RangeFilterView.swift; sourceTree = "<group>"; };
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
+		E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BVColors.swift"; sourceTree = "<group>"; };
 		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
@@ -219,14 +221,14 @@
 			isa = PBXGroup;
 			children = (
 				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
-				AC75B88D1C232C5F00D74F8E /* Constants.swift */,
-				E5E3CB721C1DE0FB00974060 /* Categories */,
-				E5E4E51B1C1BD6EE003C4A90 /* Models */,
-				AC1698441C1C7A9C00E3DAAE /* DataSource */,
-				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5508A0E1C1539CF00D23C26 /* Assets.xcassets */,
-				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
+				E5E3CB721C1DE0FB00974060 /* Categories */,
+				AC75B88D1C232C5F00D74F8E /* Constants.swift */,
+				AC1698441C1C7A9C00E3DAAE /* DataSource */,
 				E5508A131C1539CF00D23C26 /* Info.plist */,
+				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
+				E5E4E51B1C1BD6EE003C4A90 /* Models */,
+				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */,
 				E5C836651C38BEC1003BD54F /* Views */,
 			);
@@ -272,6 +274,7 @@
 				C5566EE71C3E105F007C22F3 /* UITableViewCell+Utils.swift */,
 				C5566EE51C3E1040007C22F3 /* UIViewController+Utils.swift */,
 				C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */,
+				E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
 				E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* InterestsViewController.swift in Sources */,
+				E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,

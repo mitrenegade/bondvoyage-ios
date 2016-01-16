@@ -31,7 +31,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // configure search bar
         self.searchBar.delegate = self;
 

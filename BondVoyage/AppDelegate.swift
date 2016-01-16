@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Configure Navigation Bar Appearance
+        UINavigationBar.appearance().tintColor = UIColor.BV_defaultBlueColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+
         // Override point for customization after application launch.
         Parse.enableLocalDatastore()
         
