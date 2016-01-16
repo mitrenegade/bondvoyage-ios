@@ -173,6 +173,11 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let searchText: String = searchBar.text! {
             self.interests = searchText.componentsSeparatedByString(" ")
+            if self.interests != nil {
+                self.interests = self.interests!.map { (i) -> String in
+                    return i.lowercaseString
+                }
+            }
             let genderPrefs: [String] = self.searchResultsVC.genderPrefs()
             let agePrefs: [Int] = self.searchResultsVC.agePrefs()
             UserRequest.userQuery(self.interests!, genderPref: genderPrefs, ageRange: agePrefs, numRange: [], completion: { (results, error) -> Void in

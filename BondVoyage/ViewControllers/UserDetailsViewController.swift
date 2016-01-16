@@ -63,15 +63,15 @@ class UserDetailsViewController: UIViewController {
     // MARK: - Invite to bond
     @IBAction func didClickInvite(sender: UIButton) {
         if self.selectedUser != nil {
-            var interests: [String]? = self.relevantInterests
-            if interests == nil {
-                interests = self.selectedUser!.objectForKey("interests") as? [String]
+            var interests: [String] = []
+            if self.relevantInterests != nil {
+                interests = self.relevantInterests!
             }
-            if interests == nil {
-                interests = []
+            else if self.selectedUser!.objectForKey("interests") != nil {
+                interests = self.selectedUser!.objectForKey("interests") as! [String]
             }
             
-            UserRequest.inviteUser(self.selectedUser, interests: interests!) { (success, error) -> Void in
+            UserRequest.inviteUser(self.selectedUser, interests: interests) { (success, error) -> Void in
                 if success {
                     print("Success! User was invited")
                 }
@@ -83,6 +83,7 @@ class UserDetailsViewController: UIViewController {
         else if self.invitingUser != nil {
             // TODO: add UserRequest.acceptInvitation call
             let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+            controller.relevantInterests = self.relevantInterests
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }

@@ -20,6 +20,7 @@ class PlacesViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var recommendations: [PFObject]?
+    var relevantInterests: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,11 @@ class PlacesViewController: UIViewController {
     func loadRecommendation() {
         // HACK: load any recommendation
         self.activityIndicator.startAnimating()
-        RecommendationRequest.recommendationsQuery(nil, interests: []) { (results, error) -> Void in
+        var interests: [String] = []
+        if self.relevantInterests != nil {
+            interests = self.relevantInterests!
+        }
+        RecommendationRequest.recommendationsQuery(nil, interests: interests) { (results, error) -> Void in
             self.activityIndicator.stopAnimating()
             if results != nil {
                 self.recommendations = results
@@ -51,10 +56,10 @@ class PlacesViewController: UIViewController {
     }
     
     func nextRecommendation() {
-        if self.recommendations == nil || self.recommendations!.count == 0 {
+        if self.recommendations == nil || self.recommendations!.count == 1 {
             self.noMoreRecommendations()
         }
-        if self.recommendations?.count > 0 {
+        if self.recommendations?.count > 1 {
             self.recommendations!.removeFirst()
             self.refresh()
         }

@@ -41,6 +41,11 @@ class UserRequest: NSObject {
         // query for all users on Parse with given interests plus default search criteria
 
         // converts to lowercase
+        let interestsString: [String] = interests.map { (i) -> String in
+            return i.lowercaseString
+        }
+
+        // converts to lowercase
         let genderString: [String] = genderPref.map { (g) -> String in
             return g.lowercaseString
         }

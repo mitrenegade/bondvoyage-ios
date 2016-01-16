@@ -236,13 +236,12 @@ Parse.Cloud.define("queryRecommendations", function(request, response) {
     var location = request.params.location // not used
     var interests = request.params.interests
  
-    // only match for the first interests
     var query = new Parse.Query("Recommendation")
 
     if (interests.length > 0) {
         interests = interests.map(toLowerCase)
         console.log("searching for " + interests.length + " interests: " + interests)
-        query.contains("interests", interests[0])
+        query.containsAll("interests", interests)
     }
 
     console.log("calling query.find")
