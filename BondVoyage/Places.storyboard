@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6kF-ej-dsI" customClass="AsyncImageView">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6kF-ej-dsI" customClass="AsyncImageView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="552"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ra2-1r-unE">
@@ -32,6 +32,9 @@
                                     <constraint firstAttribute="height" constant="40" id="mTs-U4-Nmb"/>
                                 </constraints>
                                 <state key="normal" title="GO"/>
+                                <connections>
+                                    <action selector="didClickButton:" destination="872-2L-cS6" eventType="touchUpInside" id="spw-C6-XRc"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00x-Cq-a5M">
                                 <rect key="frame" x="300" y="560" width="300" height="40"/>
@@ -39,17 +42,28 @@
                                     <constraint firstAttribute="height" constant="40" id="23Q-M4-FHA"/>
                                 </constraints>
                                 <state key="normal" title="NEXT"/>
+                                <connections>
+                                    <action selector="didClickButton:" destination="872-2L-cS6" eventType="touchUpInside" id="il4-aP-sGX"/>
+                                </connections>
                             </button>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RZi-Pe-vkv">
+                                <rect key="frame" x="0.0" y="276" width="600" height="276"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IdX-QR-s8K">
                                 <rect key="frame" x="20" y="276" width="560" height="276"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="QEr-I7-2kV">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="IdX-QR-s8K" firstAttribute="bottom" secondItem="RZi-Pe-vkv" secondAttribute="bottom" id="2WG-gD-1b5"/>
                             <constraint firstItem="EhZ-Lt-Lzf" firstAttribute="top" secondItem="00x-Cq-a5M" secondAttribute="bottom" id="7cr-MX-g5c"/>
                             <constraint firstItem="6kF-ej-dsI" firstAttribute="leading" secondItem="WBn-lV-n3O" secondAttribute="leading" id="CSc-99-U3F"/>
                             <constraint firstAttribute="trailing" secondItem="00x-Cq-a5M" secondAttribute="trailing" id="DAj-9C-6Jo"/>
@@ -59,14 +73,20 @@
                             <constraint firstItem="ra2-1r-unE" firstAttribute="leading" secondItem="WBn-lV-n3O" secondAttribute="leading" id="b0C-d0-IGd"/>
                             <constraint firstItem="ra2-1r-unE" firstAttribute="width" secondItem="00x-Cq-a5M" secondAttribute="width" id="duZ-iU-cZ0"/>
                             <constraint firstAttribute="trailing" secondItem="IdX-QR-s8K" secondAttribute="trailing" constant="20" id="e0l-Lb-WxO"/>
+                            <constraint firstItem="RZi-Pe-vkv" firstAttribute="leading" secondItem="WBn-lV-n3O" secondAttribute="leading" id="ecZ-Zc-BcZ"/>
+                            <constraint firstItem="QEr-I7-2kV" firstAttribute="centerY" secondItem="WBn-lV-n3O" secondAttribute="centerY" id="fhX-Di-wTb"/>
                             <constraint firstItem="IdX-QR-s8K" firstAttribute="leading" secondItem="WBn-lV-n3O" secondAttribute="leading" constant="20" id="i58-M1-BwB"/>
+                            <constraint firstAttribute="trailing" secondItem="RZi-Pe-vkv" secondAttribute="trailing" id="iot-AP-3rQ"/>
                             <constraint firstItem="6kF-ej-dsI" firstAttribute="top" secondItem="WBn-lV-n3O" secondAttribute="top" id="nYb-Ay-PCO"/>
                             <constraint firstItem="IdX-QR-s8K" firstAttribute="height" secondItem="6kF-ej-dsI" secondAttribute="height" multiplier="0.5" id="tgw-nx-LCO"/>
                             <constraint firstItem="EhZ-Lt-Lzf" firstAttribute="top" secondItem="ra2-1r-unE" secondAttribute="bottom" id="uo0-Sz-KdQ"/>
+                            <constraint firstItem="QEr-I7-2kV" firstAttribute="centerX" secondItem="WBn-lV-n3O" secondAttribute="centerX" id="zBc-NO-ELB"/>
+                            <constraint firstItem="IdX-QR-s8K" firstAttribute="top" secondItem="RZi-Pe-vkv" secondAttribute="top" id="zKd-hc-WmI"/>
                             <constraint firstItem="00x-Cq-a5M" firstAttribute="top" secondItem="IdX-QR-s8K" secondAttribute="bottom" constant="8" id="zUu-oR-jWS"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="QEr-I7-2kV" id="SDT-uz-4BB"/>
                         <outlet property="buttonGo" destination="ra2-1r-unE" id="cbh-C7-5RC"/>
                         <outlet property="buttonNext" destination="00x-Cq-a5M" id="RHl-5e-oCB"/>
                         <outlet property="imageView" destination="6kF-ej-dsI" id="0Z1-6F-Q4e"/>
