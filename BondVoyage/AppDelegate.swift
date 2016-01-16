@@ -153,8 +153,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         [message: i want to lose weight, aps: {
         }, userid: 1]
         */
-        if let _ = userInfo["from"] as? String {
-            NSNotificationCenter.defaultCenter().postNotificationName("invitation:received", object: nil, userInfo: userInfo)
+        if let _ = userInfo["from"] as? [NSObject: AnyObject] {
+            self.goToInvited(userInfo)
+        }
+    }
+    
+    func goToInvited(info: [NSObject: AnyObject]) {
+        let userDict: [NSObject: AnyObject] = info["from"] as! [NSObject: AnyObject]
+        let interests: [String] = info["interests"] as! [String]
+        let userId: String = userDict["objectId"] as! String
+        
+        let query: PFQuery = PFUser.query()!
+        query.whereKey("objectId", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if results != nil && results!.count > 0 {
+                let user: PFUser = results![0] as! PFUser
+                let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+                controller.selectedUser = user
+                let nav = UINavigationController(rootViewController: controller)
+                let presenter = self.topViewController()!
+                presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                })
+            }
+            else {
+                print("Invalid user")
+            }
         }
     }
 }
