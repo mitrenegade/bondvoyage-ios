@@ -61,6 +61,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    var interests: [String]?
     var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool!
     var selectedUser: PFUser?
@@ -133,6 +134,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         else if segue.identifier == "showUserDetailsSegue" {
             let userDetailsVC = segue.destinationViewController as! UserDetailsViewController
             userDetailsVC.selectedUser = self.selectedUser
+            userDetailsVC.relevantInterests = self.interests
         }
     }
 
@@ -142,7 +144,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier(kNearbyEventCellIdentifier)! as! NearbyEventCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         
-        var recommendation: PFObject = self.recommendations![indexPath.row]
+        let recommendation: PFObject = self.recommendations![indexPath.row]
         cell.configureCellForNearbyEvent(recommendation)
         cell.layoutSubviews()
         
@@ -170,10 +172,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let searchText: String = searchBar.text! {
-            let keywords = searchText.componentsSeparatedByString(" ")
+            self.interests = searchText.componentsSeparatedByString(" ")
             let genderPrefs: [String] = self.searchResultsVC.genderPrefs()
             let agePrefs: [Int] = self.searchResultsVC.agePrefs()
-            UserRequest.userQuery(keywords, genderPref: genderPrefs, ageRange: agePrefs, numRange: [], completion: { (results, error) -> Void in
+            UserRequest.userQuery(self.interests!, genderPref: genderPrefs, ageRange: agePrefs, numRange: [], completion: { (results, error) -> Void in
                 if error != nil {
                     print("ERROR: \(error)")
                 }
@@ -222,5 +224,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func showUserDetails() {
         self.performSegueWithIdentifier("showUserDetailsSegue", sender: self)
     }
+    
+    
     
 }

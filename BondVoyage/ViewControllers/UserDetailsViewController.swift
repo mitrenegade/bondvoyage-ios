@@ -19,7 +19,8 @@ class UserDetailsViewController: UIViewController {
     
     var selectedUser: PFUser!
     var invitingUser: PFUser!
-
+    var relevantInterests: [String]?
+    
     @IBOutlet weak var scrollViewContainer: UIView!
     
     override func viewDidLoad() {
@@ -62,7 +63,15 @@ class UserDetailsViewController: UIViewController {
     // MARK: - Invite to bond
     @IBAction func didClickInvite(sender: UIButton) {
         if self.selectedUser != nil {
-            UserRequest.inviteUser(self.selectedUser, interests: self.selectedUser.objectForKey("interests") as! [String]) { (success, error) -> Void in
+            var interests: [String]? = self.relevantInterests
+            if interests == nil {
+                interests = self.selectedUser!.objectForKey("interests") as? [String]
+            }
+            if interests == nil {
+                interests = []
+            }
+            
+            UserRequest.inviteUser(self.selectedUser, interests: interests!) { (success, error) -> Void in
                 if success {
                     print("Success! User was invited")
                 }

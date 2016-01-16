@@ -170,6 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let user: PFUser = results![0] as! PFUser
                 let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
                 controller.invitingUser = user
+                controller.relevantInterests = interests
                 let nav = UINavigationController(rootViewController: controller)
                 let presenter = self.topViewController()!
                 presenter.presentViewController(nav, animated: true, completion: { () -> Void in
