@@ -141,5 +141,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.topViewController()!.presentViewController(alert, animated: true, completion: nil)
     }
 
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("notification received: \(userInfo)")
+        /* format:
+        [aps: {
+        alert = "test push 2";
+        sound = default;
+        }]
+        
+        // With info:
+        [message: i want to lose weight, aps: {
+        }, userid: 1]
+        */
+        if let fromId = userInfo["from"] as? String {
+            let interests = userInfo["interests"] as! [String]
+            NSNotificationCenter.defaultCenter().postNotificationName("invitation:received", object: nil, userInfo: userInfo)
+        }
+    }
 }
 

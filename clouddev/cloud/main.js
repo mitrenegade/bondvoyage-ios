@@ -259,14 +259,14 @@ Parse.Cloud.define("queryRecommendations", function(request, response) {
 });
 
 Parse.Cloud.define("inviteUser", function(request, response) {
-    var fromUserId = request.user
+    var fromUser = request.user
     var toUserId = request.params.user
     var interests = request.params.interests
     var query = new Parse.Query('_User')
     query.get(toUserId).then(
         function(result) {
-            console.log("Sending push message to user " + toUserId)
-            sendPushInviteUser(response, fromUserId, toUserId, interests)
+            console.log("Sending push message to user " + toUserId + " from " + fromUser)
+            sendPushInviteUser(response, fromUser, toUserId, interests)
         },
         function(error) {
             console.log("Could not load user for inviting")
@@ -274,15 +274,22 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         }     
     )
 })
-var sendPushInviteUser = function(response, fromId, toId, interests) {
+var sendPushInviteUser = function(response, fromUser, toId, interests) {
     console.log("inside send push")
-    console.log("fromId " + fromId + " toId " + toId + " interests " + interests)
-    var message = "You have received an invitation to bond"
+    console.log("from user " + fromUser + " toId " + toId + " interests " + interests)
+    var name = fromUser.get("firstName")
+    if (name == undefined) {
+        name = fromUser.get("lastName")
+    }
+    var message = name + " has sent you an invitation to bond over " + interests[0]
+    if (name == undefined) {
+        message = "You have received an invitation to bond over " + interests[0]
+    }
     Parse.Push.send({
         channels: [ toId, "bondvoyage" ],
         data: {
             alert: message,
-            from: fromId,
+            from: fromUser,
             interests: interests,
             sound: "default"
         }
