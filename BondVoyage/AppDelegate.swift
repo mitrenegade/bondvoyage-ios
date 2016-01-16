@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 import Bolts
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
             UIApplication.sharedApplication().registerForRemoteNotifications()
         }
+        
+        // Fabric
+        Fabric.with([Crashlytics.self])
 
         return true
     }

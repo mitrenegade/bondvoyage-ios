@@ -3,3 +3,5 @@ use_frameworks!
 
 pod 'Parse'
 pod 'AsyncImageView'
+pod 'Crashlytics'
+pod 'Fabric'
