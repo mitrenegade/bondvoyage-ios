@@ -153,8 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         [message: i want to lose weight, aps: {
         }, userid: 1]
         */
-        if let fromId = userInfo["from"] as? String {
-            let interests = userInfo["interests"] as! [String]
+        if let _ = userInfo["from"] as? String {
             NSNotificationCenter.defaultCenter().postNotificationName("invitation:received", object: nil, userInfo: userInfo)
         }
     }

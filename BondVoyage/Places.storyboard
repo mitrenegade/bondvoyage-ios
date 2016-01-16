@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--Places View Controller-->
+        <scene sceneID="Dq6-4Y-5D3">
+            <objects>
+                <viewController id="872-2L-cS6" customClass="PlacesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JTg-wO-4ec"/>
+                        <viewControllerLayoutGuide type="bottom" id="EhZ-Lt-Lzf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WBn-lV-n3O">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6kF-ej-dsI" customClass="AsyncImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="552"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ra2-1r-unE">
+                                <rect key="frame" x="0.0" y="560" width="300" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="mTs-U4-Nmb"/>
+                                </constraints>
+                                <state key="normal" title="GO"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00x-Cq-a5M">
+                                <rect key="frame" x="300" y="560" width="300" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="23Q-M4-FHA"/>
+                                </constraints>
+                                <state key="normal" title="NEXT"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IdX-QR-s8K">
+                                <rect key="frame" x="20" y="276" width="560" height="276"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EhZ-Lt-Lzf" firstAttribute="top" secondItem="00x-Cq-a5M" secondAttribute="bottom" id="7cr-MX-g5c"/>
+                            <constraint firstItem="6kF-ej-dsI" firstAttribute="leading" secondItem="WBn-lV-n3O" secondAttribute="leading" id="CSc-99-U3F"/>
+                            <constraint firstAttribute="trailing" secondItem="00x-Cq-a5M" secondAttribute="trailing" id="DAj-9C-6Jo"/>
+                            <constraint firstItem="00x-Cq-a5M" firstAttribute="top" secondItem="6kF-ej-dsI" secondAttribute="bottom" constant="8" id="I5v-2z-iE7"/>
+                            <constraint firstItem="00x-Cq-a5M" firstAttribute="leading" secondItem="ra2-1r-unE" secondAttribute="trailing" id="I8R-XU-2Df"/>
+                            <constraint firstAttribute="trailing" secondItem="6kF-ej-dsI" secondAttribute="trailing" id="S1k-CB-reR"/>
+                            <constraint firstItem="ra2-1r-unE" firstAttribute="leading" secondItem="WBn-lV-n3O" secondAttribute="leading" id="b0C-d0-IGd"/>
+                            <constraint firstItem="ra2-1r-unE" firstAttribute="width" secondItem="00x-Cq-a5M" secondAttribute="width" id="duZ-iU-cZ0"/>
+                            <constraint firstAttribute="trailing" secondItem="IdX-QR-s8K" secondAttribute="trailing" constant="20" id="e0l-Lb-WxO"/>
+                            <constraint firstItem="IdX-QR-s8K" firstAttribute="leading" secondItem="WBn-lV-n3O" secondAttribute="leading" constant="20" id="i58-M1-BwB"/>
+                            <constraint firstItem="6kF-ej-dsI" firstAttribute="top" secondItem="WBn-lV-n3O" secondAttribute="top" id="nYb-Ay-PCO"/>
+                            <constraint firstItem="IdX-QR-s8K" firstAttribute="height" secondItem="6kF-ej-dsI" secondAttribute="height" multiplier="0.5" id="tgw-nx-LCO"/>
+                            <constraint firstItem="EhZ-Lt-Lzf" firstAttribute="top" secondItem="ra2-1r-unE" secondAttribute="bottom" id="uo0-Sz-KdQ"/>
+                            <constraint firstItem="00x-Cq-a5M" firstAttribute="top" secondItem="IdX-QR-s8K" secondAttribute="bottom" constant="8" id="zUu-oR-jWS"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonGo" destination="ra2-1r-unE" id="cbh-C7-5RC"/>
+                        <outlet property="buttonNext" destination="00x-Cq-a5M" id="RHl-5e-oCB"/>
+                        <outlet property="imageView" destination="6kF-ej-dsI" id="0Z1-6F-Q4e"/>
+                        <outlet property="labelInfo" destination="IdX-QR-s8K" id="ojZ-Dt-fhx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PsO-0G-Tiq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-822" y="-107"/>
+        </scene>
+    </scenes>
+</document>
