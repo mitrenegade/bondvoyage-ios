@@ -14,14 +14,29 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
+    
+    @IBOutlet weak var buttonInvite: UIButton!
+    
     var selectedUser: PFUser!
+    var invitingUser: PFUser!
 
     @IBOutlet weak var scrollViewContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.title = "INVITE"
-        self.configureDetailsForUser()
+        
+        if self.invitingUser != nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+        }
+        
+        // configure invite
+        if self.invitingUser != nil {
+            self.buttonInvite.setTitle("ACCEPT INVITATION", forState: .Normal)
+        }
+        else {
+            self.configureDetailsForUser()
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -39,16 +54,27 @@ class UserDetailsViewController: UIViewController {
         self.nameLabel.text = "\(firstName)"
     }
 
+    func close() {
+        // close modally
+        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     // MARK: - Invite to bond
     @IBAction func didClickInvite(sender: UIButton) {
-        UserRequest.inviteUser(self.selectedUser, interests: self.selectedUser.objectForKey("interests") as! [String]) { (success, error) -> Void in
-            if success {
-                print("Success! User was invited")
+        if self.selectedUser != nil {
+            UserRequest.inviteUser(self.selectedUser, interests: self.selectedUser.objectForKey("interests") as! [String]) { (success, error) -> Void in
+                if success {
+                    print("Success! User was invited")
+                }
+                else {
+                    print("Error! Push failed: \(error)")
+                }
             }
-            else {
-                print("Error! Push failed: \(error)")
-            }
+        }
+        else if self.invitingUser != nil {
+            // TODO: add UserRequest.acceptInvitation call
+            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
 
