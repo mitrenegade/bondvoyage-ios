@@ -17,23 +17,9 @@ class NearbyEventCell: UITableViewCell {
     @IBOutlet weak var viewImage: AsyncImageView!
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelInfo: UILabel!
-    var gradientLayer: CAGradientLayer?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        self.gradientLayer = CAGradientLayer()
-        self.gradientLayer!.frame = viewImage.frame
-        self.gradientLayer!.colors = [UIColor.clearColor().CGColor, UIColor.clearColor().CGColor, UIColor.blackColor().colorWithAlphaComponent(0.5).CGColor, UIColor.blackColor().colorWithAlphaComponent(0.75).CGColor]
-        self.gradientLayer!.locations = [0, 0.25, 0.4, 1]
-        self.gradientLayer!.startPoint = CGPointMake(0, 0)
-        self.gradientLayer!.endPoint = CGPointMake(1, 0)
-        viewImage.layer.addSublayer(self.gradientLayer!)
-    }
-    
-    override func layoutSublayersOfLayer(layer: CALayer) {
-        super.layoutSublayersOfLayer(layer)
-        gradientLayer!.frame = self.bounds
     }
     
     func configureCellForNearbyEvent(recommendation: PFObject) {
@@ -179,6 +165,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let searchText: String = searchBar.text! {
+            self.searchBar.resignFirstResponder()
             self.interests = searchText.componentsSeparatedByString(" ")
             if self.interests != nil {
                 self.interests = self.interests!.map { (i) -> String in
@@ -210,6 +197,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         //self.removeSearchResultsViewController()
+        self.searchBar.resignFirstResponder()
     }
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
