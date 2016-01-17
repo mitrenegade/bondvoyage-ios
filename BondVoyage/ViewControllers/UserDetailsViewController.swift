@@ -22,6 +22,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var interestsView: UIView!
     @IBOutlet weak var inviteToBondButton: UIButton!
 
+    @IBOutlet weak var interestsToTransparentViewSpacingConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDetailsForUser()
@@ -32,10 +33,9 @@ class UserDetailsViewController: UIViewController {
         self.title = "Invite"
         self.inviteToBondButton.backgroundColor = UIColor.BV_primaryActionBlueColor()
         self.transparentView.backgroundColor = UIColor.clearColor()
-        self.transparentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))
-        print("\(self.transparentView.frame.height)")
         self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
+        self.interestsToTransparentViewSpacingConstraint.constant = (self.nameView.bounds.height - 1) // I don't know why there is a 2 pixel gap between views
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -43,7 +43,6 @@ class UserDetailsViewController: UIViewController {
     }
 
     @IBAction func inviteToBondButtonPressed(sender: UIButton) {
-
     }
 
     func configureDetailsForUser() {
@@ -64,7 +63,6 @@ class UserDetailsViewController: UIViewController {
 
         let interests = self.selectedUser.valueForKey("interests")!
         self.interestsLabel.text = "Interests: \(interests)"
-        
     }
 
 

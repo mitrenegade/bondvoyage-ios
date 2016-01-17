@@ -23,7 +23,7 @@ extension UIColor {
     }
 
     class func BV_navigationBarGrayColor() -> UIColor {
-        return colorFromRGBWithAlpha(red: 219, green: 219, blue: 219, alpha: 0.92)
+        return colorFromRGBWithAlpha(red: 219, green: 219, blue: 219, alpha: 0.88)
     }
 
     private class func colorFromRGB(red red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
