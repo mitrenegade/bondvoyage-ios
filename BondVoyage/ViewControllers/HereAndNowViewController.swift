@@ -80,7 +80,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.tableView.reloadData()
         })
 
-        if !self.appDelegate().hasPushEnabled() {
+        if PFUser.currentUser() != nil && !self.appDelegate().hasPushEnabled() {
             self.appDelegate().registerForRemoteNotifications()
         }
     }
