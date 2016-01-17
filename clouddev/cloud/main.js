@@ -10,7 +10,7 @@ Parse.Cloud.define("seedTestUsers", function(request, response) {
             {"email": "chris@bondvoyage.com", "firstName": "Chris", "interests":  randomInterests(), password: "test", birthYear: 2016 - 29, gender: "male"},
             {"email": "danielle@bondvoyage.com", "firstName": "Danielle", "interests":  randomInterests(), password: "test", birthYear: 2016 - 45, gender: "female"},
             {"email": "erica@bondvoyage.com", "firstName": "Erica", "interests":  randomInterests(), password: "test", birthYear: 2016 - 28, gender: "female"},
-            {"email": "fredson@bondvoyage.com", "firstName": "Fredson", "interests": randomInterests(), password: "test", birthYear: 2016 - 32, gender: "male"},
+            {"email": "fred@bondvoyage.com", "firstName": "Fred", "interests": randomInterests(), password: "test", birthYear: 2016 - 32, gender: "male"},
             {"email": "ginger@bondvoyage.com", "firstName": "Ginger", "interests":  randomInterests(), password: "test", birthYear: 2016 - 26, gender: "female"},
             {"email": "henry@bondvoyage.com", "firstName": "Henry", "interests":  randomInterests(), password: "test", birthYear: 2016 - 14, gender: "male"},
             {"email": "irene@bondvoyage.com", "firstName": "Irene", "interests":  randomInterests(), password: "test", birthYear: 2016 - 22, gender: "female"},
@@ -243,6 +243,7 @@ Parse.Cloud.define("queryRecommendations", function(request, response) {
         console.log("searching for " + interests.length + " interests: " + interests)
         query.containsAll("interests", interests)
     }
+    query.descending("updatedAt")
 
     console.log("calling query.find")
     query.find({
@@ -284,8 +285,9 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
     if (name == undefined) {
         message = "You have received an invitation to bond over " + interests[0]
     }
+    var channel = "channel" + toId
     Parse.Push.send({
-        channels: [ toId, toId ],
+        channels: [ channel ],
         data: {
             alert: message,
             from: fromUser,
@@ -295,12 +297,13 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
     }, {
         success: function()
         {
-            console.log("Invite push notification sent")
+            console.log("Invite push notification sent to " + channel)
             response.success()
             },
         error: function(error) {
             // Handle error
-            console.log("Invite push notification failed" + error)
+            console.log("Invite push notification failed: " + error)
+            response.error(error)
             }
         });
     }

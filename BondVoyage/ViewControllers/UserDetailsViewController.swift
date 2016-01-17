@@ -23,6 +23,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var interestsView: UIView!
     @IBOutlet weak var inviteToBondButton: UIButton!
     @IBOutlet weak var interestsToTransparentViewSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var relevantInterests: [String]?
     override func viewDidLoad() {
@@ -37,11 +38,50 @@ class UserDetailsViewController: UIViewController {
 
     func configureUI() {
         self.title = "Invite"
+        if self.invitingUser != nil {
+            self.title = "Accept"
+        }
         self.inviteToBondButton.backgroundColor = UIColor.BV_primaryActionBlueColor()
         self.transparentView.backgroundColor = UIColor.clearColor()
         self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsToTransparentViewSpacingConstraint.constant = (self.nameView.bounds.height - 1) // I don't know why there is a 2 pixel gap between views
+        self.scrollViewContainer.contentMode = .ScaleAspectFill
+    }
+
+    @IBAction func inviteToBondButtonPressed(sender: UIButton) {
+        if self.selectedUser != nil {
+            var interests: [String] = []
+            if self.relevantInterests != nil {
+                interests = self.relevantInterests!
+            }
+            else if self.selectedUser!.objectForKey("interests") != nil {
+                interests = self.selectedUser!.objectForKey("interests") as! [String]
+            }
+            
+            self.activityIndicator.startAnimating()
+            self.inviteToBondButton.enabled = false
+            UserRequest.inviteUser(self.selectedUser!, interests: interests) { (success, error) -> Void in
+                self.activityIndicator.stopAnimating()
+                self.inviteToBondButton.enabled = true
+                if success {
+                    print("Success! User was invited")
+                    self.simpleAlert("Invite sent!", message: "You have sent an invitation to bond to \(self.selectedUser!.objectForKey("firstName")!)", completion: { () -> Void in
+                        self.dismiss()
+                    })
+                }
+                else {
+                    print("Error! Push failed: \(error)")
+                    self.simpleAlert("Could not invite", defaultMessage: "There was an error sending an invitation.", error: error)
+                }
+            }
+        }
+        else if self.invitingUser != nil {
+            // TODO: add UserRequest.acceptInvitation call
+            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+            controller.relevantInterests = self.relevantInterests
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 
     func configureDetailsForUser() {
@@ -72,6 +112,9 @@ class UserDetailsViewController: UIViewController {
     func configureInterestsLabel() {
         let interests = self.selectedUser.valueForKey("interests")!
         self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
+    }
+    func dismiss() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     @IBAction func pimaryActionButtonPressed(sender: UIButton) {

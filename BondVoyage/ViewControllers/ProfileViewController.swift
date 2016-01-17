@@ -266,7 +266,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         }
         
         if self.gender != nil {
-            user!.setValue(self.gender, forKey: "gender")
+            user!.setValue(self.gender!.lowercaseString, forKey: "gender")
         }
         
         if self.birthYear != nil {

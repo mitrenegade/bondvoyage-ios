@@ -43,11 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Test: seed with recommendations. Only do this once
         //RecommendationRequest.seed()
         
-        // reregister for push
-        if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
-            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-            UIApplication.sharedApplication().registerForRemoteNotifications()
+        // reenable push. for ios8, isRegisteredForRemoteNotifications doesn't get reset when the app is deleted.
+        if PFUser.currentUser() != nil && self.hasPushEnabled() {
+            self.initializeNotificationServices()
         }
         
         // Fabric
@@ -110,14 +108,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Push
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // Store the deviceToken in the current Installation and save it to Parse
-        NSNotificationCenter.defaultCenter().postNotificationName("push:enabled", object: nil)
+
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
         if PFUser.currentUser() != nil {
-            let channel: String = PFUser.currentUser()!.objectId!
+            let userId: String = PFUser.currentUser()!.objectId!
+            let channel: String = "channel\(userId)"
             installation.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
         }
         installation.saveInBackground()
+
         let channels = installation.objectForKey("channels")
         print("installation registered for remote notifications: token \(deviceToken) channel \(channels)")
     }
@@ -127,6 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("push:enable:failed", object: nil)
     }
 
+    // MARK: Push
     func hasPushEnabled() -> Bool {
         if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
             return false
@@ -144,11 +145,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-            UIApplication.sharedApplication().registerForRemoteNotifications()
+            self.initializeNotificationServices()
         }))
         self.topViewController()!.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func initializeNotificationServices() -> Void {
+        // http://www.intertech.com/Blog/push-notifications-tutorial-for-ios-9/#ixzz3xXcQVOIC
+        let settings = UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        
+        // This is an asynchronous method to retrieve a Device Token
+        // Callbacks are in AppDelegate.swift
+        // Success = didRegisterForRemoteNotificationsWithDeviceToken
+        // Fail = didFailToRegisterForRemoteNotificationsWithError
+        UIApplication.sharedApplication().registerForRemoteNotifications()
     }
     
     func warnForRemoteNotificationRegistrationFailure() {

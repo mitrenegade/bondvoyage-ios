@@ -8,6 +8,10 @@
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
+        </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -31,7 +35,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="mTs-U4-Nmb"/>
                                 </constraints>
-                                <state key="normal" title="GO"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
+                                <state key="normal" title="WHAT ELSE?"/>
                                 <connections>
                                     <action selector="didClickButton:" destination="872-2L-cS6" eventType="touchUpInside" id="spw-C6-XRc"/>
                                 </connections>
@@ -41,7 +46,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="23Q-M4-FHA"/>
                                 </constraints>
-                                <state key="normal" title="NEXT"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
+                                <state key="normal" title="LET'S GO!"/>
                                 <connections>
                                     <action selector="didClickButton:" destination="872-2L-cS6" eventType="touchUpInside" id="il4-aP-sGX"/>
                                 </connections>
@@ -87,10 +93,11 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="QEr-I7-2kV" id="SDT-uz-4BB"/>
-                        <outlet property="buttonGo" destination="ra2-1r-unE" id="cbh-C7-5RC"/>
-                        <outlet property="buttonNext" destination="00x-Cq-a5M" id="RHl-5e-oCB"/>
+                        <outlet property="buttonGo" destination="00x-Cq-a5M" id="auI-PC-JMG"/>
+                        <outlet property="buttonNext" destination="ra2-1r-unE" id="Wgn-Cz-mPu"/>
                         <outlet property="imageView" destination="6kF-ej-dsI" id="0Z1-6F-Q4e"/>
                         <outlet property="labelInfo" destination="IdX-QR-s8K" id="ojZ-Dt-fhx"/>
+                        <outlet property="viewOverlay" destination="RZi-Pe-vkv" id="6N7-2m-0i6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PsO-0G-Tiq" userLabel="First Responder" sceneMemberID="firstResponder"/>

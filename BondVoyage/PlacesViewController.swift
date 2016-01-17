@@ -13,6 +13,7 @@ import Parse
 class PlacesViewController: UIViewController {
     
     @IBOutlet weak var imageView: AsyncImageView!
+    @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var buttonGo: UIButton!
     @IBOutlet weak var buttonNext: UIButton!
@@ -38,17 +39,34 @@ class PlacesViewController: UIViewController {
     func loadRecommendation() {
         // HACK: load any recommendation
         self.activityIndicator.startAnimating()
+        self.viewOverlay.hidden = true
+        self.labelInfo.hidden = true
         var interests: [String] = []
         if self.relevantInterests != nil {
             interests = self.relevantInterests!
         }
         RecommendationRequest.recommendationsQuery(nil, interests: interests) { (results, error) -> Void in
-            self.activityIndicator.stopAnimating()
             if results != nil {
-                self.recommendations = results
-                self.refresh()
+                if results!.count == 0 {
+                    // HACK: no recommendations match given interests; return random places
+                    self.relevantInterests = nil
+                    self.loadRecommendation()
+                    return
+                }
+                else {
+                    self.activityIndicator.stopAnimating()
+                    self.viewOverlay.hidden = false
+                    self.labelInfo.hidden = false
+
+                    self.recommendations = results
+                    self.refresh()
+                }
             }
             else {
+                self.activityIndicator.stopAnimating()
+                self.viewOverlay.hidden = false
+                self.labelInfo.hidden = false
+
                 let message = "No recommendations are available for your bond."
                 self.simpleAlert("Could not load recommendations", defaultMessage: message, error: error)
             }
@@ -66,7 +84,9 @@ class PlacesViewController: UIViewController {
     }
     
     func noMoreRecommendations() {
-        self.simpleAlert("No more recommendations", defaultMessage: "We are out of recommendations. Tough luck!", error: nil)
+        self.relevantInterests = nil
+        self.loadRecommendation()
+        return
     }
 
     // MARK: - Display
@@ -93,6 +113,9 @@ class PlacesViewController: UIViewController {
     @IBAction func didClickButton(button: UIButton) {
         if button == self.buttonGo {
             print("Go")
+            self.simpleAlert("You are all set", message: "You have accepted this invitation. Have a good time!", completion: { () -> Void in
+                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            })
         }
         else if button == self.buttonNext {
             print("Next")

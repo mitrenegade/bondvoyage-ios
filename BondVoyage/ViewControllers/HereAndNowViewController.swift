@@ -62,6 +62,16 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
         self.searchResultsShowing = false
         
+        let keyboardDoneButtonView: UIToolbar = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        keyboardDoneButtonView.barStyle = UIBarStyle.Black
+        keyboardDoneButtonView.tintColor = UIColor.whiteColor()
+        let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "dismissKeyboard")
+        let search: UIBarButtonItem = UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Done, target: self, action: "search")
+        let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        keyboardDoneButtonView.setItems([close, flex, search], animated: true)
+        self.searchBar.inputAccessoryView = keyboardDoneButtonView
+        
         RecommendationRequest.recommendationsQuery(nil, interests: [], completion: { (results, error) -> Void in
             self.recommendations = results
             self.tableView.reloadData()
@@ -82,12 +92,27 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if PFUser.currentUser() != nil && !self.appDelegate().hasPushEnabled() && !self.promptedForPush {
-            self.appDelegate().registerForRemoteNotifications()
+        if PFUser.currentUser() != nil && !self.promptedForPush {
+            if !self.appDelegate().hasPushEnabled() {
+                // prompt for it
+                self.appDelegate().registerForRemoteNotifications()
+            }
+            else {
+                // reregister
+                self.appDelegate().initializeNotificationServices()
+            }
             self.promptedForPush = true
         }
     }
 
+    func dismissKeyboard() {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    func search() {
+        self.searchBarSearchButtonClicked(self.searchBar)
+    }
+    
     func displaySearchResultsViewController() {
         if !self.searchResultsShowing {
             self.searchBar.showsCancelButton = true
@@ -154,14 +179,18 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         return self.recommendations!.count
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 120
+    }
+    
     // MARK: - UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        self.simpleAlert("No events available", message: "Sorry, there are currently no events available near you.")
     }
 
     // MARK: - UISearchBarDelegate
-
+    
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let searchText: String = searchBar.text! {
             self.searchBar.resignFirstResponder()

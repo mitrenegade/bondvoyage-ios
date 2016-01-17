@@ -124,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4bw-IX-Qsq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1689" y="468"/>
+            <point key="canvasLocation" x="1758" y="725"/>
         </scene>
         <!--Itinerary-->
         <scene sceneID="ZLD-IQ-sAs">
@@ -499,29 +499,29 @@
                                 <rect key="frame" x="0.0" y="60" width="320" height="356"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nearbyEventCell" rowHeight="80" id="gC5-JE-usT" customClass="NearbyEventCell" customModule="BondVoyage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nearbyEventCell" rowHeight="120" id="gC5-JE-usT" customClass="NearbyEventCell" customModule="BondVoyage" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gC5-JE-usT" id="a9f-T3-EFh">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yLN-4m-RU1" customClass="AsyncImageView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                                 </imageView>
                                                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yW5-Y3-4QT" userLabel="View - dark overlay">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0o-Ly-QHL">
-                                                    <rect key="frame" x="112" y="0.0" width="208" height="79"/>
+                                                    <rect key="frame" x="112" y="0.0" width="208" height="119"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8X-NO-W0r">
-                                                    <rect key="frame" x="8" y="0.0" width="96" height="79"/>
+                                                    <rect key="frame" x="8" y="0.0" width="96" height="119"/>
                                                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -846,7 +846,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QCD-kG-yHn" userLabel="scrollviewcontainer" customClass="AsyncImageView">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QCD-kG-yHn" userLabel="scrollviewcontainer" customClass="AsyncImageView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="336"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epi-33-zcA">
@@ -892,8 +892,8 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIW-zh-0hw" userLabel="Name View">
-                                                <rect key="frame" x="0.0" y="275" width="320" height="72"/>
+                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tIW-zh-0hw" userLabel="Name View">
+                                                <rect key="frame" x="0.0" y="275" width="320" height="74"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gender, age" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qws-lM-nuP">
                                                         <rect key="frame" x="20" y="45" width="280" height="22"/>
@@ -963,12 +963,17 @@
                                     <action selector="pimaryActionButtonPressed:" destination="kYs-rw-dsY" eventType="touchUpInside" id="bi9-5O-Enw"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="nwl-xJ-xtJ">
+                                <rect key="frame" x="142" y="221" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="nwl-xJ-xtJ" firstAttribute="centerX" secondItem="2Pb-Ph-wM3" secondAttribute="centerX" id="1uO-jY-g37"/>
                             <constraint firstItem="QCD-kG-yHn" firstAttribute="top" secondItem="ZmY-cK-3ui" secondAttribute="bottom" id="CEr-sB-vZV"/>
                             <constraint firstItem="QCD-kG-yHn" firstAttribute="leading" secondItem="2Pb-Ph-wM3" secondAttribute="leading" id="Nme-FN-bbt"/>
                             <constraint firstAttribute="trailing" secondItem="U3f-fu-how" secondAttribute="trailing" id="OBh-rG-7js"/>
+                            <constraint firstItem="nwl-xJ-xtJ" firstAttribute="centerY" secondItem="2Pb-Ph-wM3" secondAttribute="centerY" id="UjR-dB-5yI"/>
                             <constraint firstItem="U3f-fu-how" firstAttribute="leading" secondItem="2Pb-Ph-wM3" secondAttribute="leading" id="bi0-LM-TWk"/>
                             <constraint firstItem="U3f-fu-how" firstAttribute="top" secondItem="epi-33-zcA" secondAttribute="bottom" id="dyd-xi-jKa"/>
                             <constraint firstItem="U3f-fu-how" firstAttribute="top" secondItem="QCD-kG-yHn" secondAttribute="bottom" id="fdO-zr-brK"/>
@@ -981,6 +986,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="aboutMeLabel" destination="Cv4-et-cVq" id="Jkw-Ei-hsa"/>
+                        <outlet property="activityIndicator" destination="nwl-xJ-xtJ" id="vsz-sc-lmp"/>
                         <outlet property="genderAndAgeLabel" destination="Qws-lM-nuP" id="L4D-mp-M6K"/>
                         <outlet property="interestsLabel" destination="4WX-60-BAj" id="w97-El-LBS"/>
                         <outlet property="interestsToTransparentViewSpacingConstraint" destination="e0F-mT-9I2" id="UH4-Kk-dYc"/>
@@ -994,7 +1000,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSC-O3-f06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1792" y="-590"/>
+            <point key="canvasLocation" x="1653" y="-712"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sjZ-E8-yNI">
