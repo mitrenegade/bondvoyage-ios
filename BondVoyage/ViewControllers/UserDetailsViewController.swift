@@ -22,6 +22,8 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var interestsView: UIView!
     @IBOutlet weak var inviteToBondButton: UIButton!
 
+    @IBOutlet weak var aboutMeLabel: UILabel!
+
     @IBOutlet weak var interestsToTransparentViewSpacingConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +64,21 @@ class UserDetailsViewController: UIViewController {
 
 
         let interests = self.selectedUser.valueForKey("interests")!
-        self.interestsLabel.text = "Interests: \(interests)"
+        self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
+        self.aboutMeLabel.text = "About me: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    }
+
+    private func stringFromArray(arr: Array<String>) -> String {
+        var interestsString = String()
+        for interest in arr { //TODO: this is o(n) where n time with a lot of string appending, so prob not the best way
+            if interestsString.characters.count == 0 {
+                interestsString = interest
+            } else {
+                interestsString = interestsString + ", " + interest
+            }
+        }
+        print(interestsString)
+        return interestsString
     }
 
 
