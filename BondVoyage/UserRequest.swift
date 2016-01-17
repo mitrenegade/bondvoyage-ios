@@ -50,7 +50,7 @@ class UserRequest: NSObject {
             return g.lowercaseString
         }
         
-        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interests, "gender": genderString, "age": ageRange, "number": numRange]) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interestsString, "gender": genderString, "age": ageRange, "number": numRange]) { (results, error) -> Void in
             print("results: \(results)")
             let users: [PFUser]? = results as? [PFUser]
             completion(results: users, error: error)

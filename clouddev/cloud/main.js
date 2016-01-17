@@ -285,7 +285,7 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
         message = "You have received an invitation to bond over " + interests[0]
     }
     Parse.Push.send({
-        channels: [ toId, toUserId ],
+        channels: [ toId, toId ],
         data: {
             alert: message,
             from: fromUser,
