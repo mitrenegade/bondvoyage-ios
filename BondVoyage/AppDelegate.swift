@@ -1,4 +1,4 @@
-g//
+//
 //  AppDelegate.swift
 //  BondVoyage
 //
@@ -105,7 +105,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("push:enabled", object: nil)
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
-        installation.addUniqueObject("bondvoyage", forKey: "channels") // subscribe to trainers channel
+        if PFUser.currentUser() != nil {
+            let channel: String = PFUser.currentUser()!.objectId!
+            installation.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
+        }
         installation.saveInBackground()
         let channels = installation.objectForKey("channels")
         print("installation registered for remote notifications: token \(deviceToken) channel \(channels)")
