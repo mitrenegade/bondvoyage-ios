@@ -29,6 +29,10 @@ class UserDetailsViewController: UIViewController {
         super.viewDidLoad()
         self.configureDetailsForUser()
         self.configureUI()
+
+        if self.invitingUser != nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+        }
     }
 
     func configureUI() {
