@@ -260,6 +260,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         PFUser.logInWithUsernameInBackground(self.loginEmail!, password: self.loginPassword!) { (user, error) -> Void in
             if user != nil {
                 // login successful
+                self.appDelegate().logUser()
                 self.close()
             }
             else {
@@ -276,6 +277,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         user.signUpInBackgroundWithBlock { (success, error) -> Void in
             if success {
                 print("User signed up successfully")
+                self.appDelegate().logUser()
                 self.performSegueWithIdentifier("SignupToProfile", sender: nil)
             }
             else {

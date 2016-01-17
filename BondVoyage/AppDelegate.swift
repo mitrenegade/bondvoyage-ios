@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Fabric
         Fabric.with([Crashlytics.self])
 
+        if PFUser.currentUser() != nil {
+            self.logUser()
+        }
         return true
     }
 
@@ -70,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: - Controller stack
     func topViewController() -> UIViewController? {
         if UIApplication.sharedApplication().keyWindow == nil {
             return nil
@@ -163,6 +167,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    // MARK: - Logging/analytics
+    func logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        if PFUser.currentUser() == nil {
+            return
+        }
+        
+        let user: PFUser = PFUser.currentUser()!
+        if user.email != nil {
+            Crashlytics.sharedInstance().setUserEmail(user.email!)
+        }
+        else if self.isValidEmail(user.username!) {
+            Crashlytics.sharedInstance().setUserEmail(user.username!)
+        }
+        
+        if user.objectId != nil {
+            Crashlytics.sharedInstance().setUserIdentifier(user.objectId!)
+        }
+        
+        if let name: String = user.valueForKey("firstName") as? String {
+            Crashlytics.sharedInstance().setUserName(name)
+        }
+    }
+    
+    // MARK: - Invitation notification
     func goToInvited(info: [NSObject: AnyObject]) {
         let userDict: [NSObject: AnyObject] = info["from"] as! [NSObject: AnyObject]
         let interests: [String] = info["interests"] as! [String]
@@ -185,6 +215,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Invalid user")
             }
         }
+    }
+    
+    // MARK: - Utils
+    func isValidEmail(testStr:String) -> Bool {
+        // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr)
     }
 }
 

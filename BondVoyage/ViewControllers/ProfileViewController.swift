@@ -285,6 +285,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                     })
                 }
 
+                self.appDelegate().logUser()
                 self.close()
             }
             else {
