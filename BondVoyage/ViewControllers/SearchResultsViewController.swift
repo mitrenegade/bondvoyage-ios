@@ -287,6 +287,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if PFUser.currentUser() == nil {
+            self.simpleAlert("Log in?", message: "Log in or create an account to view someone's profile")
+            return
+        }
+        
         let user = users![indexPath.row]
         let hereAndNowVC = self.parentViewController as! HereAndNowViewController
         hereAndNowVC.selectedUser = user
