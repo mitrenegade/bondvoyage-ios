@@ -67,6 +67,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     var selectedUser: PFUser?
     var recommendations: [PFObject]?
     
+    var promptedForPush: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,10 +81,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.recommendations = results
             self.tableView.reloadData()
         })
-
-        if PFUser.currentUser() != nil && !self.appDelegate().hasPushEnabled() {
-            self.appDelegate().registerForRemoteNotifications()
-        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -93,6 +91,15 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
         else {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if PFUser.currentUser() != nil && !self.appDelegate().hasPushEnabled() && !self.promptedForPush {
+            self.appDelegate().registerForRemoteNotifications()
+            self.promptedForPush = true
         }
     }
 
