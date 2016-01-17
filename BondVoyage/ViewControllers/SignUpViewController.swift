@@ -198,10 +198,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 
         self.view.layoutIfNeeded()
 
-        let view: UIView = self.currentInput!.superview!
-        var rect: CGRect = view.frame
-        rect.origin.y = view.superview!.frame.origin.y
-        self.scrollView.scrollRectToVisible(rect, animated: true)
+        if self.currentInput != nil {
+            let view: UIView = self.currentInput!.superview!
+            var rect: CGRect = view.frame
+            rect.origin.y = view.superview!.frame.origin.y
+            self.scrollView.scrollRectToVisible(rect, animated: true)
+        }
     }
     
     func keyboardWillHide(n: NSNotification) {
