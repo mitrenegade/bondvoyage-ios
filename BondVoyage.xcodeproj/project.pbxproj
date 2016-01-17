@@ -41,6 +41,7 @@
 		E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* RangeFilterView.swift */; };
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
 		E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */; };
+		E5CD98F61C4C40820058CABD /* AcceptInvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CD98F51C4C40820058CABD /* AcceptInvitationViewController.swift */; };
 		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
 		E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */; };
 		E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */; };
@@ -106,6 +107,7 @@
 		E5C836661C38BEF5003BD54F /* RangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeFilterView.swift; path = Views/RangeFilterView.swift; sourceTree = "<group>"; };
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
 		E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BVColors.swift"; sourceTree = "<group>"; };
+		E5CD98F51C4C40820058CABD /* AcceptInvitationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AcceptInvitationViewController.swift; path = ViewControllers/AcceptInvitationViewController.swift; sourceTree = "<group>"; };
 		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
 				E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */,
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
+				E5CD98F51C4C40820058CABD /* AcceptInvitationViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
+				E5CD98F61C4C40820058CABD /* AcceptInvitationViewController.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
 				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,

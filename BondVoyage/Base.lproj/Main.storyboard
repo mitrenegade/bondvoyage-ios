@@ -939,9 +939,6 @@
                                 <state key="normal" title="INVITE TO BOND">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="inviteToBondButtonPressed:" destination="kYs-rw-dsY" eventType="touchUpInside" id="70S-L0-WEG"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
