@@ -8,51 +8,56 @@
 
 import UIKit
 import Parse
+import AsyncImageView
 
 class UserDetailsViewController: UIViewController {
 
+    var selectedUser: PFUser!
+    @IBOutlet weak var scrollViewContainer: AsyncImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
-    
-    @IBOutlet weak var buttonInvite: UIButton!
-    
-    var selectedUser: PFUser!
-    var invitingUser: PFUser!
+    @IBOutlet weak var aboutMeLabel: UILabel!
+    @IBOutlet weak var transparentView: UIView!
+    @IBOutlet weak var nameView: UIView!
+    @IBOutlet weak var interestsView: UIView!
+    @IBOutlet weak var inviteToBondButton: UIButton!
+    @IBOutlet weak var interestsToTransparentViewSpacingConstraint: NSLayoutConstraint!
+
     var relevantInterests: [String]?
-    
-    @IBOutlet weak var scrollViewContainer: UIView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.title = "INVITE"
-        
-        if self.invitingUser != nil {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
-        }
-        
-        // configure invite
-        if self.invitingUser != nil {
-            self.buttonInvite.setTitle("ACCEPT INVITATION", forState: .Normal)
-        }
-        else {
-            self.configureDetailsForUser()
-        }
+        self.configureDetailsForUser()
+        self.configureUI()
     }
 
-    override func viewWillAppear(animated: Bool) {
-//        self.automaticallyAdjustsScrollViewInsets = true; // this doesn't solve the problem
-
-        // TODO: this view is pushed from an embedded view controller, and therefore will take the height of its container view. Therefore, there is a giant white gap that is the height of the navigation bar + search bar in the hereandnow viewcontroller that embedded the view controller. Must figure out a way to get around this--either by reconstraining the top of the scroll view to the navigation bar's bottom in view will appear (doesnt work because the scroll view and the nav bar are in different hierarchies), or making the constant of the scroll view's top constraint to the difference between the containerview and the top layout guide in the parent vc that embedded them. no other ways come to mind so far but i'm sure they exist
-
-        //self.scrollViewContainer.topAnchor.constraintEqualToAnchor(self.navigationController?.navigationBar.topAnchor).active = true
-
-        // the above doesnt work because the nav bar and the scroll view is in a diff hierarchy, the constraint cannot be done
+    func configureUI() {
+        self.title = "Invite"
+        self.inviteToBondButton.backgroundColor = UIColor.BV_primaryActionBlueColor()
+        self.transparentView.backgroundColor = UIColor.clearColor()
+        self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
+        self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
+        self.interestsToTransparentViewSpacingConstraint.constant = (self.nameView.bounds.height - 1) // I don't know why there is a 2 pixel gap between views
     }
 
     func configureDetailsForUser() {
+        if let photoURL: String = selectedUser.valueForKey("photoUrl") as? String {
+            self.scrollViewContainer.imageURL = NSURL(string: photoURL)
+        }
+        else {
+            self.scrollViewContainer.image = UIImage(named: "profile-icon")
+        }
+
         let firstName = self.selectedUser.valueForKey("firstName")!
         self.nameLabel.text = "\(firstName)"
+
+        let currentYear = components.year
+        let age = currentYear - (self.selectedUser.valueForKey("birthYear") as! Int)
+        self.genderAndAgeLabel.text = "\(self.selectedUser.valueForKey("gender")!), age: \(age)"
+
+        self.configureInterestsLabel()
+
+        self.aboutMeLabel.text = "About me: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
 
     func close() {
@@ -60,8 +65,13 @@ class UserDetailsViewController: UIViewController {
         self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // MARK: - Invite to bond
-    @IBAction func didClickInvite(sender: UIButton) {
+    func configureInterestsLabel() {
+        let interests = self.selectedUser.valueForKey("interests")!
+        self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
+    }
+
+    @IBAction func pimaryActionButtonPressed(sender: UIButton) {
+        print("User pressed invite to bond")
         if self.selectedUser != nil {
             var interests: [String] = []
             if self.relevantInterests != nil {
@@ -88,4 +98,17 @@ class UserDetailsViewController: UIViewController {
         }
     }
 
+    // MARK: - Helper Methods
+
+    func stringFromArray(arr: Array<String>) -> String {
+        var interestsString = String()
+        for interest in arr {
+            if interestsString.characters.count == 0 {
+                interestsString = interest
+            } else {
+                interestsString = interestsString + ", " + interest
+            }
+        }
+        return interestsString
+    }
 }

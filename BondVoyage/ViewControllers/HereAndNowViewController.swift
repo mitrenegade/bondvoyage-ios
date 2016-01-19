@@ -57,7 +57,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // configure search bar
         self.searchBar.delegate = self;
 
@@ -221,7 +220,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // MARK: SearchResultsDelegate
 
-    func showUserDetails() {
+    func showUserDetails(user:PFUser?) {
+        self.selectedUser = user
         self.performSegueWithIdentifier("showUserDetailsSegue", sender: self)
     }
     
