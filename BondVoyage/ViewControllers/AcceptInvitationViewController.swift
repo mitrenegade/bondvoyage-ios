@@ -20,7 +20,7 @@ class AcceptInvitationViewController: UserDetailsViewController {
         self.interestsLabel.text = "Wants to bond over: \(stringFromArray(interests as! Array<String>))"
     }
 
-    override func pimaryActionButtonPressed(sender: UIButton) {
+    @IBAction override func pimaryActionButtonPressed(sender: UIButton) {
         print("User pressed accept invitation to bond")
     }
 
