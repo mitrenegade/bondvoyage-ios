@@ -12,7 +12,9 @@ import AsyncImageView
 
 class UserDetailsViewController: UIViewController {
 
-    var selectedUser: PFUser!
+    var selectedUser: PFUser?
+    var invitingUser: PFUser?
+    
     @IBOutlet weak var scrollViewContainer: AsyncImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
@@ -30,27 +32,76 @@ class UserDetailsViewController: UIViewController {
         super.viewDidLoad()
         self.configureDetailsForUser()
         self.configureUI()
-
-        if self.invitingUser != nil {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
-        }
     }
 
     func configureUI() {
         self.title = "Invite"
-        if self.invitingUser != nil {
-            self.title = "Accept"
-        }
         self.inviteToBondButton.backgroundColor = UIColor.BV_primaryActionBlueColor()
         self.transparentView.backgroundColor = UIColor.clearColor()
         self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
-        self.interestsToTransparentViewSpacingConstraint.constant = (self.nameView.bounds.height - 1) // I don't know why there is a 2 pixel gap between views
+        self.interestsToTransparentViewSpacingConstraint.constant = self.nameView.bounds.height // I don't know why there is a 2 pixel gap between views
         self.scrollViewContainer.contentMode = .ScaleAspectFill
+        
+        if self.invitingUser != nil {
+            self.title = "Accept"
+            self.inviteToBondButton.setTitle("ACCEPT INVITATION", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+        }
     }
 
-    @IBAction func inviteToBondButtonPressed(sender: UIButton) {
+    func configureDetailsForUser() {
+        var user: PFUser? = selectedUser
+        if self.selectedUser == nil {
+            user = self.invitingUser
+        }
+        if user == nil {
+            return
+        }
+        
+        if let photoURL: String = user!.valueForKey("photoUrl") as? String {
+            self.scrollViewContainer.imageURL = NSURL(string: photoURL)
+        }
+        else {
+            self.scrollViewContainer.image = UIImage(named: "profile-icon")
+        }
+
+        let firstName = user!.valueForKey("firstName")!
+        self.nameLabel.text = "\(firstName)"
+
+        let currentYear = components.year
+        let age = currentYear - (user!.valueForKey("birthYear") as! Int)
+        self.genderAndAgeLabel.text = "\(user!.valueForKey("gender")!), age: \(age)"
+
+        self.configureInterestsLabel()
+
+        self.aboutMeLabel.text = "About me: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    }
+
+    func configureInterestsLabel() {
+        var user: PFUser? = selectedUser
+        if self.selectedUser == nil {
+            user = self.invitingUser
+        }
+        if user == nil {
+            return
+        }
+
+        let interests = user!.valueForKey("interests")!
         if self.selectedUser != nil {
+            self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
+        }
+        else {
+            self.interestsLabel.text = "Wants to bond over: \(stringFromArray(interests as! Array<String>))"
+        }
+    }
+    func dismiss() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+
+    @IBAction func pimaryActionButtonPressed(sender: UIButton) {
+        if self.selectedUser != nil {
+            print("User pressed invite to bond")
             var interests: [String] = []
             if self.relevantInterests != nil {
                 interests = self.relevantInterests!
@@ -76,32 +127,13 @@ class UserDetailsViewController: UIViewController {
                 }
             }
         }
-        else if self.invitingUser != nil {
+        else {
+            print("User pressed accept invitation to bond")
             // TODO: add UserRequest.acceptInvitation call
             let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
             controller.relevantInterests = self.relevantInterests
             self.navigationController?.pushViewController(controller, animated: true)
         }
-    }
-
-    func configureDetailsForUser() {
-        if let photoURL: String = selectedUser.valueForKey("photoUrl") as? String {
-            self.scrollViewContainer.imageURL = NSURL(string: photoURL)
-        }
-        else {
-            self.scrollViewContainer.image = UIImage(named: "profile-icon")
-        }
-
-        let firstName = self.selectedUser.valueForKey("firstName")!
-        self.nameLabel.text = "\(firstName)"
-
-        let currentYear = components.year
-        let age = currentYear - (self.selectedUser.valueForKey("birthYear") as! Int)
-        self.genderAndAgeLabel.text = "\(self.selectedUser.valueForKey("gender")!), age: \(age)"
-
-        self.configureInterestsLabel()
-
-        self.aboutMeLabel.text = "About me: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
 
     func close() {
@@ -109,42 +141,6 @@ class UserDetailsViewController: UIViewController {
         self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func configureInterestsLabel() {
-        let interests = self.selectedUser.valueForKey("interests")!
-        self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
-    }
-    func dismiss() {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-
-    @IBAction func pimaryActionButtonPressed(sender: UIButton) {
-        print("User pressed invite to bond")
-        if self.selectedUser != nil {
-            var interests: [String] = []
-            if self.relevantInterests != nil {
-                interests = self.relevantInterests!
-            }
-            else if self.selectedUser!.objectForKey("interests") != nil {
-                interests = self.selectedUser!.objectForKey("interests") as! [String]
-            }
-            
-            UserRequest.inviteUser(self.selectedUser, interests: interests) { (success, error) -> Void in
-                if success {
-                    print("Success! User was invited")
-                }
-                else {
-                    print("Error! Push failed: \(error)")
-                }
-            }
-        }
-        else if self.invitingUser != nil {
-            // TODO: add UserRequest.acceptInvitation call
-            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
-            controller.relevantInterests = self.relevantInterests
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-    }
-
     // MARK: - Helper Methods
 
     func stringFromArray(arr: Array<String>) -> String {
