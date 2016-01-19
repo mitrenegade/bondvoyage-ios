@@ -20,17 +20,17 @@ class NearbyEventCell: UITableViewCell {
     }
 }
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, SearchResultsDelegate {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool!
+    var selectedUser: PFUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // configure search bar
         self.searchBar.delegate = self;
 
@@ -79,8 +79,13 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "embedSearchResultsVCSegue") {
+        if segue.identifier == "embedSearchResultsVCSegue" {
             self.searchResultsVC = segue.destinationViewController as! SearchResultsViewController
+            self.searchResultsVC.delegate = self
+        }
+        else if segue.identifier == "showUserDetailsSegue" {
+            let userDetailsVC = segue.destinationViewController as! UserDetailsViewController
+            userDetailsVC.selectedUser = self.selectedUser
         }
     }
 
@@ -154,4 +159,12 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
         self.presentViewController(nav, animated: true, completion: nil)
     }
+
+    // MARK: SearchResultsDelegate
+
+    func showUserDetails() {
+        self.performSegueWithIdentifier("showUserDetailsSegue", sender: self)
+    }
+
+
 }

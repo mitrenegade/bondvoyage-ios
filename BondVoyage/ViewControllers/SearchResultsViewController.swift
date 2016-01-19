@@ -10,10 +10,15 @@ import UIKit
 import Parse
 import AsyncImageView
 
-let kSearchResultCellIdentifier = "searchResultCell"
+protocol SearchResultsDelegate {
+    func showUserDetails()
+}
+
 let date = NSDate()
 let calendar = NSCalendar.currentCalendar()
 let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+
+let kSearchResultCellIdentifier = "searchResultCell"
 
 class UserSearchResultCell: UITableViewCell {
 
@@ -25,7 +30,7 @@ class UserSearchResultCell: UITableViewCell {
     func configureCellForUser(user: PFUser) {
         let currentYear = components.year
         let age = currentYear - (user.valueForKey("birthYear") as! Int)
-        
+
         var name: String? = user.valueForKey("firstName") as? String
         if name == nil {
             name = user.valueForKey("lastName") as? String
@@ -48,7 +53,7 @@ class UserSearchResultCell: UITableViewCell {
             }
         }
         self.infoLabel.text = info
-        
+
         if let photoURL: String = user.valueForKey("photoUrl") as? String {
             self.profileImage.imageURL = NSURL(string: photoURL)
         }
@@ -79,11 +84,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var genderFilterView: GenderFilterView!
     @IBOutlet weak var groupSizeFilterView: GroupSizeFilterView!
     @IBOutlet weak var ageRangeFilterView: AgeRangeFilterView!
-    
+
     @IBOutlet weak var genderViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var groupSizeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var ageRangeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewTopSpacingConstraint: NSLayoutConstraint!
+
+    var delegate: SearchResultsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,10 +110,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.genderFilterView.configure(GenderPrefs.Male)
             self.configuredFilters = true
         }
-        
+
         self.loadPreferences()
     }
-    
+
     // MARK: - Preferences
     func loadPreferences() {
         if PFUser.currentUser() != nil {
@@ -128,10 +135,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
     }
-    
+
     func refresh() {
         if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
-            
+
             // gender preferences
             if let genderPrefs: [String] = prefObject.objectForKey("gender") as? [String] {
                 if genderPrefs.count == 1 {
@@ -141,7 +148,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                     self.genderFilterView.setSliderSelection(GenderPrefs.All.rawValue)
                 }
             }
-            
+
             // age preferences
             var ageMin = Int(self.ageRangeFilterView.rangeSlider!.minimumValue)
             var ageMax = Int(self.ageRangeFilterView.rangeSlider!.maximumValue)
@@ -152,7 +159,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 ageMax = upper
             }
             self.ageRangeFilterView.setSliderValues(lower: ageMin, upper: ageMax)
-            
+
             // group size preferences
             var groupMin = Int(self.groupSizeFilterView.rangeSlider!.minimumValue)
             var groupMax = Int(self.groupSizeFilterView.rangeSlider!.maximumValue)
@@ -165,13 +172,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.groupSizeFilterView.setSliderValues(lower: groupMin, upper: groupMax)
         }
     }
-    
+
     func enableButtons(enabled: Bool) {
         for button: UIButton in [self.genderButton, self.ageRangeButton, self.groupSizeButton] {
             button.enabled = enabled
         }
     }
-    
+
     // MARK: Filter View Methods
 
     @IBAction func filterButtonPressed(sender: UIButton) {
@@ -194,9 +201,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 
     func toggleFilterView(filterToOpen: BaseFilterView) {
         self.enableButtons(false)
-        
+
         // If there is no filter open at all, simply open filterToOpen.
-        
+
         if self.currentFilterView == nil {
             self.openFilterViewWithCompletion(filterToOpen, completion: { () -> Void in
                 self.enableButtons(true)
@@ -271,7 +278,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        let user = users![indexPath.row]
+        let hereAndNowVC = self.parentViewController as! HereAndNowViewController
+        hereAndNowVC.selectedUser = user
+        self.delegate?.showUserDetails()
     }
 
     // MARK: - UITableViewDataSource
@@ -298,12 +308,4 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             return 0
         }
     }
-
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
 }
