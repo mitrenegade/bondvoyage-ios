@@ -11,7 +11,7 @@ import Parse
 import AsyncImageView
 
 protocol SearchResultsDelegate {
-    func showUserDetails()
+    func showUserDetails(user: PFUser?)
 }
 
 let date = NSDate()
@@ -279,9 +279,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let user = users![indexPath.row]
-        let hereAndNowVC = self.parentViewController as! HereAndNowViewController
-        hereAndNowVC.selectedUser = user
-        self.delegate?.showUserDetails()
+        self.delegate?.showUserDetails(user)
     }
 
     // MARK: - UITableViewDataSource
