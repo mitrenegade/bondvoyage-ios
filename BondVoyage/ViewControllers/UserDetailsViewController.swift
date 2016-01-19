@@ -28,8 +28,6 @@ class UserDetailsViewController: UIViewController {
         super.viewDidLoad()
         self.configureDetailsForUser()
         self.configureUI()
-
-        self.inviteToBondButton.addTarget(self, action:"primaryActionButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
     }
 
     func configureUI() {
@@ -66,7 +64,7 @@ class UserDetailsViewController: UIViewController {
         self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
     }
 
-    func pimaryActionButtonPressed(sender: UIButton) {
+    @IBAction func pimaryActionButtonPressed(sender: UIButton) {
         print("User pressed invite to bond")
     }
 
