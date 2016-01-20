@@ -54,7 +54,7 @@
                                     <constraint firstAttribute="height" constant="188" id="w2V-Qg-zDR"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="nlK-It-8RX" kind="embed" id="luc-9X-1pT"/>
+                                    <segue destination="nlK-It-8RX" kind="embed" identifier="embedCategoriesVCSegue" id="luc-9X-1pT"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgF-1w-5sR" userLabel="Container View - search results">
@@ -89,7 +89,6 @@
                     <size key="freeformSize" width="320" height="480"/>
                     <connections>
                         <outlet property="constraintCategoriesHeight" destination="w2V-Qg-zDR" id="fbb-tr-6Hb"/>
-                        <outlet property="containerView" destination="dgF-1w-5sR" id="eEs-bb-McD"/>
                         <outlet property="searchBar" destination="NuS-UK-IwL" id="kXE-Zh-j7b"/>
                         <segue destination="kYs-rw-dsY" kind="show" identifier="showUserDetailsSegue" id="js8-my-0Iq"/>
                     </connections>
@@ -402,10 +401,10 @@
             </objects>
             <point key="canvasLocation" x="882" y="-163"/>
         </scene>
-        <!--View Controller-->
+        <!--Search Categories View Controller-->
         <scene sceneID="6gJ-Dq-l1d">
             <objects>
-                <viewController id="nlK-It-8RX" sceneMemberID="viewController">
+                <viewController id="nlK-It-8RX" customClass="SearchCategoriesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vZK-4f-cFT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="188"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -449,6 +448,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="nlK-It-8RX" id="yu7-67-CVG"/>
+                                    <outlet property="delegate" destination="nlK-It-8RX" id="7ig-eJ-Gpe"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -459,6 +462,9 @@
                             <constraint firstAttribute="bottom" secondItem="rkZ-Ko-YNH" secondAttribute="bottom" id="gg4-h8-RRn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="rkZ-Ko-YNH" id="h77-GQ-6VD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyO-cw-yHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

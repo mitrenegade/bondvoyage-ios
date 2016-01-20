@@ -12,16 +12,16 @@ import AsyncImageView
 
 let kSearchResultsViewControllerID = "searchResultsViewControllerID"
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, SearchResultsDelegate {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchResultsDelegate {
 
-    // search dropdown
+    // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
+    var categoriesVC: SearchCategoriesViewController!
     
-    @IBOutlet weak var containerView: UIView!
+    // search results
     @IBOutlet weak var searchBar: UISearchBar!
     var interests: [String]?
     var searchResultsVC: SearchResultsViewController!
-    var searchResultsShowing: Bool!
     var selectedUser: PFUser?
     var recommendations: [PFObject]?
     
@@ -31,23 +31,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         super.viewDidLoad()
         // configure search bar
         self.searchBar.delegate = self;
-
-        self.searchResultsShowing = false
         
-        let keyboardDoneButtonView: UIToolbar = UIToolbar()
-        keyboardDoneButtonView.sizeToFit()
-        keyboardDoneButtonView.barStyle = UIBarStyle.Black
-        keyboardDoneButtonView.tintColor = UIColor.whiteColor()
-        let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "dismissKeyboard")
-        let search: UIBarButtonItem = UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Done, target: self, action: "search")
-        let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        keyboardDoneButtonView.setItems([close, flex, search], animated: true)
-        self.searchBar.inputAccessoryView = keyboardDoneButtonView
-        
-        RecommendationRequest.recommendationsQuery(nil, interests: [], completion: { (results, error) -> Void in
-            self.recommendations = results
-            self.tableView.reloadData()
-        })
+        self.constraintCategoriesHeight.constant = 0
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -59,6 +44,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         else {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
         }
+
+        self.constraintCategoriesHeight.constant = 0
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -86,39 +73,24 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func displaySearchResultsViewController() {
-        if !self.searchResultsShowing {
-            self.searchBar.showsCancelButton = true
-            self.containerView.alpha = 0
-            self.view.bringSubviewToFront(self.containerView)
-            UIView.animateWithDuration(0.15,
-                animations: { () -> Void in
-                    self.containerView.alpha = 1
-                },
-                completion: { (Bool) -> Void in
-                    self.searchResultsShowing = true
-                }
-            )
-        }
+        self.searchBar.showsCancelButton = true
+        self.constraintCategoriesHeight.constant = 200
     }
 
     func removeSearchResultsViewController() {
+        self.searchBar.resignFirstResponder()
+        self.constraintCategoriesHeight.constant = 0
         self.searchBar.showsCancelButton = false
         self.searchBar.text = ""
-        UIView.animateWithDuration(0.18,
-            animations: { () -> Void in
-                self.containerView.alpha = 0
-            },
-            completion: { (Bool) -> Void in
-                self.view.bringSubviewToFront(self.tableView)
-                self.searchResultsShowing = false
-            }
-        )
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "embedSearchResultsVCSegue" {
             self.searchResultsVC = segue.destinationViewController as! SearchResultsViewController
             self.searchResultsVC.delegate = self
+        }
+        else if segue.identifier == "embedCategoriesVCSegue" {
+            self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
         }
         else if segue.identifier == "showUserDetailsSegue" {
             let userDetailsVC = segue.destinationViewController as! UserDetailsViewController
@@ -138,9 +110,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                     return i.lowercaseString
                 }
             }
-            let genderPrefs: [String] = self.searchResultsVC.genderPrefs()
-            let agePrefs: [Int] = self.searchResultsVC.agePrefs()
-            UserRequest.userQuery(self.interests!, genderPref: genderPrefs, ageRange: agePrefs, numRange: [], completion: { (results, error) -> Void in
+            UserRequest.userQuery(self.interests!, genderPref: [], ageRange: [], numRange: [], completion: { (results, error) -> Void in
                 if error != nil {
                     print("ERROR: \(error)")
                 }
@@ -158,12 +128,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.removeSearchResultsViewController()
-        self.searchBar.resignFirstResponder()
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        //self.removeSearchResultsViewController()
-        self.searchBar.resignFirstResponder()
+        self.removeSearchResultsViewController()
     }
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
