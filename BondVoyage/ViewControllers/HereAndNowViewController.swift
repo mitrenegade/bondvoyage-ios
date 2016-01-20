@@ -11,42 +11,14 @@ import Parse
 import AsyncImageView
 
 let kSearchResultsViewControllerID = "searchResultsViewControllerID"
-let kNearbyEventCellIdentifier = "nearbyEventCell"
-
-class NearbyEventCell: UITableViewCell {
-    @IBOutlet weak var viewImage: AsyncImageView!
-    @IBOutlet weak var labelTitle: UILabel!
-    @IBOutlet weak var labelInfo: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    func configureCellForNearbyEvent(recommendation: PFObject) {
-        // TODO: set the image
-        // TODO: set the label with activity name
-        
-        if let url: String = recommendation.objectForKey("imageURL") as? String {
-            self.viewImage.imageURL = NSURL(string: url)
-        }
-        else if let image: PFFile = recommendation.objectForKey("image") as? PFFile {
-            self.viewImage.imageURL = NSURL(string: image.url!)
-        }
-        
-        if let title: String = recommendation.objectForKey("name") as? String {
-            self.labelTitle.text = title
-        }
-        if let description: String = recommendation.objectForKey("description") as? String {
-            self.labelInfo.text = description
-        }
-    }
-}
 
 class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, SearchResultsDelegate {
 
+    // search dropdown
+    @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
+    
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
     var interests: [String]?
     var searchResultsVC: SearchResultsViewController!
     var searchResultsShowing: Bool!
@@ -153,40 +125,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             userDetailsVC.selectedUser = self.selectedUser
             userDetailsVC.relevantInterests = self.interests
         }
-    }
-
-    // MARK: - UITableViewDataSource
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kNearbyEventCellIdentifier)! as! NearbyEventCell
-        cell.adjustTableViewCellSeparatorInsets(cell)
-        
-        let recommendation: PFObject = self.recommendations![indexPath.row]
-        cell.configureCellForNearbyEvent(recommendation)
-        cell.layoutSubviews()
-        
-        return cell
-    }
-
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.recommendations == nil {
-            return 0
-        }
-        return self.recommendations!.count
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 120
-    }
-    
-    // MARK: - UITableViewDelegate
-
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.simpleAlert("No events available", message: "Sorry, there are currently no events available near you.")
     }
 
     // MARK: - UISearchBarDelegate
