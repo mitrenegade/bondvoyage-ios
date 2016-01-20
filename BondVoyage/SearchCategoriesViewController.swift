@@ -139,5 +139,12 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             expanded[indexPath.section] = !expanded[indexPath.section]
             self.tableView.reloadData()
         }
+        else {
+            self.goToMatch()
+        }
+    }
+    
+    func goToMatch() {
+        self.performSegueWithIdentifier("GoToMatch", sender: nil)
     }
 }

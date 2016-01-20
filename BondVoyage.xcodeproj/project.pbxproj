@@ -13,6 +13,8 @@
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
 		8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */; };
 		8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */; };
+		8EA047CD1C4FDDE200CCCAC3 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CC1C4FDDE200CCCAC3 /* MatchViewController.swift */; };
+		8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */; };
 		8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADA1C440B15002DDA70 /* BVSlider.swift */; };
 		8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */; };
 		8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */; };
@@ -73,6 +75,8 @@
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
 		8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCategoriesViewController.swift; sourceTree = "<group>"; };
+		8EA047CC1C4FDDE200CCCAC3 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
+		8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		8EBEDADA1C440B15002DDA70 /* BVSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVSlider.swift; sourceTree = "<group>"; };
 		8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderFilterView.swift; sourceTree = "<group>"; };
 		8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeRangeFilterView.swift; sourceTree = "<group>"; };
@@ -162,6 +166,15 @@
 				8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */,
 			);
 			name = Places;
+			sourceTree = "<group>";
+		};
+		8EA047CB1C4FDD7A00CCCAC3 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
+				E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */,
+			);
+			name = Old;
 			sourceTree = "<group>";
 		};
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
@@ -268,6 +281,7 @@
 		E5C836651C38BEC1003BD54F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */,
 				8EBEDADA1C440B15002DDA70 /* BVSlider.swift */,
 				E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */,
 				E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */,
@@ -296,9 +310,9 @@
 			children = (
 				8E507B521C4AB7960019FF19 /* Places */,
 				C518526B1C341A9E00EA2328 /* Settings */,
-				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
+				8EA047CB1C4FDD7A00CCCAC3 /* Old */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
-				E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */,
+				8EA047CC1C4FDDE200CCCAC3 /* MatchViewController.swift */,
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 			);
 			name = ViewControllers;
@@ -534,6 +548,7 @@
 				C5E0943A1C37236B00CABC51 /* InterestsViewController.swift in Sources */,
 				E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
+				8EA047CD1C4FDDE200CCCAC3 /* MatchViewController.swift in Sources */,
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
 				8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */,
 				8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */,
@@ -543,6 +558,7 @@
 				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,
 				E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */,
 				C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */,
+				8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */,
 				C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */,
 				8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */,
 			);

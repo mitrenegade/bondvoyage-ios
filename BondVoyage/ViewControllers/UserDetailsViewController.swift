@@ -23,7 +23,6 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var nameView: UIView!
     @IBOutlet weak var interestsView: UIView!
-    @IBOutlet weak var inviteToBondButton: UIButton!
     @IBOutlet weak var interestsToTransparentViewSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
@@ -36,7 +35,6 @@ class UserDetailsViewController: UIViewController {
 
     func configureUI() {
         self.title = "Invite"
-        self.inviteToBondButton.backgroundColor = UIColor.BV_primaryActionBlueColor()
         self.transparentView.backgroundColor = UIColor.clearColor()
         self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
@@ -45,7 +43,6 @@ class UserDetailsViewController: UIViewController {
         
         if self.invitingUser != nil {
             self.title = "Accept"
-            self.inviteToBondButton.setTitle("ACCEPT INVITATION", forState: .Normal)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
         }
     }
@@ -111,10 +108,8 @@ class UserDetailsViewController: UIViewController {
             }
             
             self.activityIndicator.startAnimating()
-            self.inviteToBondButton.enabled = false
             UserRequest.inviteUser(self.selectedUser!, interests: interests) { (success, error) -> Void in
                 self.activityIndicator.stopAnimating()
-                self.inviteToBondButton.enabled = true
                 if success {
                     print("Success! User was invited")
                     self.simpleAlert("Invite sent!", message: "You have sent an invitation to bond to \(self.selectedUser!.objectForKey("firstName")!)", completion: { () -> Void in
