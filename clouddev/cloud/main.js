@@ -313,8 +313,8 @@ Parse.Cloud.define("createMatchRequest", function(request, response) {
     var Match = Parse.Object.extend("Match")
     for(var i=0; i < dicts.length; i++) {
         var match = new Match(dict)
-        match.set(user: request.user)
-        match.set(categories: request.params.categories)
+        match.set(user, request.user)
+        match.set(categories, request.params.categories)
 
         // todo: time, location
 
@@ -340,10 +340,10 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     if (categories.length > 0) {
         categories = categories.map(toLowerCase)
         console.log("searching for " + categories.length + " categories: " + categories)
-        query.containsAll("categories", interests)
+        query.containsAll("categories", categories)
     }
     query.descending("updatedAt")
-    query.not("user": request.user)
+    query.notEqualTo("user", request.user)
 
     console.log("calling query.find")
     query.find({

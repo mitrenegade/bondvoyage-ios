@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class MatchViewController: UIViewController {
     
@@ -19,14 +20,19 @@ class MatchViewController: UIViewController {
     @IBOutlet weak var containerUser: UIView!
     var userController: UserDetailsViewController!
     
+    var category: String?
+    
+    var matches: [PFObject]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.containerUser.hidden = true
-        self.progressView.startActivity()
         
         self.labelText.text = "Search for matches"
+        
+        self.loadMatches()
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +49,49 @@ class MatchViewController: UIViewController {
         }
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    func refresh() {
+        if self.matches == nil {
+            self.containerUser.hidden = true
+        }
+        else if self.matches!.count == 0 {
+            self.containerUser.hidden = true
+        }
+        else {
+            self.containerUser.hidden = false
+        }
+    }
+    
+    // MARK: - Query
+    func loadMatches() {
+        // HACK: load any recommendation
+        self.progressView.startActivity()
+        var categories: [String] = []
+        if self.category != nil {
+            categories = [self.category!]
+        }
+        MatchRequest.queryMatches(nil, categories: categories) { (results, error) -> Void in
+            self.progressView.stopActivity()
+            if results != nil {
+                if results!.count == 0 {
+                    self.promptForCreateMatch()
+                    return
+                }
+                else {
+                    self.matches = results
+                    self.refresh()
+                }
+            }
+            else {
+                let message = "There was a problem loading matches."
+                self.simpleAlert("Could not load matches", defaultMessage: message, error: error)
+            }
+        }
+    }
+    
+    func promptForCreateMatch() {
+        self.simpleAlert("No matches", message: "No matches currently exist for \(self.category!)", completion: nil)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
