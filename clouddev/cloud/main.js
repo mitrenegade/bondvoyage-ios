@@ -307,3 +307,53 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
             }
         });
     }
+
+
+Parse.Cloud.define("createMatchRequest", function(request, response) {
+    var Match = Parse.Object.extend("Match")
+    for(var i=0; i < dicts.length; i++) {
+        var match = new Match(dict)
+        match.set(user: request.user)
+        match.set(categories: request.params.categories)
+
+        // todo: time, location
+
+        match.save().then(
+            function(object) {
+                console.log("createMatchRequest completed with match: " + object)
+                response.success(object)
+            },
+            function(error) {
+                console.log("error in createMatchRequest: " + error)
+                response.error(error)
+            }
+        )
+    }
+});
+
+Parse.Cloud.define("queryMatches", function(request, response) {
+    //var location = request.params.location // not used
+    var categories = request.params.categories
+ 
+    var query = new Parse.Query("Match")
+
+    if (categories.length > 0) {
+        categories = categories.map(toLowerCase)
+        console.log("searching for " + categories.length + " categories: " + categories)
+        query.containsAll("categories", interests)
+    }
+    query.descending("updatedAt")
+    query.not("user": request.user)
+
+    console.log("calling query.find")
+    query.find({
+        success: function(matches) {
+            console.log("Result matches count " + matches.length)
+            response.success(matches)
+        },
+        error: function(error) {
+            console.log("query failed: error " + error)
+            response.error(error)
+        }         
+    })
+});

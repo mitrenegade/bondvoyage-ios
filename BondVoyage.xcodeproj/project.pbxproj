@@ -15,6 +15,7 @@
 		8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */; };
 		8EA047CD1C4FDDE200CCCAC3 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CC1C4FDDE200CCCAC3 /* MatchViewController.swift */; };
 		8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */; };
+		8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047D01C4FE9F700CCCAC3 /* MatchRequest.swift */; };
 		8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADA1C440B15002DDA70 /* BVSlider.swift */; };
 		8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */; };
 		8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */; };
@@ -77,6 +78,7 @@
 		8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCategoriesViewController.swift; sourceTree = "<group>"; };
 		8EA047CC1C4FDDE200CCCAC3 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
 		8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		8EA047D01C4FE9F700CCCAC3 /* MatchRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchRequest.swift; sourceTree = "<group>"; };
 		8EBEDADA1C440B15002DDA70 /* BVSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVSlider.swift; sourceTree = "<group>"; };
 		8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderFilterView.swift; sourceTree = "<group>"; };
 		8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeRangeFilterView.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			children = (
 				AC1698451C1C7AB200E3DAAE /* UserRequest.swift */,
 				8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */,
+				8EA047D01C4FE9F700CCCAC3 /* MatchRequest.swift */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
+				8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */,
 				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,
 				E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */,
 				C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */,
