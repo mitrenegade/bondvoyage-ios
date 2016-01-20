@@ -149,15 +149,15 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func goToMatch(category: String) {
-        self.performSegueWithIdentifier("GoToMatch", sender: category)
+        self.performSegueWithIdentifier("GoToCreateMatch", sender: category)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "GoToMatch" {
-            let controller: MatchViewController = segue.destinationViewController as! MatchViewController
-            controller.category = sender as! String
+        if segue.identifier == "GoToCreateMatch" {
+            let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
+            controller.category = sender as? String
         }
     }
 }

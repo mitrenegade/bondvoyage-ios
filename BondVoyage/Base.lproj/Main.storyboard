@@ -361,7 +361,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSC-O3-f06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2342" y="-958"/>
+            <point key="canvasLocation" x="2963" y="-958"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sjZ-E8-yNI">
@@ -466,12 +466,86 @@
                     <navigationItem key="navigationItem" id="W1a-ot-mcK"/>
                     <connections>
                         <outlet property="tableView" destination="rkZ-Ko-YNH" id="h77-GQ-6VD"/>
-                        <segue destination="072-If-v9q" kind="show" identifier="GoToMatch" id="SDW-iW-y3I"/>
+                        <segue destination="xUi-91-zgb" kind="show" identifier="GoToCreateMatch" id="mgA-31-uqd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyO-cw-yHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1144" y="-898"/>
+        </scene>
+        <!--Create Match View Controller-->
+        <scene sceneID="ZSm-Ch-lb0">
+            <objects>
+                <viewController id="xUi-91-zgb" customClass="CreateMatchViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MUg-2M-10x"/>
+                        <viewControllerLayoutGuide type="bottom" id="CkW-dZ-Mpq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lvC-Gj-nF9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="io7-Vc-9xm">
+                                <rect key="frame" x="20" y="152" width="560" height="400"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPZ-Iu-Flh">
+                                        <rect key="frame" x="8" y="8" width="544" height="384"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="QPZ-Iu-Flh" firstAttribute="top" secondItem="io7-Vc-9xm" secondAttribute="top" constant="8" id="Cbr-bV-Qir"/>
+                                    <constraint firstItem="QPZ-Iu-Flh" firstAttribute="leading" secondItem="io7-Vc-9xm" secondAttribute="leading" constant="8" id="SPu-0I-8TK"/>
+                                    <constraint firstAttribute="trailing" secondItem="QPZ-Iu-Flh" secondAttribute="trailing" constant="8" id="Ti0-WJ-RTD"/>
+                                    <constraint firstAttribute="bottom" secondItem="QPZ-Iu-Flh" secondAttribute="bottom" constant="8" id="dTp-AR-exM"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-lT-6kk">
+                                <rect key="frame" x="20" y="72" width="560" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="KQK-PC-rvU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K5x-sB-Act" customClass="ProgressView" customModule="BondVoyage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="560" width="600" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="6lo-mL-Qzz"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="io7-Vc-9xm" secondAttribute="trailing" constant="20" id="4lA-iG-6AO"/>
+                            <constraint firstItem="io7-Vc-9xm" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leading" constant="20" id="LHt-Ri-WC7"/>
+                            <constraint firstItem="K5x-sB-Act" firstAttribute="top" secondItem="io7-Vc-9xm" secondAttribute="bottom" constant="8" id="VQe-2e-2j4"/>
+                            <constraint firstItem="CkW-dZ-Mpq" firstAttribute="top" secondItem="K5x-sB-Act" secondAttribute="bottom" constant="20" id="WCD-r6-LjC"/>
+                            <constraint firstItem="io7-Vc-9xm" firstAttribute="top" secondItem="Ec5-lT-6kk" secondAttribute="bottom" constant="20" id="XPq-Ie-5RK"/>
+                            <constraint firstItem="K5x-sB-Act" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leading" id="hZh-p5-vnT"/>
+                            <constraint firstAttribute="trailing" secondItem="K5x-sB-Act" secondAttribute="trailing" id="iPV-Bm-8AR"/>
+                            <constraint firstItem="Ec5-lT-6kk" firstAttribute="top" secondItem="MUg-2M-10x" secondAttribute="bottom" constant="8" id="qAY-Wu-9Yi"/>
+                            <constraint firstItem="Ec5-lT-6kk" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leadingMargin" id="tOM-Va-rWh"/>
+                            <constraint firstItem="Ec5-lT-6kk" firstAttribute="trailing" secondItem="lvC-Gj-nF9" secondAttribute="trailingMargin" id="vLf-uZ-LV6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="azt-32-rAV"/>
+                    <connections>
+                        <outlet property="labelDetails" destination="QPZ-Iu-Flh" id="qf8-V4-3eJ"/>
+                        <outlet property="labelTitle" destination="Ec5-lT-6kk" id="Tdw-I7-PQJ"/>
+                        <outlet property="progressView" destination="K5x-sB-Act" id="rDm-CZ-c8w"/>
+                        <segue destination="072-If-v9q" kind="show" identifier="GoToMatches" id="XL0-UW-vBR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="njm-lv-vo9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1820" y="-898"/>
         </scene>
         <!--Match View Controller-->
         <scene sceneID="Ncf-3X-Qy9">
@@ -576,7 +650,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="92e-1Y-i3R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1807" y="-898"/>
+            <point key="canvasLocation" x="2507" y="-898"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="et7-GT-unD">

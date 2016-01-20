@@ -311,24 +311,28 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
 
 Parse.Cloud.define("createMatchRequest", function(request, response) {
     var Match = Parse.Object.extend("Match")
-    for(var i=0; i < dicts.length; i++) {
-        var match = new Match(dict)
-        match.set(user, request.user)
-        match.set(categories, request.params.categories)
-
-        // todo: time, location
-
-        match.save().then(
-            function(object) {
-                console.log("createMatchRequest completed with match: " + object)
-                response.success(object)
-            },
-            function(error) {
-                console.log("error in createMatchRequest: " + error)
-                response.error(error)
-            }
-        )
+    var match = new Match()
+    if (request.user == undefined) {
+        response.error("User is not logged in")
+        return
     }
+    else {
+        match.set(user, request.user)
+    }
+    match.set("categories", request.params.categories)
+
+    // todo: time, location
+
+    match.save().then(
+        function(object) {
+            console.log("createMatchRequest completed with match: " + object)
+            response.success(object)
+        },
+        function(error) {
+            console.log("error in createMatchRequest: " + error)
+            response.error(error)
+        }
+    )
 });
 
 Parse.Cloud.define("queryMatches", function(request, response) {

@@ -29,10 +29,6 @@ class MatchViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.containerUser.hidden = true
-        
-        self.labelText.text = "Search for matches"
-        
-        self.loadMatches()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,46 +48,22 @@ class MatchViewController: UIViewController {
     func refresh() {
         if self.matches == nil {
             self.containerUser.hidden = true
+            self.buttonUp.hidden = true
+            self.buttonDown.hidden = true
         }
         else if self.matches!.count == 0 {
             self.containerUser.hidden = true
+            self.buttonUp.hidden = true
+            self.buttonDown.hidden = true
         }
         else {
             self.containerUser.hidden = false
+            self.buttonUp.hidden = false
+            self.buttonDown.hidden = false
         }
     }
     
-    // MARK: - Query
-    func loadMatches() {
-        // HACK: load any recommendation
-        self.progressView.startActivity()
-        var categories: [String] = []
-        if self.category != nil {
-            categories = [self.category!]
-        }
-        MatchRequest.queryMatches(nil, categories: categories) { (results, error) -> Void in
-            self.progressView.stopActivity()
-            if results != nil {
-                if results!.count == 0 {
-                    self.promptForCreateMatch()
-                    return
-                }
-                else {
-                    self.matches = results
-                    self.refresh()
-                }
-            }
-            else {
-                let message = "There was a problem loading matches."
-                self.simpleAlert("Could not load matches", defaultMessage: message, error: error)
-            }
-        }
-    }
-    
-    func promptForCreateMatch() {
-        self.simpleAlert("No matches", message: "No matches currently exist for \(self.category!)", completion: nil)
-    }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
