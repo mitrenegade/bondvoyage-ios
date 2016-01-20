@@ -317,9 +317,11 @@ Parse.Cloud.define("createMatchRequest", function(request, response) {
         return
     }
     else {
-        match.set(user, request.user)
+        match.set("user", request.user)
     }
-    match.set("categories", request.params.categories)
+    var categories = request.params.categories
+    categories = categories.map(toLowerCase)
+    match.set("categories", categories)
 
     // todo: time, location
 

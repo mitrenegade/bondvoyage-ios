@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncImageView
+import Parse
 
 let kNearbyEventCellIdentifier = "nearbyEventCell"
 
@@ -91,11 +92,30 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         for _ in subcategories.keys {
             expanded.append(false)
         }
+
+        if PFUser.currentUser() == nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if PFUser.currentUser() == nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+        }
     }
     
     // MARK: - UITableViewDataSource
@@ -152,6 +172,18 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.performSegueWithIdentifier("GoToCreateMatch", sender: category)
     }
     
+    func goToLogin() {
+        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
+        let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
+        controller.type = .Login
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    func goToSettings() {
+        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

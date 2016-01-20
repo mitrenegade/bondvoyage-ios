@@ -67,9 +67,12 @@ class CreateMatchViewController: UIViewController {
             categories = [self.category!]
         }
         self.progressView.startActivity()
-        MatchRequest.createMatch(categories) { (results, error) -> Void in
-            if results != nil {
-                print("Created \(results!.count) matches")
+        MatchRequest.createMatch(categories) { (result, error) -> Void in
+            if result != nil {
+                let match: PFObject = result! as PFObject
+                let objectId: String = match.objectId!
+                let cat: [String] = match.valueForKey("categories") as! [String]
+                self.labelDetails.text = "Match id \(objectId) for category \(cat[0])"
             }
             else {
                 self.progressView.stopActivity()
