@@ -12,6 +12,7 @@
 		8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
 		8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */; };
+		8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */; };
 		8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADA1C440B15002DDA70 /* BVSlider.swift */; };
 		8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */; };
 		8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */; };
@@ -36,15 +37,12 @@
 		E5508A121C1539CF00D23C26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */; };
 		E5508A1D1C1539CF00D23C26 /* BondVoyageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A1C1C1539CF00D23C26 /* BondVoyageTests.swift */; };
 		E5508A281C1539CF00D23C26 /* BondVoyageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */; };
-		E56A2B171C1C833D003E585B /* ItineraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A2B161C1C833D003E585B /* ItineraryViewController.swift */; };
-		E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */; };
 		E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */; };
 		E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */; };
 		E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836631C38BEB9003BD54F /* SingleFilterView.swift */; };
 		E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* RangeFilterView.swift */; };
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
 		E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */; };
-		E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */; };
 		E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */; };
 		E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */; };
 /* End PBXBuildFile section */
@@ -74,6 +72,7 @@
 		8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendationRequest.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
 		8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
+		8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCategoriesViewController.swift; sourceTree = "<group>"; };
 		8EBEDADA1C440B15002DDA70 /* BVSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVSlider.swift; sourceTree = "<group>"; };
 		8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderFilterView.swift; sourceTree = "<group>"; };
 		8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeRangeFilterView.swift; sourceTree = "<group>"; };
@@ -104,15 +103,12 @@
 		E5508A231C1539CF00D23C26 /* BondVoyageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BondVoyageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BondVoyageUITests.swift; sourceTree = "<group>"; };
 		E5508A291C1539CF00D23C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E56A2B161C1C833D003E585B /* ItineraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItineraryViewController.swift; path = ViewControllers/ItineraryViewController.swift; sourceTree = "<group>"; };
-		E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItineraryTableViewController.swift; path = ViewControllers/ItineraryTableViewController.swift; sourceTree = "<group>"; };
 		E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HereAndNowViewController.swift; path = ViewControllers/HereAndNowViewController.swift; sourceTree = "<group>"; };
 		E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultsViewController.swift; path = ViewControllers/SearchResultsViewController.swift; sourceTree = "<group>"; };
 		E5C836631C38BEB9003BD54F /* SingleFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleFilterView.swift; path = Views/SingleFilterView.swift; sourceTree = "<group>"; };
 		E5C836661C38BEF5003BD54F /* RangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeFilterView.swift; path = Views/RangeFilterView.swift; sourceTree = "<group>"; };
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
 		E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BVColors.swift"; sourceTree = "<group>"; };
-		E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewControllers/DashboardViewController.swift; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -300,10 +296,8 @@
 			children = (
 				8E507B521C4AB7960019FF19 /* Places */,
 				C518526B1C341A9E00EA2328 /* Settings */,
-				E5E4E5181C1BCF14003C4A90 /* DashboardViewController.swift */,
-				E56A2B161C1C833D003E585B /* ItineraryViewController.swift */,
-				E56A2B181C1C8368003E585B /* ItineraryTableViewController.swift */,
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
+				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */,
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 			);
@@ -525,10 +519,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E56A2B171C1C833D003E585B /* ItineraryViewController.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
 				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
-				E5E4E5191C1BCF14003C4A90 /* DashboardViewController.swift in Sources */,
 				C5566EE61C3E1040007C22F3 /* UIViewController+Utils.swift in Sources */,
 				8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */,
 				8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */,
@@ -539,11 +531,11 @@
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
-				E56A2B191C1C8368003E585B /* ItineraryTableViewController.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* InterestsViewController.swift in Sources */,
 				E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
+				8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */,
 				8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */,
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,

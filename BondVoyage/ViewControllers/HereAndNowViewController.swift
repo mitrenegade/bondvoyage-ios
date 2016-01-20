@@ -11,45 +11,17 @@ import Parse
 import AsyncImageView
 
 let kSearchResultsViewControllerID = "searchResultsViewControllerID"
-let kNearbyEventCellIdentifier = "nearbyEventCell"
 
-class NearbyEventCell: UITableViewCell {
-    @IBOutlet weak var viewImage: AsyncImageView!
-    @IBOutlet weak var labelTitle: UILabel!
-    @IBOutlet weak var labelInfo: UILabel!
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchResultsDelegate {
+
+    // categories dropdown
+    @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
+    var categoriesVC: SearchCategoriesViewController!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    func configureCellForNearbyEvent(recommendation: PFObject) {
-        // TODO: set the image
-        // TODO: set the label with activity name
-        
-        if let url: String = recommendation.objectForKey("imageURL") as? String {
-            self.viewImage.imageURL = NSURL(string: url)
-        }
-        else if let image: PFFile = recommendation.objectForKey("image") as? PFFile {
-            self.viewImage.imageURL = NSURL(string: image.url!)
-        }
-        
-        if let title: String = recommendation.objectForKey("name") as? String {
-            self.labelTitle.text = title
-        }
-        if let description: String = recommendation.objectForKey("description") as? String {
-            self.labelInfo.text = description
-        }
-    }
-}
-
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, SearchResultsDelegate {
-
-    @IBOutlet weak var containerView: UIView!
+    // search results
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
     var interests: [String]?
     var searchResultsVC: SearchResultsViewController!
-    var searchResultsShowing: Bool!
     var selectedUser: PFUser?
     var recommendations: [PFObject]?
     
@@ -59,23 +31,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         super.viewDidLoad()
         // configure search bar
         self.searchBar.delegate = self;
-
-        self.searchResultsShowing = false
         
-        let keyboardDoneButtonView: UIToolbar = UIToolbar()
-        keyboardDoneButtonView.sizeToFit()
-        keyboardDoneButtonView.barStyle = UIBarStyle.Black
-        keyboardDoneButtonView.tintColor = UIColor.whiteColor()
-        let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "dismissKeyboard")
-        let search: UIBarButtonItem = UIBarButtonItem(title: "Search", style: UIBarButtonItemStyle.Done, target: self, action: "search")
-        let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        keyboardDoneButtonView.setItems([close, flex, search], animated: true)
-        self.searchBar.inputAccessoryView = keyboardDoneButtonView
-        
-        RecommendationRequest.recommendationsQuery(nil, interests: [], completion: { (results, error) -> Void in
-            self.recommendations = results
-            self.tableView.reloadData()
-        })
+        self.constraintCategoriesHeight.constant = 0
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -87,6 +44,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         else {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
         }
+
+        self.constraintCategoriesHeight.constant = 0
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -114,33 +73,15 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func displaySearchResultsViewController() {
-        if !self.searchResultsShowing {
-            self.searchBar.showsCancelButton = true
-            self.containerView.alpha = 0
-            self.view.bringSubviewToFront(self.containerView)
-            UIView.animateWithDuration(0.15,
-                animations: { () -> Void in
-                    self.containerView.alpha = 1
-                },
-                completion: { (Bool) -> Void in
-                    self.searchResultsShowing = true
-                }
-            )
-        }
+        self.searchBar.showsCancelButton = true
+        self.constraintCategoriesHeight.constant = 200
     }
 
     func removeSearchResultsViewController() {
+        self.searchBar.resignFirstResponder()
+        self.constraintCategoriesHeight.constant = 0
         self.searchBar.showsCancelButton = false
         self.searchBar.text = ""
-        UIView.animateWithDuration(0.18,
-            animations: { () -> Void in
-                self.containerView.alpha = 0
-            },
-            completion: { (Bool) -> Void in
-                self.view.bringSubviewToFront(self.tableView)
-                self.searchResultsShowing = false
-            }
-        )
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -148,45 +89,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.searchResultsVC = segue.destinationViewController as! SearchResultsViewController
             self.searchResultsVC.delegate = self
         }
+        else if segue.identifier == "embedCategoriesVCSegue" {
+            self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
+        }
         else if segue.identifier == "showUserDetailsSegue" {
             let userDetailsVC = segue.destinationViewController as! UserDetailsViewController
             userDetailsVC.selectedUser = self.selectedUser
             userDetailsVC.relevantInterests = self.interests
         }
-    }
-
-    // MARK: - UITableViewDataSource
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kNearbyEventCellIdentifier)! as! NearbyEventCell
-        cell.adjustTableViewCellSeparatorInsets(cell)
-        
-        let recommendation: PFObject = self.recommendations![indexPath.row]
-        cell.configureCellForNearbyEvent(recommendation)
-        cell.layoutSubviews()
-        
-        return cell
-    }
-
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.recommendations == nil {
-            return 0
-        }
-        return self.recommendations!.count
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 120
-    }
-    
-    // MARK: - UITableViewDelegate
-
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.simpleAlert("No events available", message: "Sorry, there are currently no events available near you.")
     }
 
     // MARK: - UISearchBarDelegate
@@ -200,9 +110,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                     return i.lowercaseString
                 }
             }
-            let genderPrefs: [String] = self.searchResultsVC.genderPrefs()
-            let agePrefs: [Int] = self.searchResultsVC.agePrefs()
-            UserRequest.userQuery(self.interests!, genderPref: genderPrefs, ageRange: agePrefs, numRange: [], completion: { (results, error) -> Void in
+            UserRequest.userQuery(self.interests!, genderPref: [], ageRange: [], numRange: [], completion: { (results, error) -> Void in
                 if error != nil {
                     print("ERROR: \(error)")
                 }
@@ -220,12 +128,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.removeSearchResultsViewController()
-        self.searchBar.resignFirstResponder()
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        //self.removeSearchResultsViewController()
-        self.searchBar.resignFirstResponder()
+        self.removeSearchResultsViewController()
     }
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
