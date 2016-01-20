@@ -37,18 +37,30 @@ class UserRequest: NSObject {
     }
 
     // query for all users with interests, age range default
-    class func userQuery(interests: [String], gender: [Gender], ageRange: [Int], numRange: [Int], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
+    class func userQuery(interests: [String], genderPref: [String], ageRange: [Int], numRange: [Int], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
         // query for all users on Parse with given interests plus default search criteria
 
-        // converts enum to strings
-        let genderString: [String] = gender.map { (g) -> String in
-            return g.rawValue.lowercaseString
+        // converts to lowercase
+        let interestsString: [String] = interests.map { (i) -> String in
+            return i.lowercaseString
+        }
+
+        // converts to lowercase
+        let genderString: [String] = genderPref.map { (g) -> String in
+            return g.lowercaseString
         }
         
-        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interests, "gender": genderString, "age": ageRange, "number": numRange]) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interestsString, "gender": genderString, "age": ageRange, "number": numRange]) { (results, error) -> Void in
             print("results: \(results)")
             let users: [PFUser]? = results as? [PFUser]
             completion(results: users, error: error)
+        }
+    }
+    
+    class func inviteUser(user: PFUser, interests: [String], completion: ((success: Bool, error: NSError?)->Void)) {
+        PFCloud.callFunctionInBackground("inviteUser", withParameters: ["user": user.objectId!, "interests": interests]) { (results, error) -> Void in
+            print("results: \(results) error: \(error)")
+            completion(success: error == nil, error: error)
         }
     }
 }

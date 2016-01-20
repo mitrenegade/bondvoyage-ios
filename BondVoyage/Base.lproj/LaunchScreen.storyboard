@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,7 +17,22 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="logo-airplane" translatesAutoresizingMaskIntoConstraints="NO" id="KhK-fK-PTJ">
+                                <rect key="frame" x="20" y="212" width="560" height="175"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="175" id="tMO-Fn-wz3"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.7843137255" green="0.90196078430000004" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="KhK-fK-PTJ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="1rb-NE-1k8"/>
+                            <constraint firstItem="KhK-fK-PTJ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qeF-00-XLZ"/>
+                            <constraint firstItem="KhK-fK-PTJ" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="tEw-IQ-8iG"/>
+                            <constraint firstItem="KhK-fK-PTJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="yEz-8x-cu7"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +40,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo-airplane" width="825" height="300"/>
+    </resources>
 </document>

@@ -262,6 +262,15 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             )
         }
     }
+    
+    // MARK: - Pass on search options
+    func agePrefs() -> [Int] {
+        return self.ageRangeFilterView.currentRange()
+    }
+    
+    func genderPrefs() -> [String] {
+        return self.genderFilterView.currentGenderPrefs()
+    }
 
     //Helper method to get the height constraint of the filterView that is to be toggled
     func heightConstraint(filterView: BaseFilterView) -> NSLayoutConstraint {
@@ -278,6 +287,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - UITableViewDelegate
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if PFUser.currentUser() == nil {
+            self.simpleAlert("Log in?", message: "Log in or create an account to view someone's profile")
+            return
+        }
+        
         let user = users![indexPath.row]
         self.delegate?.showUserDetails(user)
     }

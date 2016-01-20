@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 import Bolts
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +40,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Test: seed the database with fake users
         UserRequest.seed()
         
+        // Test: seed with recommendations. Only do this once
+        //RecommendationRequest.seed()
+        
+        // reenable push. for ios8, isRegisteredForRemoteNotifications doesn't get reset when the app is deleted.
+        if PFUser.currentUser() != nil && self.hasPushEnabled() {
+            self.initializeNotificationServices()
+        }
+        
+        // Fabric
+        Fabric.with([Crashlytics.self])
+
+        if PFUser.currentUser() != nil {
+            self.logUser()
+        }
         return true
     }
 
@@ -63,5 +79,173 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: - Controller stack
+    func topViewController() -> UIViewController? {
+        if UIApplication.sharedApplication().keyWindow == nil {
+            return nil
+        }
+        if UIApplication.sharedApplication().keyWindow!.rootViewController == nil {
+            return nil
+        }
+        
+        return self.topViewController(UIApplication.sharedApplication().keyWindow!.rootViewController!)
+    }
+    
+    func topViewController(rootViewController: UIViewController) -> UIViewController? {
+        if rootViewController.presentedViewController == nil {
+            return rootViewController
+        }
+        
+        if rootViewController.presentedViewController!.isKindOfClass(UINavigationController) {
+            let nav: UINavigationController = rootViewController.presentedViewController as! UINavigationController
+            let lastViewController: UIViewController? = nav.viewControllers.last
+            return self.topViewController(lastViewController!)
+        }
+        
+        return self.topViewController(rootViewController.presentedViewController!)
+    }
+    
+    // MARK: - Push
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        // Store the deviceToken in the current Installation and save it to Parse
+
+        let installation = PFInstallation.currentInstallation()
+        installation.setDeviceTokenFromData(deviceToken)
+        if PFUser.currentUser() != nil {
+            let userId: String = PFUser.currentUser()!.objectId!
+            let channel: String = "channel\(userId)"
+            installation.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
+        }
+        installation.saveInBackground()
+
+        let channels = installation.objectForKey("channels")
+        print("installation registered for remote notifications: token \(deviceToken) channel \(channels)")
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("failed: error \(error)")
+        NSNotificationCenter.defaultCenter().postNotificationName("push:enable:failed", object: nil)
+    }
+
+    // MARK: Push
+    func hasPushEnabled() -> Bool {
+        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+            return false
+        }
+        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
+        if (settings?.types.contains(.Alert) == true){
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    func registerForRemoteNotifications() {
+        let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            self.initializeNotificationServices()
+        }))
+        self.topViewController()!.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func initializeNotificationServices() -> Void {
+        // http://www.intertech.com/Blog/push-notifications-tutorial-for-ios-9/#ixzz3xXcQVOIC
+        let settings = UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        
+        // This is an asynchronous method to retrieve a Device Token
+        // Callbacks are in AppDelegate.swift
+        // Success = didRegisterForRemoteNotificationsWithDeviceToken
+        // Fail = didFailToRegisterForRemoteNotificationsWithError
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+    }
+    
+    func warnForRemoteNotificationRegistrationFailure() {
+        let alert = UIAlertController(title: "Change notification settings?", message: "Push notifications are disabled, so you can't receive notifications from trainers. Would you like to go to the Settings to update them?", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+            print("go to settings")
+            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        }))
+        self.topViewController()!.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("notification received: \(userInfo)")
+        /* format:
+        [aps: {
+        alert = "test push 2";
+        sound = default;
+        }]
+        
+        // With info:
+        [message: i want to lose weight, aps: {
+        }, userid: 1]
+        */
+        if let _ = userInfo["from"] as? [NSObject: AnyObject] {
+            self.goToInvited(userInfo)
+        }
+    }
+    
+    // MARK: - Logging/analytics
+    func logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        if PFUser.currentUser() == nil {
+            return
+        }
+        
+        let user: PFUser = PFUser.currentUser()!
+        if user.email != nil {
+            Crashlytics.sharedInstance().setUserEmail(user.email!)
+        }
+        else if self.isValidEmail(user.username!) {
+            Crashlytics.sharedInstance().setUserEmail(user.username!)
+        }
+        
+        if user.objectId != nil {
+            Crashlytics.sharedInstance().setUserIdentifier(user.objectId!)
+        }
+        
+        if let name: String = user.valueForKey("firstName") as? String {
+            Crashlytics.sharedInstance().setUserName(name)
+        }
+    }
+    
+    // MARK: - Invitation notification
+    func goToInvited(info: [NSObject: AnyObject]) {
+        let userDict: [NSObject: AnyObject] = info["from"] as! [NSObject: AnyObject]
+        let interests: [String] = info["interests"] as! [String]
+        let userId: String = userDict["objectId"] as! String
+        
+        let query: PFQuery = PFUser.query()!
+        query.whereKey("objectId", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if results != nil && results!.count > 0 {
+                let user: PFUser = results![0] as! PFUser
+                let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+                controller.invitingUser = user
+                controller.relevantInterests = interests
+                let nav = UINavigationController(rootViewController: controller)
+                let presenter = self.topViewController()!
+                presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                })
+            }
+            else {
+                print("Invalid user")
+            }
+        }
+    }
+    
+    // MARK: - Utils
+    func isValidEmail(testStr:String) -> Bool {
+        // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr)
+    }
 }
 

@@ -12,7 +12,9 @@ import AsyncImageView
 
 class UserDetailsViewController: UIViewController {
 
-    var selectedUser: PFUser!
+    var selectedUser: PFUser?
+    var invitingUser: PFUser?
+    
     @IBOutlet weak var scrollViewContainer: AsyncImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
@@ -23,7 +25,9 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var interestsView: UIView!
     @IBOutlet weak var inviteToBondButton: UIButton!
     @IBOutlet weak var interestsToTransparentViewSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
+    var relevantInterests: [String]?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDetailsForUser()
@@ -36,23 +40,38 @@ class UserDetailsViewController: UIViewController {
         self.transparentView.backgroundColor = UIColor.clearColor()
         self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
-        self.interestsToTransparentViewSpacingConstraint.constant = (self.nameView.bounds.height - 1) // I don't know why there is a 2 pixel gap between views
+        self.interestsToTransparentViewSpacingConstraint.constant = self.nameView.bounds.height // I don't know why there is a 2 pixel gap between views
+        self.scrollViewContainer.contentMode = .ScaleAspectFill
+        
+        if self.invitingUser != nil {
+            self.title = "Accept"
+            self.inviteToBondButton.setTitle("ACCEPT INVITATION", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+        }
     }
 
     func configureDetailsForUser() {
-        if let photoURL: String = selectedUser.valueForKey("photoUrl") as? String {
+        var user: PFUser? = selectedUser
+        if self.selectedUser == nil {
+            user = self.invitingUser
+        }
+        if user == nil {
+            return
+        }
+        
+        if let photoURL: String = user!.valueForKey("photoUrl") as? String {
             self.scrollViewContainer.imageURL = NSURL(string: photoURL)
         }
         else {
             self.scrollViewContainer.image = UIImage(named: "profile-icon")
         }
 
-        let firstName = self.selectedUser.valueForKey("firstName")!
+        let firstName = user!.valueForKey("firstName")!
         self.nameLabel.text = "\(firstName)"
 
         let currentYear = components.year
-        let age = currentYear - (self.selectedUser.valueForKey("birthYear") as! Int)
-        self.genderAndAgeLabel.text = "\(self.selectedUser.valueForKey("gender")!), age: \(age)"
+        let age = currentYear - (user!.valueForKey("birthYear") as! Int)
+        self.genderAndAgeLabel.text = "\(user!.valueForKey("gender")!), age: \(age)"
 
         self.configureInterestsLabel()
 
@@ -60,14 +79,68 @@ class UserDetailsViewController: UIViewController {
     }
 
     func configureInterestsLabel() {
-        let interests = self.selectedUser.valueForKey("interests")!
-        self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
+        var user: PFUser? = selectedUser
+        if self.selectedUser == nil {
+            user = self.invitingUser
+        }
+        if user == nil {
+            return
+        }
+
+        let interests = user!.valueForKey("interests")!
+        if self.selectedUser != nil {
+            self.interestsLabel.text = "Interests: \(stringFromArray(interests as! Array<String>))"
+        }
+        else {
+            self.interestsLabel.text = "Wants to bond over: \(stringFromArray(interests as! Array<String>))"
+        }
+    }
+    func dismiss() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     @IBAction func pimaryActionButtonPressed(sender: UIButton) {
-        print("User pressed invite to bond")
+        if self.selectedUser != nil {
+            print("User pressed invite to bond")
+            var interests: [String] = []
+            if self.relevantInterests != nil {
+                interests = self.relevantInterests!
+            }
+            else if self.selectedUser!.objectForKey("interests") != nil {
+                interests = self.selectedUser!.objectForKey("interests") as! [String]
+            }
+            
+            self.activityIndicator.startAnimating()
+            self.inviteToBondButton.enabled = false
+            UserRequest.inviteUser(self.selectedUser!, interests: interests) { (success, error) -> Void in
+                self.activityIndicator.stopAnimating()
+                self.inviteToBondButton.enabled = true
+                if success {
+                    print("Success! User was invited")
+                    self.simpleAlert("Invite sent!", message: "You have sent an invitation to bond to \(self.selectedUser!.objectForKey("firstName")!)", completion: { () -> Void in
+                        self.dismiss()
+                    })
+                }
+                else {
+                    print("Error! Push failed: \(error)")
+                    self.simpleAlert("Could not invite", defaultMessage: "There was an error sending an invitation.", error: error)
+                }
+            }
+        }
+        else {
+            print("User pressed accept invitation to bond")
+            // TODO: add UserRequest.acceptInvitation call
+            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+            controller.relevantInterests = self.relevantInterests
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 
+    func close() {
+        // close modally
+        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     // MARK: - Helper Methods
 
     func stringFromArray(arr: Array<String>) -> String {

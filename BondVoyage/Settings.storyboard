@@ -83,11 +83,11 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SsY-te-IP6" id="oTs-ER-B6Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K4F-hc-oTQ">
-                                            <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="550" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -164,16 +164,16 @@
                                                         <rect key="frame" x="0.0" y="60" width="600" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95L-P2-jcW">
-                                                                <rect key="frame" x="8" y="8" width="150" height="24"/>
+                                                                <rect key="frame" x="8" y="8" width="74" height="24"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="150" id="WyJ-Ty-XwI"/>
+                                                                    <constraint firstAttribute="width" constant="74" id="WyJ-Ty-XwI"/>
                                                                     <constraint firstAttribute="height" constant="24" id="zo3-1V-non"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your email" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTF-5P-uPS">
-                                                                <rect key="frame" x="166" y="5" width="426" height="30"/>
+                                                                <rect key="frame" x="90" y="5" width="502" height="30"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="76H-qk-ehs"/>
@@ -199,16 +199,16 @@
                                                         <rect key="frame" x="0.0" y="108" width="600" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dT-lN-WVb">
-                                                                <rect key="frame" x="8" y="8" width="150" height="24"/>
+                                                                <rect key="frame" x="8" y="8" width="74" height="24"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="150" id="aRZ-VA-qqP"/>
+                                                                    <constraint firstAttribute="width" constant="74" id="aRZ-VA-qqP"/>
                                                                     <constraint firstAttribute="height" constant="24" id="hiC-eg-Ve1"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X36-xP-Jw3">
-                                                                <rect key="frame" x="166" y="5" width="426" height="30"/>
+                                                                <rect key="frame" x="90" y="5" width="502" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="gBZ-CL-eYn"/>
                                                                 </constraints>
@@ -274,16 +274,16 @@
                                                         <rect key="frame" x="0.0" y="60" width="600" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XNU-dY-5mT">
-                                                                <rect key="frame" x="8" y="8" width="150" height="24"/>
+                                                                <rect key="frame" x="8" y="8" width="110" height="24"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="24" id="J5y-gu-n19"/>
-                                                                    <constraint firstAttribute="width" constant="150" id="Z6s-hN-oad"/>
+                                                                    <constraint firstAttribute="width" constant="110" id="Z6s-hN-oad"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your email" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dGq-Ep-90H">
-                                                                <rect key="frame" x="166" y="5" width="426" height="30"/>
+                                                                <rect key="frame" x="126" y="5" width="466" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="eIr-ua-37S"/>
                                                                 </constraints>
@@ -308,16 +308,16 @@
                                                         <rect key="frame" x="0.0" y="108" width="600" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F6-E7-a77">
-                                                                <rect key="frame" x="8" y="8" width="150" height="24"/>
+                                                                <rect key="frame" x="8" y="8" width="110" height="24"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="24" id="1IR-h7-T9Q"/>
-                                                                    <constraint firstAttribute="width" constant="150" id="aRm-tO-neW"/>
+                                                                    <constraint firstAttribute="width" constant="110" id="aRm-tO-neW"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter a new password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZUF-Z2-3kO">
-                                                                <rect key="frame" x="166" y="5" width="426" height="30"/>
+                                                                <rect key="frame" x="126" y="5" width="466" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="OGe-rx-riw"/>
                                                                 </constraints>
@@ -342,16 +342,16 @@
                                                         <rect key="frame" x="0.0" y="156" width="600" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirmation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sF3-kH-VlP">
-                                                                <rect key="frame" x="8" y="8" width="150" height="24"/>
+                                                                <rect key="frame" x="8" y="8" width="110" height="24"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="150" id="2Pp-mY-7hs"/>
+                                                                    <constraint firstAttribute="width" constant="110" id="2Pp-mY-7hs"/>
                                                                     <constraint firstAttribute="height" constant="24" id="hIu-f6-7Be"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter password again" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dIc-xb-zLi">
-                                                                <rect key="frame" x="166" y="5" width="426" height="30"/>
+                                                                <rect key="frame" x="126" y="5" width="466" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="9IF-fD-8MZ"/>
                                                                 </constraints>
