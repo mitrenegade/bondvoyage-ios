@@ -99,6 +99,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         else {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
         }
+        
+        self.checkForExistingMatch()
 
     }
 
@@ -115,6 +117,23 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
         else {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+        }
+    }
+    
+    // MARK: - API
+    func checkForExistingMatch() {
+        if PFUser.currentUser() == nil {
+            return
+        }
+        
+        let query: PFQuery = PFQuery(className: "Match")
+        query.whereKey("user", equalTo: PFUser.currentUser()!)
+        query.whereKey("status", notEqualTo: "cancelled")
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if results != nil && results!.count > 0 {
+                let existingMatch: PFObject = results![0] 
+                self.performSegueWithIdentifier("GoToExistingMatch", sender: existingMatch)
+            }
         }
     }
     
@@ -190,6 +209,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         if segue.identifier == "GoToCreateMatch" {
             let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
             controller.category = sender as? String
+        }
+        else if segue.identifier == "GoToExistingMatch" {
+            let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
+            controller.requestedMatch = sender as? PFObject
         }
     }
 }

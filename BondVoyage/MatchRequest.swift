@@ -29,5 +29,12 @@ class MatchRequest: NSObject {
         }
     }
 
-    
+    class func cancelMatch(match: PFObject, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+        
+        PFCloud.callFunctionInBackground("cancelMatch", withParameters: ["match": match.objectId!
+            ]) { (results, error) -> Void in
+            print("results: \(results)")
+            completion(results: results, error: error)
+        }
+    }
 }

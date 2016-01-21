@@ -363,3 +363,28 @@ Parse.Cloud.define("queryMatches", function(request, response) {
         }         
     })
 });
+
+Parse.Cloud.define("cancelMatch", function(request, response) {
+    var matchId = request.params.match
+    var query = new Parse.Query("Match")
+    query.get(matchId).then(
+        function(match) {
+            match.set("status", "cancelled")
+            match.save().then(
+                function(object) {
+                    console.log("cancelMatch completed with match: " + object)
+                    response.success(object)
+                },
+                function(error) {
+                    console.log("error in cancelMatch: " + error)
+                    response.error(error)
+                }
+            )
+        },
+        function(error) {
+            console.log("Could not load match for cancelling")
+            response.error("Could not find match to cancel")
+        }     
+    )    
+});
+

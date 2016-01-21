@@ -425,7 +425,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -442,7 +442,7 @@
                                                     <rect key="frame" x="25" y="0.0" width="560" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -467,6 +467,7 @@
                     <connections>
                         <outlet property="tableView" destination="rkZ-Ko-YNH" id="h77-GQ-6VD"/>
                         <segue destination="xUi-91-zgb" kind="show" identifier="GoToCreateMatch" id="mgA-31-uqd"/>
+                        <segue destination="xUi-91-zgb" kind="show" identifier="GoToExistingMatch" id="Fow-Lj-GcF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyO-cw-yHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -675,6 +676,7 @@
         <image name="thumbup" width="285" height="299"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Fow-Lj-GcF"/>
         <segue reference="qSi-b9-Uso"/>
     </inferredMetricsTieBreakers>
 </document>
