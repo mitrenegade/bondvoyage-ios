@@ -28,11 +28,10 @@ class CreateMatchViewController: UIViewController {
         if self.requestedMatch != nil {
             let categories = self.requestedMatch!.valueForKey("categories") as! [String]
             self.category = categories[0]
-            
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
         }
         else {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+            // always create a match if one doesn't already exist
+            self.createMatch()
         }
         
         self.queryForMatches()
@@ -51,6 +50,8 @@ class CreateMatchViewController: UIViewController {
             self.labelDetails.text = "Looking for someone else who is also down for \(self.category!)"
         }
         else if self.requestedMatch != nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
+
             self.labelTitle.text = "Waiting for match"
             self.labelDetails.text = "You are waiting for someone else to join you for \(self.category!). Click Back to cancel and search for something else."
             // TODO: display location, time, other parameters
@@ -86,9 +87,6 @@ class CreateMatchViewController: UIViewController {
             self.isQuerying = false
             if results != nil {
                 if results!.count == 0 {
-                    if self.requestedMatch == nil {
-                        self.createMatch()
-                    }
                     self.refresh()
                     return
                 }
