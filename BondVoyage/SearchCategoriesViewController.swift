@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncImageView
+import Parse
 
 let kNearbyEventCellIdentifier = "nearbyEventCell"
 
@@ -91,11 +92,49 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         for _ in subcategories.keys {
             expanded.append(false)
         }
+
+        if PFUser.currentUser() == nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+        }
+        
+        self.checkForExistingMatch()
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if PFUser.currentUser() == nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+        }
+    }
+    
+    // MARK: - API
+    func checkForExistingMatch() {
+        if PFUser.currentUser() == nil {
+            return
+        }
+        
+        let query: PFQuery = PFQuery(className: "Match")
+        query.whereKey("user", equalTo: PFUser.currentUser()!)
+        query.whereKey("status", notEqualTo: "cancelled")
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if results != nil && results!.count > 0 {
+                let existingMatch: PFObject = results![0] 
+                self.performSegueWithIdentifier("GoToExistingMatch", sender: existingMatch)
+            }
+        }
     }
     
     // MARK: - UITableViewDataSource
@@ -138,6 +177,42 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         if indexPath.row == 0 {
             expanded[indexPath.section] = !expanded[indexPath.section]
             self.tableView.reloadData()
+        }
+        else {
+            let category: CATEGORY = categories[indexPath.section]
+            let subs: [SUBCATEGORY] = subcategories[category]!
+            let index = indexPath.row - 1
+            let subcategory: SUBCATEGORY = subs[index]
+            self.goToMatch(subcategory.rawValue)
+        }
+    }
+    
+    func goToMatch(category: String) {
+        self.performSegueWithIdentifier("GoToCreateMatch", sender: category)
+    }
+    
+    func goToLogin() {
+        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
+        let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
+        controller.type = .Login
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    func goToSettings() {
+        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "GoToCreateMatch" {
+            let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
+            controller.category = sender as? String
+        }
+        else if segue.identifier == "GoToExistingMatch" {
+            let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
+            controller.requestedMatch = sender as? PFObject
         }
     }
 }

@@ -307,3 +307,84 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
             }
         });
     }
+
+
+Parse.Cloud.define("createMatchRequest", function(request, response) {
+    var Match = Parse.Object.extend("Match")
+    var match = new Match()
+    if (request.user == undefined) {
+        response.error("User is not logged in")
+        return
+    }
+    else {
+        match.set("user", request.user)
+    }
+    var categories = request.params.categories
+    categories = categories.map(toLowerCase)
+    match.set("categories", categories)
+
+    // todo: time, location
+
+    match.save().then(
+        function(object) {
+            console.log("createMatchRequest completed with match: " + object)
+            response.success(object)
+        },
+        function(error) {
+            console.log("error in createMatchRequest: " + error)
+            response.error(error)
+        }
+    )
+});
+
+Parse.Cloud.define("queryMatches", function(request, response) {
+    //var location = request.params.location // not used
+    var categories = request.params.categories
+ 
+    var query = new Parse.Query("Match")
+
+    if (categories.length > 0) {
+        categories = categories.map(toLowerCase)
+        console.log("searching for " + categories.length + " categories: " + categories)
+        query.containsAll("categories", categories)
+    }
+    query.descending("updatedAt")
+    query.notEqualTo("user", request.user)
+
+    console.log("calling query.find")
+    query.find({
+        success: function(matches) {
+            console.log("Result matches count " + matches.length)
+            response.success(matches)
+        },
+        error: function(error) {
+            console.log("query failed: error " + error)
+            response.error(error)
+        }         
+    })
+});
+
+Parse.Cloud.define("cancelMatch", function(request, response) {
+    var matchId = request.params.match
+    var query = new Parse.Query("Match")
+    query.get(matchId).then(
+        function(match) {
+            match.set("status", "cancelled")
+            match.save().then(
+                function(object) {
+                    console.log("cancelMatch completed with match: " + object)
+                    response.success(object)
+                },
+                function(error) {
+                    console.log("error in cancelMatch: " + error)
+                    response.error(error)
+                }
+            )
+        },
+        function(error) {
+            console.log("Could not load match for cancelling")
+            response.error("Could not find match to cancel")
+        }     
+    )    
+});
+
