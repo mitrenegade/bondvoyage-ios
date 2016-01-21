@@ -11,6 +11,7 @@ import Parse
 
 class CreateMatchViewController: UIViewController {
     
+    @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelDetails: UILabel!
     @IBOutlet weak var progressView: ProgressView!
@@ -23,7 +24,15 @@ class CreateMatchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let index = arc4random_uniform(5) + 1
+        let name = "bg\(index)"
+        self.bgImage.image = UIImage(named: name)!
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+        blurredEffectView.frame = self.bgImage.bounds
+        blurredEffectView.alpha = 0.8
+        self.bgImage.addSubview(blurredEffectView)
+        
         self.progressView.startActivity()
         if self.requestedMatch != nil {
             let categories = self.requestedMatch!.valueForKey("categories") as! [String]

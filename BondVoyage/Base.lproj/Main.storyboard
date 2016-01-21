@@ -412,7 +412,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rkZ-Ko-YNH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="1j3-jT-8bV" style="IBUITableViewCellStyleDefault" id="mLz-vT-h11">
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -486,17 +486,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg6" translatesAutoresizingMaskIntoConstraints="NO" id="Ezw-AK-vec">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="io7-Vc-9xm">
                                 <rect key="frame" x="20" y="152" width="560" height="400"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPZ-Iu-Flh">
                                         <rect key="frame" x="8" y="8" width="544" height="384"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="QPZ-Iu-Flh" firstAttribute="top" secondItem="io7-Vc-9xm" secondAttribute="top" constant="8" id="Cbr-bV-Qir"/>
                                     <constraint firstItem="QPZ-Iu-Flh" firstAttribute="leading" secondItem="io7-Vc-9xm" secondAttribute="leading" constant="8" id="SPu-0I-8TK"/>
@@ -506,12 +508,11 @@
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-lT-6kk">
                                 <rect key="frame" x="20" y="72" width="560" height="60"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="KQK-PC-rvU"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K5x-sB-Act" customClass="ProgressView" customModule="BondVoyage" customModuleProvider="target">
@@ -525,7 +526,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="io7-Vc-9xm" secondAttribute="trailing" constant="20" id="4lA-iG-6AO"/>
+                            <constraint firstItem="Ezw-AK-vec" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leading" id="8Ej-77-F6b"/>
+                            <constraint firstItem="CkW-dZ-Mpq" firstAttribute="top" secondItem="Ezw-AK-vec" secondAttribute="bottom" id="8lw-ZB-d6f"/>
                             <constraint firstItem="io7-Vc-9xm" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leading" constant="20" id="LHt-Ri-WC7"/>
+                            <constraint firstItem="Ezw-AK-vec" firstAttribute="top" secondItem="lvC-Gj-nF9" secondAttribute="top" id="VN1-Dq-BBv"/>
                             <constraint firstItem="K5x-sB-Act" firstAttribute="top" secondItem="io7-Vc-9xm" secondAttribute="bottom" constant="8" id="VQe-2e-2j4"/>
                             <constraint firstItem="CkW-dZ-Mpq" firstAttribute="top" secondItem="K5x-sB-Act" secondAttribute="bottom" constant="20" id="WCD-r6-LjC"/>
                             <constraint firstItem="io7-Vc-9xm" firstAttribute="top" secondItem="Ec5-lT-6kk" secondAttribute="bottom" constant="20" id="XPq-Ie-5RK"/>
@@ -533,11 +537,13 @@
                             <constraint firstAttribute="trailing" secondItem="K5x-sB-Act" secondAttribute="trailing" id="iPV-Bm-8AR"/>
                             <constraint firstItem="Ec5-lT-6kk" firstAttribute="top" secondItem="MUg-2M-10x" secondAttribute="bottom" constant="8" id="qAY-Wu-9Yi"/>
                             <constraint firstItem="Ec5-lT-6kk" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leadingMargin" id="tOM-Va-rWh"/>
+                            <constraint firstAttribute="trailing" secondItem="Ezw-AK-vec" secondAttribute="trailing" id="v6R-fK-LTz"/>
                             <constraint firstItem="Ec5-lT-6kk" firstAttribute="trailing" secondItem="lvC-Gj-nF9" secondAttribute="trailingMargin" id="vLf-uZ-LV6"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="azt-32-rAV"/>
                     <connections>
+                        <outlet property="bgImage" destination="Ezw-AK-vec" id="EP8-pT-wtJ"/>
                         <outlet property="labelDetails" destination="QPZ-Iu-Flh" id="qf8-V4-3eJ"/>
                         <outlet property="labelTitle" destination="Ec5-lT-6kk" id="Tdw-I7-PQJ"/>
                         <outlet property="progressView" destination="K5x-sB-Act" id="rDm-CZ-c8w"/>
@@ -652,6 +658,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bg6" width="2000" height="1333"/>
         <image name="thumbdown" width="285" height="299"/>
         <image name="thumbup" width="285" height="299"/>
     </resources>

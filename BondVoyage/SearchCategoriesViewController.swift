@@ -143,12 +143,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell")!
             cell.textLabel!.text = categories[indexPath.section].rawValue
+            cell.backgroundColor = UIColor.clearColor()
             return cell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("SubcategoryCell")!
         let category = categories[indexPath.section]
         let subs = subcategories[category]
         let index = indexPath.row - 1
+        cell.backgroundColor = UIColor.whiteColor()
         cell.textLabel!.text = subs![index].rawValue
         return cell
     }
