@@ -17,18 +17,27 @@ class MatchViewController: UIViewController {
     @IBOutlet weak var buttonUp: UIButton!
     @IBOutlet weak var labelText: UILabel!
 
-    @IBOutlet weak var containerUser: UIView!
-    var userController: UserDetailsViewController!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    var didSetupScroll: Bool = false
     
     var category: String?
-    
     var matches: [PFObject]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.containerUser.hidden = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !didSetupScroll {
+            didSetupScroll = true
+            self.setupScroll()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,19 +54,39 @@ class MatchViewController: UIViewController {
         }
     }
     
+    func setupScroll() {
+        if self.matches == nil {
+            return
+        }
+        
+        let width: CGFloat = self.view.frame.size.width
+        let height: CGFloat = self.scrollView.frame.size.height
+        for var i=0; i<self.matches!.count; i++ {
+            let match = self.matches![i]
+            let user = match.objectForKey("user") as! PFUser
+            print("match \(i) id \(match.objectId!)")
+            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+            controller.selectedUser = user
+            self.contentView.addSubview(controller.view)
+
+            let frame = CGRectMake(width * CGFloat(i), 0, width, height)
+            controller.view.frame = frame
+            controller.view.backgroundColor = UIColor.randomColor()
+        }
+        
+        self.constraintContentWidth.constant = CGFloat(self.matches!.count) * width
+    }
+    
     func refresh() {
         if self.matches == nil {
-            self.containerUser.hidden = true
             self.buttonUp.hidden = true
             self.buttonDown.hidden = true
         }
         else if self.matches!.count == 0 {
-            self.containerUser.hidden = true
             self.buttonUp.hidden = true
             self.buttonDown.hidden = true
         }
         else {
-            self.containerUser.hidden = false
             self.buttonUp.hidden = false
             self.buttonDown.hidden = false
         }
@@ -67,9 +96,5 @@ class MatchViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "embedUserDetails" {
-            let controller: UserDetailsViewController = segue.destinationViewController as! UserDetailsViewController
-            self.userController = controller
-        }
     }
 }

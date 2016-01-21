@@ -29,7 +29,16 @@ class UserDetailsViewController: UIViewController {
     var relevantInterests: [String]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDetailsForUser()
+        if self.selectedUser != nil {
+            self.selectedUser!.fetchInBackgroundWithBlock({ (user, error) -> Void in
+                self.configureDetailsForUser()
+            })
+        }
+        else if self.invitingUser != nil {
+            self.invitingUser!.fetchInBackgroundWithBlock({ (user, error) -> Void in
+                self.configureDetailsForUser()
+            })
+        }
         self.configureUI()
     }
 

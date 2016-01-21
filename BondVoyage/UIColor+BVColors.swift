@@ -34,4 +34,9 @@ extension UIColor {
         return UIColor.init(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: alpha)
     }
 
+    class func randomColor() -> UIColor {
+        let colors = [UIColor.redColor(), UIColor.blueColor(), UIColor.greenColor(), UIColor.yellowColor(), UIColor.purpleColor(), UIColor.brownColor()]
+        let index = Int(arc4random_uniform(UInt32(colors.count)))
+        return colors[index]
+    }
 }
