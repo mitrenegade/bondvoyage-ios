@@ -188,6 +188,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func goToMatch(category: String) {
+        if PFUser.currentUser() == nil {
+            self.simpleAlert("Log in to find matches", message: "Please log in or sign up to bond with someone", completion: nil)
+            return
+        }
         self.performSegueWithIdentifier("GoToCreateMatch", sender: category)
     }
     
