@@ -13,6 +13,8 @@
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -424,7 +426,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1j3-jT-8bV">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="18"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -441,7 +443,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="00x-D0-gs4">
                                                     <rect key="frame" x="25" y="0.0" width="560" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -573,45 +575,35 @@
                                 <rect key="frame" x="0.0" y="540" width="600" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJW-IF-xdJ">
-                                        <rect key="frame" x="8" y="5" width="50" height="50"/>
+                                        <rect key="frame" x="3" y="5" width="290" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="C5E-LI-Z3k"/>
-                                            <constraint firstAttribute="width" constant="50" id="iSx-NW-44m"/>
                                         </constraints>
-                                        <state key="normal" image="thumbdown"/>
                                         <connections>
                                             <action selector="didClickButton:" destination="072-If-v9q" eventType="touchUpInside" id="Oke-Pw-k44"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sC8-BK-BpG">
-                                        <rect key="frame" x="542" y="5" width="50" height="50"/>
+                                        <rect key="frame" x="307" y="5" width="290" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="bgf-KU-YlA"/>
-                                            <constraint firstAttribute="width" constant="50" id="iRs-gE-xVG"/>
                                         </constraints>
-                                        <state key="normal" image="thumbup"/>
                                         <connections>
                                             <action selector="didClickButton:" destination="072-If-v9q" eventType="touchUpInside" id="sCk-ek-Tma"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search for matches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUN-rh-Fqj">
-                                        <rect key="frame" x="66" y="0.0" width="468" height="60"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="sC8-BK-BpG" secondAttribute="trailing" constant="8" id="5eU-qD-uS2"/>
-                                    <constraint firstItem="sC8-BK-BpG" firstAttribute="leading" secondItem="gUN-rh-Fqj" secondAttribute="trailing" constant="8" id="7Sf-zD-Qqb"/>
+                                    <constraint firstItem="sC8-BK-BpG" firstAttribute="width" secondItem="gJW-IF-xdJ" secondAttribute="width" id="5Jn-Gl-SAF"/>
+                                    <constraint firstAttribute="trailing" secondItem="sC8-BK-BpG" secondAttribute="trailing" constant="3" id="5eU-qD-uS2"/>
                                     <constraint firstAttribute="height" constant="60" id="AS3-Ed-ATa"/>
                                     <constraint firstItem="gJW-IF-xdJ" firstAttribute="centerY" secondItem="SeO-4L-N9f" secondAttribute="centerY" id="Dmj-Az-U35"/>
-                                    <constraint firstItem="gUN-rh-Fqj" firstAttribute="top" secondItem="SeO-4L-N9f" secondAttribute="top" id="dSr-mM-xyr"/>
+                                    <constraint firstItem="sC8-BK-BpG" firstAttribute="leading" secondItem="gJW-IF-xdJ" secondAttribute="trailing" constant="14" id="SHs-ap-aY9"/>
                                     <constraint firstItem="sC8-BK-BpG" firstAttribute="centerY" secondItem="SeO-4L-N9f" secondAttribute="centerY" id="gIY-wT-14u"/>
-                                    <constraint firstItem="gJW-IF-xdJ" firstAttribute="leading" secondItem="SeO-4L-N9f" secondAttribute="leading" constant="8" id="tLX-f3-NQf"/>
-                                    <constraint firstItem="gUN-rh-Fqj" firstAttribute="leading" secondItem="gJW-IF-xdJ" secondAttribute="trailing" constant="8" id="vNu-6W-jOU"/>
-                                    <constraint firstAttribute="bottom" secondItem="gUN-rh-Fqj" secondAttribute="bottom" id="xJP-CI-9Sm"/>
+                                    <constraint firstItem="gJW-IF-xdJ" firstAttribute="leading" secondItem="SeO-4L-N9f" secondAttribute="leading" constant="3" id="tLX-f3-NQf"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3R-8G-JrY" customClass="ProgressView" customModule="BondVoyage" customModuleProvider="target">
@@ -647,7 +639,6 @@
                         <outlet property="bgView" destination="ovc-Gy-kFw" id="rax-uh-BBg"/>
                         <outlet property="buttonDown" destination="gJW-IF-xdJ" id="NbC-is-ZhD"/>
                         <outlet property="buttonUp" destination="sC8-BK-BpG" id="4ux-kb-tN4"/>
-                        <outlet property="labelText" destination="gUN-rh-Fqj" id="TXv-Ah-JcS"/>
                         <outlet property="progressView" destination="V3R-8G-JrY" id="V4e-Nn-Gdu"/>
                         <outlet property="scrollView" destination="lUh-nS-0uF" id="ce3-ng-xPn"/>
                     </connections>
@@ -659,8 +650,6 @@
     </scenes>
     <resources>
         <image name="bg6" width="2000" height="1333"/>
-        <image name="thumbdown" width="285" height="299"/>
-        <image name="thumbup" width="285" height="299"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Fow-Lj-GcF"/>

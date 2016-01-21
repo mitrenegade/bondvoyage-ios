@@ -15,7 +15,6 @@ class MatchViewController: UIViewController {
     @IBOutlet weak var bgView: UIImageView!
     @IBOutlet weak var buttonDown: UIButton!
     @IBOutlet weak var buttonUp: UIButton!
-    @IBOutlet weak var labelText: UILabel!
 
     @IBOutlet weak var scrollView: UIScrollView!
 //    @IBOutlet weak var contentView: UIView!
@@ -29,6 +28,10 @@ class MatchViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.buttonDown.setImage(UIImage(named: "thumbdown")!, forState: .Normal)
+        self.buttonUp.setImage(UIImage(named: "thumbup")!, forState: .Normal)
+        self.buttonDown.imageView!.contentMode = .ScaleAspectFit
+        self.buttonUp.imageView!.contentMode = .ScaleAspectFit
     }
     
     override func viewDidLayoutSubviews() {
