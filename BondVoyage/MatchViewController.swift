@@ -18,7 +18,7 @@ class MatchViewController: UIViewController {
     @IBOutlet weak var labelText: UILabel!
 
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
+//    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
     var didSetupScroll: Bool = false
     
@@ -58,23 +58,25 @@ class MatchViewController: UIViewController {
         if self.matches == nil {
             return
         }
-        
+
         let width: CGFloat = self.view.frame.size.width
         let height: CGFloat = self.scrollView.frame.size.height
+        self.scrollView.pagingEnabled = true
+
         for var i=0; i<self.matches!.count; i++ {
             let match = self.matches![i]
             let user = match.objectForKey("user") as! PFUser
-            print("match \(i) id \(match.objectId!)")
             let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
             controller.selectedUser = user
-            self.contentView.addSubview(controller.view)
-
+            
+            controller.willMoveToParentViewController(self)
+            self.addChildViewController(controller)
+            self.scrollView.addSubview(controller.view)
             let frame = CGRectMake(width * CGFloat(i), 0, width, height)
             controller.view.frame = frame
-            controller.view.backgroundColor = UIColor.randomColor()
+            controller.didMoveToParentViewController(self)
         }
-        
-        self.constraintContentWidth.constant = CGFloat(self.matches!.count) * width
+        self.scrollView.contentSize = CGSizeMake(CGFloat(self.matches!.count) * width, height)
     }
     
     func refresh() {

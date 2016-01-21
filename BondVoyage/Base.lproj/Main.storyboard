@@ -239,7 +239,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8K5-v9-khu" userLabel="Interests View">
-                                                <rect key="frame" x="0.0" y="371" width="600" height="65"/>
+                                                <rect key="frame" x="0.0" y="369" width="600" height="65"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="about me" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cv4-et-cVq">
                                                         <rect key="frame" x="20" y="34" width="560" height="20.5"/>
@@ -254,7 +254,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.6569044503" green="0.46842706319999999" blue="0.50924692019999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="4WX-60-BAj" firstAttribute="leading" secondItem="8K5-v9-khu" secondAttribute="leading" constant="20" id="61e-FT-BXm"/>
                                                     <constraint firstItem="4WX-60-BAj" firstAttribute="top" secondItem="8K5-v9-khu" secondAttribute="top" constant="5" id="CW6-wL-lxR"/>
@@ -287,7 +287,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.66666666669999997" green="0.031027811329999998" blue="0.40194290379999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="Qws-lM-nuP" firstAttribute="leading" secondItem="tIW-zh-0hw" secondAttribute="leading" constant="20" id="2wp-AE-xgH"/>
                                                     <constraint firstItem="TQr-hQ-fdF" firstAttribute="leading" secondItem="tIW-zh-0hw" secondAttribute="leading" constant="20" id="6Ah-9e-h09"/>
@@ -304,8 +304,8 @@
                                             <constraint firstItem="Dal-fn-8GE" firstAttribute="leading" secondItem="epi-33-zcA" secondAttribute="leading" id="G0P-uS-5Ny"/>
                                             <constraint firstItem="8K5-v9-khu" firstAttribute="leading" secondItem="epi-33-zcA" secondAttribute="leading" id="JC5-Bi-Dnd"/>
                                             <constraint firstAttribute="trailing" secondItem="tIW-zh-0hw" secondAttribute="trailing" id="MP2-xh-HkL"/>
-                                            <constraint firstAttribute="bottom" secondItem="8K5-v9-khu" secondAttribute="bottom" id="Pfm-Oc-bcl"/>
-                                            <constraint firstItem="8K5-v9-khu" firstAttribute="top" secondItem="Dal-fn-8GE" secondAttribute="bottom" constant="74" id="e0F-mT-9I2"/>
+                                            <constraint firstAttribute="bottom" secondItem="8K5-v9-khu" secondAttribute="bottom" constant="102" id="Pfm-Oc-bcl"/>
+                                            <constraint firstItem="8K5-v9-khu" firstAttribute="top" secondItem="Dal-fn-8GE" secondAttribute="bottom" constant="72" id="e0F-mT-9I2"/>
                                             <constraint firstAttribute="trailing" secondItem="8K5-v9-khu" secondAttribute="trailing" id="e6U-AJ-Mm8"/>
                                             <constraint firstItem="tIW-zh-0hw" firstAttribute="top" secondItem="Dal-fn-8GE" secondAttribute="bottom" priority="999" id="kHh-VV-xpc"/>
                                             <constraint firstItem="tIW-zh-0hw" firstAttribute="leading" secondItem="epi-33-zcA" secondAttribute="leading" id="lUB-ZO-NJX"/>
@@ -319,7 +319,7 @@
                                         </variation>
                                     </scrollView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10641127665830467" green="0.66666666669999997" blue="0.47518593609567145" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="epi-33-zcA" secondAttribute="trailing" id="7cg-XO-9Wp"/>
                                     <constraint firstAttribute="bottom" secondItem="epi-33-zcA" secondAttribute="bottom" id="Jby-E1-QiG"/>
@@ -354,6 +354,7 @@
                         <outlet property="interestsView" destination="8K5-v9-khu" id="1ed-Z6-B1T"/>
                         <outlet property="nameLabel" destination="TQr-hQ-fdF" id="oR9-1g-rXa"/>
                         <outlet property="nameView" destination="tIW-zh-0hw" id="c65-Co-fT4"/>
+                        <outlet property="scrollView" destination="epi-33-zcA" id="KZ3-1q-iNX"/>
                         <outlet property="scrollViewContainer" destination="QCD-kG-yHn" id="QZX-nr-MUr"/>
                         <outlet property="transparentView" destination="Dal-fn-8GE" id="qjS-fG-YbQ"/>
                     </connections>
@@ -616,25 +617,11 @@
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUh-nS-0uF">
                                 <rect key="frame" x="0.0" y="64" width="600" height="476"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ymY-Uo-ASH">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="476"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="ymY-Uo-ASH" secondAttribute="bottom" id="6Kh-UV-Mpz"/>
-                                    <constraint firstAttribute="trailing" secondItem="ymY-Uo-ASH" secondAttribute="trailing" id="M6h-63-yPT"/>
-                                    <constraint firstItem="ymY-Uo-ASH" firstAttribute="top" secondItem="lUh-nS-0uF" secondAttribute="top" id="XB5-Dc-Mat"/>
-                                    <constraint firstItem="ymY-Uo-ASH" firstAttribute="leading" secondItem="lUh-nS-0uF" secondAttribute="leading" id="luO-yC-AdT"/>
-                                </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="V3R-8G-JrY" secondAttribute="trailing" id="1JG-Fj-gZ6"/>
-                            <constraint firstItem="ymY-Uo-ASH" firstAttribute="width" secondItem="dQE-uF-MqP" secondAttribute="width" priority="999" id="1ym-Xi-PRn"/>
-                            <constraint firstItem="ymY-Uo-ASH" firstAttribute="height" secondItem="dQE-uF-MqP" secondAttribute="height" priority="999" constant="-124" id="60z-w7-GQC"/>
                             <constraint firstAttribute="trailing" secondItem="ovc-Gy-kFw" secondAttribute="trailing" id="6gy-7L-yLc"/>
                             <constraint firstItem="SeO-4L-N9f" firstAttribute="leading" secondItem="dQE-uF-MqP" secondAttribute="leading" id="HKL-mN-QOL"/>
                             <constraint firstItem="lUh-nS-0uF" firstAttribute="top" secondItem="h30-Bs-JZW" secondAttribute="bottom" id="JN7-I7-ohw"/>
@@ -654,8 +641,6 @@
                         <outlet property="bgView" destination="ovc-Gy-kFw" id="rax-uh-BBg"/>
                         <outlet property="buttonDown" destination="gJW-IF-xdJ" id="NbC-is-ZhD"/>
                         <outlet property="buttonUp" destination="sC8-BK-BpG" id="4ux-kb-tN4"/>
-                        <outlet property="constraintContentWidth" destination="1ym-Xi-PRn" id="3iE-dj-qt4"/>
-                        <outlet property="contentView" destination="ymY-Uo-ASH" id="LdJ-q2-S9o"/>
                         <outlet property="labelText" destination="gUN-rh-Fqj" id="TXv-Ah-JcS"/>
                         <outlet property="progressView" destination="V3R-8G-JrY" id="V4e-Nn-Gdu"/>
                         <outlet property="scrollView" destination="lUh-nS-0uF" id="ce3-ng-xPn"/>
