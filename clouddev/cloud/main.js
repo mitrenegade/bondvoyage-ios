@@ -266,7 +266,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
     query.get(toUserId).then(
         function(result) {
             console.log("Sending push message to user " + toUserId + " from " + fromUser)
-            sendPushInviteUser(response, fromUser, toUserId, interests)
+//            sendPushInviteUser(response, fromUser, toUserId, interests)
         },
         function(error) {
             console.log("Could not load user for inviting")
@@ -274,7 +274,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         }     
     )
 })
-var sendPushInviteUser = function(response, fromUser, toId, interests) {
+var sendPushInviteUser = function(response, fromUser, toId, fromMatch, toMatch) {
     console.log("inside send push")
     console.log("from user " + fromUser + " toId " + toId + " interests " + interests)
     var name = fromUser.get("firstName")
@@ -291,6 +291,8 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
         data: {
             alert: message,
             from: fromUser,
+            fromMatch: fromMatch,
+            toMatch: toMatch,
             interests: interests,
             sound: "default"
         }
@@ -308,7 +310,7 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
         });
     }
 
-
+// MATCHES
 Parse.Cloud.define("createMatchRequest", function(request, response) {
     var Match = Parse.Object.extend("Match")
     var match = new Match()
@@ -388,4 +390,47 @@ Parse.Cloud.define("cancelMatch", function(request, response) {
         }     
     )    
 });
+
+Parse.Cloud.define("inviteMatch", function(request, response) {
+    var fromUser = request.user
+    var fromMatchId = request.params.from
+    var toMatchId = request.params.to
+
+    var query = new Parse.Query("Match")
+    query.get(fromMatchId).then {
+        function (fromMatch) {
+            var query = new Parse.Query("Match")
+            query.get(fromMatchId).then {
+                function (toMatch) {
+                    fromMatch.set("status", "pending")
+                    fromMatch.set("inviteTo", toMatch)
+                    toMatch.set("status", "pending")
+                    toMatch.set("inviteFrom", fromMatch)                           
+                }
+                function(error) {
+                    console.log("Could not load match for connecting")
+                    response.error("Could not load your match request")
+                }     
+            )
+        }
+        function(error) {
+            console.log("Could not load match for connecting")
+            response.error("Could not load your match request")
+        }     
+    )    
+});
+
+    var toUserId = request.params.user
+    var query = new Parse.Query('_User')
+    query.get(toUserId).then(
+        function(result) {
+            console.log("Sending push message to user " + toUserId + " from " + fromUser)
+            sendPushInviteUser(response, fromUser, toUserId, interests)
+        },
+        function(error) {
+            console.log("Could not load user for inviting")
+            response.error("Could not find user to invite")
+        }     
+    )
+})
 
