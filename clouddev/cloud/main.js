@@ -350,6 +350,7 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     }
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
+    query.notEqualTo("status", "cancelled")
 
     console.log("calling query.find")
     query.find({
