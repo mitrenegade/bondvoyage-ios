@@ -29,7 +29,9 @@ class CreateMatchViewController: UIViewController {
         self.bgImage.image = UIImage(named: name)!
         let blurEffect = UIBlurEffect(style: .Light)
         let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-        blurredEffectView.frame = self.bgImage.bounds
+        var frame = self.bgImage.bounds
+        frame.size.height += 20
+        blurredEffectView.frame = frame
         blurredEffectView.alpha = 0.8
         self.bgImage.addSubview(blurredEffectView)
         

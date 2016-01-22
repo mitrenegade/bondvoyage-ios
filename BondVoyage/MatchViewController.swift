@@ -13,7 +13,6 @@ class MatchViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var bgView: UIImageView!
-    @IBOutlet weak var buttonDown: UIButton!
     @IBOutlet weak var buttonUp: UIButton!
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -28,10 +27,6 @@ class MatchViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.buttonDown.setImage(UIImage(named: "thumbdown")!, forState: .Normal)
-        self.buttonUp.setImage(UIImage(named: "thumbup")!, forState: .Normal)
-        self.buttonDown.imageView!.contentMode = .ScaleAspectFit
-        self.buttonUp.imageView!.contentMode = .ScaleAspectFit
     }
     
     override func viewDidLayoutSubviews() {
@@ -49,10 +44,7 @@ class MatchViewController: UIViewController {
     }
     
     @IBAction func didClickButton(button: UIButton) {
-        if button == self.buttonDown {
-            
-        }
-        else if button == self.buttonUp {
+        if button == self.buttonUp {
             
         }
     }
@@ -85,15 +77,12 @@ class MatchViewController: UIViewController {
     func refresh() {
         if self.matches == nil {
             self.buttonUp.hidden = true
-            self.buttonDown.hidden = true
         }
         else if self.matches!.count == 0 {
             self.buttonUp.hidden = true
-            self.buttonDown.hidden = true
         }
         else {
             self.buttonUp.hidden = false
-            self.buttonDown.hidden = false
         }
     }
     

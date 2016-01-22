@@ -9,6 +9,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
         </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
@@ -574,36 +575,25 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SeO-4L-N9f">
                                 <rect key="frame" x="0.0" y="540" width="600" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJW-IF-xdJ">
-                                        <rect key="frame" x="3" y="5" width="290" height="50"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="C5E-LI-Z3k"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="didClickButton:" destination="072-If-v9q" eventType="touchUpInside" id="Oke-Pw-k44"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sC8-BK-BpG">
-                                        <rect key="frame" x="307" y="5" width="290" height="50"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="8" y="5" width="584" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="bgf-KU-YlA"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                        <state key="normal" title="INVITE TO BOND"/>
                                         <connections>
                                             <action selector="didClickButton:" destination="072-If-v9q" eventType="touchUpInside" id="sCk-ek-Tma"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="sC8-BK-BpG" firstAttribute="width" secondItem="gJW-IF-xdJ" secondAttribute="width" id="5Jn-Gl-SAF"/>
-                                    <constraint firstAttribute="trailing" secondItem="sC8-BK-BpG" secondAttribute="trailing" constant="3" id="5eU-qD-uS2"/>
+                                    <constraint firstAttribute="trailing" secondItem="sC8-BK-BpG" secondAttribute="trailing" constant="8" id="5eU-qD-uS2"/>
                                     <constraint firstAttribute="height" constant="60" id="AS3-Ed-ATa"/>
-                                    <constraint firstItem="gJW-IF-xdJ" firstAttribute="centerY" secondItem="SeO-4L-N9f" secondAttribute="centerY" id="Dmj-Az-U35"/>
-                                    <constraint firstItem="sC8-BK-BpG" firstAttribute="leading" secondItem="gJW-IF-xdJ" secondAttribute="trailing" constant="14" id="SHs-ap-aY9"/>
+                                    <constraint firstItem="sC8-BK-BpG" firstAttribute="leading" secondItem="SeO-4L-N9f" secondAttribute="leading" constant="8" id="Cgq-2b-6Hj"/>
                                     <constraint firstItem="sC8-BK-BpG" firstAttribute="centerY" secondItem="SeO-4L-N9f" secondAttribute="centerY" id="gIY-wT-14u"/>
-                                    <constraint firstItem="gJW-IF-xdJ" firstAttribute="leading" secondItem="SeO-4L-N9f" secondAttribute="leading" constant="3" id="tLX-f3-NQf"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3R-8G-JrY" customClass="ProgressView" customModule="BondVoyage" customModuleProvider="target">
@@ -615,6 +605,7 @@
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUh-nS-0uF">
                                 <rect key="frame" x="0.0" y="64" width="600" height="476"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -637,7 +628,6 @@
                     </view>
                     <connections>
                         <outlet property="bgView" destination="ovc-Gy-kFw" id="rax-uh-BBg"/>
-                        <outlet property="buttonDown" destination="gJW-IF-xdJ" id="NbC-is-ZhD"/>
                         <outlet property="buttonUp" destination="sC8-BK-BpG" id="4ux-kb-tN4"/>
                         <outlet property="progressView" destination="V3R-8G-JrY" id="V4e-Nn-Gdu"/>
                         <outlet property="scrollView" destination="lUh-nS-0uF" id="ce3-ng-xPn"/>

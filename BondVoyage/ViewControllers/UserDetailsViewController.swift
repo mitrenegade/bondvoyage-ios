@@ -78,6 +78,9 @@ class UserDetailsViewController: UIViewController {
         if let photoURL: String = user!.valueForKey("photoUrl") as? String {
             self.scrollViewContainer.imageURL = NSURL(string: photoURL)
         }
+        else if let photo: PFFile = user!.valueForKey("photo") as? PFFile {
+            self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
+        }
         else {
             self.scrollViewContainer.image = UIImage(named: "profile-icon")
         }
