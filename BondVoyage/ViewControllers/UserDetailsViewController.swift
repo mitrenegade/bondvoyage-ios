@@ -28,6 +28,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var relevantInterests: [String]?
+    var matchId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,8 +59,9 @@ class UserDetailsViewController: UIViewController {
         self.scrollViewContainer.contentMode = .ScaleAspectFill
         
         if self.invitingUser != nil {
-            self.title = "Accept"
+            self.title = nil // todo: load match and set this to match category
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Accept", style: .Done, target: self, action: "acceptInvitation")
         }
     }
 
@@ -109,7 +111,7 @@ class UserDetailsViewController: UIViewController {
                 self.interestsLabel.text = "Interests: \(stringFromArray(interests))"
             }
             else {
-                self.interestsLabel.text = "Wants to bond over: \(stringFromArray(interests))"
+                self.interestsLabel.text = "Wants to bond over: \(stringFromArray(interests))" // todo: load match and set this to match category
             }
         }
 
@@ -146,15 +148,14 @@ class UserDetailsViewController: UIViewController {
                 }
             }
         }
-        else {
-            print("User pressed accept invitation to bond")
-            // TODO: add UserRequest.acceptInvitation call
-            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
-            controller.relevantInterests = self.relevantInterests
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
     }
 
+    func acceptInvitation() {
+        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+        controller.relevantInterests = self.relevantInterests
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func close() {
         // close modally
         self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)

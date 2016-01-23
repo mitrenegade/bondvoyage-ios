@@ -181,8 +181,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }]
         
         // With info:
-        [message: i want to lose weight, aps: {
-        }, userid: 1]
+        [
+        [from: {
+        objectId = Xpqevj9iZY;
+        }, parsePushId: 2LP23eaIpL, fromMatch: {
+        categories =     (
+        museums
+        );
+        createdAt = "2016-01-23T22:37:32.208Z";
+        inviteTo =     {
+        "__type" = Pointer;
+        className = Match;
+        objectId = dvWIDtvWng;
+        };
+        objectId = ILtTAMoK6V;
+        status = pending;
+        updatedAt = "2016-01-23T22:37:41.144Z";
+        user =     {
+        "__type" = Pointer;
+        className = "_User";
+        objectId = Xpqevj9iZY;
+        };
+        }, toMatch: {
+        categories =     (
+        museums
+        );
+        createdAt = "2016-01-23T22:37:20.969Z";
+        inviteFrom =     {
+        "__type" = Pointer;
+        className = Match;
+        objectId = ILtTAMoK6V;
+        };
+        objectId = dvWIDtvWng;
+        status = pending;
+        updatedAt = "2016-01-23T22:37:41.143Z";
+        user =     {
+        "__type" = Pointer;
+        className = "_User";
+        objectId = KaxEQenlcS;
+        };
+        }
+        ]
         */
         if let _ = userInfo["from"] as? [NSObject: AnyObject] {
             self.goToInvited(userInfo)
@@ -217,8 +256,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Invitation notification
     func goToInvited(info: [NSObject: AnyObject]) {
         let userDict: [NSObject: AnyObject] = info["from"] as! [NSObject: AnyObject]
-        let interests: [String] = info["interests"] as! [String]
         let userId: String = userDict["objectId"] as! String
+
+        let fromMatch: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
+        let categories: [String] = fromMatch["categories"] as! [String]
+        let fromMatchId: String = fromMatch["objectId"] as! String
         
         let query: PFQuery = PFUser.query()!
         query.whereKey("objectId", equalTo: userId)
@@ -227,7 +269,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let user: PFUser = results![0] as! PFUser
                 let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
                 controller.invitingUser = user
-                controller.relevantInterests = interests
+                controller.matchId = fromMatchId
                 let nav = UINavigationController(rootViewController: controller)
                 let presenter = self.topViewController()!
                 presenter.presentViewController(nav, animated: true, completion: { () -> Void in
