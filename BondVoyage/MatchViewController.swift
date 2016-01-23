@@ -14,6 +14,7 @@ class MatchViewController: UIViewController {
     @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var bgView: UIImageView!
     @IBOutlet weak var buttonUp: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     @IBOutlet weak var scrollView: UIScrollView!
 //    @IBOutlet weak var contentView: UIView!
@@ -48,8 +49,16 @@ class MatchViewController: UIViewController {
         if button == self.buttonUp {
             // create a bond
             if self.fromMatch != nil {
+                self.activityIndicator.startAnimating()
                 MatchRequest.inviteMatch(self.fromMatch!, toMatch: self.matches![self.currentPage()], completion: { (results, error) -> Void in
-                    
+                    self.activityIndicator.stopAnimating()
+                    if error != nil {
+                        self.simpleAlert("Could not invite", defaultMessage: "There was an error sending your invite.", error: error)
+                    }
+                    else {
+                        self.simpleAlert("Invitation sent", message: "You have successfully sent an invtation.")
+                        // TODO: refresh scroll view and remove this user or prevent multiple invitations from being sent
+                    }
                 })
             }
             else {
