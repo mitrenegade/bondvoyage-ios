@@ -266,7 +266,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
     query.get(toUserId).then(
         function(result) {
             console.log("Sending push message to user " + toUserId + " from " + fromUser)
-            sendPushInviteUser(response, fromUser, toUserId, interests)
+//            sendPushInviteUser(response, fromUser, toUserId, interests)
         },
         function(error) {
             console.log("Could not load user for inviting")
@@ -274,24 +274,31 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         }     
     )
 })
-var sendPushInviteUser = function(response, fromUser, toId, interests) {
+var sendPushForMatches = function(response, fromMatch, toMatch) {
     console.log("inside send push")
-    console.log("from user " + fromUser + " toId " + toId + " interests " + interests)
+    var fromUser = fromMatch.get("user")
+    var toUser = toMatch.get("user")
+    console.log("from user id " + fromUser.id + " to user id " + toUser.id)
     var name = fromUser.get("firstName")
     if (name == undefined) {
         name = fromUser.get("lastName")
     }
-    var message = name + " has sent you an invitation to bond over " + interests[0]
+    var categories = fromMatch.get("categories")
+    var message = name + " has sent you an invitation to bond over " + categories[0]
     if (name == undefined) {
-        message = "You have received an invitation to bond over " + interests[0]
+        message = "You have received an invitation to bond over " + categories[0]
     }
+
+    var toId = toUser.id
     var channel = "channel" + toId
+    console.log("push message: " + message + " channel: " + channel)
     Parse.Push.send({
         channels: [ channel ],
         data: {
             alert: message,
             from: fromUser,
-            interests: interests,
+            fromMatch: fromMatch,
+            toMatch: toMatch,
             sound: "default"
         }
     }, {
@@ -308,7 +315,7 @@ var sendPushInviteUser = function(response, fromUser, toId, interests) {
         });
     }
 
-
+// MATCHES
 Parse.Cloud.define("createMatchRequest", function(request, response) {
     var Match = Parse.Object.extend("Match")
     var match = new Match()
@@ -350,6 +357,7 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     }
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
+    query.notEqualTo("status", "cancelled")
 
     console.log("calling query.find")
     query.find({
@@ -386,5 +394,39 @@ Parse.Cloud.define("cancelMatch", function(request, response) {
             response.error("Could not find match to cancel")
         }     
     )    
+});
+
+Parse.Cloud.define("inviteMatch", function(request, response) {
+    var fromUser = request.user
+    var fromMatchId = request.params.from
+    var toMatchId = request.params.to
+
+    var query = new Parse.Query("Match")
+    query.get(fromMatchId).then(
+        function (fromMatch) {
+            var query = new Parse.Query("Match")
+            query.get(toMatchId).then(
+                function (toMatch) {
+                    fromMatch.set("status", "pending")
+                    fromMatch.set("inviteTo", toMatch)
+                    toMatch.set("status", "pending")
+                    toMatch.set("inviteFrom", fromMatch)     
+                    fromMatch.save()
+                    toMatch.save()
+
+                    console.log("Sending push message to match id " + toMatch.id + " from match id " + fromMatch.id)
+                    sendPushForMatches(response, fromMatch, toMatch)
+                },
+                function(error) {
+                    console.log("Could not load match for connecting")
+                    response.error("Could not load your match request")
+                }     
+            )
+        },
+        function(error) {
+            console.log("Could not load match for connecting")
+            response.error("Could not load your match request")
+        }  
+    )
 });
 

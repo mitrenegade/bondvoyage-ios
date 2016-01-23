@@ -13,22 +13,30 @@ class MatchViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var bgView: UIImageView!
-    @IBOutlet weak var buttonDown: UIButton!
     @IBOutlet weak var buttonUp: UIButton!
-    @IBOutlet weak var labelText: UILabel!
 
-    @IBOutlet weak var containerUser: UIView!
-    var userController: UserDetailsViewController!
+    @IBOutlet weak var scrollView: UIScrollView!
+//    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    var didSetupScroll: Bool = false
     
     var category: String?
-    
     var matches: [PFObject]?
+    var fromMatch: PFObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.containerUser.hidden = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !didSetupScroll {
+            didSetupScroll = true
+            self.setupScroll()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,29 +45,58 @@ class MatchViewController: UIViewController {
     }
     
     @IBAction func didClickButton(button: UIButton) {
-        if button == self.buttonDown {
-            
+        if button == self.buttonUp {
+            // create a bond
+            if self.fromMatch != nil {
+                MatchRequest.inviteMatch(self.fromMatch!, toMatch: self.matches![self.currentPage()], completion: { (results, error) -> Void in
+                    
+                })
+            }
+            else {
+                self.simpleAlert("Please try again", defaultMessage: "You aren't currently looking for a match. Please go back and select a category.", error: nil)
+            }
         }
-        else if button == self.buttonUp {
-            
+    }
+        
+    func currentPage() -> Int {
+        let page = Int(floor(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
+        return page
+    }
+    
+    func setupScroll() {
+        if self.matches == nil {
+            return
         }
+
+        let width: CGFloat = self.view.frame.size.width
+        let height: CGFloat = self.scrollView.frame.size.height
+        self.scrollView.pagingEnabled = true
+
+        for var i=0; i<self.matches!.count; i++ {
+            let match = self.matches![i]
+            let user = match.objectForKey("user") as! PFUser
+            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+            controller.selectedUser = user
+            
+            controller.willMoveToParentViewController(self)
+            self.addChildViewController(controller)
+            self.scrollView.addSubview(controller.view)
+            let frame = CGRectMake(width * CGFloat(i), 0, width, height)
+            controller.view.frame = frame
+            controller.didMoveToParentViewController(self)
+        }
+        self.scrollView.contentSize = CGSizeMake(CGFloat(self.matches!.count) * width, height)
     }
     
     func refresh() {
         if self.matches == nil {
-            self.containerUser.hidden = true
             self.buttonUp.hidden = true
-            self.buttonDown.hidden = true
         }
         else if self.matches!.count == 0 {
-            self.containerUser.hidden = true
             self.buttonUp.hidden = true
-            self.buttonDown.hidden = true
         }
         else {
-            self.containerUser.hidden = false
             self.buttonUp.hidden = false
-            self.buttonDown.hidden = false
         }
     }
     
@@ -67,9 +104,5 @@ class MatchViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "embedUserDetails" {
-            let controller: UserDetailsViewController = segue.destinationViewController as! UserDetailsViewController
-            self.userController = controller
-        }
     }
 }

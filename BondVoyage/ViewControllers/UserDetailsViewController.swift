@@ -16,6 +16,7 @@ class UserDetailsViewController: UIViewController {
     var invitingUser: PFUser?
     
     @IBOutlet weak var scrollViewContainer: AsyncImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
@@ -29,8 +30,23 @@ class UserDetailsViewController: UIViewController {
     var relevantInterests: [String]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDetailsForUser()
+        
+        self.nameView.hidden = true
+        self.interestsView.hidden = true
+        
+        if self.selectedUser != nil {
+            self.selectedUser!.fetchInBackgroundWithBlock({ (user, error) -> Void in
+                self.configureDetailsForUser()
+            })
+        }
+        else if self.invitingUser != nil {
+            self.invitingUser!.fetchInBackgroundWithBlock({ (user, error) -> Void in
+                self.configureDetailsForUser()
+            })
+        }
         self.configureUI()
+        
+        self.view!.backgroundColor = UIColor.clearColor()
     }
 
     func configureUI() {
@@ -56,8 +72,14 @@ class UserDetailsViewController: UIViewController {
             return
         }
         
+        self.nameView.hidden = false
+        self.interestsView.hidden = false
+
         if let photoURL: String = user!.valueForKey("photoUrl") as? String {
             self.scrollViewContainer.imageURL = NSURL(string: photoURL)
+        }
+        else if let photo: PFFile = user!.valueForKey("photo") as? PFFile {
+            self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
         }
         else {
             self.scrollViewContainer.image = UIImage(named: "profile-icon")
@@ -71,8 +93,6 @@ class UserDetailsViewController: UIViewController {
         self.genderAndAgeLabel.text = "\(user!.valueForKey("gender")!), age: \(age)"
 
         self.configureInterestsLabel()
-
-        self.aboutMeLabel.text = "About me: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
 
     func configureInterestsLabel() {
@@ -91,7 +111,10 @@ class UserDetailsViewController: UIViewController {
         else {
             self.interestsLabel.text = "Wants to bond over: \(stringFromArray(interests as! Array<String>))"
         }
+
+        self.aboutMeLabel.text = "About me: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
+    
     func dismiss() {
         self.navigationController?.popViewControllerAnimated(true)
     }

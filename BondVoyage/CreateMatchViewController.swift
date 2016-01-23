@@ -11,6 +11,7 @@ import Parse
 
 class CreateMatchViewController: UIViewController {
     
+    @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelDetails: UILabel!
     @IBOutlet weak var progressView: ProgressView!
@@ -20,19 +21,31 @@ class CreateMatchViewController: UIViewController {
     var requestedMatch: PFObject?
     var isQuerying: Bool = false
     
+    weak var matchController: MatchViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let index = arc4random_uniform(5) + 1
+        let name = "bg\(index)"
+        self.bgImage.image = UIImage(named: name)!
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+        var frame = self.bgImage.bounds
+        frame.size.height += 20
+        blurredEffectView.frame = frame
+        blurredEffectView.alpha = 0.8
+        self.bgImage.addSubview(blurredEffectView)
+        
         self.progressView.startActivity()
         if self.requestedMatch != nil {
             let categories = self.requestedMatch!.valueForKey("categories") as! [String]
             self.category = categories[0]
-            
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
+            self.matchController?.fromMatch = self.requestedMatch
         }
         else {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+            // always create a match if one doesn't already exist
+            self.createMatch()
         }
         
         self.queryForMatches()
@@ -51,6 +64,8 @@ class CreateMatchViewController: UIViewController {
             self.labelDetails.text = "Looking for someone else who is also down for \(self.category!)"
         }
         else if self.requestedMatch != nil {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
+
             self.labelTitle.text = "Waiting for match"
             self.labelDetails.text = "You are waiting for someone else to join you for \(self.category!). Click Back to cancel and search for something else."
             // TODO: display location, time, other parameters
@@ -86,9 +101,6 @@ class CreateMatchViewController: UIViewController {
             self.isQuerying = false
             if results != nil {
                 if results!.count == 0 {
-                    if self.requestedMatch == nil {
-                        self.createMatch()
-                    }
                     self.refresh()
                     return
                 }
@@ -120,6 +132,7 @@ class CreateMatchViewController: UIViewController {
             if result != nil {
                 let match: PFObject = result! as PFObject
                 self.requestedMatch = match
+                self.matchController?.fromMatch = self.requestedMatch
             }
             else {
                 let message = "There was a problem setting up your activity."
@@ -150,6 +163,7 @@ class CreateMatchViewController: UIViewController {
             let controller: MatchViewController = segue.destinationViewController as! MatchViewController
             controller.category = self.category
             controller.matches = self.matches
+            self.matchController = controller
         }
     }
 

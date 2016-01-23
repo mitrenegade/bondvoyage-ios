@@ -143,12 +143,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell")!
             cell.textLabel!.text = categories[indexPath.section].rawValue
+            cell.backgroundColor = UIColor.clearColor()
             return cell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("SubcategoryCell")!
         let category = categories[indexPath.section]
         let subs = subcategories[category]
         let index = indexPath.row - 1
+        cell.backgroundColor = UIColor.whiteColor()
         cell.textLabel!.text = subs![index].rawValue
         return cell
     }
@@ -168,7 +170,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 40
+        return 50
     }
     
     // MARK: - UITableViewDelegate
@@ -188,6 +190,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func goToMatch(category: String) {
+        if PFUser.currentUser() == nil {
+            self.simpleAlert("Log in to find matches", message: "Please log in or sign up to bond with someone", completion: nil)
+            return
+        }
         self.performSegueWithIdentifier("GoToCreateMatch", sender: category)
     }
     
