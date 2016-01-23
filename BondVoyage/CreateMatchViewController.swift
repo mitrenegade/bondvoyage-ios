@@ -21,6 +21,8 @@ class CreateMatchViewController: UIViewController {
     var requestedMatch: PFObject?
     var isQuerying: Bool = false
     
+    weak var matchController: MatchViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,6 +41,7 @@ class CreateMatchViewController: UIViewController {
         if self.requestedMatch != nil {
             let categories = self.requestedMatch!.valueForKey("categories") as! [String]
             self.category = categories[0]
+            self.matchController?.fromMatch = self.requestedMatch
         }
         else {
             // always create a match if one doesn't already exist
@@ -129,6 +132,7 @@ class CreateMatchViewController: UIViewController {
             if result != nil {
                 let match: PFObject = result! as PFObject
                 self.requestedMatch = match
+                self.matchController?.fromMatch = self.requestedMatch
             }
             else {
                 let message = "There was a problem setting up your activity."
@@ -159,6 +163,7 @@ class CreateMatchViewController: UIViewController {
             let controller: MatchViewController = segue.destinationViewController as! MatchViewController
             controller.category = self.category
             controller.matches = self.matches
+            self.matchController = controller
         }
     }
 

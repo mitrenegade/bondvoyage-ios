@@ -22,6 +22,7 @@ class MatchViewController: UIViewController {
     
     var category: String?
     var matches: [PFObject]?
+    var fromMatch: PFObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,20 @@ class MatchViewController: UIViewController {
     @IBAction func didClickButton(button: UIButton) {
         if button == self.buttonUp {
             // create a bond
+            if self.fromMatch != nil {
+                MatchRequest.inviteMatch(self.fromMatch!, toMatch: self.matches![self.currentPage()], completion: { (results, error) -> Void in
+                    
+                })
+            }
+            else {
+                self.simpleAlert("Please try again", defaultMessage: "You aren't currently looking for a match. Please go back and select a category.", error: nil)
+            }
         }
+    }
+        
+    func currentPage() -> Int {
+        let page = Int(floor(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
+        return page
     }
     
     func setupScroll() {
