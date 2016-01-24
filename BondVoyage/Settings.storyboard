@@ -817,9 +817,6 @@
                                                                 <state key="normal" title="Gender">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
-                                                                <connections>
-                                                                    <action selector="didClickButton:" destination="r9Z-No-mhl" eventType="touchUpInside" id="vJR-N1-ooU"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -860,9 +857,6 @@
                                                                 <state key="normal" title="Group Size">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
-                                                                <connections>
-                                                                    <action selector="didClickButton:" destination="r9Z-No-mhl" eventType="touchUpInside" id="riz-4J-QlQ"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -905,9 +899,6 @@
                                                                 <state key="normal" title="Age Range">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
-                                                                <connections>
-                                                                    <action selector="didClickButton:" destination="r9Z-No-mhl" eventType="touchUpInside" id="ldc-Fr-UJg"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
