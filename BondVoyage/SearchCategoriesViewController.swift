@@ -87,7 +87,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     var selectedCategory: String?
     var matches: [PFObject]?
     var requestedMatch: PFObject?
-
+    var promptedForPush: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -105,6 +106,22 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         
         self.checkForExistingMatch()
 
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if PFUser.currentUser() != nil && !self.promptedForPush {
+            if !self.appDelegate().hasPushEnabled() {
+                // prompt for it
+                self.appDelegate().registerForRemoteNotifications()
+            }
+            else {
+                // reregister
+                self.appDelegate().initializeNotificationServices()
+            }
+            self.promptedForPush = true
+        }
     }
 
     override func didReceiveMemoryWarning() {

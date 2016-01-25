@@ -69,7 +69,7 @@ class MatchStatusViewController: UIViewController {
                 user.fetchInBackgroundWithBlock({ (object, error) -> Void in
                     if let name: String = user.objectForKey("firstName") as? String {
                         self.labelTitle.text = "You have received an invitation from \(name)"
-                        self.labelDetails.text = "\(name) wants to bond over \(self.category)"
+                        self.labelDetails.text = "\(name) wants to bond over \(self.category!)"
                     }
                     self.goToAcceptInvite(user)
                 })
@@ -158,7 +158,7 @@ class MatchStatusViewController: UIViewController {
         let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
         controller.invitingUser = user
         controller.invitingMatch = self.fromMatch
-        
+        self.navigationController!.pushViewController(controller, animated: true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

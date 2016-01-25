@@ -267,33 +267,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if results != nil && results!.count > 0 {
                 let fromMatch: PFObject = results![0]
                 let presenter = self.topViewController()!
-                if presenter.isKindOfClass(MatchStatusViewController) {
-                    let matchController: MatchStatusViewController = presenter as! MatchStatusViewController
-                    matchController.fromMatch = fromMatch
+                if let nav: UINavigationController = presenter as? UINavigationController {
+                    if nav.viewControllers.last!.isKindOfClass(MatchStatusViewController) {
+                        let matchController: MatchStatusViewController = nav.viewControllers.last! as! MatchStatusViewController
+                        matchController.fromMatch = fromMatch
+                        matchController.refresh()
+                        return
+                    }
                 }
-                else {
-                    let query: PFQuery = PFUser.query()!
-                    query.whereKey("objectId", equalTo: userId)
-                    query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-                        if results != nil && results!.count > 0 {
-                            let user: PFUser = results![0] as! PFUser
-                            
-                            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
-                            controller.invitingUser = user
-                            controller.invitingMatch = fromMatch
-                            
-                            let nav = UINavigationController(rootViewController: controller)
-                            presenter.presentViewController(nav, animated: true, completion: { () -> Void in
-                            })
-                        }
-                        else {
-                            print("Invalid user")
-                        }
+                
+                let query: PFQuery = PFUser.query()!
+                query.whereKey("objectId", equalTo: userId)
+                query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                    if results != nil && results!.count > 0 {
+                        let user: PFUser = results![0] as! PFUser
+                        
+                        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+                        controller.invitingUser = user
+                        controller.invitingMatch = fromMatch
+                        
+                        let nav = UINavigationController(rootViewController: controller)
+                        presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                        })
+                    }
+                    else {
+                        print("Invalid user")
                     }
                 }
             }
             else {
-                
+            
             }
         })
     }

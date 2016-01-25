@@ -61,7 +61,7 @@ class UserDetailsViewController: UIViewController {
         
         if self.invitingUser != nil {
             self.title = "Invitation"
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "declineInvitation")
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Decline", style: .Done, target: self, action: "declineInvitation")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Accept", style: .Done, target: self, action: "acceptInvitation")
         }
     }
