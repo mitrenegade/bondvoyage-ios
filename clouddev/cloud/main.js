@@ -329,6 +329,7 @@ Parse.Cloud.define("createMatchRequest", function(request, response) {
     var categories = request.params.categories
     categories = categories.map(toLowerCase)
     match.set("categories", categories)
+    match.set("status", "active")
 
     // todo: time, location
 
@@ -357,7 +358,7 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     }
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
-    query.notEqualTo("status", "cancelled")
+    query.equalTo("status", "active")
 
     console.log("calling query.find")
     query.find({
