@@ -84,6 +84,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
 
     @IBOutlet weak var tableView: UITableView!
     var expanded: [Bool] = [Bool]()
+    var selectedCategory: String?
+    var matches: [PFObject]?
+    var requestedMatch: PFObject?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,16 +188,30 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             let subs: [SUBCATEGORY] = subcategories[category]!
             let index = indexPath.row - 1
             let subcategory: SUBCATEGORY = subs[index]
-            self.goToMatch(subcategory.rawValue)
+            self.goToCategoryQuery(subcategory.rawValue)
         }
     }
     
-    func goToMatch(category: String) {
+    func goToCategoryQuery(category: String) {
+        // first query for existing bond requests
         if PFUser.currentUser() == nil {
             self.simpleAlert("Log in to find matches", message: "Please log in or sign up to bond with someone", completion: nil)
             return
         }
-        self.performSegueWithIdentifier("GoToCreateMatch", sender: category)
+        self.selectedCategory = category
+        self.queryForMatches()
+    }
+    
+    func goToCreateMatch() {
+        self.createMatch()
+    }
+    
+    func goToInvite() {
+        self.performSegueWithIdentifier("GoToInvite", sender: self)
+    }
+    
+    func goToMatchStatus() {
+        self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
     }
     
     func goToLogin() {
@@ -212,13 +229,65 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "GoToCreateMatch" {
-            let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
-            controller.category = sender as? String
+        if segue.identifier == "GoToInvite" {
+            let controller: InviteViewController = segue.destinationViewController as! InviteViewController
+            controller.category = self.selectedCategory
+            controller.matches = self.matches
+            controller.fromMatch = self.requestedMatch
         }
-        else if segue.identifier == "GoToExistingMatch" {
+        else if segue.identifier == "GoToMatchStatus" {
             let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
-            controller.requestedMatch = sender as? PFObject
+            controller.category = self.selectedCategory
+            controller.matches = self.matches
+            controller.requestedMatch = self.requestedMatch
         }
     }
+    
+    // MARK: - API
+    // MARK: - API calls
+    func queryForMatches() {
+        // searches for existing requests for category. Does not create own request
+        var categories: [String] = []
+        if self.selectedCategory != nil {
+            categories = [self.selectedCategory!]
+        }
+        MatchRequest.queryMatches(nil, categories: categories) { (results, error) -> Void in
+            if results != nil {
+                if results!.count > 0 {
+                    self.matches = results
+                }
+                self.goToCreateMatch()
+            }
+            else {
+                let message = "There was a problem loading matches. Please try again"
+                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+            }
+        }
+    }
+    
+    func createMatch() {
+        // no existing requests exist. Create a request for others to match to
+        var categories: [String] = []
+        if self.selectedCategory != nil {
+            categories = [self.selectedCategory!]
+        }
+        MatchRequest.createMatch(categories) { (result, error) -> Void in
+            if result != nil {
+                let match: PFObject = result! as PFObject
+                self.requestedMatch = match
+                
+                if self.matches != nil {
+                    self.goToInvite()
+                }
+                else {
+                    self.goToMatchStatus()
+                }
+            }
+            else {
+                let message = "There was a problem setting up your activity. Please try again."
+                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
+            }
+        }
+    }
+
 }

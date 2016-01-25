@@ -1,5 +1,5 @@
 //
-//  MatchViewController.swift
+//  InviteViewController.swift
 //  BondVoyage
 //
 //  Created by Bobby Ren on 1/20/16.
@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class MatchViewController: UIViewController {
+class InviteViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var bgView: UIImageView!

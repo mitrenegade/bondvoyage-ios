@@ -97,7 +97,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cg-MI-x4R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1290" y="-163"/>
+            <point key="canvasLocation" x="1264" y="-138"/>
         </scene>
         <!--Search Results View Controller-->
         <scene sceneID="v3w-lh-E5e">
@@ -399,7 +399,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8RT-uD-d9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="409" y="-918"/>
+            <point key="canvasLocation" x="550" y="-918"/>
         </scene>
         <!--Search Categories View Controller-->
         <scene sceneID="6gJ-Dq-l1d">
@@ -469,13 +469,13 @@
                     <navigationItem key="navigationItem" id="W1a-ot-mcK"/>
                     <connections>
                         <outlet property="tableView" destination="rkZ-Ko-YNH" id="h77-GQ-6VD"/>
-                        <segue destination="xUi-91-zgb" kind="show" identifier="GoToCreateMatch" id="mgA-31-uqd"/>
-                        <segue destination="xUi-91-zgb" kind="show" identifier="GoToExistingMatch" id="Fow-Lj-GcF"/>
+                        <segue destination="072-If-v9q" kind="show" identifier="GoToInvite" id="ZNV-sV-OFD"/>
+                        <segue destination="xUi-91-zgb" kind="showDetail" identifier="GoToMatchStatus" id="2t7-xT-Cx0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyO-cw-yHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1144" y="-898"/>
+            <point key="canvasLocation" x="1259" y="-898"/>
         </scene>
         <!--Create Match View Controller-->
         <scene sceneID="ZSm-Ch-lb0">
@@ -492,10 +492,10 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg6" translatesAutoresizingMaskIntoConstraints="NO" id="Ezw-AK-vec">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="io7-Vc-9xm">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="io7-Vc-9xm">
                                 <rect key="frame" x="20" y="152" width="560" height="400"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPZ-Iu-Flh">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPZ-Iu-Flh">
                                         <rect key="frame" x="8" y="8" width="544" height="384"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
@@ -509,7 +509,7 @@
                                     <constraint firstAttribute="bottom" secondItem="QPZ-Iu-Flh" secondAttribute="bottom" constant="8" id="dTp-AR-exM"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-lT-6kk">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Searching for" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-lT-6kk">
                                 <rect key="frame" x="20" y="72" width="560" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -550,17 +550,16 @@
                         <outlet property="labelDetails" destination="QPZ-Iu-Flh" id="qf8-V4-3eJ"/>
                         <outlet property="labelTitle" destination="Ec5-lT-6kk" id="Tdw-I7-PQJ"/>
                         <outlet property="progressView" destination="K5x-sB-Act" id="rDm-CZ-c8w"/>
-                        <segue destination="072-If-v9q" kind="show" identifier="GoToMatches" id="XL0-UW-vBR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="njm-lv-vo9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1820" y="-898"/>
+            <point key="canvasLocation" x="1954" y="-103"/>
         </scene>
-        <!--Match View Controller-->
+        <!--Invite View Controller-->
         <scene sceneID="Ncf-3X-Qy9">
             <objects>
-                <viewController id="072-If-v9q" customClass="MatchViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="072-If-v9q" customClass="InviteViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h30-Bs-JZW"/>
                         <viewControllerLayoutGuide type="bottom" id="XGw-V4-bPC"/>
@@ -626,18 +625,19 @@
                         <outlet property="bgView" destination="ovc-Gy-kFw" id="rax-uh-BBg"/>
                         <outlet property="buttonUp" destination="sC8-BK-BpG" id="4ux-kb-tN4"/>
                         <outlet property="scrollView" destination="lUh-nS-0uF" id="ce3-ng-xPn"/>
+                        <segue destination="xUi-91-zgb" kind="show" identifier="GoToMatchStatus" id="5DK-Ky-SmS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="92e-1Y-i3R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2507" y="-898"/>
+            <point key="canvasLocation" x="1929" y="-898"/>
         </scene>
     </scenes>
     <resources>
         <image name="bg6" width="2000" height="1333"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Fow-Lj-GcF"/>
         <segue reference="qSi-b9-Uso"/>
+        <segue reference="5DK-Ky-SmS"/>
     </inferredMetricsTieBreakers>
 </document>

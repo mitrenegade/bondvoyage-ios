@@ -21,7 +21,7 @@ class CreateMatchViewController: UIViewController {
     var requestedMatch: PFObject?
     var isQuerying: Bool = false
     
-    weak var matchController: MatchViewController?
+    weak var inviteController: InviteViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class CreateMatchViewController: UIViewController {
         if self.requestedMatch != nil {
             let categories = self.requestedMatch!.valueForKey("categories") as! [String]
             self.category = categories[0]
-            self.matchController?.fromMatch = self.requestedMatch
+            self.inviteController?.fromMatch = self.requestedMatch
         }
         else {
             // always create a match if one doesn't already exist
@@ -98,61 +98,6 @@ class CreateMatchViewController: UIViewController {
     
     func goToMatches() {
         self.performSegueWithIdentifier("GoToMatches", sender: nil)
-    }
-    
-    // MARK: - API calls
-    func queryForMatches() {
-        // searches for existing requests for category. Does not create own request
-        var categories: [String] = []
-        if self.category != nil {
-            categories = [self.category!]
-        }
-        self.isQuerying = true
-        MatchRequest.queryMatches(nil, categories: categories) { (results, error) -> Void in
-            self.progressView.stopActivity()
-            self.isQuerying = false
-            if results != nil {
-                if results!.count == 0 {
-                    self.refresh()
-                    return
-                }
-                else {
-                    self.matches = results
-                    self.labelTitle.text = "Match found"
-                    self.goToMatches()
-                }
-            }
-            else {
-                let message = "There was a problem loading matches."
-                self.simpleAlert("Could not load matches", defaultMessage: message, error: error)
-                self.labelTitle.text = "Problem loading matches"
-            }
-            self.refresh()
-        }
-    }
-    
-    func createMatch() {
-        // no existing requests exist. Create a request for others to match to
-        self.labelTitle.text = "Waiting for a match"
-        var categories: [String] = []
-        if self.category != nil {
-            categories = [self.category!]
-        }
-        self.progressView.startActivity()
-        MatchRequest.createMatch(categories) { (result, error) -> Void in
-            self.progressView.stopActivity()
-            if result != nil {
-                let match: PFObject = result! as PFObject
-                self.requestedMatch = match
-                self.matchController?.fromMatch = self.requestedMatch
-            }
-            else {
-                let message = "There was a problem setting up your activity."
-                self.simpleAlert("Could not find matches", defaultMessage: message, error: error)
-                self.labelTitle.text = "Problem creating activity"
-            }
-            self.refresh()
-        }
     }
     
     func cancelMatch() {
