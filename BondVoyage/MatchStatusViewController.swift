@@ -63,15 +63,30 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
             // TODO: display location, time, other parameters
         }
         else if self.fromMatch != nil {
-            self.labelTitle.text = "You have received an invitation to bond"
-            self.labelDetails.text = "Loading invitation details."
+            if self.fromMatch!.valueForKey("status") as? String == "pending" {
+                self.labelTitle.text = "You have received an invitation to bond"
+                self.labelDetails.text = "Loading invitation details."
+            }
+            else if self.fromMatch!.valueForKey("status") as? String == "declined" {
+                self.labelTitle.text = "Your invitation was declined"
+                self.labelDetails.text = "Sorry, looks like this bond will not be accepted."
+            }
+            
             if let user: PFUser = self.fromMatch!.objectForKey("user") as? PFUser {
                 user.fetchInBackgroundWithBlock({ (object, error) -> Void in
-                    if let name: String = user.objectForKey("firstName") as? String {
-                        self.labelTitle.text = "You have received an invitation from \(name)"
-                        self.labelDetails.text = "\(name) wants to bond over \(self.category!)"
+                    if self.fromMatch!.valueForKey("status") as? String == "pending" {
+                        if let name: String = user.objectForKey("firstName") as? String {
+                            self.labelTitle.text = "You have received an invitation from \(name)"
+                            self.labelDetails.text = "\(name) wants to bond over \(self.category!)"
+                        }
+                        self.goToAcceptInvite(user)
                     }
-                    self.goToAcceptInvite(user)
+                    else if self.fromMatch!.valueForKey("status") as? String == "declined" {
+                        if let name: String = user.objectForKey("firstName") as? String {
+                            self.labelTitle.text = "Your invitation was declined"
+                            self.labelDetails.text = "Sorry, looks like \(name) declined your invitation to bond over \(self.category!)."
+                        }
+                    }
                 })
             }
         }

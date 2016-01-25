@@ -316,8 +316,10 @@ var sendPushForMatches = function(response, fromMatch, toMatch) {
         });
     }
 
-var sendPushForDecline = function(response, fromMatch, toMatch) {
+var sendPushForInvitationResponse = function(response, fromMatch, toMatch, status) {
     console.log("inside send push")
+    // toUser is the user who was the target of the invitation. In this case, the toUser is sending
+    // the notification to the fromUser
     var fromUser = fromMatch.get("user")
     var toUser = toMatch.get("user")
     console.log("from user id " + fromUser.id + " to user id " + toUser.id)
@@ -326,9 +328,9 @@ var sendPushForDecline = function(response, fromMatch, toMatch) {
         name = toUser.get("lastName")
     }
     var categories = toMatch.get("categories")
-    var message = name + " has declined your invitation to bond over " + categories[0]
+    var message = name + " has " + status + " your invitation to bond over " + categories[0]
     if (name == undefined) {
-        message = "Your invitation to bond over " + categories[0] + " was declined"
+        message = "Your invitation to bond over " + categories[0] + " was " + status
     }
 
     var fromId = fromUser.id
@@ -338,7 +340,8 @@ var sendPushForDecline = function(response, fromMatch, toMatch) {
         channels: [ channel ],
         data: {
             alert: message,
-            toUser: toUser,
+            invitedUser: toUser,
+            invitationStatus: status,
             fromMatch: fromMatch,
             toMatch: toMatch,
             sound: "default"
@@ -346,12 +349,12 @@ var sendPushForDecline = function(response, fromMatch, toMatch) {
     }, {
         success: function()
         {
-            console.log("Decline push notification sent to " + channel)
+            console.log("Invitation status push notification sent to " + channel)
             response.success()
             },
         error: function(error) {
             // Handle error
-            console.log("Decline push notification failed: " + error)
+            console.log("Invitation status push notification failed: " + error)
             response.error(error)
             }
         });
@@ -440,7 +443,7 @@ Parse.Cloud.define("cancelInvite", function(request, response) {
                             console.log("cancelInvitation completed")
                             if (declined != undefined) {
                                 console.log("Sending push message to match id " + toMatch.id + " from match id " + fromMatch.id)
-                                sendPushForDecline(response, fromMatch, toMatch)
+                                sendPushForInvitationResponse(response, fromMatch, toMatch, "declined")
                             }
                             else {
                                 response.success()

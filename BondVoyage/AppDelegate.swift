@@ -224,7 +224,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         */
         if let _ = userInfo["from"] as? [NSObject: AnyObject] {
-            self.goToInvited(userInfo)
+            self.goToHandleNotification(userInfo)
+        }
+        else if let _ = userInfo["invitationStatus"] {
+            self.goToHandleNotification(userInfo)
         }
     }
     
@@ -253,13 +256,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    // MARK: - Invitation notification
-    func goToInvited(info: [NSObject: AnyObject]) {
-        let userDict: [NSObject: AnyObject] = info["from"] as! [NSObject: AnyObject]
-        let userId: String = userDict["objectId"] as! String
+    // MARK: - Notification
+    func goToHandleNotification(info: [NSObject: AnyObject]) {
+        var userId: String = ""
+        if let userDict: [NSObject: AnyObject] = info["from"] as? [NSObject: AnyObject] {
+            userId = userDict["objectId"] as! String
+        }
+        else if let userDict: [NSObject: AnyObject] = info["invitedUser"] as? [NSObject: AnyObject] {
+            userId = userDict["objectId"] as! String
+        }
 
-        let fromMatch: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
-        let fromMatchId: String = fromMatch["objectId"] as! String
+        let fromMatchDict: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
+        let fromMatchId: String = fromMatchDict["objectId"] as! String
         
         let query: PFQuery = PFQuery(className: "Match")
         query.whereKey("objectId", equalTo: fromMatchId)
@@ -270,6 +278,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let nav: UINavigationController = presenter as? UINavigationController {
                     if nav.viewControllers.last!.isKindOfClass(MatchStatusViewController) {
                         let matchController: MatchStatusViewController = nav.viewControllers.last! as! MatchStatusViewController
+                        matchController.toMatch = nil
                         matchController.fromMatch = fromMatch
                         matchController.refresh()
                         return
@@ -300,7 +309,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
     }
-    
+
     // MARK: - Utils
     func isValidEmail(testStr:String) -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
