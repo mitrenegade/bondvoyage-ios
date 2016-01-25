@@ -1,5 +1,5 @@
 //
-//  MatchViewController.swift
+//  InviteViewController.swift
 //  BondVoyage
 //
 //  Created by Bobby Ren on 1/20/16.
@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class MatchViewController: UIViewController {
+class InviteViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var bgView: UIImageView!
@@ -28,6 +28,7 @@ class MatchViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: "cancel")
     }
     
     override func viewDidLayoutSubviews() {
@@ -44,6 +45,17 @@ class MatchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func cancel() {
+        MatchRequest.cancelMatch(self.fromMatch!) { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not cancel match", defaultMessage: "Your current match could not be cancelled", error: error)
+            }
+            else {
+                self.navigationController!.popToRootViewControllerAnimated(true)
+            }
+        }
+    }
+    
     @IBAction func didClickButton(button: UIButton) {
         if button == self.buttonUp {
             // create a bond
@@ -55,8 +67,7 @@ class MatchViewController: UIViewController {
                         self.simpleAlert("Could not invite", defaultMessage: "There was an error sending your invite.", error: error)
                     }
                     else {
-                        self.simpleAlert("Invitation sent", message: "You have successfully sent an invtation.")
-                        // TODO: refresh scroll view and remove this user or prevent multiple invitations from being sent
+                        self.goToMatchStatus()
                     }
                 })
             }
@@ -108,9 +119,18 @@ class MatchViewController: UIViewController {
         }
     }
     
+    func goToMatchStatus() {
+        self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "GoToMatchStatus" {
+            let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
+            controller.category = self.category
+            controller.requestedMatch = self.fromMatch
+            controller.toMatch = self.matches![self.currentPage()]
+        }
     }
 }

@@ -329,6 +329,7 @@ Parse.Cloud.define("createMatchRequest", function(request, response) {
     var categories = request.params.categories
     categories = categories.map(toLowerCase)
     match.set("categories", categories)
+    match.set("status", "active")
 
     // todo: time, location
 
@@ -357,7 +358,7 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     }
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
-    query.notEqualTo("status", "cancelled")
+    query.equalTo("status", "active")
 
     console.log("calling query.find")
     query.find({
@@ -370,6 +371,50 @@ Parse.Cloud.define("queryMatches", function(request, response) {
             response.error(error)
         }         
     })
+});
+
+Parse.Cloud.define("cancelInvite", function(request, response) {
+    var fromId = request.params.from
+    var toId = request.params.to
+    var declined = request.params.declined
+    console.log("CancelInvite from " + fromId + " to " + toId + " declined? " + declined)
+    var query = new Parse.Query("Match")
+    query.get(fromId).then(
+        function(fromMatch) {
+            fromMatch.set("status", "cancelled")
+            if (declined != undefined) {
+                fromMatch.set("status", "declined")
+                console.log("cancelInvite is declining an invite")
+            }
+            fromMatch.unset("inviteTo")
+            fromMatch.save()
+            var queryTo = new Parse.Query("Match")
+            queryTo.get(toId).then(
+                function(toMatch) {
+                    toMatch.set("status", "active")
+                    toMatch.unset("inviteFrom")
+                    toMatch.save().then(
+                        function(object) {
+                            console.log("cancelInvitation completed")
+                            response.success()
+                        },
+                        function(error) {
+                            console.log("error in cancelMatch: " + error)
+                            response.error(error)
+                        }
+                    )
+                },
+                function(error) {
+                    console.log("Could not load match for cancelling")
+                    response.error("Could not find match to cancel")
+                }
+            )    
+        },
+        function(error) {
+            console.log("Could not load match for cancelling")
+            response.error("Could not find match to cancel")
+        }
+    )    
 });
 
 Parse.Cloud.define("cancelMatch", function(request, response) {
