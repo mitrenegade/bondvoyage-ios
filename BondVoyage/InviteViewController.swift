@@ -56,7 +56,8 @@ class InviteViewController: UIViewController {
                     }
                     else {
                         self.simpleAlert("Invitation sent", message: "You have successfully sent an invtation.")
-                        // TODO: refresh scroll view and remove this user or prevent multiple invitations from being sent
+                        
+                        self.goToMatchStatus()
                     }
                 })
             }
@@ -108,9 +109,18 @@ class InviteViewController: UIViewController {
         }
     }
     
+    func goToMatchStatus() {
+        self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "GoToMatchStatus" {
+            let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
+            controller.category = self.category
+            controller.fromMatch = self.fromMatch
+            controller.toMatch = self.matches![self.currentPage()]
+        }
     }
 }

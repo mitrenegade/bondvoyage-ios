@@ -134,8 +134,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         query.whereKey("status", notEqualTo: "cancelled")
         query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
             if results != nil && results!.count > 0 {
-                let existingMatch: PFObject = results![0] 
-                self.performSegueWithIdentifier("GoToExistingMatch", sender: existingMatch)
+                self.requestedMatch = results![0]
+                let categories = self.requestedMatch!.objectForKey("categories") as! [String]
+                self.selectedCategory = categories[0]
+                self.goToMatchStatus()
             }
         }
     }
@@ -236,10 +238,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             controller.fromMatch = self.requestedMatch
         }
         else if segue.identifier == "GoToMatchStatus" {
-            let controller: CreateMatchViewController = segue.destinationViewController as! CreateMatchViewController
+            let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
             controller.category = self.selectedCategory
-            controller.matches = self.matches
-            controller.requestedMatch = self.requestedMatch
+            controller.fromMatch = self.requestedMatch
+            controller.toMatch = nil
         }
     }
     
