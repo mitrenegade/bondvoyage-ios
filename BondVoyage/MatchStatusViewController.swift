@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class MatchStatusViewController: UIViewController {
+class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
@@ -158,7 +158,15 @@ class MatchStatusViewController: UIViewController {
         let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
         controller.invitingUser = user
         controller.invitingMatch = self.fromMatch
+        controller.delegate = self
         self.navigationController!.pushViewController(controller, animated: true)
+    }
+    
+    // MARK: - UserDetailsDelegate
+    func didDeclineInvitation() {
+        self.fromMatch = nil
+        self.navigationController!.popViewControllerAnimated(true)
+        self.refresh()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

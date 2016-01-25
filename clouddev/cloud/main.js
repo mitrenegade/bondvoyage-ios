@@ -274,6 +274,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         }     
     )
 })
+
 var sendPushForMatches = function(response, fromMatch, toMatch) {
     console.log("inside send push")
     var fromUser = fromMatch.get("user")
@@ -315,6 +316,46 @@ var sendPushForMatches = function(response, fromMatch, toMatch) {
         });
     }
 
+var sendPushForDecline = function(response, fromMatch, toMatch) {
+    console.log("inside send push")
+    var fromUser = fromMatch.get("user")
+    var toUser = toMatch.get("user")
+    console.log("from user id " + fromUser.id + " to user id " + toUser.id)
+    var name = toUser.get("firstName")
+    if (name == undefined) {
+        name = toUser.get("lastName")
+    }
+    var categories = toMatch.get("categories")
+    var message = name + " has declined your invitation to bond over " + categories[0]
+    if (name == undefined) {
+        message = "Your invitation to bond over " + categories[0] + " was declined"
+    }
+
+    var fromId = fromUser.id
+    var channel = "channel" + fromId
+    console.log("push message: " + message + " channel: " + channel)
+    Parse.Push.send({
+        channels: [ channel ],
+        data: {
+            alert: message,
+            toUser: toUser,
+            fromMatch: fromMatch,
+            toMatch: toMatch,
+            sound: "default"
+        }
+    }, {
+        success: function()
+        {
+            console.log("Decline push notification sent to " + channel)
+            response.success()
+            },
+        error: function(error) {
+            // Handle error
+            console.log("Decline push notification failed: " + error)
+            response.error(error)
+            }
+        });
+    }
 // MATCHES
 Parse.Cloud.define("createMatchRequest", function(request, response) {
     var Match = Parse.Object.extend("Match")
@@ -381,12 +422,13 @@ Parse.Cloud.define("cancelInvite", function(request, response) {
     var query = new Parse.Query("Match")
     query.get(fromId).then(
         function(fromMatch) {
-            fromMatch.set("status", "cancelled")
             if (declined != undefined) {
                 fromMatch.set("status", "declined")
                 console.log("cancelInvite is declining an invite")
             }
-            fromMatch.unset("inviteTo")
+            else {
+                fromMatch.set("status", "cancelled")
+            }
             fromMatch.save()
             var queryTo = new Parse.Query("Match")
             queryTo.get(toId).then(
@@ -396,7 +438,13 @@ Parse.Cloud.define("cancelInvite", function(request, response) {
                     toMatch.save().then(
                         function(object) {
                             console.log("cancelInvitation completed")
-                            response.success()
+                            if (declined != undefined) {
+                                console.log("Sending push message to match id " + toMatch.id + " from match id " + fromMatch.id)
+                                sendPushForDecline(response, fromMatch, toMatch)
+                            }
+                            else {
+                                response.success()
+                            }
                         },
                         function(error) {
                             console.log("error in cancelMatch: " + error)

@@ -10,6 +10,10 @@ import UIKit
 import Parse
 import AsyncImageView
 
+protocol UserDetailsDelegate: class {
+    func didDeclineInvitation()
+}
+
 class UserDetailsViewController: UIViewController {
 
     var selectedUser: PFUser?
@@ -29,6 +33,8 @@ class UserDetailsViewController: UIViewController {
 
     var relevantInterests: [String]?
     var invitingMatch: PFObject?
+
+    weak var delegate: UserDetailsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +149,12 @@ class UserDetailsViewController: UIViewController {
     
     func close() {
         // close modally
-        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        if self.delegate != nil {
+            self.delegate!.didDeclineInvitation()
+        }
+        else {
+            self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     // MARK: - Helper Methods
