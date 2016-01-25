@@ -165,8 +165,10 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     // MARK: - UserDetailsDelegate
     func didDeclineInvitation() {
         self.fromMatch = nil
+        self.requestedMatch?.fetchFromLocalDatastoreInBackgroundWithBlock({ (result, error) -> Void in
+            self.refresh()
+        })
         self.navigationController!.popViewControllerAnimated(true)
-        self.refresh()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
