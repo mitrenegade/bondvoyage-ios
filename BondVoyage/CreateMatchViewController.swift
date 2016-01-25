@@ -74,7 +74,15 @@ class CreateMatchViewController: UIViewController {
             self.labelTitle.text = "Loading"
             self.labelDetails.text = "Please be patient..."
         }
+        
+        if self.matches != nil && self.matches!.count > 0 {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "View Matches", style: .Done, target: self, action: "goToMatches")
+        }
+        else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
+    
     func cancel() {
         let alert: UIAlertController = UIAlertController(title: "Stop waiting?", message: "Would you like to cancel and search for something else?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Back to categories", style: .Default, handler: { (action) -> Void in
@@ -86,6 +94,10 @@ class CreateMatchViewController: UIViewController {
     
     func close() {
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func goToMatches() {
+        self.performSegueWithIdentifier("GoToMatches", sender: nil)
     }
     
     // MARK: - API calls
@@ -107,7 +119,7 @@ class CreateMatchViewController: UIViewController {
                 else {
                     self.matches = results
                     self.labelTitle.text = "Match found"
-                    self.performSegueWithIdentifier("GoToMatches", sender: nil)
+                    self.goToMatches()
                 }
             }
             else {
@@ -163,6 +175,7 @@ class CreateMatchViewController: UIViewController {
             let controller: MatchViewController = segue.destinationViewController as! MatchViewController
             controller.category = self.category
             controller.matches = self.matches
+            controller.fromMatch = self.requestedMatch
             self.matchController = controller
         }
     }
