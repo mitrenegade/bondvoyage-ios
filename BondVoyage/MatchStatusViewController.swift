@@ -70,6 +70,7 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
             else if self.fromMatch!.valueForKey("status") as? String == "declined" {
                 self.labelTitle.text = "Your invitation was declined"
                 self.labelDetails.text = "Sorry, looks like this bond will not be accepted."
+                self.progressView.stopActivity()
             }
             
             if let user: PFUser = self.fromMatch!.objectForKey("user") as? PFUser {
