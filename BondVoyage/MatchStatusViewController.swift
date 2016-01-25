@@ -52,13 +52,29 @@ class MatchStatusViewController: UIViewController {
             self.labelTitle.text = "Waiting for user to accept the bond"
             self.labelDetails.text = "You are waiting for someone to accept your bond invitation."
             if let user: PFUser = self.toMatch!.objectForKey("user") as? PFUser {
-                if let name: String = user.objectForKey("firstName") as? String {
-                    self.labelTitle.text = "Waiting for \(name) to accept"
-                    self.labelDetails.text = "You are waiting for \(name) to accept your invitation to bond over \(self.category!)."
-                }
+                user.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                    if let name: String = user.objectForKey("firstName") as? String {
+                        self.labelTitle.text = "Waiting for \(name) to accept"
+                        self.labelDetails.text = "You are waiting for \(name) to accept your invitation to bond over \(self.category!)."
+                    }
+                })
             }
             // TODO: display location, time, other parameters
         }
+        else if self.fromMatch != nil && self.fromMatch!.objectForKey("inviteTo") != nil {
+            self.labelTitle.text = "Waiting for user to accept the bond"
+            self.labelDetails.text = "You are waiting for someone to accept your bond invitation."
+            
+            if let invited: PFObject = self.fromMatch!.objectForKey("inviteTo") as? PFObject {
+                self.toMatch = invited
+                self.toMatch!.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                    if object != nil {
+                        self.refresh()
+                    }
+                })
+            }
+        }
+
         else {
             self.labelTitle.text = "No bonds available"
             self.labelDetails.text = "You are waiting for someone else to join you for \(self.category!). Click Back to cancel and search for something else."
