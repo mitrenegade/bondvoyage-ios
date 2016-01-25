@@ -376,10 +376,16 @@ Parse.Cloud.define("queryMatches", function(request, response) {
 Parse.Cloud.define("cancelInvite", function(request, response) {
     var fromId = request.params.from
     var toId = request.params.to
+    var declined = request.params.declined
+    console.log("CancelInvite from " + fromId + " to " + toId + " declined? " + declined)
     var query = new Parse.Query("Match")
     query.get(fromId).then(
         function(fromMatch) {
-            fromMatch.set("status", "active")
+            fromMatch.set("status", "cancelled")
+            if (declined != undefined) {
+                fromMatch.set("status", "declined")
+                console.log("cancelInvite is declining an invite")
+            }
             fromMatch.unset("inviteTo")
             fromMatch.save()
             var queryTo = new Parse.Query("Match")

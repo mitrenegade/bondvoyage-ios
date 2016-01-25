@@ -17,8 +17,9 @@ class MatchStatusViewController: UIViewController {
     @IBOutlet weak var progressView: ProgressView!
 
     var category: String?
-    var fromMatch: PFObject? // the user's created bond request
-    var toMatch: PFObject? // the user's invited bond request if coming from inviteViewController
+    var requestedMatch: PFObject? // the user's created bond request
+    var fromMatch: PFObject? // another user who has invited this user
+    var toMatch: PFObject? // user's invited bond request if coming from inviteViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,20 +62,53 @@ class MatchStatusViewController: UIViewController {
             }
             // TODO: display location, time, other parameters
         }
-        else if self.fromMatch != nil && self.fromMatch!.objectForKey("inviteTo") != nil {
-            self.labelTitle.text = "Waiting for user to accept the bond"
-            self.labelDetails.text = "You are waiting for someone to accept your bond invitation."
-            
-            if let invited: PFObject = self.fromMatch!.objectForKey("inviteTo") as? PFObject {
-                self.toMatch = invited
-                self.toMatch!.fetchInBackgroundWithBlock({ (object, error) -> Void in
-                    if object != nil {
-                        self.refresh()
+        else if self.fromMatch != nil {
+            self.labelTitle.text = "You have received an invitation to bond"
+            self.labelDetails.text = "Loading invitation details."
+            if let user: PFUser = self.fromMatch!.objectForKey("user") as? PFUser {
+                user.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                    if let name: String = user.objectForKey("firstName") as? String {
+                        self.labelTitle.text = "You have received an invitation from \(name)"
+                        self.labelDetails.text = "\(name) wants to bond over \(self.category)"
                     }
+                    self.goToAcceptInvite(user)
                 })
             }
         }
-
+        else if self.requestedMatch != nil {
+            // comes from SearchCategoryViewController
+            if self.requestedMatch!.objectForKey("inviteTo") != nil {
+                // user has invited someone
+                self.labelTitle.text = "Waiting for user to accept the bond"
+                self.labelDetails.text = "You are waiting for someone to accept your bond invitation."
+                
+                if let invited: PFObject = self.requestedMatch!.objectForKey("inviteTo") as? PFObject {
+                    self.toMatch = invited
+                    self.toMatch!.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                        if object != nil {
+                            self.refresh()
+                        }
+                    })
+                }
+            }
+            else if self.requestedMatch!.objectForKey("inviteFrom") != nil {
+                // user has been invited by someone
+                self.labelTitle.text = "You have received an invitation to bond"
+                self.labelDetails.text = "Loading invitation details."
+                if let inviteFrom: PFObject = self.requestedMatch!.objectForKey("inviteFrom") as? PFObject {
+                    self.fromMatch = inviteFrom
+                    self.fromMatch!.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                        if object != nil {
+                            self.refresh()
+                        }
+                    })
+                }
+            }
+            else {
+                self.labelTitle.text = "No bonds available"
+                self.labelDetails.text = "You are waiting for someone else to join you for \(self.category!). Click Back to cancel and search for something else."
+            }
+        }
         else {
             self.labelTitle.text = "No bonds available"
             self.labelDetails.text = "You are waiting for someone else to join you for \(self.category!). Click Back to cancel and search for something else."
@@ -91,7 +125,7 @@ class MatchStatusViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     func goToMatches() {
@@ -99,7 +133,7 @@ class MatchStatusViewController: UIViewController {
     }
 
     func cancelInvitation() {
-        MatchRequest.cancelInvite(self.fromMatch!, toMatch: self.toMatch!) { (results, error) -> Void in
+        MatchRequest.cancelInvite(self.requestedMatch!, toMatch: self.toMatch!, isDecline: false) { (results, error) -> Void in
             if error != nil {
                 self.simpleAlert("Could not cancel invitation", defaultMessage: "Your current invitation could not be cancelled", error: error)
             }
@@ -110,7 +144,7 @@ class MatchStatusViewController: UIViewController {
     }
     
     func cancelMatch() {
-        MatchRequest.cancelMatch(self.fromMatch!) { (results, error) -> Void in
+        MatchRequest.cancelMatch(self.requestedMatch!) { (results, error) -> Void in
             if error != nil {
                 self.simpleAlert("Could not cancel match", defaultMessage: "Your current match could not be cancelled", error: error)
             }
@@ -118,6 +152,13 @@ class MatchStatusViewController: UIViewController {
                 self.close()
             }
         }
+    }
+    
+    func goToAcceptInvite(user: PFUser) {
+        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+        controller.invitingUser = user
+        controller.invitingMatch = self.fromMatch
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

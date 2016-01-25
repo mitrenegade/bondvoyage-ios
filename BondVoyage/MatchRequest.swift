@@ -38,15 +38,18 @@ class MatchRequest: NSObject {
 
     class func cancelMatch(match: PFObject, completion: ((results: AnyObject?, error: NSError?)->Void)) {
         PFCloud.callFunctionInBackground("cancelMatch", withParameters: ["match": match.objectId!]) { (results, error) -> Void in
-            print("results: \(results)")
+            print("results: \(results) error: \(error)")
             completion(results: results, error: error)
         }
     }
 
-    class func cancelInvite(fromMatch: PFObject, toMatch: PFObject, completion: ((results: AnyObject?, error: NSError?)->Void)) {
-        let params =  ["from": fromMatch.objectId!, "to": toMatch.objectId!]
+    class func cancelInvite(fromMatch: PFObject, toMatch: PFObject, isDecline: Bool, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+        var params =  ["from": fromMatch.objectId!, "to": toMatch.objectId!]
+        if isDecline {
+            params["declined"] = "declined"
+        }
         PFCloud.callFunctionInBackground("cancelInvite", withParameters: params) { (results, error) -> Void in
-            print("results: \(results)")
+            print("results: \(results) error: \(error)")
             completion(results: results, error: error)
         }
     }

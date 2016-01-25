@@ -28,7 +28,8 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var relevantInterests: [String]?
-    var matchId: String?
+    var invitingMatch: PFObject?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,8 +60,8 @@ class UserDetailsViewController: UIViewController {
         self.scrollViewContainer.contentMode = .ScaleAspectFill
         
         if self.invitingUser != nil {
-            self.title = nil // todo: load match and set this to match category
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+            self.title = "Invitation"
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "declineInvitation")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Accept", style: .Done, target: self, action: "acceptInvitation")
         }
     }
@@ -122,38 +123,22 @@ class UserDetailsViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
-    @IBAction func pimaryActionButtonPressed(sender: UIButton) {
-        if self.selectedUser != nil {
-            print("User pressed invite to bond")
-            var interests: [String] = []
-            if self.relevantInterests != nil {
-                interests = self.relevantInterests!
-            }
-            else if self.selectedUser!.objectForKey("interests") != nil {
-                interests = self.selectedUser!.objectForKey("interests") as! [String]
-            }
-            
-            self.activityIndicator.startAnimating()
-            UserRequest.inviteUser(self.selectedUser!, interests: interests) { (success, error) -> Void in
-                self.activityIndicator.stopAnimating()
-                if success {
-                    print("Success! User was invited")
-                    self.simpleAlert("Invite sent!", message: "You have sent an invitation to bond to \(self.selectedUser!.objectForKey("firstName")!)", completion: { () -> Void in
-                        self.dismiss()
-                    })
-                }
-                else {
-                    print("Error! Push failed: \(error)")
-                    self.simpleAlert("Could not invite", defaultMessage: "There was an error sending an invitation.", error: error)
-                }
-            }
-        }
-    }
-
     func acceptInvitation() {
         let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
         controller.relevantInterests = self.relevantInterests
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func declineInvitation() {
+        let toMatch: PFObject = self.invitingMatch!.valueForKey("inviteTo") as! PFObject
+        MatchRequest.cancelInvite(self.invitingMatch!, toMatch: toMatch, isDecline: true) { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not decline invitation", defaultMessage: "Please try again", error: error)
+            }
+            else {
+                self.close()
+            }
+        }
     }
     
     func close() {

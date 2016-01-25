@@ -129,7 +129,7 @@ class InviteViewController: UIViewController {
         if segue.identifier == "GoToMatchStatus" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
             controller.category = self.category
-            controller.fromMatch = self.fromMatch
+            controller.requestedMatch = self.fromMatch
             controller.toMatch = self.matches![self.currentPage()]
         }
     }

@@ -240,7 +240,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         else if segue.identifier == "GoToMatchStatus" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
             controller.category = self.selectedCategory
-            controller.fromMatch = self.requestedMatch
+            controller.requestedMatch = self.requestedMatch
+            controller.fromMatch = nil
             controller.toMatch = nil
         }
     }
