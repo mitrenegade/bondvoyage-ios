@@ -379,12 +379,14 @@ Parse.Cloud.define("cancelInvite", function(request, response) {
     var query = new Parse.Query("Match")
     query.get(fromId).then(
         function(fromMatch) {
-            fromMatch.set("status", "cancelled")
+            fromMatch.set("status", "active")
+            fromMatch.unset("inviteTo")
             fromMatch.save()
             var queryTo = new Parse.Query("Match")
             queryTo.get(toId).then(
                 function(toMatch) {
                     toMatch.set("status", "active")
+                    toMatch.unset("inviteFrom")
                     toMatch.save().then(
                         function(object) {
                             console.log("cancelInvitation completed")
