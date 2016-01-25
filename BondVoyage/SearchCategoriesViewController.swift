@@ -258,6 +258,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
                 if results!.count > 0 {
                     self.matches = results
                 }
+                else {
+                    self.matches = nil
+                }
                 self.goToCreateMatch()
             }
             else {

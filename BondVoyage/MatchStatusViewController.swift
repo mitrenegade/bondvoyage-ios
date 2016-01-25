@@ -34,6 +34,8 @@ class MatchStatusViewController: UIViewController {
         blurredEffectView.alpha = 0.8
         self.bgImage.addSubview(blurredEffectView)
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
+
         self.progressView.startActivity()
         self.refresh()
     }
@@ -47,8 +49,6 @@ class MatchStatusViewController: UIViewController {
         // refresh ui
         if self.toMatch != nil {
             // invited - waiting for bond acceptance
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
-
             self.labelTitle.text = "Waiting for user to accept the bond"
             self.labelDetails.text = "You are waiting for someone to accept your bond invitation."
             // TODO: display location, time, other parameters
@@ -86,9 +86,7 @@ class MatchStatusViewController: UIViewController {
                 self.simpleAlert("Could not cancel match", defaultMessage: "Your current match could not be cancelled", error: error)
             }
             else {
-                self.simpleAlert("Match canceled", message: "Click Close to find another match", completion: { () -> Void in
-                    self.close()
-                })
+                self.close()
             }
         }
     }

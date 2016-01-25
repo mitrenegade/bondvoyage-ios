@@ -28,6 +28,7 @@ class InviteViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: "cancel")
     }
     
     override func viewDidLayoutSubviews() {
@@ -42,6 +43,17 @@ class InviteViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func cancel() {
+        MatchRequest.cancelMatch(self.fromMatch!) { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not cancel match", defaultMessage: "Your current match could not be cancelled", error: error)
+            }
+            else {
+                self.navigationController!.popToRootViewControllerAnimated(true)
+            }
+        }
     }
     
     @IBAction func didClickButton(button: UIButton) {
