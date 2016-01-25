@@ -17,7 +17,6 @@ class MatchViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     @IBOutlet weak var scrollView: UIScrollView!
-//    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
     var didSetupScroll: Bool = false
     
