@@ -67,8 +67,6 @@ class InviteViewController: UIViewController {
                         self.simpleAlert("Could not invite", defaultMessage: "There was an error sending your invite.", error: error)
                     }
                     else {
-                        self.simpleAlert("Invitation sent", message: "You have successfully sent an invtation.")
-                        
                         self.goToMatchStatus()
                     }
                 })

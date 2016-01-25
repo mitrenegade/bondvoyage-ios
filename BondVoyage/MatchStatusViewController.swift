@@ -51,6 +51,12 @@ class MatchStatusViewController: UIViewController {
             // invited - waiting for bond acceptance
             self.labelTitle.text = "Waiting for user to accept the bond"
             self.labelDetails.text = "You are waiting for someone to accept your bond invitation."
+            if let user: PFUser = self.toMatch!.objectForKey("user") as? PFUser {
+                if let name: String = user.objectForKey("firstName") as? String {
+                    self.labelTitle.text = "Waiting for \(name) to accept"
+                    self.labelDetails.text = "You are waiting for \(name) to accept your invitation to bond over \(self.category!)."
+                }
+            }
             // TODO: display location, time, other parameters
         }
         else {
@@ -77,7 +83,14 @@ class MatchStatusViewController: UIViewController {
     }
 
     func cancelInvitation() {
-        // todo: cancel fromMatch and toMatch
+        MatchRequest.cancelInvite(self.fromMatch!, toMatch: self.toMatch!) { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not cancel invitation", defaultMessage: "Your current invitation could not be cancelled", error: error)
+            }
+            else {
+                self.close()
+            }
+        }
     }
     
     func cancelMatch() {
