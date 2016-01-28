@@ -53,4 +53,13 @@ class MatchRequest: NSObject {
             completion(results: results, error: error)
         }
     }
+    
+    class func acceptInvite(fromMatch: PFObject, toMatch: PFObject, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+        var params =  ["from": fromMatch.objectId!, "to": toMatch.objectId!]
+        PFCloud.callFunctionInBackground("acceptInvite", withParameters: params) { (results, error) -> Void in
+            print("results: \(results) error: \(error)")
+            completion(results: results, error: error)
+        }
+    }
+
 }
