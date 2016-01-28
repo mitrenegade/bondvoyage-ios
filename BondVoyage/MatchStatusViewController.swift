@@ -149,7 +149,7 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     }
 
     func cancelInvitation() {
-        MatchRequest.cancelInvite(self.requestedMatch!, toMatch: self.toMatch!, isDecline: false) { (results, error) -> Void in
+        MatchRequest.respondToInvite(self.requestedMatch!, toMatch: self.toMatch!, responseType: "cancelled") { (results, error) -> Void in
             if error != nil {
                 self.simpleAlert("Could not cancel invitation", defaultMessage: "Your current invitation could not be cancelled", error: error)
             }

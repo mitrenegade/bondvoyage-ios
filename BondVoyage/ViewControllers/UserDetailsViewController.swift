@@ -130,14 +130,20 @@ class UserDetailsViewController: UIViewController {
     }
 
     func acceptInvitation() {
-        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
-        controller.relevantInterests = self.relevantInterests
-        self.navigationController?.pushViewController(controller, animated: true)
+        let toMatch: PFObject = self.invitingMatch!.valueForKey("inviteTo") as! PFObject
+        MatchRequest.respondToInvite(self.invitingMatch!, toMatch: toMatch, responseType: "accepted") { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not accept invitation", defaultMessage: "Please try again", error: error)
+            }
+            else {
+                self.goToPlaces()
+            }
+        }
     }
     
     func declineInvitation() {
         let toMatch: PFObject = self.invitingMatch!.valueForKey("inviteTo") as! PFObject
-        MatchRequest.cancelInvite(self.invitingMatch!, toMatch: toMatch, isDecline: true) { (results, error) -> Void in
+        MatchRequest.respondToInvite(self.invitingMatch!, toMatch: toMatch, responseType: "declined") { (results, error) -> Void in
             if error != nil {
                 self.simpleAlert("Could not decline invitation", defaultMessage: "Please try again", error: error)
             }
@@ -145,6 +151,12 @@ class UserDetailsViewController: UIViewController {
                 self.close()
             }
         }
+    }
+    
+    func goToPlaces() {
+        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+        controller.relevantInterests = self.relevantInterests
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func close() {

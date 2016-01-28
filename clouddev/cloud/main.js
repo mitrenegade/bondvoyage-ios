@@ -427,7 +427,7 @@ Parse.Cloud.define("respondToInvite", function(request, response) {
     var fromId = request.params.from
     var toId = request.params.to
     var responseType = request.params.responseType // "declined", "cancelled", "accepted"
-    console.log("RespondToInvite from " + fromId + " to " + toId + " declined? " + declined)
+    console.log("RespondToInvite from " + fromId + " to " + toId + " responseType " + responseType)
     var query = new Parse.Query("Match")
     query.get(fromId).then(
         function(fromMatch) {
@@ -454,6 +454,10 @@ Parse.Cloud.define("respondToInvite", function(request, response) {
                             else if (responseType == "declined" || responseType == "accepted") {
                                 console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
                                 sendPushForInvitationResponse(response, fromMatch, toMatch, responseType)
+                            }
+                            else {
+                                console.log("here")
+                                response.error("Invalid response type")
                             }
                         },
                         function(error) {
