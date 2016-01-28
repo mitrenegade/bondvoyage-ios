@@ -149,8 +149,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         let query: PFQuery = PFQuery(className: "Match")
         query.whereKey("user", equalTo: PFUser.currentUser()!)
         query.whereKey("status", notContainedIn: ["cancelled", "declined"])
+        query.orderByDescending("updatedAt")
         query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
             if results != nil && results!.count > 0 {
+                print("existing matches: \(results!)")
                 self.requestedMatch = results![0]
                 let categories = self.requestedMatch!.objectForKey("categories") as! [String]
                 self.selectedCategory = categories[0]

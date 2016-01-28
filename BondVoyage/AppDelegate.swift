@@ -142,8 +142,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func registerForRemoteNotifications() {
+        if let timestamp: NSDate = NSUserDefaults.standardUserDefaults().objectForKey("push:request:defer:timestamp") as? NSDate {
+            if NSDate().timeIntervalSinceDate(timestamp) < 1*24*3600 {
+                return
+            }
+        }
+        
         let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Not now", style: .Cancel, handler: { (action) -> Void in
+            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "push:request:defer:timestamp")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }))
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             self.initializeNotificationServices()
         }))
