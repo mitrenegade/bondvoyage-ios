@@ -72,6 +72,9 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                 self.labelDetails.text = "Sorry, looks like this bond will not be accepted."
                 self.progressView.stopActivity()
             }
+            else if self.fromMatch!.valueForKey("status") as? String == "accepted" {
+                self.goToPlaces()
+            }
             
             if let user: PFUser = self.fromMatch!.objectForKey("user") as? PFUser {
                 user.fetchInBackgroundWithBlock({ (object, error) -> Void in
@@ -141,13 +144,21 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     }
     
     func close() {
-        self.navigationController!.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func goToMatches() {
         self.performSegueWithIdentifier("GoToMatches", sender: nil)
     }
 
+    func goToPlaces() {
+        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+        if self.category != nil {
+            controller.relevantInterests = [self.category!]
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func cancelInvitation() {
         MatchRequest.respondToInvite(self.requestedMatch!, toMatch: self.toMatch!, responseType: "cancelled") { (results, error) -> Void in
             if error != nil {

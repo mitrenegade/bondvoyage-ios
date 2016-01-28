@@ -274,6 +274,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else if let userDict: [NSObject: AnyObject] = info["invitedUser"] as? [NSObject: AnyObject] {
             userId = userDict["objectId"] as! String
         }
+        
+        let status = info["invitationStatus"] as? String
 
         let fromMatchDict: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
         let fromMatchId: String = fromMatchDict["objectId"] as! String
@@ -283,6 +285,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         query.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
             if results != nil && results!.count > 0 {
                 let fromMatch: PFObject = results![0]
+                
                 let presenter = self.topViewController()!
                 if let nav: UINavigationController = presenter as? UINavigationController {
                     if nav.viewControllers.last!.isKindOfClass(MatchStatusViewController) {
