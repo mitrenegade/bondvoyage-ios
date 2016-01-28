@@ -181,7 +181,8 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     // MARK: - UserDetailsDelegate
     func didDeclineInvitation() {
         self.fromMatch = nil
-        self.requestedMatch?.fetchFromLocalDatastoreInBackgroundWithBlock({ (result, error) -> Void in
+        // fetch from web because it was already updated
+        self.requestedMatch?.fetchInBackgroundWithBlock({ (object, error) -> Void in
             self.refresh()
         })
         self.navigationController!.popViewControllerAnimated(true)
