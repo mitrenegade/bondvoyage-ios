@@ -39,6 +39,12 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         super.viewDidLoad()
         // configure search bar
         self.searchBar.delegate = self;
+        for view: UIView in self.searchBar.subviews[0].subviews {
+            if view.isKindOfClass(UITextField.self) {
+                let textfield: UITextField = view as! UITextField
+                textfield.inputView = UIView()
+            }
+        }
         
         self.constraintCategoriesHeight.constant = 0
         self.loadActivitiesForCategory(nil) { (results, error) -> Void in
