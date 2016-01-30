@@ -14,17 +14,23 @@ class ActivitiesCell: UITableViewCell {
     @IBOutlet weak var viewFrame: UIView!
     @IBOutlet weak var profileImage: AsyncImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    var shadowLayer: CALayer?
     
     var match: PFObject?
     
     func configureCellForUser(match: PFObject) {
         self.profileImage.crossfadeDuration = 0
-        
+
         self.match = match
         let user: PFUser = match.objectForKey("user") as! PFUser
         
         let category = (self.match!.objectForKey("categories") as! [String])[0].capitalizeFirst
         let city: String? = self.match!.objectForKey("city") as? String
+        
+        self.viewFrame!.layer.shadowOpacity = 1
+        self.viewFrame!.layer.shadowRadius = 5
+        self.viewFrame!.layer.shadowColor = UIColor.blackColor().CGColor
+        self.viewFrame!.layer.shadowOffset = CGSizeMake(3, 3)
         
         user.fetchInBackgroundWithBlock { (object, error) -> Void in
             var name: String? = user.valueForKey("firstName") as? String
