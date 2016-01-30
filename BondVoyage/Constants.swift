@@ -53,3 +53,13 @@ class Constants: NSObject {
         return UIColor(red: 200.0/255.0, green: 230.0/255.0, blue: 233.0/255.0, alpha: 1)
     }
 }
+
+extension String {
+    var capitalizeFirst: String {
+        if isEmpty { return "" }
+        var result = self
+        result.replaceRange(startIndex...startIndex, with: String(self[startIndex]).uppercaseString)
+        return result
+    }
+    
+}

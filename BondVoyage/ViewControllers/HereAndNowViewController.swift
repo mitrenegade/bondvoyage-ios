@@ -160,6 +160,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 180
+    }
+    
     // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if PFUser.currentUser() == nil {
