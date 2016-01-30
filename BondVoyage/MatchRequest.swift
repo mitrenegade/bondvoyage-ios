@@ -43,12 +43,12 @@ class MatchRequest: NSObject {
         }
     }
 
-    class func cancelInvite(fromMatch: PFObject, toMatch: PFObject, isDecline: Bool, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+    class func respondToInvite(fromMatch: PFObject, toMatch: PFObject, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
         var params =  ["from": fromMatch.objectId!, "to": toMatch.objectId!]
-        if isDecline {
-            params["declined"] = "declined"
+        if responseType != nil {
+            params["responseType"] = responseType
         }
-        PFCloud.callFunctionInBackground("cancelInvite", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("respondToInvite", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             completion(results: results, error: error)
         }

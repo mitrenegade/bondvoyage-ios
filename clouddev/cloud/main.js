@@ -274,6 +274,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         }     
     )
 })
+
 var sendPushForMatches = function(response, fromMatch, toMatch) {
     console.log("inside send push")
     var fromUser = fromMatch.get("user")
@@ -315,6 +316,54 @@ var sendPushForMatches = function(response, fromMatch, toMatch) {
         });
     }
 
+var sendPushForInvitationResponse = function(response, fromMatch, toMatch, status) {
+    console.log("inside send push")
+    // toUser is the user who was the target of the invitation. In this case, the toUser is sending
+    // the notification to the fromUser
+    var fromUser = fromMatch.get("user")
+    var toUser = toMatch.get("user")
+    console.log("from user id " + fromUser.id + " to user id " + toUser.id)
+    var name = toUser.get("firstName")
+    if (name == undefined) {
+        name = toUser.get("lastName")
+    }
+    var categories = toMatch.get("categories")
+    var message = name + " has " + status + " your invitation to bond over " + categories[0]
+    if (name == undefined) {
+        message = "Your invitation to bond over " + categories[0] + " was " + status
+    }
+
+    var fromId = fromUser.id
+    var channel = "channel" + fromId
+    if (status == "cancelled") {
+        // notify the invitee that the invite has been cancelled
+        var toId = toUser.id
+        channel = "channel" + toId
+    }
+    console.log("push message: " + message + " channel: " + channel)
+    Parse.Push.send({
+        channels: [ channel ],
+        data: {
+            alert: message,
+            invitedUser: toUser,
+            invitationStatus: status,
+            fromMatch: fromMatch,
+            toMatch: toMatch,
+            sound: "default"
+        }
+    }, {
+        success: function()
+        {
+            console.log("Invitation status push notification sent to " + channel)
+            response.success()
+            },
+        error: function(error) {
+            // Handle error
+            console.log("Invitation status push notification failed: " + error)
+            response.error(error)
+            }
+        });
+    }
 // MATCHES
 Parse.Cloud.define("createMatchRequest", function(request, response) {
     var Match = Parse.Object.extend("Match")
@@ -373,51 +422,65 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     })
 });
 
-Parse.Cloud.define("cancelInvite", function(request, response) {
+Parse.Cloud.define("respondToInvite", function(request, response) {
+    // declined and accepted is sent by the invitee; cancelled is sent by the inviter
     var fromId = request.params.from
     var toId = request.params.to
-    var declined = request.params.declined
-    console.log("CancelInvite from " + fromId + " to " + toId + " declined? " + declined)
+    var responseType = request.params.responseType // "declined", "cancelled", "accepted"
+    console.log("RespondToInvite from " + fromId + " to " + toId + " responseType " + responseType)
     var query = new Parse.Query("Match")
     query.get(fromId).then(
         function(fromMatch) {
-            fromMatch.set("status", "cancelled")
-            if (declined != undefined) {
-                fromMatch.set("status", "declined")
-                console.log("cancelInvite is declining an invite")
+            fromMatch.set("status", responseType)
+            if (responseType == undefined) {
+                fromMatch.set("status", "cancelled")
             }
-            fromMatch.unset("inviteTo")
             fromMatch.save()
             var queryTo = new Parse.Query("Match")
             queryTo.get(toId).then(
                 function(toMatch) {
-                    toMatch.set("status", "active")
-                    toMatch.unset("inviteFrom")
+                    if (responseType == undefined || responseType == "cancelled" || responseType == "declined") {
+                        // reset status so invitee can continue to be invited
+                        toMatch.set("status", "active")
+                        toMatch.unset("inviteFrom")
+                    }
                     toMatch.save().then(
                         function(object) {
-                            console.log("cancelInvitation completed")
-                            response.success()
+                            console.log("RespondToInvite completed")
+                            if (responseType == undefined || responseType == "cancelled") {
+                                console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
+                                sendPushForInvitationResponse(response, fromMatch, toMatch, responseType)
+                            }
+                            else if (responseType == "declined" || responseType == "accepted") {
+                                console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
+                                sendPushForInvitationResponse(response, fromMatch, toMatch, responseType)
+                            }
+                            else {
+                                console.log("here")
+                                response.error("Invalid response type")
+                            }
                         },
                         function(error) {
-                            console.log("error in cancelMatch: " + error)
+                            console.log("error in RespondToInvite: " + error)
                             response.error(error)
                         }
                     )
                 },
                 function(error) {
-                    console.log("Could not load match for cancelling")
-                    response.error("Could not find match to cancel")
+                    console.log("Could not load match for RespondToInvite")
+                    response.error("Could not find match to respond to")
                 }
             )    
         },
         function(error) {
-            console.log("Could not load match for cancelling")
-            response.error("Could not find match to cancel")
+            console.log("Could not load match for RespondToInvite")
+            response.error("Could not find match to respond to")
         }
     )    
 });
 
 Parse.Cloud.define("cancelMatch", function(request, response) {
+    // used for cancelling an unmatched invitation
     var matchId = request.params.match
     var query = new Parse.Query("Match")
     query.get(matchId).then(

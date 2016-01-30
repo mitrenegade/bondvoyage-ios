@@ -10,6 +10,10 @@ import UIKit
 import Parse
 import AsyncImageView
 
+protocol UserDetailsDelegate: class {
+    func didDeclineInvitation()
+}
+
 class UserDetailsViewController: UIViewController {
 
     var selectedUser: PFUser?
@@ -29,6 +33,8 @@ class UserDetailsViewController: UIViewController {
 
     var relevantInterests: [String]?
     var invitingMatch: PFObject?
+
+    weak var delegate: UserDetailsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,14 +130,20 @@ class UserDetailsViewController: UIViewController {
     }
 
     func acceptInvitation() {
-        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
-        controller.relevantInterests = self.relevantInterests
-        self.navigationController?.pushViewController(controller, animated: true)
+        let toMatch: PFObject = self.invitingMatch!.valueForKey("inviteTo") as! PFObject
+        MatchRequest.respondToInvite(self.invitingMatch!, toMatch: toMatch, responseType: "accepted") { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not accept invitation", defaultMessage: "Please try again", error: error)
+            }
+            else {
+                self.goToPlaces()
+            }
+        }
     }
     
     func declineInvitation() {
         let toMatch: PFObject = self.invitingMatch!.valueForKey("inviteTo") as! PFObject
-        MatchRequest.cancelInvite(self.invitingMatch!, toMatch: toMatch, isDecline: true) { (results, error) -> Void in
+        MatchRequest.respondToInvite(self.invitingMatch!, toMatch: toMatch, responseType: "declined") { (results, error) -> Void in
             if error != nil {
                 self.simpleAlert("Could not decline invitation", defaultMessage: "Please try again", error: error)
             }
@@ -141,9 +153,20 @@ class UserDetailsViewController: UIViewController {
         }
     }
     
+    func goToPlaces() {
+        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+        controller.relevantInterests = self.relevantInterests
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func close() {
         // close modally
-        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        if self.delegate != nil {
+            self.delegate!.didDeclineInvitation()
+        }
+        else {
+            self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     // MARK: - Helper Methods

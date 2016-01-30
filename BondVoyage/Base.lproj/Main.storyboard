@@ -477,7 +477,7 @@
         <!--Match Status View Controller-->
         <scene sceneID="ZSm-Ch-lb0">
             <objects>
-                <viewController id="xUi-91-zgb" customClass="MatchStatusViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MatchStatusViewController" id="xUi-91-zgb" customClass="MatchStatusViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MUg-2M-10x"/>
                         <viewControllerLayoutGuide type="bottom" id="CkW-dZ-Mpq"/>

@@ -128,7 +128,6 @@ class InviteViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "GoToMatchStatus" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
-            controller.category = self.category
             controller.requestedMatch = self.fromMatch
             controller.toMatch = self.matches![self.currentPage()]
         }

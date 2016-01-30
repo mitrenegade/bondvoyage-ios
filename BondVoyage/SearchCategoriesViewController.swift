@@ -148,9 +148,11 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         
         let query: PFQuery = PFQuery(className: "Match")
         query.whereKey("user", equalTo: PFUser.currentUser()!)
-        query.whereKey("status", notEqualTo: "cancelled")
+        query.whereKey("status", notContainedIn: ["cancelled", "declined"])
+        query.orderByDescending("updatedAt")
         query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
             if results != nil && results!.count > 0 {
+                print("existing matches: \(results!)")
                 self.requestedMatch = results![0]
                 let categories = self.requestedMatch!.objectForKey("categories") as! [String]
                 self.selectedCategory = categories[0]
@@ -250,13 +252,11 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         // Pass the selected object to the new view controller.
         if segue.identifier == "GoToInvite" {
             let controller: InviteViewController = segue.destinationViewController as! InviteViewController
-            controller.category = self.selectedCategory
             controller.matches = self.matches
             controller.fromMatch = self.requestedMatch
         }
         else if segue.identifier == "GoToMatchStatus" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
-            controller.category = self.selectedCategory
             controller.requestedMatch = self.requestedMatch
             controller.fromMatch = nil
             controller.toMatch = nil

@@ -142,8 +142,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func registerForRemoteNotifications() {
+        if let timestamp: NSDate = NSUserDefaults.standardUserDefaults().objectForKey("push:request:defer:timestamp") as? NSDate {
+            if NSDate().timeIntervalSinceDate(timestamp) < 1*24*3600 {
+                return
+            }
+        }
+        
         let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Not now", style: .Cancel, handler: { (action) -> Void in
+            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "push:request:defer:timestamp")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }))
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             self.initializeNotificationServices()
         }))
@@ -224,7 +233,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         */
         if let _ = userInfo["from"] as? [NSObject: AnyObject] {
-            self.goToInvited(userInfo)
+            self.goToHandleNotification(userInfo)
+        }
+        else if let _ = userInfo["invitationStatus"] {
+            self.goToHandleNotification(userInfo)
         }
     }
     
@@ -253,23 +265,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    // MARK: - Invitation notification
-    func goToInvited(info: [NSObject: AnyObject]) {
-        let userDict: [NSObject: AnyObject] = info["from"] as! [NSObject: AnyObject]
-        let userId: String = userDict["objectId"] as! String
-
-        let fromMatch: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
-        let fromMatchId: String = fromMatch["objectId"] as! String
+    // MARK: - Notification
+    func goToHandleNotification(info: [NSObject: AnyObject]) {
+        var userId: String = ""
+        if let userDict: [NSObject: AnyObject] = info["from"] as? [NSObject: AnyObject] {
+            userId = userDict["objectId"] as! String
+        }
+        else if let userDict: [NSObject: AnyObject] = info["invitedUser"] as? [NSObject: AnyObject] {
+            userId = userDict["objectId"] as! String
+        }
+        
+        let fromMatchDict: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
+        let fromMatchId: String = fromMatchDict["objectId"] as! String
         
         let query: PFQuery = PFQuery(className: "Match")
         query.whereKey("objectId", equalTo: fromMatchId)
         query.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
             if results != nil && results!.count > 0 {
                 let fromMatch: PFObject = results![0]
+                
+                // if already looking at match status, let it handle it
                 let presenter = self.topViewController()!
                 if let nav: UINavigationController = presenter as? UINavigationController {
                     if nav.viewControllers.last!.isKindOfClass(MatchStatusViewController) {
                         let matchController: MatchStatusViewController = nav.viewControllers.last! as! MatchStatusViewController
+                        matchController.toMatch = nil
                         matchController.fromMatch = fromMatch
                         matchController.refresh()
                         return
@@ -280,15 +300,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 query.whereKey("objectId", equalTo: userId)
                 query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
                     if results != nil && results!.count > 0 {
-                        let user: PFUser = results![0] as! PFUser
+
+                        // looking at some other screen. determine which one to pop up
+                        let status = info["invitationStatus"] as? String
+                        let categories: [String] = fromMatch.objectForKey("categories") as! [String]
                         
-                        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
-                        controller.invitingUser = user
-                        controller.invitingMatch = fromMatch
-                        
-                        let nav = UINavigationController(rootViewController: controller)
-                        presenter.presentViewController(nav, animated: true, completion: { () -> Void in
-                        })
+                        if status == "pending" {
+                            let user: PFUser = results![0] as! PFUser
+                            
+                            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+                            controller.invitingUser = user
+                            controller.invitingMatch = fromMatch
+                            
+                            let nav = UINavigationController(rootViewController: controller)
+                            presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                            })
+                        }
+                        else if status == "accepted" {
+                            // goToPlaces
+                            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+                            controller.relevantInterests = categories
+                            
+                            let nav = UINavigationController(rootViewController: controller)
+                            presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                            })
+                            
+                        }
+                        else if status == "declined" {
+                            let controller: MatchStatusViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MatchStatusViewController") as! MatchStatusViewController
+                            controller.toMatch = nil
+                            controller.fromMatch = fromMatch
+                            let nav = UINavigationController(rootViewController: controller)
+                            presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                            })
+                        }
                     }
                     else {
                         print("Invalid user")
@@ -300,7 +345,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
     }
-    
+
     // MARK: - Utils
     func isValidEmail(testStr:String) -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
