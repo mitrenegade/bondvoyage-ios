@@ -217,11 +217,13 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // MARK: - SearchCategoriesDelegate
     func goToMatchStatus(match: PFObject) {
+        self.removeSearchResultsViewController()
         self.requestedMatch = match
         self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
     }
     
     func goToInvite(match: PFObject, matches: [PFObject]) {
+        self.removeSearchResultsViewController()
         self.requestedMatch = match
         self.performSegueWithIdentifier("GoToInvite", sender: matches)
     }
@@ -231,6 +233,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         // Pass the selected object to the new view controller.
         if segue.identifier == "embedCategoriesVCSegue" {
             self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
+            self.categoriesVC.delegate = self
         }
         else if segue.identifier == "GoToInvite" {
             let controller: InviteViewController = segue.destinationViewController as! InviteViewController

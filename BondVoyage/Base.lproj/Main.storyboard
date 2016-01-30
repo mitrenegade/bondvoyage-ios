@@ -57,7 +57,7 @@
                                     <constraint firstAttribute="height" constant="188" id="w2V-Qg-zDR"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="nlK-It-8RX" kind="embed" id="Mrg-4z-aGR"/>
+                                    <segue destination="nlK-It-8RX" kind="embed" identifier="embedCategoriesVCSegue" id="Mrg-4z-aGR"/>
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="83" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cTU-h3-6Gk">
