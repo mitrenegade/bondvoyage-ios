@@ -148,13 +148,13 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         if self.toMatch != nil {
             self.cancelInvitation()
         }
-        else if self.fromMatch != nil {
+        else if self.fromMatch != nil && self.requestedMatch == nil {
             // hack: handle a case where the inviting match was cancelled but invited match was not
             self.requestedMatch = self.fromMatch
             self.cancelMatch()
         }
         else {
-            self.cancelInvitation()
+            self.cancelMatch()
         }
     }
     
