@@ -12,14 +12,14 @@ import Parse
 
 class ActivitiesCell: UITableViewCell {
     @IBOutlet weak var viewFrame: UIView!
-    @IBOutlet weak var profileImage: AsyncImageView!
+    @IBOutlet weak var bgImage: AsyncImageView!
     @IBOutlet weak var titleLabel: UILabel!
     var shadowLayer: CALayer?
     
     var match: PFObject?
     
     func configureCellForUser(match: PFObject) {
-        self.profileImage.crossfadeDuration = 0
+        self.bgImage.crossfadeDuration = 0
 
         self.match = match
         let user: PFUser = match.objectForKey("user") as! PFUser
@@ -31,6 +31,13 @@ class ActivitiesCell: UITableViewCell {
         self.viewFrame!.layer.shadowRadius = 5
         self.viewFrame!.layer.shadowColor = UIColor.blackColor().CGColor
         self.viewFrame!.layer.shadowOffset = CGSizeMake(3, 3)
+
+        self.titleLabel!.layer.shadowOpacity = 1
+        self.titleLabel!.layer.shadowRadius = 3
+        self.titleLabel!.layer.shadowColor = UIColor.blackColor().CGColor
+        self.titleLabel!.layer.shadowOffset = CGSizeMake(3, 3)
+
+        self.bgImage.image = CategoryFactory.subcategoryBgImage(category)
         
         user.fetchInBackgroundWithBlock { (object, error) -> Void in
             var name: String? = user.valueForKey("firstName") as? String
@@ -53,13 +60,6 @@ class ActivitiesCell: UITableViewCell {
             }
             
             self.titleLabel.text = title
-            
-            if let photoURL: String = user.valueForKey("photoUrl") as? String {
-                self.profileImage.imageURL = NSURL(string: photoURL)
-            }
-            else {
-                self.profileImage.image = UIImage(named: "profile-icon")
-            }
         }
     }
 }

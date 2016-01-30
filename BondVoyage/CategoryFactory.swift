@@ -77,6 +77,19 @@ var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
     .Technology: [.VideoGames, .LaserTag]
 ]
 
+var BG_CATEGORIES: [CATEGORY: String] = [
+    .Arts: "category_art",
+    .Business: "category_business",
+    .Community: "category_community",
+    .Education: "category_education",
+    .Entertainment: "category_entertainment",
+    .Food: "category_food",
+    .Health: "category_health",
+    .Music: "category_music",
+    .Outdoors: "category_outdoors",
+    .Sports: "category_sports",
+    .Technology: "category_technology"
+]
 class CategoryFactory: NSObject {
 
     class func categories() -> [String] {
@@ -97,7 +110,26 @@ class CategoryFactory: NSObject {
         return []
     }
     
-    class func bgImage(category: String) -> UIImage {
-        return UIImage(named: "category_\(category.lowercaseString)")!
+    class func categoryBgImage(category: String) -> UIImage {
+        for cat: CATEGORY in CATEGORIES {
+            if cat.rawValue == category {
+                let name = BG_CATEGORIES[cat]!
+                return UIImage(named:"\(name).jpg")!
+            }
+        }
+        return UIImage(named: "event_starbucks.jpg")!
+    }
+
+    class func subcategoryBgImage(subcategory: String) -> UIImage {
+        for cat: CATEGORY in CATEGORIES {
+            let sub: [SUBCATEGORY] = SUBCATEGORIES[cat]!
+            let subcategories: [String] = sub.map({ (subcategory) -> String in
+                return subcategory.rawValue
+            })
+            if subcategories.contains(subcategory) {
+                return self.categoryBgImage(cat.rawValue)
+            }
+        }
+        return UIImage(named: "event_starbucks.jpg")!
     }
 }

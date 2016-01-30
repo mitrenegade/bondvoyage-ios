@@ -103,7 +103,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="profileImage" destination="X1a-ST-hWC" id="Ofz-U2-vnP"/>
+                                            <outlet property="bgImage" destination="X1a-ST-hWC" id="EOn-mw-qb2"/>
                                             <outlet property="titleLabel" destination="26f-Nx-O6c" id="0ec-aP-2m5"/>
                                             <outlet property="viewFrame" destination="if0-xy-c7M" id="9Mm-7g-166"/>
                                         </connections>
