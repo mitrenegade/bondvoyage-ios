@@ -37,6 +37,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // configure title bar
+        let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
+        imageView.frame = CGRectMake(0, 0, 150, 44)
+        imageView.contentMode = .ScaleAspectFit
+        imageView.backgroundColor = Constants.lightBlueColor()
+        imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
+        //self.navigationItem.titleView = imageView
+        self.navigationController!.navigationBar.addSubview(imageView)
         // configure search bar
         self.searchBar.delegate = self;
         for view: UIView in self.searchBar.subviews[0].subviews {
@@ -60,13 +68,23 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
+        let button: UIButton = UIButton(type: .Custom)
+        button.frame = CGRectMake(0, 0, 80, 30)
+        button.backgroundColor = UIColor.clearColor()
+        button.setBackgroundImage(UIImage(), forState: .Normal)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         if PFUser.currentUser() == nil {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
+            button.addTarget(self, action: "goToLogin", forControlEvents: .TouchUpInside)
+            button.setTitle("Log In", forState: .Normal)
         }
         else {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
+            button.addTarget(self, action: "goToSettings", forControlEvents: .TouchUpInside)
+            button.setTitle("Settings", forState: .Normal)
         }
 
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
+        self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
         self.constraintCategoriesHeight.constant = 0
     }
     
