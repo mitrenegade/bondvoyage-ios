@@ -275,8 +275,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userId = userDict["objectId"] as! String
         }
         
-        let status = info["invitationStatus"] as? String
-
         let fromMatchDict: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
         let fromMatchId: String = fromMatchDict["objectId"] as! String
         
@@ -286,6 +284,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if results != nil && results!.count > 0 {
                 let fromMatch: PFObject = results![0]
                 
+                // if already looking at match status, let it handle it
                 let presenter = self.topViewController()!
                 if let nav: UINavigationController = presenter as? UINavigationController {
                     if nav.viewControllers.last!.isKindOfClass(MatchStatusViewController) {
@@ -301,15 +300,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 query.whereKey("objectId", equalTo: userId)
                 query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
                     if results != nil && results!.count > 0 {
-                        let user: PFUser = results![0] as! PFUser
+
+                        // looking at some other screen. determine which one to pop up
+                        let status = info["invitationStatus"] as? String
+                        let categories: [String] = fromMatch.objectForKey("categories") as! [String]
                         
-                        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
-                        controller.invitingUser = user
-                        controller.invitingMatch = fromMatch
-                        
-                        let nav = UINavigationController(rootViewController: controller)
-                        presenter.presentViewController(nav, animated: true, completion: { () -> Void in
-                        })
+                        if status == "pending" {
+                            let user: PFUser = results![0] as! PFUser
+                            
+                            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+                            controller.invitingUser = user
+                            controller.invitingMatch = fromMatch
+                            
+                            let nav = UINavigationController(rootViewController: controller)
+                            presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                            })
+                        }
+                        else if status == "accepted" {
+                            // goToPlaces
+                            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+                            controller.relevantInterests = categories
+                            
+                            let nav = UINavigationController(rootViewController: controller)
+                            presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                            })
+                            
+                        }
+                        else if status == "declined" {
+                            let controller: MatchStatusViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MatchStatusViewController") as! MatchStatusViewController
+                            controller.toMatch = nil
+                            controller.fromMatch = fromMatch
+                            controller.category = categories[0]
+                            let nav = UINavigationController(rootViewController: controller)
+                            presenter.presentViewController(nav, animated: true, completion: { () -> Void in
+                            })
+                        }
                     }
                     else {
                         print("Invalid user")
