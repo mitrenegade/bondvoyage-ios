@@ -252,13 +252,11 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         // Pass the selected object to the new view controller.
         if segue.identifier == "GoToInvite" {
             let controller: InviteViewController = segue.destinationViewController as! InviteViewController
-            controller.category = self.selectedCategory
             controller.matches = self.matches
             controller.fromMatch = self.requestedMatch
         }
         else if segue.identifier == "GoToMatchStatus" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
-            controller.category = self.selectedCategory
             controller.requestedMatch = self.requestedMatch
             controller.fromMatch = nil
             controller.toMatch = nil

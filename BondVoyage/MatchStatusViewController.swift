@@ -16,7 +16,6 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     @IBOutlet weak var labelDetails: UILabel!
     @IBOutlet weak var progressView: ProgressView!
 
-    var category: String?
     var requestedMatch: PFObject? // the user's created bond request
     var fromMatch: PFObject? // another user who has invited this user
     var toMatch: PFObject? // user's invited bond request if coming from inviteViewController
@@ -52,11 +51,12 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
             // invited - waiting for bond acceptance
             self.labelTitle.text = "Waiting for user to accept the bond"
             self.labelDetails.text = "You are waiting for someone to accept your bond invitation."
+            let category: String = (self.toMatch!.objectForKey("categories") as! [String])[0]
             if let user: PFUser = self.toMatch!.objectForKey("user") as? PFUser {
                 user.fetchInBackgroundWithBlock({ (object, error) -> Void in
                     if let name: String = user.objectForKey("firstName") as? String {
                         self.labelTitle.text = "Waiting for \(name) to accept"
-                        self.labelDetails.text = "You are waiting for \(name) to accept your invitation to bond over \(self.category!)."
+                        self.labelDetails.text = "You are waiting for \(name) to accept your invitation to bond over \(category)."
                     }
                 })
             }
@@ -74,21 +74,24 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
             }
             else if self.fromMatch!.valueForKey("status") as? String == "accepted" {
                 self.goToPlaces()
+                return
             }
+            else if self.fromMatch!.valueForKey("status")
+            let category: String = (self.fromMatch!.objectForKey("categories") as! [String])[0]
             
             if let user: PFUser = self.fromMatch!.objectForKey("user") as? PFUser {
                 user.fetchInBackgroundWithBlock({ (object, error) -> Void in
                     if self.fromMatch!.valueForKey("status") as? String == "pending" {
                         if let name: String = user.objectForKey("firstName") as? String {
                             self.labelTitle.text = "You have received an invitation from \(name)"
-                            self.labelDetails.text = "\(name) wants to bond over \(self.category!)"
+                            self.labelDetails.text = "\(name) wants to bond over \(category)"
                         }
                         self.goToAcceptInvite(user)
                     }
                     else if self.fromMatch!.valueForKey("status") as? String == "declined" {
                         if let name: String = user.objectForKey("firstName") as? String {
                             self.labelTitle.text = "Your invitation was declined"
-                            self.labelDetails.text = "Sorry, looks like \(name) declined your invitation to bond over \(self.category!)."
+                            self.labelDetails.text = "Sorry, looks like \(name) declined your invitation to bond over \(category)."
                         }
                     }
                 })
@@ -124,13 +127,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                 }
             }
             else {
+                let category: String = (self.requestedMatch!.objectForKey("categories") as! [String])[0]
                 self.labelTitle.text = "No bonds available"
-                self.labelDetails.text = "You are waiting for someone else to join you for \(self.category!). Click Back to cancel and search for something else."
+                self.labelDetails.text = "You are waiting for someone else to join you for \(category). Click Back to cancel and search for something else."
             }
         }
         else {
-            self.labelTitle.text = "No bonds available"
-            self.labelDetails.text = "You are waiting for someone else to join you for \(self.category!). Click Back to cancel and search for something else."
+            print("No matches to display in MatchStatusViewController: error!")
+            self.close()
         }
     }
     
@@ -138,8 +142,12 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         if self.toMatch != nil {
             self.cancelInvitation()
         }
+        else if self.fromMatch != nil { // toMatch is nil. why?
+            print("here")
+            self.close()
+        }
         else {
-            self.cancelMatch()
+            self.cancelInvitation()
         }
     }
     
@@ -152,10 +160,9 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     }
 
     func goToPlaces() {
+        let categories: [String] = self.fromMatch!.objectForKey("categories") as! [String]
         let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
-        if self.category != nil {
-            controller.relevantInterests = [self.category!]
-        }
+        controller.relevantInterests = categories
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -171,6 +178,10 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     }
     
     func cancelMatch() {
+        // todo: handle corner case: user has requested a match but does not receive notifications.
+        // that match gets an invitation. But before they reload the match they cancel it.
+        // need to check if requestedMatch has an invite already, and cancelInvitation instead.
+        
         MatchRequest.cancelMatch(self.requestedMatch!) { (results, error) -> Void in
             if error != nil {
                 self.simpleAlert("Could not cancel match", defaultMessage: "Your current match could not be cancelled", error: error)

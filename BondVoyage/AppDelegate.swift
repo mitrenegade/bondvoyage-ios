@@ -330,7 +330,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             let controller: MatchStatusViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MatchStatusViewController") as! MatchStatusViewController
                             controller.toMatch = nil
                             controller.fromMatch = fromMatch
-                            controller.category = categories[0]
                             let nav = UINavigationController(rootViewController: controller)
                             presenter.presentViewController(nav, animated: true, completion: { () -> Void in
                             })
