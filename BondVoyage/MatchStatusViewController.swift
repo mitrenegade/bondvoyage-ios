@@ -76,7 +76,13 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                 self.goToPlaces()
                 return
             }
-            else if self.fromMatch!.valueForKey("status")
+            else if self.fromMatch!.valueForKey("status") as? String == "cancelled" {
+                // handles a corner case where match was cancelled but the invited match was not
+                self.labelTitle.text = "Your last bond has been cancelled"
+                self.labelDetails.text = "Please hit back to search for more activities."
+                self.progressView.stopActivity()
+                return
+            }
             let category: String = (self.fromMatch!.objectForKey("categories") as! [String])[0]
             
             if let user: PFUser = self.fromMatch!.objectForKey("user") as? PFUser {
@@ -142,12 +148,13 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         if self.toMatch != nil {
             self.cancelInvitation()
         }
-        else if self.fromMatch != nil { // toMatch is nil. why?
-            print("here")
-            self.close()
+        else if self.fromMatch != nil && self.requestedMatch == nil {
+            // hack: handle a case where the inviting match was cancelled but invited match was not
+            self.requestedMatch = self.fromMatch
+            self.cancelMatch()
         }
         else {
-            self.cancelInvitation()
+            self.cancelMatch()
         }
     }
     

@@ -10,9 +10,13 @@ import UIKit
 import Parse
 import AsyncImageView
 
-let kSearchResultsViewControllerID = "searchResultsViewControllerID"
+let date = NSDate()
+let calendar = NSCalendar.currentCalendar()
+let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchResultsDelegate {
+let kCellIdentifier = "ActivitiesCell"
+
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
@@ -21,11 +25,15 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
     // search results
     @IBOutlet weak var searchBar: UISearchBar!
     var interests: [String]?
-    var searchResultsVC: SearchResultsViewController!
+    @IBOutlet weak var tableView: UITableView!
     var selectedUser: PFUser?
     var recommendations: [PFObject]?
     
     var promptedForPush: Bool = false
+    var nearbyMatches: [PFObject]?
+    
+    // from SearchCategoriesDelegate
+    var requestedMatch: PFObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +41,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
         self.searchBar.delegate = self;
         
         self.constraintCategoriesHeight.constant = 0
+        self.loadActivitiesForCategory(nil) { (results, error) -> Void in
+            if results != nil && results!.count > 0 {
+                self.nearbyMatches = results
+            }
+            self.tableView.reloadData()
+        }
+
+        self.checkForExistingMatch()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -64,6 +80,74 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
         }
     }
 
+    // MARK: - API
+    func checkForExistingMatch() {
+        if PFUser.currentUser() == nil {
+            return
+        }
+        
+        let query: PFQuery = PFQuery(className: "Match")
+        query.whereKey("user", equalTo: PFUser.currentUser()!)
+        query.whereKey("status", notContainedIn: ["cancelled", "declined"])
+        query.orderByDescending("updatedAt")
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if results != nil && results!.count > 0 {
+                print("existing matches: \(results!)")
+                self.requestedMatch = results![0]
+                self.goToMatchStatus(self.requestedMatch!)
+            }
+        }
+    }
+    
+    func loadActivitiesForCategory(category: String?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+        let query: PFQuery = PFQuery(className: "Match")
+        query.whereKey("user", notEqualTo: PFUser.currentUser()!)
+        query.whereKey("status", notContainedIn: ["cancelled", "declined"])
+        if category != nil {
+            query.whereKey("categories", containsString: category!)
+        }
+        query.orderByDescending("updatedAt")
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            completion(results: results, error: error)
+        }
+    }
+    
+    // MARK: - UITableViewDataSource
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
+        cell.adjustTableViewCellSeparatorInsets(cell)
+        if nearbyMatches != nil {
+            cell.configureCellForUser(self.nearbyMatches![indexPath.row])
+        }
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let numUsers: Int = self.nearbyMatches?.count {
+            return numUsers
+        }
+        else {
+            print("No matches found")
+            return 0
+        }
+    }
+    
+    // MARK: - UITableViewDelegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if PFUser.currentUser() == nil {
+            self.simpleAlert("Log in?", message: "Log in or create an account to view someone's profile")
+            return
+        }
+        
+        self.requestedMatch = self.nearbyMatches![indexPath.row]
+        self.performSegueWithIdentifier("GoToInvite", sender: [self.requestedMatch!])
+    }
+    
+    // MARK: - Search Bar
     func dismissKeyboard() {
         self.searchBar.resignFirstResponder()
     }
@@ -74,7 +158,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
     
     func displaySearchResultsViewController() {
         self.searchBar.showsCancelButton = true
-        self.constraintCategoriesHeight.constant = 200
+        self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
     }
 
     func removeSearchResultsViewController() {
@@ -84,23 +168,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
         self.searchBar.text = ""
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "embedSearchResultsVCSegue" {
-            self.searchResultsVC = segue.destinationViewController as! SearchResultsViewController
-            self.searchResultsVC.delegate = self
-        }
-        else if segue.identifier == "embedCategoriesVCSegue" {
-            self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
-        }
-        else if segue.identifier == "showUserDetailsSegue" {
-            let userDetailsVC = segue.destinationViewController as! UserDetailsViewController
-            userDetailsVC.selectedUser = self.selectedUser
-            userDetailsVC.relevantInterests = self.interests
-        }
-    }
-
     // MARK: - UISearchBarDelegate
-    
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let searchText: String = searchBar.text! {
             self.searchBar.resignFirstResponder()
@@ -110,15 +178,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
                     return i.lowercaseString
                 }
             }
-            UserRequest.userQuery(self.interests!, genderPref: [], ageRange: [], numRange: [], completion: { (results, error) -> Void in
-                if error != nil {
-                    print("ERROR: \(error)")
-                }
-                else {
-                    self.searchResultsVC.users = results
-                    self.searchResultsVC.tableView.reloadData()
-                }
-            });
+            
+            print("search")
         }
     }
 
@@ -141,6 +202,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
         }
     }
 
+    // MARK: Navigation
     func goToLogin() {
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
         let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
@@ -153,13 +215,40 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, SearchRes
         self.presentViewController(nav, animated: true, completion: nil)
     }
 
-    // MARK: SearchResultsDelegate
-
-    func showUserDetails(user:PFUser?) {
-        self.selectedUser = user
-        self.performSegueWithIdentifier("showUserDetailsSegue", sender: self)
+    // MARK: - SearchCategoriesDelegate
+    func goToMatchStatus(match: PFObject) {
+        self.removeSearchResultsViewController()
+        self.requestedMatch = match
+        self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
     }
     
+    func goToInvite(match: PFObject, matches: [PFObject]) {
+        self.removeSearchResultsViewController()
+        self.requestedMatch = match
+        self.performSegueWithIdentifier("GoToInvite", sender: matches)
+    }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "embedCategoriesVCSegue" {
+            self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
+            self.categoriesVC.delegate = self
+        }
+        else if segue.identifier == "GoToInvite" {
+            let controller: InviteViewController = segue.destinationViewController as! InviteViewController
+            let matches: [PFObject] = sender as! [PFObject]
+            controller.matches = matches
+            controller.fromMatch = self.requestedMatch
+        }
+        else if segue.identifier == "GoToMatchStatus" {
+            let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
+            controller.requestedMatch = self.requestedMatch
+            controller.fromMatch = nil
+            controller.toMatch = nil
+        }
+    }
     
+
+
 }
