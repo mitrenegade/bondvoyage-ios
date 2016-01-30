@@ -48,4 +48,18 @@ class Constants: NSObject {
     class func blueColor() -> UIColor {
         return UIColor(red: 79.0/255.0, green: 129.0/255.0, blue: 170.0/255.0, alpha: 1)
     }
+
+    class func lightBlueColor() -> UIColor {
+        return UIColor(red: 200.0/255.0, green: 230.0/255.0, blue: 233.0/255.0, alpha: 1)
+    }
+}
+
+extension String {
+    var capitalizeFirst: String {
+        if isEmpty { return "" }
+        var result = self
+        result.replaceRange(startIndex...startIndex, with: String(self[startIndex]).uppercaseString)
+        return result
+    }
+    
 }

@@ -54,6 +54,11 @@ class UserDetailsViewController: UIViewController {
         }
         self.configureUI()
         
+        self.nameLabel!.layer.shadowOpacity = 1
+        self.nameLabel!.layer.shadowRadius = 2
+        self.nameLabel!.layer.shadowColor = UIColor.blackColor().CGColor
+        self.nameLabel!.layer.shadowOffset = CGSizeMake(1, 1)
+        
         self.view!.backgroundColor = UIColor.clearColor()
     }
 
