@@ -42,7 +42,6 @@
 		E5508A1D1C1539CF00D23C26 /* BondVoyageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A1C1C1539CF00D23C26 /* BondVoyageTests.swift */; };
 		E5508A281C1539CF00D23C26 /* BondVoyageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */; };
 		E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */; };
-		E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */; };
 		E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836631C38BEB9003BD54F /* SingleFilterView.swift */; };
 		E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* RangeFilterView.swift */; };
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
@@ -112,7 +111,6 @@
 		E5508A271C1539CF00D23C26 /* BondVoyageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BondVoyageUITests.swift; sourceTree = "<group>"; };
 		E5508A291C1539CF00D23C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HereAndNowViewController.swift; path = ViewControllers/HereAndNowViewController.swift; sourceTree = "<group>"; };
-		E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultsViewController.swift; path = ViewControllers/SearchResultsViewController.swift; sourceTree = "<group>"; };
 		E5C836631C38BEB9003BD54F /* SingleFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleFilterView.swift; path = Views/SingleFilterView.swift; sourceTree = "<group>"; };
 		E5C836661C38BEF5003BD54F /* RangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeFilterView.swift; path = Views/RangeFilterView.swift; sourceTree = "<group>"; };
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
@@ -170,15 +168,6 @@
 				8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */,
 			);
 			name = Places;
-			sourceTree = "<group>";
-		};
-		8EA047CB1C4FDD7A00CCCAC3 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
-				E56E32921C2AF52A001A2349 /* SearchResultsViewController.swift */,
-			);
-			name = Old;
 			sourceTree = "<group>";
 		};
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
@@ -315,7 +304,7 @@
 			children = (
 				8E507B521C4AB7960019FF19 /* Places */,
 				C518526B1C341A9E00EA2328 /* Settings */,
-				8EA047CB1C4FDD7A00CCCAC3 /* Old */,
+				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8EA047CC1C4FDDE200CCCAC3 /* InviteViewController.swift */,
 				8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */,
@@ -564,7 +553,6 @@
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
 				8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */,
 				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,
-				E56E32931C2AF52A001A2349 /* SearchResultsViewController.swift in Sources */,
 				C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */,
 				8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */,
 				C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */,
