@@ -12,7 +12,6 @@
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
-            <string>Lato-Bold</string>
         </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
@@ -805,48 +804,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JgP-9U-hVd">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="584"/>
                                         <subviews>
-                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6SS-cU-Evg" userLabel="View - gender">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZC-1O-Aa6" userLabel="View - size">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="140"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ap-wA-Thg" userLabel="View - header">
-                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Er-D3-Z1f">
-                                                                <rect key="frame" x="8" y="8" width="584" height="44"/>
-                                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
-                                                                <state key="normal" title="Gender">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                </state>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="Cly-2p-0HA"/>
-                                                            <constraint firstItem="3Er-D3-Z1f" firstAttribute="leading" secondItem="9Ap-wA-Thg" secondAttribute="leading" constant="8" id="KlR-jO-SMY"/>
-                                                            <constraint firstAttribute="bottom" secondItem="3Er-D3-Z1f" secondAttribute="bottom" constant="8" id="PPT-VC-xu7"/>
-                                                            <constraint firstItem="3Er-D3-Z1f" firstAttribute="top" secondItem="9Ap-wA-Thg" secondAttribute="top" constant="8" id="SEH-ah-rMX"/>
-                                                            <constraint firstAttribute="trailing" secondItem="3Er-D3-Z1f" secondAttribute="trailing" constant="8" id="Us6-Xm-Ea5"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AC5-Ri-N8U" customClass="GenderFilterView" customModule="BondVoyage" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="60" width="600" height="80"/>
-                                                        <color key="backgroundColor" red="0.6588235294117647" green="0.71372549019607845" blue="0.76862745098039209" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </view>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstItem="9Ap-wA-Thg" firstAttribute="top" secondItem="6SS-cU-Evg" secondAttribute="top" id="636-7j-9u8"/>
-                                                    <constraint firstItem="9Ap-wA-Thg" firstAttribute="leading" secondItem="6SS-cU-Evg" secondAttribute="leading" id="7aV-qV-rPu"/>
-                                                    <constraint firstItem="AC5-Ri-N8U" firstAttribute="top" secondItem="9Ap-wA-Thg" secondAttribute="bottom" id="Aoy-Ca-Krh"/>
-                                                    <constraint firstAttribute="bottom" secondItem="AC5-Ri-N8U" secondAttribute="bottom" id="Gwy-BI-3lh"/>
-                                                    <constraint firstAttribute="height" constant="140" id="IrW-9R-cBe"/>
-                                                    <constraint firstItem="AC5-Ri-N8U" firstAttribute="leading" secondItem="6SS-cU-Evg" secondAttribute="leading" id="XyG-pt-ZZ0"/>
-                                                    <constraint firstAttribute="trailing" secondItem="9Ap-wA-Thg" secondAttribute="trailing" id="q6P-DK-Xit"/>
-                                                    <constraint firstAttribute="trailing" secondItem="AC5-Ri-N8U" secondAttribute="trailing" id="vka-cA-YXB"/>
-                                                </constraints>
-                                            </view>
-                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZC-1O-Aa6" userLabel="View - age">
-                                                <rect key="frame" x="0.0" y="140" width="600" height="140"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="obN-Nw-ZtO" userLabel="View - header">
                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
@@ -887,8 +846,8 @@
                                                     <constraint firstItem="5vy-bi-FvY" firstAttribute="top" secondItem="obN-Nw-ZtO" secondAttribute="bottom" id="qMW-I6-R7W"/>
                                                 </constraints>
                                             </view>
-                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPB-VU-fRx" userLabel="View - size">
-                                                <rect key="frame" x="0.0" y="280" width="600" height="140"/>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPB-VU-fRx" userLabel="View - age">
+                                                <rect key="frame" x="0.0" y="140" width="600" height="140"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WNj-2k-GRI" userLabel="View - header">
                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
@@ -932,13 +891,10 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="JZC-1O-Aa6" firstAttribute="top" secondItem="JgP-9U-hVd" secondAttribute="top" id="0ma-oF-Dg5"/>
                                             <constraint firstItem="rPB-VU-fRx" firstAttribute="leading" secondItem="JgP-9U-hVd" secondAttribute="leading" id="6yq-Fp-Xtf"/>
-                                            <constraint firstItem="6SS-cU-Evg" firstAttribute="top" secondItem="JgP-9U-hVd" secondAttribute="top" id="LzB-4v-hlW"/>
-                                            <constraint firstAttribute="trailing" secondItem="6SS-cU-Evg" secondAttribute="trailing" id="VJj-p4-nd5"/>
                                             <constraint firstAttribute="trailing" secondItem="rPB-VU-fRx" secondAttribute="trailing" id="YG0-Db-eWW"/>
                                             <constraint firstItem="rPB-VU-fRx" firstAttribute="top" secondItem="JZC-1O-Aa6" secondAttribute="bottom" id="a2o-ta-4hY"/>
-                                            <constraint firstItem="6SS-cU-Evg" firstAttribute="leading" secondItem="JgP-9U-hVd" secondAttribute="leading" id="a3g-0Y-8b9"/>
-                                            <constraint firstItem="JZC-1O-Aa6" firstAttribute="top" secondItem="6SS-cU-Evg" secondAttribute="bottom" id="iSG-cF-rMh"/>
                                             <constraint firstAttribute="trailing" secondItem="JZC-1O-Aa6" secondAttribute="trailing" id="jTd-f0-8bo"/>
                                             <constraint firstItem="JZC-1O-Aa6" firstAttribute="leading" secondItem="JgP-9U-hVd" secondAttribute="leading" id="lDh-ev-mFZ"/>
                                         </constraints>
@@ -969,7 +925,6 @@
                     <connections>
                         <outlet property="ageFilterView" destination="YDZ-kQ-UKO" id="Spc-le-ISL"/>
                         <outlet property="contentView" destination="JgP-9U-hVd" id="dBW-70-bMI"/>
-                        <outlet property="genderFilterView" destination="AC5-Ri-N8U" id="nrN-DL-qFa"/>
                         <outlet property="groupFilterView" destination="5vy-bi-FvY" id="wX0-ru-QaJ"/>
                         <outlet property="scrollView" destination="uFk-rd-TqM" id="MS9-Zo-RPW"/>
                     </connections>
