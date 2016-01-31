@@ -125,7 +125,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     func loadActivitiesForCategory(category: String?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         let query: PFQuery = PFQuery(className: "Match")
-        query.whereKey("user", notEqualTo: PFUser.currentUser()!)
+        if PFUser.currentUser() != nil {
+            query.whereKey("user", notEqualTo: PFUser.currentUser()!)
+        }
         query.whereKey("status", notContainedIn: ["cancelled", "declined"])
         if category != nil {
             query.whereKey("categories", containsString: category!)
