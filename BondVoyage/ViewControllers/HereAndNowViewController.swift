@@ -258,17 +258,43 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         
         self.removeSearchResultsViewController()
         
-        self.selectedCategory = category?.lowercaseString
+        self.selectedCategory = category
         self.searchBar.text = category
-        self.loadActivitiesForCategory(self.selectedCategory) { (results, error) -> Void in
-            if results != nil && results!.count > 0 {
-                if self.selectedCategory == nil {
-                    self.nearbyMatches = results
+        self.loadActivitiesForCategory(category?.lowercaseString) { (results, error) -> Void in
+            if results != nil {
+                if results!.count > 0 {
+                    if self.selectedCategory == nil {
+                        self.nearbyMatches = results
+                    }
+                    else {
+                        self.filteredMatches = results
+                    }
+                    self.tableView.reloadData()
                 }
                 else {
-                    self.filteredMatches = results
+                    // no results, no error
+                    var message = ""
+                    if self.selectedCategory == nil {
+                        message = "There are no activities near you."
+                        self.nearbyMatches = nil
+                    }
+                    else {
+                        message = "There is no one interested in \(self.selectedCategory!) near you."
+                        self.filteredMatches = nil
+                    }
+                    self.tableView.reloadData()
+                    
+                    let alert: UIAlertController = UIAlertController(title: "No activities nearby", message: "\(message) Would you like to create one?", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
+                        self.selectedCategory = nil // if search result is nil due to a category, reload using existing nearbyMatches
+                        self.tableView.reloadData()
+                        self.searchBarCancelButtonClicked(self.searchBar)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
+                        self.createMatch()
+                    }))
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
-                self.tableView.reloadData()
             }
             else {
                 let message = "There was a problem loading matches. Please try again"

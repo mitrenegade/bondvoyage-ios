@@ -84,7 +84,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     // MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         if indexPath.row == 0 {
+            for var i=0; i<expanded.count; i++ {
+                if i != indexPath.section {
+                    expanded[i] = false
+                }
+            }
             expanded[indexPath.section] = !expanded[indexPath.section]
             self.tableView.reloadData()
         }
