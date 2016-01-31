@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
 
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
+    @IBOutlet weak var buttonAbout: UIButton!
     
     var pickerBirthYear: UIPickerView = UIPickerView()
     
@@ -332,6 +333,9 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBAction func didClickButton(sender: UIButton) {
         if sender == self.buttonPhoto {
             self.addPhoto(sender)
+        }
+        else if sender == self.buttonAbout {
+            self.performSegueWithIdentifier("toAboutMe", sender: self)
         }
     }
     

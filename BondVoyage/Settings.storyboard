@@ -106,7 +106,6 @@
                     <connections>
                         <segue destination="RlX-hR-DMK" kind="show" identifier="toSignup" id="Mzm-JK-u8t"/>
                         <segue destination="VU4-AG-LNB" kind="show" identifier="toProfile" id="shf-P5-iYt"/>
-                        <segue destination="85b-X6-Cfa" kind="show" identifier="toInterests" id="Ih7-La-PMB"/>
                         <segue destination="r9Z-No-mhl" kind="show" identifier="toSearchPreferences" id="YAb-3n-ojI"/>
                     </connections>
                 </tableViewController>
@@ -640,13 +639,16 @@
                                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9qE-uu-tfr" customClass="AsyncImageView">
-                                                                <rect key="frame" x="552" y="0.0" width="40" height="40"/>
+                                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="chevron-right" translatesAutoresizingMaskIntoConstraints="NO" id="IFa-v1-FwX">
+                                                                <rect key="frame" x="580" y="10" width="20" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="20" id="JfZ-8Y-SIg"/>
+                                                                    <constraint firstAttribute="height" constant="20" id="UfO-ze-jTZ"/>
+                                                                </constraints>
                                                             </imageView>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dc-Qj-Ugh">
-                                                                <rect key="frame" x="552" y="0.0" width="40" height="40"/>
+                                                                <rect key="frame" x="8" y="0.0" width="584" height="40"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="40" id="hN8-FY-FXt"/>
                                                                     <constraint firstAttribute="height" constant="40" id="oy5-W6-hIQ"/>
                                                                 </constraints>
                                                                 <connections>
@@ -657,12 +659,11 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstItem="0Ch-FQ-DDC" firstAttribute="leading" secondItem="1tT-mX-tcd" secondAttribute="leading" constant="8" id="0MV-Qi-Orw"/>
-                                                            <constraint firstItem="2dc-Qj-Ugh" firstAttribute="bottom" secondItem="9qE-uu-tfr" secondAttribute="bottom" id="QYU-Tk-nne"/>
-                                                            <constraint firstItem="2dc-Qj-Ugh" firstAttribute="leading" secondItem="9qE-uu-tfr" secondAttribute="leading" id="XjE-DR-2Ln"/>
+                                                            <constraint firstItem="IFa-v1-FwX" firstAttribute="centerY" secondItem="1tT-mX-tcd" secondAttribute="centerY" id="Y4z-C3-I8f"/>
                                                             <constraint firstItem="2dc-Qj-Ugh" firstAttribute="centerY" secondItem="1tT-mX-tcd" secondAttribute="centerY" id="aO7-mW-spt"/>
                                                             <constraint firstAttribute="height" constant="40" id="adR-r2-una"/>
-                                                            <constraint firstItem="2dc-Qj-Ugh" firstAttribute="top" secondItem="9qE-uu-tfr" secondAttribute="top" id="ldb-9z-ulM"/>
-                                                            <constraint firstItem="2dc-Qj-Ugh" firstAttribute="trailing" secondItem="9qE-uu-tfr" secondAttribute="trailing" id="u8J-On-NXw"/>
+                                                            <constraint firstAttribute="trailing" secondItem="IFa-v1-FwX" secondAttribute="trailing" id="cso-jS-GuX"/>
+                                                            <constraint firstItem="2dc-Qj-Ugh" firstAttribute="leading" secondItem="1tT-mX-tcd" secondAttribute="leading" constant="8" id="db9-jC-YbH"/>
                                                             <constraint firstItem="0Ch-FQ-DDC" firstAttribute="centerY" secondItem="1tT-mX-tcd" secondAttribute="centerY" id="yTX-5S-rvo"/>
                                                             <constraint firstAttribute="trailing" secondItem="2dc-Qj-Ugh" secondAttribute="trailing" constant="8" id="yXk-4k-TLK"/>
                                                         </constraints>
@@ -728,6 +729,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="648"/>
                     <connections>
+                        <outlet property="buttonAbout" destination="2dc-Qj-Ugh" id="GHd-8n-VOv"/>
                         <outlet property="buttonPhoto" destination="Xi5-VC-Dvu" id="Zo0-PY-Tej"/>
                         <outlet property="constraintBottomOffset" destination="bdN-BL-gPF" id="6pg-a0-FSk"/>
                         <outlet property="imagePhoto" destination="D6c-nA-xfe" id="zQo-N5-YWU"/>
@@ -735,6 +737,7 @@
                         <outlet property="inputFirstName" destination="Aa8-ek-Btu" id="bP7-cz-bLm"/>
                         <outlet property="inputLastName" destination="Lt1-xF-SLu" id="InQ-VV-FhH"/>
                         <outlet property="scrollView" destination="2ei-Yp-jVg" id="pPt-EP-5BQ"/>
+                        <segue destination="85b-X6-Cfa" kind="show" identifier="toAboutMe" id="BZH-Wz-Rvk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fs8-ct-DZf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -750,7 +753,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ccY-m9-EwR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vve-G6-LDj">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="648"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Oh-Ut-HcX">
@@ -763,7 +766,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SGs-Pj-Nx4">
-                                <rect key="frame" x="20" y="116" width="560" height="464"/>
+                                <rect key="frame" x="20" y="116" width="560" height="512"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -787,7 +790,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qvr-kV-scK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="431" y="1096"/>
+            <point key="canvasLocation" x="1111" y="1890"/>
         </scene>
         <!--Search Preferences View Controller-->
         <scene sceneID="CyF-cW-cn2">
@@ -937,6 +940,9 @@
             <point key="canvasLocation" x="431" y="338"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="chevron-right" width="170" height="170"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="w8r-Cn-hqy"/>
         <segue reference="NTU-i5-hgN"/>
