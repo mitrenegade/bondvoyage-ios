@@ -34,7 +34,7 @@ class SettingsViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -47,14 +47,10 @@ class SettingsViewController: UITableViewController {
             cell.textLabel?.text = "Profile"
         }
         else if row == 1 {
-            // interest cloud
-            cell.textLabel?.text = "Interests"
-        }
-        else if row == 2 {
             // edit search parameters
             cell.textLabel?.text = "Search preferences"
         }
-        else if row == 3 {
+        else if row == 2 {
             // logout
             cell.textLabel?.text = "Log out"
         }
@@ -70,12 +66,9 @@ class SettingsViewController: UITableViewController {
             self.performSegueWithIdentifier("toProfile", sender: nil)
         }
         else if row == 1 {
-            self.performSegueWithIdentifier("toInterests", sender: nil)
-        }
-        else if row == 2 {
             self.performSegueWithIdentifier("toSearchPreferences", sender: nil)
         }
-        else if row == 3 {
+        else if row == 2 {
             PFUser.logOut()
             self.close()
         }

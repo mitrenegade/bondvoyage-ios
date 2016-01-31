@@ -21,13 +21,11 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     var currentInput: UITextField?
     @IBOutlet weak var inputFirstName: UITextField!
     @IBOutlet weak var inputLastName: UITextField!
-    @IBOutlet weak var inputGender: UITextField!
     @IBOutlet weak var inputBirthYear: UITextField!
 
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
     
-    var pickerGender: UIPickerView = UIPickerView()
     var pickerBirthYear: UIPickerView = UIPickerView()
     
     var isSignup: Bool = false
@@ -35,7 +33,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
 
     var firstName: String?
     var lastName: String?
-    var gender: String?
     var birthYear: Int?
 
     var currentYear: Int = 2016
@@ -58,10 +55,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         let components = calendar.components([.Year], fromDate: date)
         currentYear = components.year
         
-        // pickers for age and gender
-        pickerGender.delegate = self
-        pickerGender.dataSource = self
-        self.inputGender.inputView = pickerGender
+        // pickers for age
         pickerBirthYear.delegate = self
         pickerBirthYear.dataSource = self
         self.inputBirthYear.inputView = pickerBirthYear
@@ -73,7 +67,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputFirstName, inputLastName, inputGender, inputBirthYear] {
+        for input: UITextField in [inputFirstName, inputLastName, inputBirthYear] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
         
@@ -98,9 +92,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             }
             if let lastName: String = user.objectForKey("lastName") as? String{
                 self.inputLastName.text = lastName
-            }
-            if let gender: String = user.objectForKey("gender") as? String{
-                self.inputGender.text = gender
             }
             if let birthYear: Int = user.objectForKey("birthYear") as? Int{
                 self.inputBirthYear.text = "\(birthYear)"
@@ -130,44 +121,23 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         return 1
     }
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == self.pickerGender {
-            return 4 // select, MFO
-        }
         return 80 // years
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == self.pickerGender {
-            print("row: \(row)")
-            print("genders \(genderOptions)")
-            return genderOptions[row]
+        if row == 0 {
+            return "Select your birth year"
         }
         else {
-            if row == 0 {
-                return "Select your birth year"
-            }
-            else {
-                let year = currentYear - row
-                return "\(year)"
-            }
+            let year = currentYear - row
+            return "\(year)"
         }
     }
     
     // MARK: - UIPickerViewDelegate
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == self.pickerGender {
-            if row == 0 {
-                self.gender = nil
-            }
-            else {
-                self.gender = genderOptions[row]
-                self.inputGender.text = self.gender
-            }
-        }
-        else {
-            self.birthYear = currentYear - row
-            self.inputBirthYear.text = "\(self.birthYear!)"
-        }
+        self.birthYear = currentYear - row
+        self.inputBirthYear.text = "\(self.birthYear!)"
     }
 
     // MARK: - TextFieldDelegate
@@ -185,9 +155,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             self.inputLastName.becomeFirstResponder()
         }
         else if textField == self.inputLastName {
-            self.inputGender.becomeFirstResponder()
-        }
-        else if textField == self.inputGender {
             self.inputBirthYear.becomeFirstResponder()
         }
         else if textField == self.inputBirthYear {
@@ -239,9 +206,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         self.view.endEditing(true)
         self.firstName = self.inputFirstName.text
         self.lastName = self.inputLastName.text
-        if self.inputGender.text != "Select gender" {
-            self.gender = self.inputGender.text
-        }
         if self.inputBirthYear.text != "Select your birth year" {
             self.birthYear = Int(self.inputBirthYear.text!)
         }
@@ -263,10 +227,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
         if self.lastName != nil {
             user!.setValue(self.lastName, forKey: "lastName")
-        }
-        
-        if self.gender != nil {
-            user!.setValue(self.gender!.lowercaseString, forKey: "gender")
         }
         
         if self.birthYear != nil {
