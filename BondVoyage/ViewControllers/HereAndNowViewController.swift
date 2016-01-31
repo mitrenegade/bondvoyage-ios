@@ -312,12 +312,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         MatchRequest.createMatch(categories) { (result, error) -> Void in
             if result != nil {
                 let match: PFObject = result! as PFObject
-                if self.nearbyMatches != nil {
-                    self.goToInvite(match, matches: self.nearbyMatches!)
-                }
-                else {
-                    self.goToMatchStatus(match)
-                }
+                self.goToMatchStatus(match)
             }
             else {
                 let message = "There was a problem setting up your activity. Please try again."
