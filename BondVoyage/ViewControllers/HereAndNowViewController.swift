@@ -189,7 +189,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         
         if self.selectedCategory != nil {
             // show all the users in the category
-            self.goToInvite(self.filteredMatches!)
+            self.goToInvite(self.filteredMatches!, index: indexPath.row)
         }
         else {
             // only show the one user that was clicked
@@ -347,7 +347,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             let category = categories[0]
             self.createMatch(category, completion: { (result, error) -> Void in
                 if result != nil {
-                    self.requestedMatch = result! as PFObject
                     self.performSegueWithIdentifier("GoToInvite", sender: [match])
                 }
                 else {
@@ -359,16 +358,15 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
     
-    func goToInvite(matches: [PFObject]) {
+    func goToInvite(matches: [PFObject], index: Int) {
         self.removeSearchResultsViewController()
-        // FIXME: goToInvite just by clicking on a user should not create an invite
-        // clicking back from inviteViewController should not cancel the fromMatch
-        // createMatch should only be called if we click Invite to bond
-        
         self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
             if result != nil {
-                self.requestedMatch = result! as PFObject
-                self.performSegueWithIdentifier("GoToInvite", sender: matches)
+                let match: PFObject = matches[index]
+                var mutable: [PFObject] = matches
+                mutable.removeAtIndex(index)
+                mutable.insert(match, atIndex: 0)
+                self.performSegueWithIdentifier("GoToInvite", sender: mutable)
             }
             else {
                 let message = "There was a problem setting up your activity. Please try again."
