@@ -16,7 +16,7 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
@@ -240,6 +240,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
         let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
         controller.type = .Login
+        controller.delegate = self
         self.presentViewController(nav, animated: true, completion: nil)
     }
     
@@ -354,6 +355,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
     
-
+    // MARK: SignupDelegate
+    func didLogin() {
+        self.didSelectCategory(nil)
+    }
 
 }
