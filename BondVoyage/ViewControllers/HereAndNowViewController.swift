@@ -252,11 +252,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     // MARK: - SearchCategoriesDelegate
     func didSelectCategory(category: String?) {
         // first query for existing bond requests
-        if PFUser.currentUser() == nil {
-            self.simpleAlert("Log in to find matches", message: "Please log in or sign up to bond with someone", completion: nil)
-            return
-        }
-        
         self.removeSearchResultsViewController()
         
         self.selectedCategory = category
