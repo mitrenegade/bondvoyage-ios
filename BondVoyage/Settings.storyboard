@@ -744,10 +744,10 @@
             </objects>
             <point key="canvasLocation" x="431" y="1890"/>
         </scene>
-        <!--Interests View Controller-->
+        <!--About Me View Controller-->
         <scene sceneID="mQr-tQ-2HR">
             <objects>
-                <viewController id="85b-X6-Cfa" customClass="InterestsViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="85b-X6-Cfa" customClass="AboutMeViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TGa-OO-bx3"/>
                         <viewControllerLayoutGuide type="bottom" id="ccY-m9-EwR"/>
@@ -770,22 +770,38 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="85b-X6-Cfa" id="2B5-2T-IDw"/>
+                                </connections>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here's a little something about me..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNu-1o-8h4">
+                                <rect key="frame" x="28" y="116" width="543" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="NbJ-0Y-aEB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SGs-Pj-Nx4" firstAttribute="leading" secondItem="vve-G6-LDj" secondAttribute="leadingMargin" id="I7f-v2-Z7l"/>
                             <constraint firstItem="6Oh-Ut-HcX" firstAttribute="trailing" secondItem="vve-G6-LDj" secondAttribute="trailingMargin" id="Ss6-54-pNu"/>
                             <constraint firstItem="6Oh-Ut-HcX" firstAttribute="leading" secondItem="vve-G6-LDj" secondAttribute="leadingMargin" id="Wc1-td-e2N"/>
+                            <constraint firstItem="QNu-1o-8h4" firstAttribute="top" secondItem="6Oh-Ut-HcX" secondAttribute="bottom" constant="8" id="XUR-YC-u3Y"/>
                             <constraint firstItem="6Oh-Ut-HcX" firstAttribute="top" secondItem="TGa-OO-bx3" secondAttribute="bottom" constant="8" id="eMm-eW-C6u"/>
                             <constraint firstItem="SGs-Pj-Nx4" firstAttribute="trailing" secondItem="vve-G6-LDj" secondAttribute="trailingMargin" id="fO2-mP-b00"/>
+                            <constraint firstItem="QNu-1o-8h4" firstAttribute="trailing" secondItem="vve-G6-LDj" secondAttribute="trailingMargin" constant="-9" id="i0y-R2-HPg"/>
                             <constraint firstItem="ccY-m9-EwR" firstAttribute="top" secondItem="SGs-Pj-Nx4" secondAttribute="bottom" constant="20" id="n0t-hZ-gBO"/>
                             <constraint firstItem="SGs-Pj-Nx4" firstAttribute="top" secondItem="6Oh-Ut-HcX" secondAttribute="bottom" constant="8" id="sLL-E7-Wck"/>
+                            <constraint firstItem="QNu-1o-8h4" firstAttribute="leading" secondItem="vve-G6-LDj" secondAttribute="leadingMargin" constant="8" id="sVU-Jh-G9X"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="constraintBottomOffset" destination="n0t-hZ-gBO" id="0gn-wI-pme"/>
                         <outlet property="inputInterests" destination="SGs-Pj-Nx4" id="rQB-t5-VBk"/>
+                        <outlet property="placeholder" destination="QNu-1o-8h4" id="f09-gW-UXB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qvr-kV-scK" userLabel="First Responder" sceneMemberID="firstResponder"/>

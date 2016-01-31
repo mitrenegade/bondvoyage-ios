@@ -72,9 +72,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             input.inputAccessoryView = keyboardDoneButtonView
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        
         if PFUser.currentUser() != nil {
             let user: PFUser = PFUser.currentUser()!
             user.fetchInBackgroundWithBlock({ (result, error) -> Void in
@@ -111,6 +108,17 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     func close() {
