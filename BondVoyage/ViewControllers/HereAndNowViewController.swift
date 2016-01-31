@@ -154,24 +154,26 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var rows = 0
         if self.selectedCategory != nil {
             if let count: Int = self.filteredMatches?.count {
-                return count
+                rows = count
             }
             else {
-                print("No matches found")
-                return 0
+                rows = 0
             }
         }
         else {
             if let count: Int = self.nearbyMatches?.count {
-                return count
+                rows = count
             }
             else {
                 print("No matches found")
-                return 0
+                rows = 0
             }
         }
+        print("rows: \(rows)")
+        return rows
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -218,18 +220,22 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.removeSearchResultsViewController()
         self.didSelectCategory(nil)
+        self.searchBar.text = nil
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         self.removeSearchResultsViewController()
         self.searchBar.showsCancelButton = false
-        self.searchBar.text = nil
     }
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.characters.count > 0 {
             self.displaySearchResultsViewController()
             // TODO: search with searchText
+        }
+        else {
+            self.searchBar.resignFirstResponder() // required or searchBar will begin editing again
+            self.searchBarTextDidEndEditing(searchBar)
         }
     }
 
@@ -250,8 +256,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     // MARK: - SearchCategoriesDelegate
     func didSelectCategory(category: String?) {
         // first query for existing bond requests
-        self.removeSearchResultsViewController()
-        
         self.selectedCategory = category
         self.searchBar.text = category
         self.loadActivitiesForCategory(category?.lowercaseString) { (results, error) -> Void in
@@ -264,6 +268,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                         self.filteredMatches = results
                     }
                     self.tableView.reloadData()
+                    self.removeSearchResultsViewController()
                 }
                 else {
                     // no results, no error
@@ -277,6 +282,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                         self.filteredMatches = nil
                     }
                     self.tableView.reloadData()
+                    self.removeSearchResultsViewController()
+
                     if PFUser.currentUser() != nil {
                         message = "\(message) Would you like to create one?"
                     }
