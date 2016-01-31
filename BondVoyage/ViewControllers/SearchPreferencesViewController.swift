@@ -13,7 +13,6 @@ class SearchPreferencesViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
 
-    @IBOutlet weak var genderFilterView: GenderFilterView!
     @IBOutlet weak var ageFilterView: AgeRangeFilterView!
     @IBOutlet weak var groupFilterView: GroupSizeFilterView!
     
@@ -26,7 +25,6 @@ class SearchPreferencesViewController: UIViewController {
         
         self.ageFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
         self.groupFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
-        self.genderFilterView.configure(GenderPrefs.Male)
 
         // load preferences
         if PFUser.currentUser() == nil {
@@ -73,13 +71,11 @@ class SearchPreferencesViewController: UIViewController {
         if prefObject == nil {
             prefObject = PFObject(className: "SearchPreference")
         }
-        let gender: [String] = self.genderFilterView.currentGenderPrefs()
         let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
         let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
         let groupMin = Int(self.groupFilterView.rangeSlider!.lowerValue)
         let groupMax = Int(self.groupFilterView.rangeSlider!.upperValue)
         
-        prefObject!.setValue(gender, forKey: "gender")
         prefObject!.setValue(ageMin, forKey: "ageMin")
         prefObject!.setValue(ageMax, forKey: "ageMax")
         prefObject!.setValue(groupMin, forKey: "groupMin")
@@ -100,16 +96,6 @@ class SearchPreferencesViewController: UIViewController {
     func refresh() {
         if let prefObject: PFObject = PFUser.currentUser()!.objectForKey("preferences") as? PFObject {
 
-            // gender preferences
-            if let genderPrefs: [String] = prefObject.objectForKey("gender") as? [String] {
-                if genderPrefs.count == 1 {
-                    self.genderFilterView.setSliderSelection(genderPrefs[0])
-                }
-                else {
-                    self.genderFilterView.setSliderSelection(GenderPrefs.All.rawValue)
-                }
-            }
-            
             // age preferences
             var ageMin = Int(self.ageFilterView.rangeSlider!.minimumValue)
             var ageMax = Int(self.ageFilterView.rangeSlider!.maximumValue)

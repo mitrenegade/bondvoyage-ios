@@ -5,8 +5,14 @@
 //  Created by Bobby Ren on 1/11/16.
 //  Copyright © 2016 RenderApps. All rights reserved.
 //
+// not used
 
 import UIKit
+
+// not used
+enum GenderPrefs: String {
+    case Female, Male, Other, All
+}
 
 class GenderFilterView: SingleFilterView {
     var genderOptions: [GenderPrefs] = [.Male, .Female, .Other, .All]
