@@ -340,6 +340,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     func goToInvite(matches: [PFObject]) {
         self.removeSearchResultsViewController()
+        // FIXME: goToInvite just by clicking on a user should not create an invite
+        // clicking back from inviteViewController should not cancel the fromMatch
+        // createMatch should only be called if we click Invite to bond
+        
         self.createMatch { (result, error) -> Void in
             if result != nil {
                 self.requestedMatch = result! as PFObject
