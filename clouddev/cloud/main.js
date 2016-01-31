@@ -1,9 +1,5 @@
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
-});
- 
+
+
 Parse.Cloud.define("seedTestUsers", function(request, response) {
     var userDicts = [{"email": "amy@bondvoyage.com", "firstName": "Amy", "interests": randomInterests(), password: "test", birthYear: 2016 - 21, gender: "female"},
             {"email": "bobby@bondvoyage.com", "firstName": "Bobby", "interests":  randomInterests(), password: "test", birthYear: 2016 - 32, gender: "male"},
@@ -170,14 +166,6 @@ var toLowerCase = function(w) {
 Parse.Cloud.define("queryUsers", function(request, response) {
     var interests = request.params.interests
  
-    var genderOptions = request.params.gender
-    if (genderOptions != undefined) {
-        if (genderOptions.length == 0) {
-            genderOptions = ["male", "female"]
-        }
-        // TODO: error if gender options are invalid. or, ignore?
-    }
- 
     var ageOptions = request.params.age // can be a single number or a range
     if (ageOptions != undefined) {
         if (ageOptions.length == 0) {
@@ -209,9 +197,6 @@ Parse.Cloud.define("queryUsers", function(request, response) {
     var query = new Parse.Query(Parse.User)
     query.containsAll("interests", interests)
 
-    if (genderOptions != undefined) {
-        query.containedIn("gender", genderOptions)
-    }
     if (ageOptions != undefined) {
         var yearMax = 2016 - ageOptions[0]
         var yearMin = 2016 - ageOptions[1]

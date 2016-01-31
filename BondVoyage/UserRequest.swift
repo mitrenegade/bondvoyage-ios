@@ -37,7 +37,7 @@ class UserRequest: NSObject {
     }
 
     // query for all users with interests, age range default
-    class func userQuery(interests: [String], genderPref: [String], ageRange: [Int], numRange: [Int], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
+    class func userQuery(interests: [String], ageRange: [Int], numRange: [Int], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
         // query for all users on Parse with given interests plus default search criteria
 
         // converts to lowercase
@@ -45,12 +45,7 @@ class UserRequest: NSObject {
             return i.lowercaseString
         }
 
-        // converts to lowercase
-        let genderString: [String] = genderPref.map { (g) -> String in
-            return g.lowercaseString
-        }
-        
-        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interestsString, "gender": genderString, "age": ageRange, "number": numRange]) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interestsString, "age": ageRange, "number": numRange]) { (results, error) -> Void in
             print("results: \(results)")
             let users: [PFUser]? = results as? [PFUser]
             completion(results: users, error: error)
