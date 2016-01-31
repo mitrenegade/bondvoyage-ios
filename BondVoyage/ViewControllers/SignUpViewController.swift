@@ -16,6 +16,10 @@ enum SignupSectionType: Int {
     case Signup
 }
 
+protocol SignupDelegate: class {
+    func didLogin()
+}
+
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     var type: SignupSectionType = .Login
@@ -38,6 +42,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var inputConfirmation: UITextField!
     
     var cancelEditing: Bool = false
+    weak var delegate: SignupDelegate?
     
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
     
@@ -264,6 +269,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 // login successful
                 self.appDelegate().logUser()
                 self.close()
+                self.delegate?.didLogin()
             }
             else {
                 self.simpleAlert("Invalid login", defaultMessage: "There was an issue logging you in.", error: error)
@@ -281,6 +287,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 print("User signed up successfully")
                 self.appDelegate().logUser()
                 self.performSegueWithIdentifier("SignupToProfile", sender: nil)
+                self.delegate?.didLogin()
             }
             else {
                 print("Error signing up")
