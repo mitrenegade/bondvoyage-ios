@@ -277,25 +277,29 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                         self.filteredMatches = nil
                     }
                     self.tableView.reloadData()
-                    
-                    let alert: UIAlertController = UIAlertController(title: "No activities nearby", message: "\(message) Would you like to create one?", preferredStyle: .Alert)
+                    if PFUser.currentUser() != nil {
+                        message = "\(message) Would you like to create one?"
+                    }
+                    let alert: UIAlertController = UIAlertController(title: "No activities nearby", message: message, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
                         self.selectedCategory = nil // if search result is nil due to a category, reload using existing nearbyMatches
                         self.tableView.reloadData()
                         self.searchBarCancelButtonClicked(self.searchBar)
                     }))
-                    alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
-                        self.createMatch({ (result, error) -> Void in
-                            if result != nil {
-                                let match: PFObject = result! as PFObject
-                                self.goToMatchStatus(match)
-                            }
-                            else {
-                                let message = "There was a problem setting up your activity. Please try again."
-                                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
-                            }
-                        })
-                    }))
+                    if PFUser.currentUser() != nil {
+                        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
+                            self.createMatch({ (result, error) -> Void in
+                                if result != nil {
+                                    let match: PFObject = result! as PFObject
+                                    self.goToMatchStatus(match)
+                                }
+                                else {
+                                    let message = "There was a problem setting up your activity. Please try again."
+                                    self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
+                                }
+                            })
+                        }))
+                    }
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             }
