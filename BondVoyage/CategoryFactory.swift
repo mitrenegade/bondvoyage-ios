@@ -94,7 +94,7 @@ class CategoryFactory: NSObject {
 
     class func categories() -> [String] {
         return CATEGORIES.map({ (category) -> String in
-            return category.rawValue.lowercaseString
+            return category.rawValue
         })
     }
     
@@ -103,7 +103,7 @@ class CategoryFactory: NSObject {
             if cat.rawValue.lowercaseString == category.lowercaseString {
                 let sub: [SUBCATEGORY] = SUBCATEGORIES[cat]!
                 return sub.map({ (subcategory) -> String in
-                    return subcategory.rawValue.lowercaseString
+                    return subcategory.rawValue
                 })
             }
         }

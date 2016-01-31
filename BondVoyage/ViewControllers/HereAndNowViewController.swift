@@ -300,6 +300,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func createMatch() {
+        if PFUser.currentUser() == nil {
+            return
+        }
         // no existing requests exist. Create a request for others to match to
         var categories: [String] = []
         if self.selectedCategory != nil {
