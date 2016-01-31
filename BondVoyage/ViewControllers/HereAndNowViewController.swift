@@ -24,17 +24,20 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // search results
     @IBOutlet weak var searchBar: UISearchBar!
-    var interests: [String]?
     @IBOutlet weak var tableView: UITableView!
     var selectedUser: PFUser?
     var recommendations: [PFObject]?
     
-    var promptedForPush: Bool = false
+    // tableview data
+    var selectedCategory: String?
     var nearbyMatches: [PFObject]?
+    var filteredMatches: [PFObject]?
     
     // from SearchCategoriesDelegate
     var requestedMatch: PFObject?
     
+    var promptedForPush: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // configure title bar
@@ -55,12 +58,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
         
         self.constraintCategoriesHeight.constant = 0
-        self.loadActivitiesForCategory(nil) { (results, error) -> Void in
-            if results != nil && results!.count > 0 {
-                self.nearbyMatches = results
-            }
-            self.tableView.reloadData()
-        }
+        self.didSelectCategory(nil)
 
         self.checkForExistingMatch()
     }
@@ -130,7 +128,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
         query.whereKey("status", notContainedIn: ["cancelled", "declined"])
         if category != nil {
-            query.whereKey("categories", containsString: category!)
+            query.whereKey("categories", equalTo: category!)
         }
         query.orderByDescending("updatedAt")
         query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
@@ -146,19 +144,33 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
         cell.adjustTableViewCellSeparatorInsets(cell)
-        if nearbyMatches != nil {
+        if self.selectedCategory == nil && nearbyMatches != nil {
             cell.configureCellForUser(self.nearbyMatches![indexPath.row])
+        }
+        else if self.selectedCategory != nil && filteredMatches != nil {
+            cell.configureCellForUser(self.filteredMatches![indexPath.row])
         }
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let numUsers: Int = self.nearbyMatches?.count {
-            return numUsers
+        if self.selectedCategory != nil {
+            if let count: Int = self.filteredMatches?.count {
+                return count
+            }
+            else {
+                print("No matches found")
+                return 0
+            }
         }
         else {
-            print("No matches found")
-            return 0
+            if let count: Int = self.nearbyMatches?.count {
+                return count
+            }
+            else {
+                print("No matches found")
+                return 0
+            }
         }
     }
     
@@ -173,17 +185,21 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             return
         }
         
-        self.requestedMatch = self.nearbyMatches![indexPath.row]
-        self.performSegueWithIdentifier("GoToInvite", sender: [self.requestedMatch!])
+        if self.selectedCategory != nil {
+            // show all the users in the category
+            self.requestedMatch = self.filteredMatches![indexPath.row]
+            self.performSegueWithIdentifier("GoToInvite", sender: self.filteredMatches)
+        }
+        else {
+            // only show the one user that was clicked
+            self.requestedMatch = self.nearbyMatches![indexPath.row]
+            self.performSegueWithIdentifier("GoToInvite", sender: [self.requestedMatch!])
+        }
     }
     
     // MARK: - Search Bar
     func dismissKeyboard() {
         self.searchBar.resignFirstResponder()
-    }
-    
-    func search() {
-        self.searchBarSearchButtonClicked(self.searchBar)
     }
     
     func displaySearchResultsViewController() {
@@ -192,37 +208,24 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     func removeSearchResultsViewController() {
-        self.searchBar.resignFirstResponder()
+        self.dismissKeyboard()
         self.constraintCategoriesHeight.constant = 0
-        self.searchBar.showsCancelButton = false
-        self.searchBar.text = ""
     }
 
     // MARK: - UISearchBarDelegate
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if let searchText: String = searchBar.text! {
-            self.searchBar.resignFirstResponder()
-            self.interests = searchText.componentsSeparatedByString(" ")
-            if self.interests != nil {
-                self.interests = self.interests!.map { (i) -> String in
-                    return i.lowercaseString
-                }
-            }
-            
-            print("search")
-        }
-    }
-
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         self.displaySearchResultsViewController()
     }
 
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.removeSearchResultsViewController()
+        self.didSelectCategory(nil)
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         self.removeSearchResultsViewController()
+        self.searchBar.showsCancelButton = false
+        self.searchBar.text = nil
     }
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -246,6 +249,57 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     // MARK: - SearchCategoriesDelegate
+    func didSelectCategory(category: String?) {
+        // first query for existing bond requests
+        if PFUser.currentUser() == nil {
+            self.simpleAlert("Log in to find matches", message: "Please log in or sign up to bond with someone", completion: nil)
+            return
+        }
+        
+        self.removeSearchResultsViewController()
+        
+        self.selectedCategory = category?.lowercaseString
+        self.searchBar.text = category
+        self.loadActivitiesForCategory(self.selectedCategory) { (results, error) -> Void in
+            if results != nil && results!.count > 0 {
+                if self.selectedCategory == nil {
+                    self.nearbyMatches = results
+                }
+                else {
+                    self.filteredMatches = results
+                }
+                self.tableView.reloadData()
+            }
+            else {
+                let message = "There was a problem loading matches. Please try again"
+                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+            }
+        }
+    }
+    
+    func createMatch() {
+        // no existing requests exist. Create a request for others to match to
+        var categories: [String] = []
+        if self.selectedCategory != nil {
+            categories = [self.selectedCategory!]
+        }
+        MatchRequest.createMatch(categories) { (result, error) -> Void in
+            if result != nil {
+                let match: PFObject = result! as PFObject
+                if self.nearbyMatches != nil {
+                    self.goToInvite(match, matches: self.nearbyMatches!)
+                }
+                else {
+                    self.goToMatchStatus(match)
+                }
+            }
+            else {
+                let message = "There was a problem setting up your activity. Please try again."
+                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
+            }
+        }
+    }
+    
     func goToMatchStatus(match: PFObject) {
         self.removeSearchResultsViewController()
         self.requestedMatch = match

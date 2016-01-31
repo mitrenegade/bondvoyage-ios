@@ -13,17 +13,13 @@ import Parse
 let kNearbyEventCellIdentifier = "nearbyEventCell"
 
 protocol SearchCategoriesDelegate: class {
-    func goToInvite(match: PFObject, matches: [PFObject])
-    func goToMatchStatus(match: PFObject)
+    func didSelectCategory(category: String?)
 }
 class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var expanded: [Bool] = [Bool]()
     
-    var selectedCategory: String?
-    var matches: [PFObject]?
-
     weak var delegate: SearchCategoriesDelegate?
     
     override func viewDidLoad() {
@@ -97,66 +93,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             let subs = CategoryFactory.subCategories(category)
             let index = indexPath.row - 1
             let subcategory: String = subs[index]
-            self.goToCategoryQuery(subcategory)
+            self.delegate?.didSelectCategory(subcategory)
         }
     }
-    
-    func goToCategoryQuery(category: String) {
-        // first query for existing bond requests
-        if PFUser.currentUser() == nil {
-            self.simpleAlert("Log in to find matches", message: "Please log in or sign up to bond with someone", completion: nil)
-            return
-        }
-        self.selectedCategory = category
-        self.queryForMatches()
-    }
-    
-    // MARK: - API
-    // MARK: - API calls
-    func queryForMatches() {
-        // searches for existing requests for category. Does not create own request
-        var categories: [String] = []
-        if self.selectedCategory != nil {
-            categories = [self.selectedCategory!]
-        }
-        MatchRequest.queryMatches(nil, categories: categories) { (results, error) -> Void in
-            if results != nil {
-                if results!.count > 0 {
-                    self.matches = results
-                }
-                else {
-                    self.matches = nil
-                }
-                self.createMatch()
-            }
-            else {
-                let message = "There was a problem loading matches. Please try again"
-                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
-            }
-        }
-    }
-    
-    func createMatch() {
-        // no existing requests exist. Create a request for others to match to
-        var categories: [String] = []
-        if self.selectedCategory != nil {
-            categories = [self.selectedCategory!]
-        }
-        MatchRequest.createMatch(categories) { (result, error) -> Void in
-            if result != nil {
-                let match: PFObject = result! as PFObject
-                if self.matches != nil {
-                    self.delegate?.goToInvite(match, matches: self.matches!)
-                }
-                else {
-                    self.delegate?.goToMatchStatus(match)
-                }
-            }
-            else {
-                let message = "There was a problem setting up your activity. Please try again."
-                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
-            }
-        }
-    }
-
 }
