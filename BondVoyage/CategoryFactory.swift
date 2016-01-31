@@ -94,16 +94,16 @@ class CategoryFactory: NSObject {
 
     class func categories() -> [String] {
         return CATEGORIES.map({ (category) -> String in
-            return category.rawValue
+            return category.rawValue.lowercaseString
         })
     }
     
     class func subCategories(category: String) -> [String] {
         for cat: CATEGORY in CATEGORIES {
-            if cat.rawValue == category {
+            if cat.rawValue.lowercaseString == category.lowercaseString {
                 let sub: [SUBCATEGORY] = SUBCATEGORIES[cat]!
                 return sub.map({ (subcategory) -> String in
-                    return subcategory.rawValue
+                    return subcategory.rawValue.lowercaseString
                 })
             }
         }
@@ -112,7 +112,7 @@ class CategoryFactory: NSObject {
     
     class func categoryBgImage(category: String) -> UIImage {
         for cat: CATEGORY in CATEGORIES {
-            if cat.rawValue == category {
+            if cat.rawValue.lowercaseString == category.lowercaseString {
                 let name = BG_CATEGORIES[cat]!
                 return UIImage(named:"\(name).jpg")!
             }
@@ -124,10 +124,10 @@ class CategoryFactory: NSObject {
         for cat: CATEGORY in CATEGORIES {
             let sub: [SUBCATEGORY] = SUBCATEGORIES[cat]!
             let subcategories: [String] = sub.map({ (subcategory) -> String in
-                return subcategory.rawValue
+                return subcategory.rawValue.lowercaseString
             })
-            if subcategories.contains(subcategory) {
-                return self.categoryBgImage(cat.rawValue)
+            if subcategories.contains(subcategory.lowercaseString) {
+                return self.categoryBgImage(cat.rawValue.lowercaseString)
             }
         }
         return UIImage(named: "event_starbucks.jpg")!

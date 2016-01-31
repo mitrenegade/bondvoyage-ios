@@ -251,7 +251,6 @@
 				AC1698441C1C7A9C00E3DAAE /* DataSource */,
 				E5508A131C1539CF00D23C26 /* Info.plist */,
 				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
-				E5E4E51B1C1BD6EE003C4A90 /* Models */,
 				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */,
 				E5C836651C38BEC1003BD54F /* Views */,
@@ -317,13 +316,6 @@
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 			);
 			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		E5E4E51B1C1BD6EE003C4A90 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
