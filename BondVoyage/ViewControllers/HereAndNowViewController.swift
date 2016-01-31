@@ -187,13 +187,11 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         
         if self.selectedCategory != nil {
             // show all the users in the category
-            self.requestedMatch = self.filteredMatches![indexPath.row]
-            self.performSegueWithIdentifier("GoToInvite", sender: self.filteredMatches)
+            self.goToInvite(self.filteredMatches!)
         }
         else {
             // only show the one user that was clicked
-            self.requestedMatch = self.nearbyMatches![indexPath.row]
-            self.performSegueWithIdentifier("GoToInvite", sender: [self.requestedMatch!])
+            self.goToInvite(self.nearbyMatches!)
         }
     }
     
@@ -287,7 +285,16 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                         self.searchBarCancelButtonClicked(self.searchBar)
                     }))
                     alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
-                        self.createMatch()
+                        self.createMatch({ (result, error) -> Void in
+                            if result != nil {
+                                let match: PFObject = result! as PFObject
+                                self.goToMatchStatus(match)
+                            }
+                            else {
+                                let message = "There was a problem setting up your activity. Please try again."
+                                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
+                            }
+                        })
                     }))
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
@@ -299,8 +306,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
     
-    func createMatch() {
+    func createMatch(completion: ((result: PFObject?, error: NSError?)->Void)) {
         if PFUser.currentUser() == nil {
+            completion(result: nil, error: nil)
             return
         }
         // no existing requests exist. Create a request for others to match to
@@ -309,14 +317,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             categories = [self.selectedCategory!]
         }
         MatchRequest.createMatch(categories) { (result, error) -> Void in
-            if result != nil {
-                let match: PFObject = result! as PFObject
-                self.goToMatchStatus(match)
-            }
-            else {
-                let message = "There was a problem setting up your activity. Please try again."
-                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
-            }
+            completion(result: result, error: error)
         }
     }
     
@@ -326,10 +327,18 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
     }
     
-    func goToInvite(match: PFObject, matches: [PFObject]) {
+    func goToInvite(matches: [PFObject]) {
         self.removeSearchResultsViewController()
-        self.requestedMatch = match
-        self.performSegueWithIdentifier("GoToInvite", sender: matches)
+        self.createMatch { (result, error) -> Void in
+            if result != nil {
+                self.requestedMatch = result! as PFObject
+                self.performSegueWithIdentifier("GoToInvite", sender: matches)
+            }
+            else {
+                let message = "There was a problem setting up your activity. Please try again."
+                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
+            }
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
