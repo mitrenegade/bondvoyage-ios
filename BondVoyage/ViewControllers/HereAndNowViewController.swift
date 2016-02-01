@@ -376,7 +376,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToUser(match: PFObject) {
-        if self.currentLocation == nil && self.currentLocation!.horizontalAccuracy < 100 {
+        if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             self.warnForLocationAvailability()
             return
         }
@@ -396,7 +396,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToInvite(matches: [PFObject], index: Int) {
-        if self.currentLocation == nil && self.currentLocation!.horizontalAccuracy < 100 {
+        if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             self.warnForLocationAvailability()
             return
         }
