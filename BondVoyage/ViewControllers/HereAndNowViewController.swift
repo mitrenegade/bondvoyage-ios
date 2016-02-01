@@ -42,6 +42,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
 
+    // button
+    @IBOutlet weak var buttonAdd: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // configure title bar
@@ -279,6 +282,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.loadActivitiesForCategory(category?.lowercaseString) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
+                    self.buttonAdd.hidden = true
+                    
                     if self.selectedCategory == nil {
                         self.nearbyMatches = results
                     }
@@ -295,48 +300,25 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                         message = "There are no activities near you."
                         self.nearbyMatches = nil
                         self.tableView.reloadData()
-                        self.simpleAlert("No results", message: message)
-                        return
                     }
                     else {
                         message = "There is no one interested in \(self.selectedCategory!) near you."
                         self.filteredMatches = nil
                     }
-                    self.tableView.reloadData()
-                    self.removeSearchResultsViewController()
 
                     if PFUser.currentUser() != nil {
-                        message = "\(message) Would you like to create one?"
+                        self.buttonAdd.hidden = false
+                        message = "\(message) Click the button to add your own activity."
                     }
-                    let alert: UIAlertController = UIAlertController(title: "No activities nearby", message: message, preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
-                        self.selectedCategory = nil // if search result is nil due to a category, reload using existing nearbyMatches
-                        self.tableView.reloadData()
-                        self.searchBarCancelButtonClicked(self.searchBar)
-                    }))
-                    if PFUser.currentUser() != nil {
-                        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
-                            if self.selectedCategory != nil {
-                                self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
-                                    if result != nil {
-                                        let match: PFObject = result! as PFObject
-                                        self.goToMatchStatus(match)
-                                    }
-                                    else {
-                                        let message = "There was a problem setting up your activity. Please try again."
-                                        self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
-                                    }
-                                })
-                            }
-                            else {
-                                self.simpleAlert("Select a category", message: "Use the search bar to select a category.")
-                            }
-                        }))
-                    }
-                    self.presentViewController(alert, animated: true, completion: nil)
+
+                    self.tableView.reloadData()
+                    self.removeSearchResultsViewController()
+                    
+                    self.simpleAlert("No activities nearby", message:message)
                 }
             }
             else {
+                self.buttonAdd.hidden = true
                 let message = "There was a problem loading matches. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
@@ -471,5 +453,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             print("\(location)")
             self.currentLocation = location
         }
+    }
+    
+    // MARK: add button
+    @IBAction func didClickButton(sender: UIButton) {
+        self.displaySearchResultsViewController()
     }
 }
