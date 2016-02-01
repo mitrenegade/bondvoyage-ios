@@ -368,8 +368,9 @@ Parse.Cloud.define("createMatchRequest", function(request, response) {
 
     // location
     if (request.params.lat != undefined && request.params.lon != undefined) {
-        match.set("lat", request.params.lat)
-        match.set("lon", request.params.lon)
+        var geopoint = new Parse.GeoPoint(request.params.lat, request.params.lon)
+        console.log("Creating geopoint for new match at lat " + request.params.lat + " lon " + request.params.lon + " geopoint " + geopoint)
+        match.set("geopoint", geopoint)
     }
 
     // todo: time
@@ -400,37 +401,16 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
     query.notContainedIn("status", ["cancelled", "declined"])
+    if (request.params.lat != undefined && request.params.lon != undefined) {
+        var point = new Parse.GeoPoint(request.params.lat, request.params.lon)
+        query.withinKilometers("geopoint", point, 5)
+    }
 
     console.log("calling query.find")
     query.find({
         success: function(matches) {
             console.log("Result matches count " + matches.length)
-            if (request.params.lat != undefined && request.params.lon != undefined) {
-                // check for location
-                var filtered = []
-                for (var i=0; i<matches.length; i++) {
-                    var match = matches[i]
-                    console.log("i: " + i + " id: " + match.get("id"))
-                    if (match.get("lat") != undefined && match.get("lon") != undefined) {
-                        var dist = getDistanceFromLatLonInKm(request.params.lat, request.params.lon, match.get("lat"), match.get("lon"))
-                        console.log("calculated distance: " + dist)
-                        if (dist < 5) {
-                            filtered = filtered + match
-                        }
-                        else {
-                            console.log("Distance too great: " + dist)
-                        }
-                    }
-                    else {
-                        console.log("no location available")
-                        filtered = filtered + match
-                    }
-                }
-                response.success(filtered)
-            }
-            else {
-                response.success(matches)
-            }
+            response.success(matches)
         },
         error: function(error) {
             console.log("query failed: error " + error)
@@ -556,21 +536,4 @@ Parse.Cloud.define("inviteMatch", function(request, response) {
 });
 
 
-// calculates distance between lat and lon
-function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2-lat1);  // deg2rad below
-  var dLon = deg2rad(lon2-lon1); 
-  var a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ; 
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = R * c; // Distance in km
-  return d;
-}
 
-function deg2rad(deg) {
-  return deg * (Math.PI/180)
-}

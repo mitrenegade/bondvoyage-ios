@@ -294,6 +294,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                     if self.selectedCategory == nil {
                         message = "There are no activities near you."
                         self.nearbyMatches = nil
+                        self.tableView.reloadData()
+                        self.simpleAlert("No results", message: message)
+                        return
                     }
                     else {
                         message = "There is no one interested in \(self.selectedCategory!) near you."
