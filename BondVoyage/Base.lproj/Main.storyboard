@@ -114,8 +114,20 @@
                                     <outlet property="delegate" destination="QRx-5S-RBT" id="f0p-6R-1Ee"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ep3-3r-UMj">
+                                <rect key="frame" x="272" y="475" width="56" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="56" id="0sV-KQ-Mvz"/>
+                                    <constraint firstAttribute="height" constant="61" id="Sfo-0I-q4K"/>
+                                </constraints>
+                                <state key="normal" image="icon-add"/>
+                                <connections>
+                                    <action selector="didClickButton:" destination="QRx-5S-RBT" eventType="touchUpInside" id="STO-yP-IQS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="ep3-3r-UMj" firstAttribute="centerX" secondItem="AOn-pS-eDg" secondAttribute="centerX" id="4df-MW-xFc"/>
                             <constraint firstItem="cTU-h3-6Gk" firstAttribute="leading" secondItem="AOn-pS-eDg" secondAttribute="leading" id="4tj-aA-IaD"/>
                             <constraint firstItem="3ib-VY-zaT" firstAttribute="leading" secondItem="AOn-pS-eDg" secondAttribute="leading" id="9MV-vb-Rp8"/>
                             <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="3ib-VY-zaT" secondAttribute="bottom" id="OkH-ZS-Eif"/>
@@ -125,12 +137,14 @@
                             <constraint firstItem="7lz-Sn-AcN" firstAttribute="top" secondItem="AOn-pS-eDg" secondAttribute="top" id="ZUN-Om-e1I"/>
                             <constraint firstItem="7lz-Sn-AcN" firstAttribute="leading" secondItem="AOn-pS-eDg" secondAttribute="leading" id="hVX-Bp-oxz"/>
                             <constraint firstItem="u2N-4v-g4w" firstAttribute="top" secondItem="cTU-h3-6Gk" secondAttribute="bottom" id="l2R-yV-SnD"/>
+                            <constraint firstItem="u2N-4v-g4w" firstAttribute="top" secondItem="ep3-3r-UMj" secondAttribute="bottom" id="ok7-9X-7wz"/>
                             <constraint firstAttribute="trailing" secondItem="3ib-VY-zaT" secondAttribute="trailing" id="zFb-xI-9Fw"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="WZh-83-nJ8"/>
                     <connections>
+                        <outlet property="buttonAdd" destination="ep3-3r-UMj" id="diH-Be-0DI"/>
                         <outlet property="constraintCategoriesHeight" destination="w2V-Qg-zDR" id="fbb-tr-6Hb"/>
                         <outlet property="searchBar" destination="NuS-UK-IwL" id="kXE-Zh-j7b"/>
                         <outlet property="tableView" destination="cTU-h3-6Gk" id="uwR-OS-N8W"/>
@@ -542,6 +556,7 @@
     </scenes>
     <resources>
         <image name="bg6" width="2000" height="1333"/>
+        <image name="icon-add" width="56" height="61"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="WU3-Oy-h5m"/>

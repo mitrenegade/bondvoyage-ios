@@ -12,17 +12,26 @@ import Parse
 class MatchRequest: NSObject {
     // todo: add CLLocation or other parameters
     
-    class func createMatch(categories: [String], completion: ((result: PFObject?, error: NSError?)->Void)) {
-        PFCloud.callFunctionInBackground("createMatchRequest", withParameters: ["categories": categories]) { (results, error) -> Void in
+    class func createMatch(categories: [String], location: CLLocation, completion: ((result: PFObject?, error: NSError?)->Void)) {
+        PFCloud.callFunctionInBackground("createMatchRequest", withParameters: ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude]) { (results, error) -> Void in
             print("results: \(results)")
             let match: PFObject? = results as? PFObject
             completion(result: match, error: error)
         }
     }
 
-    class func queryMatches(location: NSObject?, categories: [String], completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryMatches(location: CLLocation?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
-        PFCloud.callFunctionInBackground("queryMatches", withParameters: ["categories": categories]) { (results, error) -> Void in
+        var params: [String: AnyObject] = [String: AnyObject]()
+        if categories != nil {
+            params["categories"] = categories
+        }
+        if location != nil {
+            params["lat"] = location!.coordinate.latitude
+            params["lon"] = location!.coordinate.longitude
+        }
+        
+        PFCloud.callFunctionInBackground("queryMatches", withParameters: params) { (results, error) -> Void in
             print("results: \(results)")
             let matches: [PFObject]? = results as? [PFObject]
             completion(results: matches, error: error)

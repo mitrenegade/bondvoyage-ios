@@ -16,7 +16,7 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
@@ -32,12 +32,20 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     var selectedCategory: String?
     var nearbyMatches: [PFObject]?
     var filteredMatches: [PFObject]?
+    var clickedAddButton: Bool = false
     
     // from SearchCategoriesDelegate
     var requestedMatch: PFObject?
     
     var promptedForPush: Bool = false
+    
+    // location
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
 
+    // button
+    @IBOutlet weak var buttonAdd: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // configure title bar
@@ -61,6 +69,24 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.didSelectCategory(nil)
 
         self.checkForExistingMatch()
+        
+        // location
+        locationManager.delegate = self
+        let loc: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        if loc == CLAuthorizationStatus.AuthorizedAlways || loc == CLAuthorizationStatus.AuthorizedWhenInUse{
+            locationManager.startUpdatingLocation()
+        }
+        else if loc == CLAuthorizationStatus.Denied {
+            self.warnForLocationPermission()
+        }
+        else {
+            if (locationManager.respondsToSelector("requestWhenInUseAuthorization")) {
+                locationManager.requestWhenInUseAuthorization()
+            }
+            else {
+                locationManager.startUpdatingLocation()
+            }
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -122,16 +148,11 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func loadActivitiesForCategory(category: String?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
-        let query: PFQuery = PFQuery(className: "Match")
-        if PFUser.currentUser() != nil {
-            query.whereKey("user", notEqualTo: PFUser.currentUser()!)
-        }
-        query.whereKey("status", notContainedIn: ["cancelled", "declined"])
+        var cat: [String]?
         if category != nil {
-            query.whereKey("categories", equalTo: category!)
+            cat = [category!]
         }
-        query.orderByDescending("updatedAt")
-        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+        MatchRequest.queryMatches(self.currentLocation, categories: cat) { (results, error) -> Void in
             completion(results: results, error: error)
         }
     }
@@ -183,7 +204,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if PFUser.currentUser() == nil {
-            self.simpleAlert("Log in?", message: "Log in or create an account to view someone's profile")
+            self.simpleAlert("Please log in", message: "Log in or create an account to view someone's profile")
             return
         }
         
@@ -205,7 +226,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     func displaySearchResultsViewController() {
         self.searchBar.showsCancelButton = true
-        self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
+        if self.clickedAddButton {
+            self.constraintCategoriesHeight.constant = self.view.frame.size.height
+            self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
+        }
+        else {
+            self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
+            self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        }
     }
 
     func removeSearchResultsViewController() {
@@ -219,9 +247,12 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.clickedAddButton = false
+
         self.removeSearchResultsViewController()
         self.didSelectCategory(nil)
         self.searchBar.text = nil
+        
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -256,12 +287,29 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // MARK: - SearchCategoriesDelegate
     func didSelectCategory(category: String?) {
+        if self.clickedAddButton {
+            self.clickedAddButton = false
+            self.createMatch(category!, completion: { (result, error) -> Void in
+                self.searchBarCancelButtonClicked(self.searchBar)
+                if result != nil {
+                    let match: PFObject = result!
+                    self.goToMatchStatus(match)
+                    self.view.endEditing(true)
+                }
+                else {
+                    self.simpleAlert("Could not create activity", defaultMessage: "We could not create an activity for \(category!)", error: error)
+                }
+            })
+            return
+        }
         // first query for existing bond requests
         self.selectedCategory = category
         self.searchBar.text = category
         self.loadActivitiesForCategory(category?.lowercaseString) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
+ //                   self.buttonAdd.hidden = true
+                    
                     if self.selectedCategory == nil {
                         self.nearbyMatches = results
                     }
@@ -277,46 +325,26 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                     if self.selectedCategory == nil {
                         message = "There are no activities near you."
                         self.nearbyMatches = nil
+                        self.tableView.reloadData()
                     }
                     else {
                         message = "There is no one interested in \(self.selectedCategory!) near you."
                         self.filteredMatches = nil
                     }
-                    self.tableView.reloadData()
-                    self.removeSearchResultsViewController()
 
                     if PFUser.currentUser() != nil {
-                        message = "\(message) Would you like to create one?"
+//                        self.buttonAdd.hidden = false
+                        message = "\(message) Click the button to add your own activity."
                     }
-                    let alert: UIAlertController = UIAlertController(title: "No activities nearby", message: message, preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
-                        self.selectedCategory = nil // if search result is nil due to a category, reload using existing nearbyMatches
-                        self.tableView.reloadData()
-                        self.searchBarCancelButtonClicked(self.searchBar)
-                    }))
-                    if PFUser.currentUser() != nil {
-                        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
-                            if self.selectedCategory != nil {
-                                self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
-                                    if result != nil {
-                                        let match: PFObject = result! as PFObject
-                                        self.goToMatchStatus(match)
-                                    }
-                                    else {
-                                        let message = "There was a problem setting up your activity. Please try again."
-                                        self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
-                                    }
-                                })
-                            }
-                            else {
-                                self.simpleAlert("Select a category", message: "Use the search bar to select a category.")
-                            }
-                        }))
-                    }
-                    self.presentViewController(alert, animated: true, completion: nil)
+
+                    self.tableView.reloadData()
+                    self.removeSearchResultsViewController()
+                    
+                    self.simpleAlert("No activities nearby", message:message)
                 }
             }
             else {
+//                self.buttonAdd.hidden = true
                 let message = "There was a problem loading matches. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
@@ -328,9 +356,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             completion(result: nil, error: nil)
             return
         }
+        if self.currentLocation == nil {
+            self.warnForLocationAvailability()
+            completion(result: nil, error: nil)
+            return
+        }
         // no existing requests exist. Create a request for others to match to
         let categories: [String] = [category]
-        MatchRequest.createMatch(categories) { (result, error) -> Void in
+        MatchRequest.createMatch(categories, location: self.currentLocation!) { (result, error) -> Void in
             self.requestedMatch = result
             completion(result: result, error: error)
         }
@@ -343,6 +376,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToUser(match: PFObject) {
+        if self.currentLocation == nil && self.currentLocation!.horizontalAccuracy < 100 {
+            self.warnForLocationAvailability()
+            return
+        }
         if let categories: [String] = match.objectForKey("categories") as? [String] {
             let category = categories[0]
             self.createMatch(category, completion: { (result, error) -> Void in
@@ -359,6 +396,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToInvite(matches: [PFObject], index: Int) {
+        if self.currentLocation == nil && self.currentLocation!.horizontalAccuracy < 100 {
+            self.warnForLocationAvailability()
+            return
+        }
         self.removeSearchResultsViewController()
         self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
             if result != nil {
@@ -401,4 +442,53 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.didSelectCategory(nil)
     }
 
+    // MARK: location
+    func warnForLocationPermission() {
+        let message: String = "BondVoyage needs GPS access to find activities near you. Please go to your phone settings to enable location access. Go there now?"
+        let alert: UIAlertController = UIAlertController(title: "Could not access location", message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    func warnForLocationAvailability() {
+        let message: String = "BondVoyage needs an accurate location to find a match. Please make sure your phone can receive accurate location information."
+        let alert: UIAlertController = UIAlertController(title: "Accurate location not found", message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    // MARK: - CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
+            locationManager.startUpdatingLocation()
+        }
+        else if status == .Denied {
+            self.warnForLocationPermission()
+            print("Authorization is not available")
+        }
+        else {
+            print("status unknown")
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first as CLLocation? {
+            print("\(location)")
+            self.currentLocation = location
+        }
+    }
+    
+    // MARK: add button
+    @IBAction func didClickButton(sender: UIButton) {
+        if self.clickedAddButton {
+            self.searchBarCancelButtonClicked(self.searchBar)
+        }
+        else {
+            self.clickedAddButton = true
+            self.displaySearchResultsViewController()
+        }
+    }
 }

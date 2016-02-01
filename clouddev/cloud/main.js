@@ -360,12 +360,20 @@ Parse.Cloud.define("createMatchRequest", function(request, response) {
     else {
         match.set("user", request.user)
     }
+
     var categories = request.params.categories
     categories = categories.map(toLowerCase)
     match.set("categories", categories)
     match.set("status", "active")
 
-    // todo: time, location
+    // location
+    if (request.params.lat != undefined && request.params.lon != undefined) {
+        var geopoint = new Parse.GeoPoint(request.params.lat, request.params.lon)
+        console.log("Creating geopoint for new match at lat " + request.params.lat + " lon " + request.params.lon + " geopoint " + geopoint)
+        match.set("geopoint", geopoint)
+    }
+
+    // todo: time
 
     match.save().then(
         function(object) {
@@ -385,14 +393,18 @@ Parse.Cloud.define("queryMatches", function(request, response) {
  
     var query = new Parse.Query("Match")
 
-    if (categories.length > 0) {
+    if (categories != undefined && categories.length > 0) {
         categories = categories.map(toLowerCase)
         console.log("searching for " + categories.length + " categories: " + categories)
         query.containsAll("categories", categories)
     }
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
-    query.equalTo("status", "active")
+    query.notContainedIn("status", ["cancelled", "declined"])
+    if (request.params.lat != undefined && request.params.lon != undefined) {
+        var point = new Parse.GeoPoint(request.params.lat, request.params.lon)
+        query.withinKilometers("geopoint", point, 5)
+    }
 
     console.log("calling query.find")
     query.find({
@@ -522,4 +534,6 @@ Parse.Cloud.define("inviteMatch", function(request, response) {
         }  
     )
 });
+
+
 
