@@ -176,7 +176,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dal-fn-8GE" userLabel="Transparent View">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="297"/>
-                                                <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="297" id="1na-5v-r5H"/>
                                                 </constraints>
@@ -248,8 +248,8 @@
                                             <constraint firstItem="8K5-v9-khu" firstAttribute="leading" secondItem="epi-33-zcA" secondAttribute="leading" id="JC5-Bi-Dnd"/>
                                             <constraint firstAttribute="trailing" secondItem="tIW-zh-0hw" secondAttribute="trailing" id="MP2-xh-HkL"/>
                                             <constraint firstAttribute="bottom" secondItem="8K5-v9-khu" secondAttribute="bottom" constant="102" id="Pfm-Oc-bcl"/>
-                                            <constraint firstItem="8K5-v9-khu" firstAttribute="top" secondItem="Dal-fn-8GE" secondAttribute="bottom" constant="72" id="e0F-mT-9I2"/>
                                             <constraint firstAttribute="trailing" secondItem="8K5-v9-khu" secondAttribute="trailing" id="e6U-AJ-Mm8"/>
+                                            <constraint firstItem="8K5-v9-khu" firstAttribute="top" secondItem="tIW-zh-0hw" secondAttribute="bottom" id="eC3-HK-x2Q"/>
                                             <constraint firstItem="tIW-zh-0hw" firstAttribute="top" secondItem="Dal-fn-8GE" secondAttribute="bottom" priority="999" id="kHh-VV-xpc"/>
                                             <constraint firstItem="tIW-zh-0hw" firstAttribute="leading" secondItem="epi-33-zcA" secondAttribute="leading" id="lUB-ZO-NJX"/>
                                             <constraint firstItem="Dal-fn-8GE" firstAttribute="top" secondItem="epi-33-zcA" secondAttribute="top" id="pae-hJ-Lp0"/>
@@ -291,15 +291,14 @@
                     <connections>
                         <outlet property="aboutMeLabel" destination="Cv4-et-cVq" id="Jkw-Ei-hsa"/>
                         <outlet property="activityIndicator" destination="nwl-xJ-xtJ" id="vsz-sc-lmp"/>
+                        <outlet property="constraintNameViewTopOffset" destination="1na-5v-r5H" id="HGk-ZB-LHN"/>
                         <outlet property="genderAndAgeLabel" destination="Qws-lM-nuP" id="L4D-mp-M6K"/>
                         <outlet property="interestsLabel" destination="4WX-60-BAj" id="w97-El-LBS"/>
-                        <outlet property="interestsToTransparentViewSpacingConstraint" destination="e0F-mT-9I2" id="UH4-Kk-dYc"/>
                         <outlet property="interestsView" destination="8K5-v9-khu" id="1ed-Z6-B1T"/>
                         <outlet property="nameLabel" destination="TQr-hQ-fdF" id="oR9-1g-rXa"/>
                         <outlet property="nameView" destination="tIW-zh-0hw" id="c65-Co-fT4"/>
                         <outlet property="scrollView" destination="epi-33-zcA" id="KZ3-1q-iNX"/>
                         <outlet property="scrollViewContainer" destination="QCD-kG-yHn" id="QZX-nr-MUr"/>
-                        <outlet property="transparentView" destination="Dal-fn-8GE" id="qjS-fG-YbQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSC-O3-f06" userLabel="First Responder" sceneMemberID="firstResponder"/>

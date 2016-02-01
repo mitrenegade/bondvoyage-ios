@@ -103,6 +103,7 @@ class InviteViewController: UIViewController {
             let frame = CGRectMake(width * CGFloat(i), 0, width, height)
             controller.view.frame = frame
             controller.didMoveToParentViewController(self)
+            controller.configureUI() // force resize
         }
         self.scrollView.contentSize = CGSizeMake(CGFloat(self.matches!.count) * width, height)
     }

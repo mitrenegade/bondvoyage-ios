@@ -25,10 +25,9 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
     @IBOutlet weak var aboutMeLabel: UILabel!
-    @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var nameView: UIView!
     @IBOutlet weak var interestsView: UIView!
-    @IBOutlet weak var interestsToTransparentViewSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var constraintNameViewTopOffset: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var relevantInterests: [String]?
@@ -64,10 +63,9 @@ class UserDetailsViewController: UIViewController {
 
     func configureUI() {
         self.title = "Invite"
-        self.transparentView.backgroundColor = UIColor.clearColor()
         self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
-        self.interestsToTransparentViewSpacingConstraint.constant = self.nameView.bounds.height // I don't know why there is a 2 pixel gap between views
+        self.constraintNameViewTopOffset.constant = self.view.frame.size.height - self.nameView.frame.size.height - self.interestsView.frame.size.height
         self.scrollViewContainer.contentMode = .ScaleAspectFill
         
         if self.invitingUser != nil {
