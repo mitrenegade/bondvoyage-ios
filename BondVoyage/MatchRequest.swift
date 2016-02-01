@@ -12,7 +12,7 @@ import Parse
 class MatchRequest: NSObject {
     // todo: add CLLocation or other parameters
     
-    class func createMatch(categories: [String], completion: ((result: PFObject?, error: NSError?)->Void)) {
+    class func createMatch(categories: [String], location: CLLocation?, completion: ((result: PFObject?, error: NSError?)->Void)) {
         PFCloud.callFunctionInBackground("createMatchRequest", withParameters: ["categories": categories]) { (results, error) -> Void in
             print("results: \(results)")
             let match: PFObject? = results as? PFObject

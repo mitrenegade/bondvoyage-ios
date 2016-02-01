@@ -205,7 +205,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if PFUser.currentUser() == nil {
-            self.simpleAlert("Log in?", message: "Log in or create an account to view someone's profile")
+            self.simpleAlert("Please log in", message: "Log in or create an account to view someone's profile")
             return
         }
         
@@ -352,7 +352,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
         // no existing requests exist. Create a request for others to match to
         let categories: [String] = [category]
-        MatchRequest.createMatch(categories) { (result, error) -> Void in
+        MatchRequest.createMatch(categories, location: self.currentLocation) { (result, error) -> Void in
             self.requestedMatch = result
             completion(result: result, error: error)
         }
@@ -365,6 +365,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToUser(match: PFObject) {
+        if self.currentLocation == nil && self.currentLocation!.horizontalAccuracy < 100 {
+            self.warnForLocationAvailability()
+            return
+        }
         if let categories: [String] = match.objectForKey("categories") as? [String] {
             let category = categories[0]
             self.createMatch(category, completion: { (result, error) -> Void in
@@ -381,6 +385,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToInvite(matches: [PFObject], index: Int) {
+        if self.currentLocation == nil && self.currentLocation!.horizontalAccuracy < 100 {
+            self.warnForLocationAvailability()
+            return
+        }
         self.removeSearchResultsViewController()
         self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
             if result != nil {
@@ -433,7 +441,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
+
+    func warnForLocationAvailability() {
+        let message: String = "BondVoyage needs an accurate location to find a match. Please make sure your phone can receive accurate location information."
+        let alert: UIAlertController = UIAlertController(title: "Accurate location not found", message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
     // MARK: - CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
