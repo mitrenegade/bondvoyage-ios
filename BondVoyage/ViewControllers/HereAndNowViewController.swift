@@ -16,7 +16,7 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
@@ -37,6 +37,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     var requestedMatch: PFObject?
     
     var promptedForPush: Bool = false
+    
+    // location
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +65,24 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.didSelectCategory(nil)
 
         self.checkForExistingMatch()
+        
+        // location
+        locationManager.delegate = self
+        let loc: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        if loc == CLAuthorizationStatus.AuthorizedAlways || loc == CLAuthorizationStatus.AuthorizedWhenInUse{
+            locationManager.startUpdatingLocation()
+        }
+        else if loc == CLAuthorizationStatus.Denied {
+            self.warnForLocationPermission()
+        }
+        else {
+            if (locationManager.respondsToSelector("requestWhenInUseAuthorization")) {
+                locationManager.requestWhenInUseAuthorization()
+            }
+            else {
+                locationManager.startUpdatingLocation()
+            }
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -401,4 +423,35 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.didSelectCategory(nil)
     }
 
+    // MARK: location
+    func warnForLocationPermission() {
+        let message: String = "BondVoyage needs GPS access to find activities near you. Please go to your phone settings to enable location access. Go there now?"
+        let alert: UIAlertController = UIAlertController(title: "Could not access location", message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
+            locationManager.startUpdatingLocation()
+        }
+        else if status == .Denied {
+            self.warnForLocationPermission()
+            print("Authorization is not available")
+        }
+        else {
+            print("status unknown")
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first as CLLocation? {
+            print("\(location)")
+            self.currentLocation = location
+        }
+    }
 }
