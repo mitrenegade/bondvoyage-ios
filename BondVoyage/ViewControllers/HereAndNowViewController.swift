@@ -228,9 +228,11 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.searchBar.showsCancelButton = true
         if self.clickedAddButton {
             self.constraintCategoriesHeight.constant = self.view.frame.size.height
+            self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
         }
         else {
             self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
+            self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         }
     }
 
