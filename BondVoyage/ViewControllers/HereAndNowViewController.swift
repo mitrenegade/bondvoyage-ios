@@ -350,9 +350,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             completion(result: nil, error: nil)
             return
         }
+        if self.currentLocation == nil {
+            self.warnForLocationAvailability()
+            completion(result: nil, error: nil)
+            return
+        }
         // no existing requests exist. Create a request for others to match to
         let categories: [String] = [category]
-        MatchRequest.createMatch(categories, location: self.currentLocation) { (result, error) -> Void in
+        MatchRequest.createMatch(categories, location: self.currentLocation!) { (result, error) -> Void in
             self.requestedMatch = result
             completion(result: result, error: error)
         }

@@ -12,8 +12,8 @@ import Parse
 class MatchRequest: NSObject {
     // todo: add CLLocation or other parameters
     
-    class func createMatch(categories: [String], location: CLLocation?, completion: ((result: PFObject?, error: NSError?)->Void)) {
-        PFCloud.callFunctionInBackground("createMatchRequest", withParameters: ["categories": categories]) { (results, error) -> Void in
+    class func createMatch(categories: [String], location: CLLocation, completion: ((result: PFObject?, error: NSError?)->Void)) {
+        PFCloud.callFunctionInBackground("createMatchRequest", withParameters: ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude]) { (results, error) -> Void in
             print("results: \(results)")
             let match: PFObject? = results as? PFObject
             completion(result: match, error: error)

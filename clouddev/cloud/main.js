@@ -360,12 +360,19 @@ Parse.Cloud.define("createMatchRequest", function(request, response) {
     else {
         match.set("user", request.user)
     }
+
     var categories = request.params.categories
     categories = categories.map(toLowerCase)
     match.set("categories", categories)
     match.set("status", "active")
 
-    // todo: time, location
+    // location
+    if (request.params.lat != undefined && request.params.lon != undefined) {
+        match.set("lat", request.params.lat)
+        match.set("lon", request.params.lon)
+    }
+
+    // todo: time
 
     match.save().then(
         function(object) {
@@ -398,7 +405,28 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     query.find({
         success: function(matches) {
             console.log("Result matches count " + matches.length)
-            response.success(matches)
+            if (request.params.lat != undefined && request.params.lon != undefined) {
+                // check for location
+                var filtered = []
+                for (var i=0; i<matches.length; i++) {
+                    var match = matches[i]
+                    if (match.get("lat") != undefined && match.get("lon") != undefine) {
+                        var dist = getDistanceFromLatLonInKm(request.params.lat, request.params.lon, match.get("lat"), match.get("lon"))
+                        if (dist < 5) {
+                            filtered.add(match)
+                        }
+                        else {
+                            console.log("Distance too great: " + dist)
+                        }
+                    }
+                    else {
+                        filtered.add(match)
+                    }
+                }
+            }
+            else {
+                response.success(matches)
+            }
         },
         error: function(error) {
             console.log("query failed: error " + error)
@@ -523,3 +551,22 @@ Parse.Cloud.define("inviteMatch", function(request, response) {
     )
 });
 
+
+// calculates distance between lat and lon
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
