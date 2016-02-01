@@ -392,14 +392,14 @@ Parse.Cloud.define("queryMatches", function(request, response) {
  
     var query = new Parse.Query("Match")
 
-    if (categories.length > 0) {
+    if (categories != undefined && categories.length > 0) {
         categories = categories.map(toLowerCase)
         console.log("searching for " + categories.length + " categories: " + categories)
         query.containsAll("categories", categories)
     }
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
-    query.equalTo("status", "active")
+    query.notContainedIn("status", ["cancelled", "declined"])
 
     console.log("calling query.find")
     query.find({
@@ -410,19 +410,23 @@ Parse.Cloud.define("queryMatches", function(request, response) {
                 var filtered = []
                 for (var i=0; i<matches.length; i++) {
                     var match = matches[i]
-                    if (match.get("lat") != undefined && match.get("lon") != undefine) {
+                    console.log("i: " + i + " id: " + match.get("id"))
+                    if (match.get("lat") != undefined && match.get("lon") != undefined) {
                         var dist = getDistanceFromLatLonInKm(request.params.lat, request.params.lon, match.get("lat"), match.get("lon"))
+                        console.log("calculated distance: " + dist)
                         if (dist < 5) {
-                            filtered.add(match)
+                            filtered = filtered + match
                         }
                         else {
                             console.log("Distance too great: " + dist)
                         }
                     }
                     else {
-                        filtered.add(match)
+                        console.log("no location available")
+                        filtered = filtered + match
                     }
                 }
+                response.success(filtered)
             }
             else {
                 response.success(matches)

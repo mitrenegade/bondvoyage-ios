@@ -20,9 +20,18 @@ class MatchRequest: NSObject {
         }
     }
 
-    class func queryMatches(location: NSObject?, categories: [String], completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryMatches(location: CLLocation?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
-        PFCloud.callFunctionInBackground("queryMatches", withParameters: ["categories": categories]) { (results, error) -> Void in
+        var params: [String: AnyObject] = [String: AnyObject]()
+        if categories != nil {
+            params["categories"] = categories
+        }
+        if location != nil {
+            params["lat"] = location!.coordinate.latitude
+            params["lon"] = location!.coordinate.longitude
+        }
+        
+        PFCloud.callFunctionInBackground("queryMatches", withParameters: params) { (results, error) -> Void in
             print("results: \(results)")
             let matches: [PFObject]? = results as? [PFObject]
             completion(results: matches, error: error)

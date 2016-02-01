@@ -144,16 +144,11 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func loadActivitiesForCategory(category: String?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
-        let query: PFQuery = PFQuery(className: "Match")
-        if PFUser.currentUser() != nil {
-            query.whereKey("user", notEqualTo: PFUser.currentUser()!)
-        }
-        query.whereKey("status", notContainedIn: ["cancelled", "declined"])
+        var cat: [String]?
         if category != nil {
-            query.whereKey("categories", equalTo: category!)
+            cat = [category!]
         }
-        query.orderByDescending("updatedAt")
-        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+        MatchRequest.queryMatches(self.currentLocation, categories: cat) { (results, error) -> Void in
             completion(results: results, error: error)
         }
     }
