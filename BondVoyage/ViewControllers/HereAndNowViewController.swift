@@ -32,6 +32,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     var selectedCategory: String?
     var nearbyMatches: [PFObject]?
     var filteredMatches: [PFObject]?
+    var clickedAddButton: Bool = false
     
     // from SearchCategoriesDelegate
     var requestedMatch: PFObject?
@@ -242,6 +243,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.removeSearchResultsViewController()
         self.didSelectCategory(nil)
         self.searchBar.text = nil
+        
+        self.clickedAddButton = false
+        self.buttonAdd.hidden = true
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -276,6 +280,20 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // MARK: - SearchCategoriesDelegate
     func didSelectCategory(category: String?) {
+        if self.clickedAddButton {
+            self.clickedAddButton = false
+            self.createMatch(category!, completion: { (result, error) -> Void in
+                if result != nil {
+                    let match: PFObject = result!
+                    self.goToMatchStatus(match)
+                }
+                else {
+                    self.simpleAlert("Could not create activity", defaultMessage: "We could not create an activity for \(category!)", error: error)
+                }
+                self.searchBarCancelButtonClicked(self.searchBar)
+            })
+            return
+        }
         // first query for existing bond requests
         self.selectedCategory = category
         self.searchBar.text = category
@@ -457,6 +475,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
+        self.clickedAddButton = true
         self.displaySearchResultsViewController()
     }
 }
