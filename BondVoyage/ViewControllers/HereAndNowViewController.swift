@@ -226,7 +226,12 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     func displaySearchResultsViewController() {
         self.searchBar.showsCancelButton = true
-        self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
+        if self.clickedAddButton {
+            self.constraintCategoriesHeight.constant = self.view.frame.size.height
+        }
+        else {
+            self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
+        }
     }
 
     func removeSearchResultsViewController() {
@@ -240,12 +245,12 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
 
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.clickedAddButton = false
+
         self.removeSearchResultsViewController()
         self.didSelectCategory(nil)
         self.searchBar.text = nil
         
-        self.clickedAddButton = false
-        self.buttonAdd.hidden = true
     }
 
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -283,14 +288,15 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         if self.clickedAddButton {
             self.clickedAddButton = false
             self.createMatch(category!, completion: { (result, error) -> Void in
+                self.searchBarCancelButtonClicked(self.searchBar)
                 if result != nil {
                     let match: PFObject = result!
                     self.goToMatchStatus(match)
+                    self.view.endEditing(true)
                 }
                 else {
                     self.simpleAlert("Could not create activity", defaultMessage: "We could not create an activity for \(category!)", error: error)
                 }
-                self.searchBarCancelButtonClicked(self.searchBar)
             })
             return
         }
@@ -300,7 +306,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         self.loadActivitiesForCategory(category?.lowercaseString) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
-                    self.buttonAdd.hidden = true
+ //                   self.buttonAdd.hidden = true
                     
                     if self.selectedCategory == nil {
                         self.nearbyMatches = results
@@ -325,7 +331,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                     }
 
                     if PFUser.currentUser() != nil {
-                        self.buttonAdd.hidden = false
+//                        self.buttonAdd.hidden = false
                         message = "\(message) Click the button to add your own activity."
                     }
 
@@ -336,7 +342,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                 }
             }
             else {
-                self.buttonAdd.hidden = true
+//                self.buttonAdd.hidden = true
                 let message = "There was a problem loading matches. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
@@ -475,7 +481,12 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
-        self.clickedAddButton = true
-        self.displaySearchResultsViewController()
+        if self.clickedAddButton {
+            self.searchBarCancelButtonClicked(self.searchBar)
+        }
+        else {
+            self.clickedAddButton = true
+            self.displaySearchResultsViewController()
+        }
     }
 }

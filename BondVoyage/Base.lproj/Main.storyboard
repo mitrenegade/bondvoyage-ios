@@ -114,7 +114,7 @@
                                     <outlet property="delegate" destination="QRx-5S-RBT" id="f0p-6R-1Ee"/>
                                 </connections>
                             </tableView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ep3-3r-UMj">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ep3-3r-UMj">
                                 <rect key="frame" x="272" y="475" width="56" height="61"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="0sV-KQ-Mvz"/>
