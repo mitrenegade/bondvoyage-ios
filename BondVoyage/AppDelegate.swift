@@ -12,6 +12,8 @@ import Bolts
 import Fabric
 import Crashlytics
 import FBSDKCoreKit
+import ParseUI
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -54,7 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
+        
         if PFUser.currentUser() != nil {
             self.logUser()
         }

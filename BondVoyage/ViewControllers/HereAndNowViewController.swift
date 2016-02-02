@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import AsyncImageView
+import ParseUI
 
 let date = NSDate()
 let calendar = NSCalendar.currentCalendar()
@@ -16,7 +17,7 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
@@ -273,11 +274,22 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // MARK: Navigation
     func goToLogin() {
+        /*
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
         let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
         controller.type = .Login
         controller.delegate = self
         self.presentViewController(nav, animated: true, completion: nil)
+        */
+        
+        if (PFUser.currentUser() == nil) {
+            let loginViewController = PFLogInViewController()
+            loginViewController.fields = [.UsernameAndPassword, .LogInButton, .PasswordForgotten, .SignUpButton, .Facebook]
+            loginViewController.emailAsUsername = true
+            loginViewController.delegate = self
+            loginViewController.signUpController?.delegate = self
+            self.presentViewController(loginViewController, animated: false, completion: nil)
+        }
     }
     
     func goToSettings() {
@@ -490,5 +502,16 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.clickedAddButton = true
             self.displaySearchResultsViewController()
         }
+    }
+    
+    // MARK: ParseUI
+    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.didLogin()
+    }
+    
+    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.didLogin()
     }
 }

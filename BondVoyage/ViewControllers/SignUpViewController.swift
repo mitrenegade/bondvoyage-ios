@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import ParseUI
 
 var kInputCellIdentifier = "InputCell"
 
@@ -33,6 +34,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var buttonLogin: UIButton!
     @IBOutlet weak var buttonSignup: UIButton!
+    @IBOutlet weak var buttonFacebook: UIButton!
     
     var currentInput: UITextField?
     @IBOutlet weak var inputLoginEmail: UITextField!
@@ -128,6 +130,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         else if sender == self.buttonSignup {
             self.type = .Signup
+        }
+        else if sender == self.buttonFacebook {
+            self.doFacebookLogin()
         }
         self.refreshForType(true)
     }
@@ -307,5 +312,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             let controller: ProfileViewController = segue.destinationViewController as! ProfileViewController
             controller.isSignup = true
         }
+    }
+    
+    func doFacebookLogin() {
+        let permissions = ["email", "public_profile"]
+        /*
+        let controller = PFLogInViewController()
+        loginController.delegate = self
+        self.presentViewController(loginController, animated: true, completion: nil)
+        */
+        
     }
 }

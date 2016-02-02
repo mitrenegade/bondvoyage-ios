@@ -725,6 +725,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bondvoyage.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -746,6 +747,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bondvoyage.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "bc005c0d-24e4-4b87-8671-0018faf77206";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
