@@ -401,10 +401,12 @@ Parse.Cloud.define("queryMatches", function(request, response) {
     query.descending("updatedAt")
     query.notEqualTo("user", request.user)
     query.notContainedIn("status", ["cancelled", "declined"])
+    /*
     if (request.params.lat != undefined && request.params.lon != undefined) {
         var point = new Parse.GeoPoint(request.params.lat, request.params.lon)
         query.withinKilometers("geopoint", point, 5)
     }
+    */
 
     console.log("calling query.find")
     query.find({
