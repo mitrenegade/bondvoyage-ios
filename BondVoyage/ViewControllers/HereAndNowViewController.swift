@@ -283,7 +283,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         */
         
         if (PFUser.currentUser() == nil) {
-            let loginViewController = PFLogInViewController()
+            let loginViewController = LoginViewController()
             loginViewController.fields = [.UsernameAndPassword, .LogInButton, .PasswordForgotten, .SignUpButton, .Facebook]
             loginViewController.emailAsUsername = true
             loginViewController.delegate = self

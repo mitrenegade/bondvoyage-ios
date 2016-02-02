@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62223C5E02C10845D64B6A0B /* Pods.framework */; };
+		8E19458D1C606D9400C3EC41 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458C1C606D9400C3EC41 /* LoginViewController.swift */; };
 		8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */; };
 		8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
@@ -76,6 +77,7 @@
 		1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2852CA77D6571005D3434276 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E19458C1C606D9400C3EC41 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPreferencesViewController.swift; path = ViewControllers/SearchPreferencesViewController.swift; sourceTree = "<group>"; };
 		8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendationRequest.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
 				C518526F1C3420BB00EA2328 /* SignUpViewController.swift */,
 				C5E094371C3703CA00CABC51 /* ProfileViewController.swift */,
+				8E19458C1C606D9400C3EC41 /* LoginViewController.swift */,
 				C5E094391C37236B00CABC51 /* AboutMeViewController.swift */,
 				8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */,
 			);
@@ -550,6 +553,7 @@
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
+				8E19458D1C606D9400C3EC41 /* LoginViewController.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
 				E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
