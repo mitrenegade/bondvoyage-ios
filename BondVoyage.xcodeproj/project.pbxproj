@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62223C5E02C10845D64B6A0B /* Pods.framework */; };
 		8E19458D1C606D9400C3EC41 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458C1C606D9400C3EC41 /* LoginViewController.swift */; };
+		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
 		8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */; };
 		8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
@@ -78,6 +79,7 @@
 		2852CA77D6571005D3434276 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E19458C1C606D9400C3EC41 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPreferencesViewController.swift; path = ViewControllers/SearchPreferencesViewController.swift; sourceTree = "<group>"; };
 		8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendationRequest.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 			children = (
 				8E507B521C4AB7960019FF19 /* Places */,
 				C518526B1C341A9E00EA2328 /* Settings */,
+				8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */,
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8EA047CC1C4FDDE200CCCAC3 /* InviteViewController.swift */,
@@ -565,6 +568,7 @@
 				8EA047D31C4FF02C00CCCAC3 /* MatchStatusViewController.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,
 				8E91D4641C5D03F900C6D406 /* ActivitiesCell.swift in Sources */,
+				8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
 				8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */,
 				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,

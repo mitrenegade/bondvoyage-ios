@@ -10,7 +10,12 @@
 import UIKit
 import Parse
 
+protocol SettingsDelegate: class {
+    func didLogout()
+}
+
 class SettingsViewController: UITableViewController {
+    weak var delegate: SettingsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +75,7 @@ class SettingsViewController: UITableViewController {
         }
         else if row == 2 {
             PFUser.logOut()
-            self.close()
+            self.delegate?.didLogout()
         }
     }
 }

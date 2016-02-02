@@ -17,7 +17,7 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
@@ -46,6 +46,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // button
     @IBOutlet weak var buttonAdd: UIButton!
+    
+    weak var delegate: SettingsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -281,19 +283,12 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         controller.delegate = self
         self.presentViewController(nav, animated: true, completion: nil)
         */
-        
-        if (PFUser.currentUser() == nil) {
-            let loginViewController = LoginViewController()
-            loginViewController.fields = [.UsernameAndPassword, .LogInButton, .PasswordForgotten, .SignUpButton, .Facebook]
-            loginViewController.emailAsUsername = true
-            loginViewController.delegate = self
-            loginViewController.signUpController?.delegate = self
-            self.presentViewController(loginViewController, animated: false, completion: nil)
-        }
     }
     
     func goToSettings() {
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+        let controller: SettingsViewController = nav.viewControllers[0] as! SettingsViewController
+        controller.delegate = self.delegate
         self.presentViewController(nav, animated: true, completion: nil)
     }
 
@@ -451,9 +446,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // MARK: SignupDelegate
     func didLogin() {
+        // no longer used
         self.didSelectCategory(nil)
     }
-
+    
     // MARK: location
     func warnForLocationPermission() {
         let message: String = "BondVoyage needs GPS access to find activities near you. Please go to your phone settings to enable location access. Go there now?"
@@ -504,14 +500,4 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
     
-    // MARK: ParseUI
-    func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.didLogin()
-    }
-    
-    func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.didLogin()
-    }
 }
