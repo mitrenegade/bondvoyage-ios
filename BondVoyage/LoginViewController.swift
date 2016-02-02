@@ -43,8 +43,8 @@ class LoginViewController: PFLogInViewController {
         
         var height = self.view.frame.size.height / 6
         var y = logInView!.usernameField!.frame.origin.y - height - 16
-        if y < 0 {
-            y = 0
+        if y < 20 {
+            y = 20
             height = logInView!.usernameField!.frame.origin.y - 8
         }
         let frame = CGRectMake(0, y, logInView!.frame.width,  height)
