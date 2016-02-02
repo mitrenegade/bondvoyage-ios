@@ -581,7 +581,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="u5m-vY-rgh" kind="presentation" identifier="GoToMain" id="g44-Aw-xzI"/>
+                        <segue destination="u5m-vY-rgh" kind="presentation" identifier="GoToMain" animates="NO" id="g44-Aw-xzI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qbo-4k-JkF" userLabel="First Responder" sceneMemberID="firstResponder"/>
