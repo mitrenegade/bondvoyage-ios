@@ -20,19 +20,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     var fromMatch: PFObject? // another user who has invited this user
     var toMatch: PFObject? // user's invited bond request if coming from inviteViewController
     
+    var blurAdded: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let index = arc4random_uniform(5) + 1
         let name = "bg\(index)"
         self.bgImage.image = UIImage(named: name)!
-        let blurEffect = UIBlurEffect(style: .Light)
-        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-        var frame = self.bgImage.bounds
-        frame.size.height += 20
-        blurredEffectView.frame = frame
-        blurredEffectView.alpha = 0.8
-        self.bgImage.addSubview(blurredEffectView)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
 
@@ -43,6 +38,20 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if !self.blurAdded {
+            self.blurAdded = true
+            let blurEffect = UIBlurEffect(style: .Light)
+            let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+            var frame = self.bgImage.bounds
+            frame.size.height += 20
+            blurredEffectView.frame = frame
+            blurredEffectView.alpha = 0.8
+            self.bgImage.addSubview(blurredEffectView)
+        }
     }
     
     func refresh() {
