@@ -387,6 +387,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.warnForLocationAvailability()
             return
         }
+
         if let categories: [String] = match.objectForKey("categories") as? [String] {
             let category = categories[0]
             self.createMatch(category, completion: { (result, error) -> Void in
@@ -407,6 +408,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.warnForLocationAvailability()
             return
         }
+        
         self.removeSearchResultsViewController()
         self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
             if result != nil {
@@ -491,6 +493,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
+        /*
         if self.clickedAddButton {
             self.searchBarCancelButtonClicked(self.searchBar)
         }
@@ -498,6 +501,14 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.clickedAddButton = true
             self.displaySearchResultsViewController()
         }
+        */
+        self.goToPlaces()
+    }
+    
+    func goToPlaces() {
+        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+        controller.relevantInterests = nil
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
 }
