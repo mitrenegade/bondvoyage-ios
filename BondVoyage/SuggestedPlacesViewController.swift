@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import AsyncImageView
 
 class SuggestedPlacesViewController: UITableViewController {
 
@@ -48,8 +49,21 @@ class SuggestedPlacesViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell", forIndexPath: indexPath)
 
+        let imageView: AsyncImageView = cell.viewWithTag(1) as! AsyncImageView
+        let labelTitle: UILabel = cell.viewWithTag(2) as! UILabel
+        
+        if indexPath.row < self.places?.count {
+            let place: BVPlace = self.places![indexPath.row]
+            labelTitle.text = place.name
+            if let urlString = place.iconURL {
+                imageView.imageURL = NSURL(string: urlString)
+            }
+            else {
+                imageView.imageURL = nil
+            }
+        }
         // Configure the cell...
 
         return cell

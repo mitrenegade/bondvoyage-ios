@@ -15,12 +15,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="tAL-Uu-8Cv">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlaceCell" id="tAL-Uu-8Cv">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tAL-Uu-8Cv" id="iXb-3f-Ide">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" tableViewCell="tAL-Uu-8Cv" id="iXb-3f-Ide">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="doy-pG-Jie" customClass="AsyncImageView">
+                                            <rect key="frame" x="8" y="2" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="6Ot-z0-n5t"/>
+                                                <constraint firstAttribute="height" constant="40" id="9Mb-Du-JDC"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0tP-I9-jW5">
+                                            <rect key="frame" x="56" y="8" width="536" height="27.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="0tP-I9-jW5" secondAttribute="trailing" constant="8" id="Cfm-2S-BPv"/>
+                                        <constraint firstItem="0tP-I9-jW5" firstAttribute="leading" secondItem="doy-pG-Jie" secondAttribute="trailing" constant="8" id="E34-ay-0VH"/>
+                                        <constraint firstItem="0tP-I9-jW5" firstAttribute="top" secondItem="iXb-3f-Ide" secondAttribute="top" constant="8" id="F8d-hh-nhf"/>
+                                        <constraint firstAttribute="bottom" secondItem="0tP-I9-jW5" secondAttribute="bottom" constant="8" id="MYR-6F-olP"/>
+                                        <constraint firstItem="doy-pG-Jie" firstAttribute="leading" secondItem="iXb-3f-Ide" secondAttribute="leading" constant="8" id="YDI-wG-UYf"/>
+                                        <constraint firstAttribute="bottom" secondItem="doy-pG-Jie" secondAttribute="bottom" constant="1.5" id="eLW-Oc-IqN"/>
+                                        <constraint firstItem="doy-pG-Jie" firstAttribute="top" secondItem="iXb-3f-Ide" secondAttribute="top" constant="2" id="xQn-7P-8uf"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>

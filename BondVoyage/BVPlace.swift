@@ -28,7 +28,8 @@ class BVPlace : NSObject {
     var phone: NSString?
     var website: NSString?
     var shortDescription: NSString?
-
+    var iconURL: String?
+    
     var locale_code: NSString? // ISO Country code, used to localize currency
 
     // init from results of google places API with general search
@@ -115,6 +116,10 @@ class BVPlace : NSObject {
                     self.formatDetails(dictionary!)
                 }
             })
+        }
+        
+        if dictionary["icon"] != nil {
+            self.iconURL = dictionary["icon"] as? String
         }
     }
     
