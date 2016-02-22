@@ -7,19 +7,26 @@
 //
 
 import UIKit
+import CoreLocation
 
 class SuggestedPlacesViewController: UITableViewController {
 
     var relevantInterest: String?
+    let dataProvider = GoogleDataProvider()
+    
+    var places: [BVPlace]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 39.950956, longitude: -75.165741)
+        dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 50, types: nil, searchTerms: "coffee") { (results, errorString) -> Void in
+            print("results \(results)")
+            if !results.isEmpty {
+                self.places = results
+                self.tableView.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,16 +37,16 @@ class SuggestedPlacesViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if self.places == nil {
+            return  0
+        }
+        return self.places!.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
@@ -47,7 +54,6 @@ class SuggestedPlacesViewController: UITableViewController {
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

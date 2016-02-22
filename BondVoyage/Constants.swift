@@ -12,7 +12,8 @@ import UIKit
 let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
 
-let GOOGLE_API_SERVER_KEY: String = "AIzaSyACcyQL3r_ryyj6qlOSplxf3ucsguEIWg4"
+let GOOGLE_API_IOS_KEY: String = "AIzaSyACcyQL3r_ryyj6qlOSplxf3ucsguEIWg4"
+let GOOGLE_API_SERVER_KEY: String = "AIzaSyAVhw7NunYCQpo9D1-eTa73xGGBj4ZeHpI" // used to make data requests through website
 
 // default slider range min/max
 var RANGE_SELECTOR_MAX = 100
