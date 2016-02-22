@@ -14,6 +14,7 @@
 		8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
 		8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */; };
+		8E7867431C7BAA4F0017841E /* SuggestedPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */; };
 		8E91D4641C5D03F900C6D406 /* ActivitiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */; };
 		8E9515151C605F82007F8BCB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */; };
 		8E9515161C605F83007F8BCB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */; };
@@ -84,6 +85,7 @@
 		8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendationRequest.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
 		8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
+		8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestedPlacesViewController.swift; sourceTree = "<group>"; };
 		8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesCell.swift; sourceTree = "<group>"; };
 		8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		8E507B521C4AB7960019FF19 /* Places */ = {
 			isa = PBXGroup;
 			children = (
+				8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */,
 				8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */,
 			);
 			name = Places;
@@ -408,7 +411,7 @@
 				TargetAttributes = {
 					E5508A031C1539CF00D23C26 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 5NVJ6YCC6N;
+						DevelopmentTeam = H799H8B8DD;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -544,6 +547,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E7867431C7BAA4F0017841E /* SuggestedPlacesViewController.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
 				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
 				C5566EE61C3E1040007C22F3 /* UIViewController+Utils.swift in Sources */,

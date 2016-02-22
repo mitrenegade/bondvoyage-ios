@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import AsyncImageView
 import ParseUI
+import GoogleMaps
 
 let date = NSDate()
 let calendar = NSCalendar.currentCalendar()
@@ -43,6 +44,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     // location
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+
+    var placePicker: GMSPlacePicker?
 
     // button
     @IBOutlet weak var buttonAdd: UIButton!
@@ -506,9 +509,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToPlaces() {
-        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
-        controller.relevantInterests = nil
-        self.navigationController?.pushViewController(controller, animated: true)
+        let nav: UINavigationController = UIStoryboard(name: "Places", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        let controller: SuggestedPlacesViewController = nav.viewControllers[0] as! SuggestedPlacesViewController
+        controller.relevantInterest = "coffee"
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
     }
     
 }
