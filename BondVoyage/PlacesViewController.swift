@@ -9,6 +9,7 @@
 import UIKit
 import AsyncImageView
 import Parse
+import GoogleMaps
 
 class PlacesViewController: UIViewController {
     
