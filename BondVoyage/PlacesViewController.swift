@@ -11,7 +11,7 @@ import AsyncImageView
 import Parse
 import GoogleMaps
 
-class PlacesViewController: UIViewController {
+class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet weak var buttonGo: UIButton!
@@ -19,6 +19,8 @@ class PlacesViewController: UIViewController {
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var placeNameLabel: UILabel!
     @IBOutlet var aboutPlaceLabel: UILabel!
+    
+    @IBOutlet weak var mapView: GMSMapView!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -30,6 +32,10 @@ class PlacesViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.scrollView.contentSize.height = 1000
+        
+        let camera = GMSCameraPosition.cameraWithLatitude(1.285, longitude: 103.848, zoom: 12)
+        self.mapView.camera = camera
+        self.mapView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {

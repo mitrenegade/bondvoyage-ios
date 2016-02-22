@@ -123,7 +123,7 @@
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3P-rb-uqe">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3P-rb-uqe" customClass="GMSMapView">
                                                         <rect key="frame" x="8" y="38" width="584" height="204"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
@@ -209,6 +209,7 @@
                         <outlet property="aboutPlaceLabel" destination="9gj-hX-Ycg" id="Vh0-U8-JgI"/>
                         <outlet property="activityIndicator" destination="QEr-I7-2kV" id="SDT-uz-4BB"/>
                         <outlet property="addressLabel" destination="bb5-qV-zIp" id="pdl-Qe-3uG"/>
+                        <outlet property="mapView" destination="k3P-rb-uqe" id="rEM-Uc-wNl"/>
                         <outlet property="placeNameLabel" destination="Jpz-eq-cRs" id="FFP-dU-HnS"/>
                         <outlet property="scrollView" destination="4Il-DI-UG6" id="fWi-mC-CvX"/>
                     </connections>
