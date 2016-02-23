@@ -22,12 +22,14 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var inputFirstName: UITextField!
     @IBOutlet weak var inputLastName: UITextField!
     @IBOutlet weak var inputBirthYear: UITextField!
+    @IBOutlet weak var inputGender: UITextField!
 
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
     @IBOutlet weak var buttonAbout: UIButton!
     
     var pickerBirthYear: UIPickerView = UIPickerView()
+    var pickerGender: UIPickerView = UIPickerView()
     
     var isSignup: Bool = false
     var selectedPhoto: UIImage?
@@ -39,8 +41,9 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     var currentYear: Int = 2016
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
     var cancelEditing: Bool = false
+    var gender: Gender?
 
-    var genderOptions = ["Select a gender", Gender.Male.rawValue, Gender.Female.rawValue, Gender.Other.rawValue]
+    var genderOptions: [Gender] = [Gender.Male, Gender.Female, Gender.Other]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +63,12 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         pickerBirthYear.delegate = self
         pickerBirthYear.dataSource = self
         self.inputBirthYear.inputView = pickerBirthYear
-                
+
+        // picker for gender
+        pickerGender.delegate = self
+        pickerGender.dataSource = self
+        self.inputGender.inputView = pickerGender
+
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.Black
         keyboardDoneButtonView.tintColor = UIColor.whiteColor()
@@ -68,7 +76,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputFirstName, inputLastName, inputBirthYear] {
+        for input: UITextField in [inputFirstName, inputLastName, inputGender, inputBirthYear] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
         
@@ -93,6 +101,18 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             }
             if let birthYear: Int = user.objectForKey("birthYear") as? Int{
                 self.inputBirthYear.text = "\(birthYear)"
+            }
+            if let gender: String = user.objectForKey("gender") as? String{
+                if gender == "male" {
+                    self.gender = .Male
+                }
+                if gender == "female" {
+                    self.gender = .Female
+                }
+                if gender == "Male" {
+                    self.gender = .Other
+                }
+                self.inputGender.text = self.gender?.rawValue
             }
         }
         
@@ -130,25 +150,49 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         return 1
     }
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == self.pickerGender {
+            return 4 // select, MFO
+        }
         return 80 // years
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if row == 0 {
-            return "Select your birth year"
+        if pickerView == self.pickerGender {
+            print("row: \(row)")
+            print("genders \(genderOptions)")
+            if row == 0 {
+                return "Select a gender"
+            }
+            return genderOptions[row-1].rawValue
         }
         else {
-            let year = currentYear - row
-            return "\(year)"
+            if row == 0 {
+                return "Select your birth year"
+            }
+            else {
+                let year = currentYear - row
+                return "\(year)"
+            }
         }
     }
     
     // MARK: - UIPickerViewDelegate
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.birthYear = currentYear - row
-        self.inputBirthYear.text = "\(self.birthYear!)"
+        if pickerView == self.pickerGender {
+            if row == 0 {
+                self.gender = nil
+            }
+            else {
+                self.gender = genderOptions[row-1]
+                self.inputGender.text = self.gender?.rawValue
+            }
+        }
+        else {
+            self.birthYear = currentYear - row
+            self.inputBirthYear.text = "\(self.birthYear!)"
+        }
     }
-
+    
     // MARK: - TextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -167,6 +211,9 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             self.inputBirthYear.becomeFirstResponder()
         }
         else if textField == self.inputBirthYear {
+            self.inputGender.becomeFirstResponder()
+        }
+        else if textField == self.inputGender {
             textField.resignFirstResponder()
             return true
         }
@@ -218,7 +265,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         if self.inputBirthYear.text != "Select your birth year" {
             self.birthYear = Int(self.inputBirthYear.text!)
         }
-        
 
         self.updateProfile()
     }
@@ -241,6 +287,11 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         if self.birthYear != nil {
             user!.setValue(self.birthYear, forKey: "birthYear")
         }
+        
+        if self.gender != nil {
+            user!.setValue(self.gender!.rawValue.lowercaseString, forKey: "gender")
+        }
+        
         
         user!.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
