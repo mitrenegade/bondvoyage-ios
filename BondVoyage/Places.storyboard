@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Suggested Places View Controller-->
         <scene sceneID="OjN-Yr-kIF">
             <objects>
                 <tableViewController storyboardIdentifier="SuggestedPlacesViewController" id="maY-52-zce" customClass="SuggestedPlacesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
@@ -55,7 +55,7 @@
                             <outlet property="delegate" destination="maY-52-zce" id="ivi-Kz-1UM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="Lye-jG-iVo"/>
+                    <navigationItem key="navigationItem" id="Lye-jG-iVo"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3eb-FD-E1u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

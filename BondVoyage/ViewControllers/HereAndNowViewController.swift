@@ -501,7 +501,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
-        /*
         if self.clickedAddButton {
             self.searchBarCancelButtonClicked(self.searchBar)
         }
@@ -509,15 +508,5 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.clickedAddButton = true
             self.displaySearchResultsViewController()
         }
-        */
-        self.goToPlaces()
-    }
-    
-    func goToPlaces() {
-        let nav: UINavigationController = UIStoryboard(name: "Places", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        let controller: SuggestedPlacesViewController = nav.viewControllers[0] as! SuggestedPlacesViewController
-        controller.relevantInterest = "coffee"
-        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
-    }
-    
+    }    
 }

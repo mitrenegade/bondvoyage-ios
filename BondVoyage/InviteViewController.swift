@@ -60,16 +60,7 @@ class InviteViewController: UIViewController {
         if button == self.buttonUp {
             // create a bond
             if self.fromMatch != nil {
-                self.activityIndicator.startAnimating()
-                MatchRequest.inviteMatch(self.fromMatch!, toMatch: self.matches![self.currentPage()], completion: { (results, error) -> Void in
-                    self.activityIndicator.stopAnimating()
-                    if error != nil {
-                        self.simpleAlert("Could not invite", defaultMessage: "There was an error sending your invite.", error: error)
-                    }
-                    else {
-                        self.goToMatchStatus()
-                    }
-                })
+                self.goToSelectPlace()
             }
             else {
                 self.simpleAlert("Please try again", defaultMessage: "You aren't currently looking for a match. Please go back and select a category.", error: nil)
@@ -121,7 +112,23 @@ class InviteViewController: UIViewController {
     }
     
     func goToMatchStatus() {
-        self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
+        self.activityIndicator.startAnimating()
+        MatchRequest.inviteMatch(self.fromMatch!, toMatch: self.matches![self.currentPage()], completion: { (results, error) -> Void in
+            self.activityIndicator.stopAnimating()
+            if error != nil {
+                self.simpleAlert("Could not invite", defaultMessage: "There was an error sending your invite.", error: error)
+            }
+            else {
+                self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
+            }
+        })
+    }
+    
+    func goToSelectPlace() {
+        let controller: SuggestedPlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("SuggestedPlacesViewController") as! SuggestedPlacesViewController
+        let categories: [String] = self.fromMatch!.objectForKey("categories") as! [String]
+        controller.relevantInterest = categories[0]
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
