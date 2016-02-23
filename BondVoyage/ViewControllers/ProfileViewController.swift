@@ -27,6 +27,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
     @IBOutlet weak var buttonAbout: UIButton!
+    @IBOutlet weak var buttonPreview: UIButton!
     
     var pickerBirthYear: UIPickerView = UIPickerView()
     var pickerGender: UIPickerView = UIPickerView()
@@ -396,6 +397,17 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         else if sender == self.buttonAbout {
             self.performSegueWithIdentifier("toAboutMe", sender: self)
         }
+        else if sender == self.buttonPreview {
+            self.previewProfile()
+        }
+    }
+    
+    func previewProfile() {
+        let user: PFUser = PFUser.currentUser()!
+        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+        controller.selectedUser = user
+        controller.title = "My Profile"
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     /*
