@@ -31,6 +31,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     var place: BVPlace!
     var recommendations: [BVPlace]?
     var currentPage: Int = 0
+    var marker: GMSMarker!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -57,9 +58,15 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     func refresh() {
         let coordinate = place.coordinate
-        let camera = GMSCameraPosition.cameraWithTarget(coordinate, zoom: 10)
+        let camera = GMSCameraPosition.cameraWithTarget(coordinate, zoom: 17)
         self.mapView.camera = camera
         self.mapView.delegate = self
+        
+        if self.marker != nil {
+            self.marker.map = nil
+        }
+        self.marker = GMSMarker(position: coordinate)
+        self.marker.map = self.mapView
         
         if let iconURLString = self.place.iconURL {
             self.iconView.imageURL = NSURL(string: iconURLString)
