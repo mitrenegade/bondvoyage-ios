@@ -18,6 +18,8 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var buttonNext: UIButton!
 
     @IBOutlet weak var imageView: AsyncImageView!
+    @IBOutlet weak var constraintImageHeight: NSLayoutConstraint!
+    
     @IBOutlet weak var iconView: AsyncImageView!
     @IBOutlet weak var constraintIconWidth: NSLayoutConstraint!
     
@@ -76,17 +78,34 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         
         if place.photo != nil {
             self.imageView.image = place.photo
+            self.constraintImageHeight.constant = 200
+            self.imageView.superview?.setNeedsLayout()
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                self.imageView.superview?.layoutIfNeeded()
+            })
         }
         else {
             // hack: if place exists, fetch the image from the photo reference
             // if place is nil and only a merchant exists, we fetch the details then use the photo reference to fetch the photos. we don't update any other aspect of the FVPlace
             self.imageView.image = nil
-            self.imageView.startAnimating()
+            self.activityIndicator.startAnimating()
             self.place!.fetchImage({ (image) -> Void in
                 if (image != nil) {
                     self.imageView.image = image
+                    self.constraintImageHeight.constant = 200
+                    self.imageView.superview?.setNeedsLayout()
+                    UIView.animateWithDuration(0.25, animations: { () -> Void in
+                        self.imageView.superview?.layoutIfNeeded()
+                    })
                 }
-                self.imageView.stopAnimating()
+                else {
+                    self.constraintImageHeight.constant = 0
+                    self.imageView.superview?.setNeedsLayout()
+                    UIView.animateWithDuration(0.25, animations: { () -> Void in
+                        self.imageView.superview?.layoutIfNeeded()
+                    })
+                }
+                self.activityIndicator.stopAnimating()
             })
         }
         
