@@ -89,12 +89,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        if PFUser.currentUser() == nil {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Plain, target: self, action: "goToLogin")
-        }
-        else {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "goToSettings")
-        }
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "goToSettings")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
         
@@ -232,16 +227,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     // MARK: Navigation
-    func goToLogin() {
-        /*
-        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
-        let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
-        controller.type = .Login
-        controller.delegate = self
-        self.presentViewController(nav, animated: true, completion: nil)
-        */
-    }
-    
     func goToSettings() {
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
         let controller: SettingsViewController = nav.viewControllers[0] as! SettingsViewController
