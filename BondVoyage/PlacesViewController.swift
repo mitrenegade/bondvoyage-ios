@@ -23,22 +23,39 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var placeNameLabel: UILabel!
+    
     @IBOutlet var aboutPlaceLabel: UILabel!
+    @IBOutlet weak var constraintAboutHeight: NSLayoutConstraint!
     
     @IBOutlet weak var mapView: GMSMapView!
     var place: BVPlace!
+    var recommendations: [BVPlace]?
+    var currentPage: Int = 0
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var recommendations: [PFObject]?
     var relevantInterests: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.scrollView.contentSize.height = 1000
+        if self.recommendations == nil {
+            self.recommendations = [place]
+        }
+        else {
+            self.currentPage = self.recommendations!.indexOf(self.place)!
+        }
         
+        self.refresh()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func refresh() {
         let coordinate = place.coordinate
         let camera = GMSCameraPosition.cameraWithTarget(coordinate, zoom: 10)
         self.mapView.camera = camera
@@ -56,22 +73,25 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         else {
             // hack: if place exists, fetch the image from the photo reference
             // if place is nil and only a merchant exists, we fetch the details then use the photo reference to fetch the photos. we don't update any other aspect of the FVPlace
+            self.imageView.image = nil
+            self.imageView.startAnimating()
             self.place!.fetchImage({ (image) -> Void in
                 if (image != nil) {
                     self.imageView.image = image
                 }
+                self.imageView.stopAnimating()
             })
         }
         
         self.placeNameLabel.text = self.place.name
         self.addressLabel.text = self.place.address
         
-        self.aboutPlaceLabel.text = self.place.shortDescription as? String
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        if self.place.shortDescription != nil {
+            self.aboutPlaceLabel.text = self.place.shortDescription as? String
+        }
+        else {
+            self.constraintAboutHeight.constant = 0
+        }
     }
     
     // MARK: - Action
@@ -84,6 +104,14 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         }
         else if button == self.buttonNext {
             print("Next")
+            if self.currentPage < self.recommendations!.count - 1 {
+                self.currentPage = self.currentPage + 1
+            }
+            else {
+                self.currentPage = 0
+            }
+            self.place = self.recommendations![self.currentPage]
+            self.refresh()
         }
     }
     

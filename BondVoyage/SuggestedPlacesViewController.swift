@@ -21,7 +21,7 @@ class SuggestedPlacesViewController: UITableViewController {
         super.viewDidLoad()
 
         let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 39.950956, longitude: -75.165741)
-        dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 50, types: nil, searchTerms: "coffee") { (results, errorString) -> Void in
+        dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms: self.relevantInterest!) { (results, errorString) -> Void in
             print("results \(results)")
             if !results.isEmpty {
                 self.places = results
@@ -83,6 +83,7 @@ class SuggestedPlacesViewController: UITableViewController {
             
             let controller: PlacesViewController = segue.destinationViewController as! PlacesViewController
             controller.place = place
+            controller.recommendations = self.places
         }
     }
 }
