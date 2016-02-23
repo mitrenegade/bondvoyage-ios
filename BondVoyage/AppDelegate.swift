@@ -325,6 +325,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
                             controller.invitingUser = user
                             controller.invitingMatch = fromMatch
+                            controller.title = "Invite"
                             
                             let nav = UINavigationController(rootViewController: controller)
                             presenter.presentViewController(nav, animated: true, completion: { () -> Void in

@@ -213,6 +213,7 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         controller.invitingUser = user
         controller.invitingMatch = self.fromMatch
         controller.delegate = self
+        controller.title = "Invite"
         self.navigationController!.pushViewController(controller, animated: true)
     }
     

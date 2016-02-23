@@ -29,6 +29,7 @@ class InviteViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: "cancel")
+        self.title = "Invite"
     }
     
     override func viewDidLayoutSubviews() {

@@ -62,7 +62,6 @@ class UserDetailsViewController: UIViewController {
     }
 
     func configureUI() {
-        self.title = "Invite"
         self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
         self.constraintNameViewTopOffset.constant = self.view.frame.size.height - self.nameView.frame.size.height - self.interestsView.frame.size.height
