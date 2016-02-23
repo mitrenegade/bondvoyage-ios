@@ -387,8 +387,13 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     func goToUser(match: PFObject) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
-            self.warnForLocationAvailability()
-            return
+            if TESTING {
+                self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
+            }
+            else {
+                self.warnForLocationAvailability()
+                return
+            }
         }
 
         if let categories: [String] = match.objectForKey("categories") as? [String] {

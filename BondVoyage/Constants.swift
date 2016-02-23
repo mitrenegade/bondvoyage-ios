@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+let TESTING: Bool = true
+let PHILADELPHIA_LAT = 39.949508
+let PHILADELPHIA_LON = -75.171886
+
 let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
 
