@@ -18,7 +18,7 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate {
+class HereAndNowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, CLLocationManagerDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
@@ -136,7 +136,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         if category != nil {
             cat = [category!]
         }
-        MatchRequest.queryMatches(self.currentLocation, categories: cat) { (results, error) -> Void in
+        ActivityRequest.queryActivities(self.currentLocation, categories: cat) { (results, error) -> Void in
             completion(results: results, error: error)
         }
     }
@@ -238,7 +238,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func didSelectCategory(category: String?) {
         if self.clickedAddButton {
             self.clickedAddButton = false
-            self.createMatch(category!, completion: { (result, error) -> Void in
+            self.createActivity(category!, completion: { (result, error) -> Void in
                 self.toggleCategories(false)
                 if result != nil {
                     let match: PFObject = result!
@@ -296,7 +296,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func createMatch(category: String, completion: ((result: PFObject?, error: NSError?)->Void)) {
+    func createActivity(category: String, completion: ((result: PFObject?, error: NSError?)->Void)) {
         if PFUser.currentUser() == nil {
             completion(result: nil, error: nil)
             return
@@ -313,7 +313,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
         // no existing requests exist. Create a request for others to match to
         let categories: [String] = [category]
-        MatchRequest.createMatch(categories, location: self.currentLocation!) { (result, error) -> Void in
+        ActivityRequest.createActivity(categories, location: self.currentLocation!) { (result, error) -> Void in
             self.requestedMatch = result
             completion(result: result, error: error)
         }
@@ -335,20 +335,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 return
             }
         }
-
-        if let categories: [String] = match.objectForKey("categories") as? [String] {
-            let category = categories[0]
-            self.createMatch(category, completion: { (result, error) -> Void in
-                if result != nil {
-                    self.performSegueWithIdentifier("GoToInvite", sender: [match])
-                }
-                else {
-                    self.selectedCategory = nil
-                    let message = "There was a problem setting up your activity. Please try again."
-                    self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
-                }
-            })
-        }
+        self.performSegueWithIdentifier("GoToInvite", sender: [match])
     }
     
     func goToCategory(matches: [PFObject], index: Int) {
@@ -358,19 +345,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         self.hideCategories()
-        self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
-            if result != nil {
-                let match: PFObject = matches[index]
-                var mutable: [PFObject] = matches
-                mutable.removeAtIndex(index)
-                mutable.insert(match, atIndex: 0)
-                self.performSegueWithIdentifier("GoToInvite", sender: mutable)
-            }
-            else {
-                let message = "There was a problem setting up your activity. Please try again."
-                self.simpleAlert("Could not initiate bond", defaultMessage: message, error: error)
-            }
-        })
+        let match: PFObject = matches[index]
+        var mutable: [PFObject] = matches
+        mutable.removeAtIndex(index)
+        mutable.insert(match, atIndex: 0)
+        self.performSegueWithIdentifier("GoToInvite", sender: mutable)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -392,12 +371,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             controller.fromMatch = nil
             controller.toMatch = nil
         }
-    }
-    
-    // MARK: SignupDelegate
-    func didLogin() {
-        // no longer used
-        self.didSelectCategory(nil)
     }
     
     // MARK: location
