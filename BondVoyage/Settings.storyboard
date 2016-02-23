@@ -464,14 +464,14 @@
                         <viewControllerLayoutGuide type="bottom" id="9dE-68-rAy"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zpk-ZN-6VV">
-                        <rect key="frame" x="0.0" y="64" width="600" height="584"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ei-Yp-jVg">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="584"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdT-OZ-BkG">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="584"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="408"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fOw-hN-Z2b" userLabel="View - profile container">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="408"/>
@@ -808,7 +808,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bdT-OZ-BkG" firstAttribute="width" secondItem="zpk-ZN-6VV" secondAttribute="width" id="238-DX-JOo"/>
-                            <constraint firstItem="bdT-OZ-BkG" firstAttribute="height" secondItem="zpk-ZN-6VV" secondAttribute="height" id="ES6-q5-5jZ"/>
+                            <constraint firstItem="bdT-OZ-BkG" firstAttribute="height" secondItem="zpk-ZN-6VV" secondAttribute="height" constant="-28" id="ES6-q5-5jZ"/>
                             <constraint firstAttribute="trailing" secondItem="2ei-Yp-jVg" secondAttribute="trailing" id="NDX-t2-Q8w"/>
                             <constraint firstItem="2ei-Yp-jVg" firstAttribute="top" secondItem="NxJ-jJ-kwc" secondAttribute="bottom" id="Y9o-Bl-1Gn"/>
                             <constraint firstItem="9dE-68-rAy" firstAttribute="top" secondItem="2ei-Yp-jVg" secondAttribute="bottom" id="bdN-BL-gPF"/>
@@ -818,7 +818,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="JPR-fg-WoL"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="648"/>
+                    <size key="freeformSize" width="600" height="500"/>
                     <connections>
                         <outlet property="buttonAbout" destination="g9A-lX-GKR" id="aEj-yJ-cc5"/>
                         <outlet property="buttonPhoto" destination="Xi5-VC-Dvu" id="Zo0-PY-Tej"/>
@@ -846,7 +846,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ccY-m9-EwR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vve-G6-LDj">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="648"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Oh-Ut-HcX">
@@ -859,7 +859,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SGs-Pj-Nx4">
-                                <rect key="frame" x="20" y="116" width="560" height="512"/>
+                                <rect key="frame" x="20" y="116" width="560" height="364"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

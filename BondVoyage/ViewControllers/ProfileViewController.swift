@@ -12,7 +12,6 @@ import Photos
 import AsyncImageView
 
 class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    @IBOutlet weak var constraintProfileHeight: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -243,14 +242,9 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     // MARK: - keyboard notifications
     func keyboardWillShow(n: NSNotification) {
         let size = n.userInfo![UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size
-        self.constraintBottomOffset.constant = size!.height + 20
+        self.constraintBottomOffset.constant = size!.height
         
         self.view.layoutIfNeeded()
-        
-        let view: UIView = self.currentInput!.superview!
-        var rect: CGRect = view.frame
-        rect.origin.y = view.superview!.frame.origin.y
-        self.scrollView.scrollRectToVisible(rect, animated: true)
     }
     
     func keyboardWillHide(n: NSNotification) {
