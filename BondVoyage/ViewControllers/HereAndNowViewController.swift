@@ -194,7 +194,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         
         if self.selectedCategory != nil {
             // show all the users in the category
-            self.goToInvite(self.filteredMatches!, index: indexPath.row)
+            self.goToCategory(self.filteredMatches!, index: indexPath.row)
         }
         else {
             // only show the one user that was clicked
@@ -302,9 +302,14 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         if self.currentLocation == nil {
-            self.warnForLocationAvailability()
-            completion(result: nil, error: nil)
-            return
+            if TESTING {
+                self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
+            }
+            else {
+                self.warnForLocationAvailability()
+                completion(result: nil, error: nil)
+                return
+            }
         }
         // no existing requests exist. Create a request for others to match to
         let categories: [String] = [category]
@@ -346,7 +351,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func goToInvite(matches: [PFObject], index: Int) {
+    func goToCategory(matches: [PFObject], index: Int) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             self.warnForLocationAvailability()
             return
