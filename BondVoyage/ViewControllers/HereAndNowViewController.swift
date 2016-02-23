@@ -89,23 +89,15 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        let button: UIButton = UIButton(type: .Custom)
-        button.frame = CGRectMake(0, 0, 80, 30)
-        button.backgroundColor = UIColor.clearColor()
-        button.setBackgroundImage(UIImage(), forState: .Normal)
-        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         if PFUser.currentUser() == nil {
-            button.addTarget(self, action: "goToLogin", forControlEvents: .TouchUpInside)
-            button.setTitle("Log In", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Plain, target: self, action: "goToLogin")
         }
         else {
-            button.addTarget(self, action: "goToSettings", forControlEvents: .TouchUpInside)
-            button.setTitle("Settings", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "goToSettings")
         }
-
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
+        
         self.constraintCategoriesHeight.constant = 0
     }
     
@@ -219,14 +211,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func toggleCategories(show: Bool) {
         if show {
             self.showingCategories = true
-            if self.clickedAddButton {
-                self.constraintCategoriesHeight.constant = self.view.frame.size.height
-                self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
-            }
-            else {
-                self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
-                self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-            }
+            self.constraintCategoriesHeight.constant = self.view.frame.size.height
+            self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
             self.view.setNeedsLayout()
             UIView.animateWithDuration(0.25, animations: { () -> Void in
                 self.view.layoutIfNeeded()
@@ -242,10 +228,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func hideCategories() {
         self.showingCategories = false
         self.constraintCategoriesHeight.constant = 0
-        self.view.setNeedsLayout()
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
-            self.view.layoutIfNeeded()
-        })
+        // don't animate or tableview looks weird
     }
 
     // MARK: Navigation
@@ -477,7 +460,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 self.toggleCategories(true)
             }
         }
-        else { //if sender == self.buttonFilter {
+        else if sender == self.navigationItem.rightBarButtonItem {
             self.toggleCategories(!self.showingCategories)
         }
     }

@@ -28,17 +28,8 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ib-VY-zaT" userLabel="Container View - categories">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="188" id="w2V-Qg-zDR"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="nlK-It-8RX" kind="embed" identifier="embedCategoriesVCSegue" id="Mrg-4z-aGR"/>
-                                </connections>
-                            </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="83" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cTU-h3-6Gk">
-                                <rect key="frame" x="0.0" y="188" width="600" height="348"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ActivitiesCell" rowHeight="84" id="kGa-e7-btX" customClass="ActivitiesCell" customModule="BondVoyage" customModuleProvider="target">
@@ -94,6 +85,15 @@
                                     <outlet property="delegate" destination="QRx-5S-RBT" id="f0p-6R-1Ee"/>
                                 </connections>
                             </tableView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ib-VY-zaT" userLabel="Container View - categories">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="w2V-Qg-zDR"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="nlK-It-8RX" kind="embed" identifier="embedCategoriesVCSegue" id="Mrg-4z-aGR"/>
+                                </connections>
+                            </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ep3-3r-UMj">
                                 <rect key="frame" x="272" y="475" width="56" height="61"/>
                                 <constraints>
@@ -109,8 +109,8 @@
                         <constraints>
                             <constraint firstItem="ep3-3r-UMj" firstAttribute="centerX" secondItem="AOn-pS-eDg" secondAttribute="centerX" id="4df-MW-xFc"/>
                             <constraint firstItem="cTU-h3-6Gk" firstAttribute="leading" secondItem="AOn-pS-eDg" secondAttribute="leading" id="4tj-aA-IaD"/>
+                            <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="ln8-gA-D9l" secondAttribute="bottom" id="7Jx-eU-HFw"/>
                             <constraint firstItem="3ib-VY-zaT" firstAttribute="leading" secondItem="AOn-pS-eDg" secondAttribute="leading" id="9MV-vb-Rp8"/>
-                            <constraint firstItem="cTU-h3-6Gk" firstAttribute="top" secondItem="3ib-VY-zaT" secondAttribute="bottom" id="OkH-ZS-Eif"/>
                             <constraint firstAttribute="trailing" secondItem="cTU-h3-6Gk" secondAttribute="trailing" id="Tl8-5Y-NB2"/>
                             <constraint firstItem="3ib-VY-zaT" firstAttribute="top" secondItem="ln8-gA-D9l" secondAttribute="bottom" id="jqw-8U-ufG"/>
                             <constraint firstItem="u2N-4v-g4w" firstAttribute="top" secondItem="cTU-h3-6Gk" secondAttribute="bottom" id="l2R-yV-SnD"/>
@@ -310,11 +310,11 @@
                         <viewControllerLayoutGuide type="bottom" id="mqW-rs-n94"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vZK-4f-cFT">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rkZ-Ko-YNH">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
                                 <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="1j3-jT-8bV" style="IBUITableViewCellStyleDefault" id="mLz-vT-h11">
