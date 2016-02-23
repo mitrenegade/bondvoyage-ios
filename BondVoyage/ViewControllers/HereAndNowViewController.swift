@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import AsyncImageView
 import ParseUI
+import GoogleMaps
 
 let date = NSDate()
 let calendar = NSCalendar.currentCalendar()
@@ -43,6 +44,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     // location
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+
+    var placePicker: GMSPlacePicker?
 
     // button
     @IBOutlet weak var buttonAdd: UIButton!
@@ -384,9 +387,15 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     func goToUser(match: PFObject) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
-            self.warnForLocationAvailability()
-            return
+            if TESTING {
+                self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
+            }
+            else {
+                self.warnForLocationAvailability()
+                return
+            }
         }
+
         if let categories: [String] = match.objectForKey("categories") as? [String] {
             let category = categories[0]
             self.createMatch(category, completion: { (result, error) -> Void in
@@ -407,6 +416,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.warnForLocationAvailability()
             return
         }
+        
         self.removeSearchResultsViewController()
         self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
             if result != nil {
@@ -498,6 +508,5 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.clickedAddButton = true
             self.displaySearchResultsViewController()
         }
-    }
-    
+    }    
 }
