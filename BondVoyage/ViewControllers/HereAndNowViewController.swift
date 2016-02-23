@@ -18,14 +18,14 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate {
+class HereAndNowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, SignupDelegate, CLLocationManagerDelegate {
 
     // categories dropdown
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
     var categoriesVC: SearchCategoriesViewController!
+    var showingCategories: Bool = false
     
     // search results
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var selectedUser: PFUser?
     var recommendations: [PFObject]?
@@ -62,15 +62,6 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
         //self.navigationItem.titleView = imageView
         self.navigationController!.navigationBar.addSubview(imageView)
-        // configure search bar
-        self.searchBar.delegate = self;
-        for view: UIView in self.searchBar.subviews[0].subviews {
-            if view.isKindOfClass(UITextField.self) {
-                let textfield: UITextField = view as! UITextField
-                textfield.inputView = UIView()
-            }
-        }
-        
         self.constraintCategoriesHeight.constant = 0
         self.didSelectCategory(nil)
 
@@ -225,56 +216,36 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
     }
     
-    // MARK: - Search Bar
-    func dismissKeyboard() {
-        self.searchBar.resignFirstResponder()
+    func toggleCategories(show: Bool) {
+        if show {
+            self.showingCategories = true
+            if self.clickedAddButton {
+                self.constraintCategoriesHeight.constant = self.view.frame.size.height
+                self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
+            }
+            else {
+                self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
+                self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+            }
+            self.view.setNeedsLayout()
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            })
+        }
+        else {
+            self.hideCategories()
+            self.clickedAddButton = false
+            self.didSelectCategory(nil)
+        }
     }
     
-    func displaySearchResultsViewController() {
-        self.searchBar.showsCancelButton = true
-        if self.clickedAddButton {
-            self.constraintCategoriesHeight.constant = self.view.frame.size.height
-            self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
-        }
-        else {
-            self.constraintCategoriesHeight.constant = self.view.frame.size.height / 2
-            self.categoriesVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        }
-    }
-
-    func removeSearchResultsViewController() {
-        self.dismissKeyboard()
+    func hideCategories() {
+        self.showingCategories = false
         self.constraintCategoriesHeight.constant = 0
-    }
-
-    // MARK: - UISearchBarDelegate
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        self.displaySearchResultsViewController()
-    }
-
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.clickedAddButton = false
-
-        self.removeSearchResultsViewController()
-        self.didSelectCategory(nil)
-        self.searchBar.text = nil
-        
-    }
-
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        self.removeSearchResultsViewController()
-        self.searchBar.showsCancelButton = false
-    }
-
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.characters.count > 0 {
-            self.displaySearchResultsViewController()
-            // TODO: search with searchText
-        }
-        else {
-            self.searchBar.resignFirstResponder() // required or searchBar will begin editing again
-            self.searchBarTextDidEndEditing(searchBar)
-        }
+        self.view.setNeedsLayout()
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
     }
 
     // MARK: Navigation
@@ -300,7 +271,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         if self.clickedAddButton {
             self.clickedAddButton = false
             self.createMatch(category!, completion: { (result, error) -> Void in
-                self.searchBarCancelButtonClicked(self.searchBar)
+                self.toggleCategories(false)
                 if result != nil {
                     let match: PFObject = result!
                     self.goToMatchStatus(match)
@@ -314,11 +285,9 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
         }
         // first query for existing bond requests
         self.selectedCategory = category
-        self.searchBar.text = category
         self.loadActivitiesForCategory(category?.lowercaseString) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
- //                   self.buttonAdd.hidden = true
                     
                     if self.selectedCategory == nil {
                         self.nearbyMatches = results
@@ -327,7 +296,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                         self.filteredMatches = results
                     }
                     self.tableView.reloadData()
-                    self.removeSearchResultsViewController()
+                    self.hideCategories()
                 }
                 else {
                     // no results, no error
@@ -343,18 +312,16 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
                     }
 
                     if PFUser.currentUser() != nil {
-//                        self.buttonAdd.hidden = false
                         message = "\(message) Click the button to add your own activity."
                     }
 
                     self.tableView.reloadData()
-                    self.removeSearchResultsViewController()
+                    self.hideCategories()
                     
                     self.simpleAlert("No activities nearby", message:message)
                 }
             }
             else {
-//                self.buttonAdd.hidden = true
                 let message = "There was a problem loading matches. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
@@ -380,7 +347,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func goToMatchStatus(match: PFObject) {
-        self.removeSearchResultsViewController()
+        self.hideCategories()
         self.requestedMatch = match
         self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
     }
@@ -417,7 +384,7 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             return
         }
         
-        self.removeSearchResultsViewController()
+        self.hideCategories()
         self.createMatch(self.selectedCategory!, completion: { (result, error) -> Void in
             if result != nil {
                 let match: PFObject = matches[index]
@@ -501,12 +468,17 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
-        if self.clickedAddButton {
-            self.searchBarCancelButtonClicked(self.searchBar)
+        if sender == self.buttonAdd {
+            if self.showingCategories && self.clickedAddButton {
+                self.toggleCategories(false)
+            }
+            else {
+                self.clickedAddButton = true
+                self.toggleCategories(true)
+            }
         }
-        else {
-            self.clickedAddButton = true
-            self.displaySearchResultsViewController()
+        else { //if sender == self.buttonFilter {
+            self.toggleCategories(!self.showingCategories)
         }
-    }    
+    }
 }
