@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u5m-vY-rgh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sTt-RH-1Ke">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -552,10 +552,47 @@
             </objects>
             <point key="canvasLocation" x="1232" y="-903"/>
         </scene>
+        <!--Welcome View Controller-->
+        <scene sceneID="RL9-cL-SPH">
+            <objects>
+                <viewController id="sTt-RH-1Ke" customClass="WelcomeViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sac-Gu-64M"/>
+                        <viewControllerLayoutGuide type="bottom" id="fhR-h9-0Ca"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="n2X-tc-dn0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="logo-airplane" translatesAutoresizingMaskIntoConstraints="NO" id="K1e-89-doI">
+                                <rect key="frame" x="20" y="212" width="560" height="175"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="175" id="rLR-L8-tue"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.7843137255" green="0.90196078430000004" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="K1e-89-doI" firstAttribute="centerX" secondItem="n2X-tc-dn0" secondAttribute="centerX" id="HnP-2g-Pda"/>
+                            <constraint firstItem="K1e-89-doI" firstAttribute="trailing" secondItem="n2X-tc-dn0" secondAttribute="trailingMargin" id="VBX-xE-OVi"/>
+                            <constraint firstItem="K1e-89-doI" firstAttribute="leading" secondItem="n2X-tc-dn0" secondAttribute="leadingMargin" id="mtU-se-5OQ"/>
+                            <constraint firstItem="K1e-89-doI" firstAttribute="centerY" secondItem="n2X-tc-dn0" secondAttribute="centerY" id="vNb-F1-ahH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="u5m-vY-rgh" kind="presentation" identifier="GoToMain" animates="NO" id="g44-Aw-xzI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qbo-4k-JkF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-980" y="-898"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bg6" width="2000" height="1333"/>
         <image name="icon-add" width="56" height="61"/>
+        <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="WU3-Oy-h5m"/>

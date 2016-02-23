@@ -391,6 +391,13 @@
                                                     <constraint firstAttribute="height" constant="216" id="zk6-Pu-Ur0"/>
                                                 </constraints>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Uv-8i-oKU">
+                                                <rect key="frame" x="0.0" y="392" width="600" height="44"/>
+                                                <color key="backgroundColor" red="0.30980393290000002" green="0.50588238240000005" blue="0.66666668650000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="Eu">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>

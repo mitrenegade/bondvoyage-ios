@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import AsyncImageView
+import ParseUI
 
 let date = NSDate()
 let calendar = NSCalendar.currentCalendar()
@@ -45,6 +46,8 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // button
     @IBOutlet weak var buttonAdd: UIButton!
+    
+    weak var delegate: SettingsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -273,15 +276,19 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
 
     // MARK: Navigation
     func goToLogin() {
+        /*
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SignupNavigationController") as! UINavigationController
         let controller: SignUpViewController = nav.viewControllers[0] as! SignUpViewController
         controller.type = .Login
         controller.delegate = self
         self.presentViewController(nav, animated: true, completion: nil)
+        */
     }
     
     func goToSettings() {
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+        let controller: SettingsViewController = nav.viewControllers[0] as! SettingsViewController
+        controller.delegate = self.delegate
         self.presentViewController(nav, animated: true, completion: nil)
     }
 
@@ -439,9 +446,10 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     // MARK: SignupDelegate
     func didLogin() {
+        // no longer used
         self.didSelectCategory(nil)
     }
-
+    
     // MARK: location
     func warnForLocationPermission() {
         let message: String = "BondVoyage needs GPS access to find activities near you. Please go to your phone settings to enable location access. Go there now?"
@@ -491,4 +499,5 @@ class HereAndNowViewController: UIViewController, UISearchBarDelegate, UITableVi
             self.displaySearchResultsViewController()
         }
     }
+    
 }
