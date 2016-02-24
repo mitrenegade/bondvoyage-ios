@@ -21,7 +21,7 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func queryActivities(location: CLLocation?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(location: CLLocation?, user: PFUser?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
@@ -30,6 +30,9 @@ class ActivityRequest: NSObject {
         if location != nil {
             params["lat"] = location!.coordinate.latitude
             params["lon"] = location!.coordinate.longitude
+        }
+        if user != nil {
+            params["user"] = user!
         }
         
         PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in

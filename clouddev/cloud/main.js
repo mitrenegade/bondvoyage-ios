@@ -579,7 +579,8 @@ Parse.Cloud.define("createActivity", function(request, response) {
 Parse.Cloud.define("queryActivities", function(request, response) {
     //var location = request.params.location // not used
     var categories = request.params.categories
- 
+    var user = request.params.user
+
     var query = new Parse.Query("Activity")
 
     if (categories != undefined && categories.length > 0) {
@@ -588,7 +589,14 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         query.containsAll("categories", categories)
     }
     query.descending("updatedAt")
-    query.notEqualTo("user", request.user)
+    if (user == undefined) {
+        // find all activities that do not belong to current user
+        query.notEqualTo("user", request.user)
+    }
+    else {
+        // find all activities that belong to a specified user
+        query.equalTo("user", user)
+    }
     query.notContainedIn("status", ["cancelled", "declined"])
     /*
     if (request.params.lat != undefined && request.params.lon != undefined) {

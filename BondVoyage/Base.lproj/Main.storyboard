@@ -22,7 +22,6 @@
         <!--Here And Now View Controller-->
         <scene sceneID="eaw-8M-fqf">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5Cg-MI-x4R" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="QRx-5S-RBT" customClass="HereAndNowViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ln8-gA-D9l"/>
@@ -118,6 +117,7 @@
                         <segue destination="xUi-91-zgb" kind="show" identifier="GoToCurrentActivity" id="WU3-Oy-h5m"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Cg-MI-x4R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="488" y="-1855"/>
         </scene>
@@ -711,7 +711,6 @@
         <!--My Activities View Controller-->
         <scene sceneID="hZ4-Pv-SPj">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="p5L-PG-J6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="MyActivitiesViewController" id="Iaw-Ys-emX" customClass="MyActivitiesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pNi-tr-jxE"/>
@@ -802,6 +801,7 @@
                         <outlet property="tableView" destination="2X0-Yd-p9Z" id="Ga5-rF-wZ8"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p5L-PG-J6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="584" y="289"/>
         </scene>
