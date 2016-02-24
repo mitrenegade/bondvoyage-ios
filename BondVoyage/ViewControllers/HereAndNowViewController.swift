@@ -32,8 +32,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     // tableview data
     var selectedCategory: String?
-    var nearbyMatches: [PFObject]?
-    var filteredMatches: [PFObject]?
+    var nearbyActivities: [PFObject]?
+    var filteredActivities: [PFObject]?
     var clickedAddButton: Bool = false
     
     // from SearchCategoriesDelegate
@@ -149,11 +149,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
         cell.adjustTableViewCellSeparatorInsets(cell)
-        if self.selectedCategory == nil && nearbyMatches != nil {
-            cell.configureCellForUser(self.nearbyMatches![indexPath.row])
+        if self.selectedCategory == nil && nearbyActivities != nil {
+            cell.configureCellForUser(self.nearbyActivities![indexPath.row])
         }
-        else if self.selectedCategory != nil && filteredMatches != nil {
-            cell.configureCellForUser(self.filteredMatches![indexPath.row])
+        else if self.selectedCategory != nil && filteredActivities != nil {
+            cell.configureCellForUser(self.filteredActivities![indexPath.row])
         }
         return cell
     }
@@ -161,7 +161,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows = 0
         if self.selectedCategory != nil {
-            if let count: Int = self.filteredMatches?.count {
+            if let count: Int = self.filteredActivities?.count {
                 rows = count
             }
             else {
@@ -169,7 +169,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
         else {
-            if let count: Int = self.nearbyMatches?.count {
+            if let count: Int = self.nearbyActivities?.count {
                 rows = count
             }
             else {
@@ -194,12 +194,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         
         if self.selectedCategory != nil {
             // show all the users in the category
-            self.goToCategory(self.filteredMatches!, index: indexPath.row)
+            self.goToCategory(self.filteredActivities!, index: indexPath.row)
         }
         else {
             // only show the one user that was clicked
-            let match: PFObject = self.nearbyMatches![indexPath.row]
-            self.goToUser(match)
+            let activity: PFObject = self.nearbyActivities![indexPath.row]
+            self.goToUser(activity)
         }
     }
     
@@ -258,10 +258,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 if results!.count > 0 {
                     
                     if self.selectedCategory == nil {
-                        self.nearbyMatches = results
+                        self.nearbyActivities = results
                     }
                     else {
-                        self.filteredMatches = results
+                        self.filteredActivities = results
                     }
                     self.tableView.reloadData()
                     self.hideCategories()
@@ -271,12 +271,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                     var message = ""
                     if self.selectedCategory == nil {
                         message = "There are no activities near you."
-                        self.nearbyMatches = nil
+                        self.nearbyActivities = nil
                         self.tableView.reloadData()
                     }
                     else {
                         message = "There is no one interested in \(self.selectedCategory!) near you."
-                        self.filteredMatches = nil
+                        self.filteredActivities = nil
                     }
 
                     if PFUser.currentUser() != nil {
@@ -325,7 +325,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         self.performSegueWithIdentifier("GoToCurrentActivity", sender: self)
     }
     
-    func goToUser(match: PFObject) {
+    func goToUser(activity: PFObject) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             if TESTING {
                 self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
@@ -335,21 +335,26 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 return
             }
         }
-        self.performSegueWithIdentifier("GoToInvite", sender: [match])
+        self.performSegueWithIdentifier("GoToNearbyActivities", sender: [activity])
     }
     
-    func goToCategory(matches: [PFObject], index: Int) {
+    func goToCategory(activities: [PFObject], index: Int) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
-            self.warnForLocationAvailability()
-            return
+            if TESTING {
+                self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
+            }
+            else {
+                self.warnForLocationAvailability()
+                return
+            }
         }
         
         self.hideCategories()
-        let match: PFObject = matches[index]
-        var mutable: [PFObject] = matches
+        let activity: PFObject = activities[index]
+        var mutable: [PFObject] = activities
         mutable.removeAtIndex(index)
-        mutable.insert(match, atIndex: 0)
-        self.performSegueWithIdentifier("GoToInvite", sender: mutable)
+        mutable.insert(activity, atIndex: 0)
+        self.performSegueWithIdentifier("GoToNearbyActivities", sender: mutable)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -359,12 +364,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
             self.categoriesVC.delegate = self
         }
-        else if segue.identifier == "GoToInvite" {
+        else if segue.identifier == "GoToNearbyActivities" {
             let controller: InviteViewController = segue.destinationViewController as! InviteViewController
-            let matches: [PFObject] = sender as! [PFObject]
-            controller.matches = matches
-            // TODO
-//            controller.fromMatch = self.requestedMatch
+            let activities: [PFObject] = sender as! [PFObject]
+            controller.activities = activities
         }
         else if segue.identifier == "GoToCurrentActivity" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
