@@ -289,35 +289,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userId = userDict["objectId"] as! String
         }
         
-        let fromMatchDict: [NSObject: AnyObject] = info["fromMatch"] as! [NSObject: AnyObject]
-        let fromMatchId: String = fromMatchDict["objectId"] as! String
+        var activityId: String = ""
+        if let fromMatchDict: [NSObject: AnyObject] = info["activity"] as? [NSObject: AnyObject] {
+            let fromMatchId: String = fromMatchDict["objectId"] as! String
+            activityId = fromMatchId
+        }
         
-        let query: PFQuery = PFQuery(className: "Match")
-        query.whereKey("objectId", equalTo: fromMatchId)
+        let query: PFQuery = PFQuery(className: "Activity")
+        query.whereKey("objectId", equalTo: activityId)
         query.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
             if results != nil && results!.count > 0 {
-                let fromMatch: PFObject = results![0]
+                let activity: PFObject = results![0]
                 
                 // if already looking at match status, let it handle it
                 let presenter = self.topViewController()!
                 if let nav: UINavigationController = presenter as? UINavigationController {
                     if nav.viewControllers.last!.isKindOfClass(MatchStatusViewController) {
                         let matchController: MatchStatusViewController = nav.viewControllers.last! as! MatchStatusViewController
-                        matchController.toMatch = nil
-                        matchController.fromMatch = fromMatch
+                        matchController.currentActivity = activity
                         matchController.refresh()
                         return
                     }
+                }
+                else if let controller: MatchStatusViewController = presenter as? MatchStatusViewController {
+                    controller.currentActivity = activity
+                    controller.refresh()
+                    return
                 }
                 
                 let query: PFQuery = PFUser.query()!
                 query.whereKey("objectId", equalTo: userId)
                 query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
                     if results != nil && results!.count > 0 {
-
+                        /* TODO
+                        
                         // looking at some other screen. determine which one to pop up
                         let status = info["invitationStatus"] as? String
-                        let categories: [String] = fromMatch.objectForKey("categories") as! [String]
+                        let categories: [String] = activity.objectForKey("categories") as! [String]
                         
                         if status == "pending" {
                             let user: PFUser = results![0] as! PFUser
@@ -343,12 +351,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                         else if status == "declined" {
                             let controller: MatchStatusViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MatchStatusViewController") as! MatchStatusViewController
+                            /* TODO
                             controller.toMatch = nil
                             controller.fromMatch = fromMatch
+                            */
                             let nav = UINavigationController(rootViewController: controller)
                             presenter.presentViewController(nav, animated: true, completion: { () -> Void in
                             })
                         }
+                        */
                     }
                     else {
                         print("Invalid user")

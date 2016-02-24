@@ -12,6 +12,7 @@ import Parse
 class MatchRequest: NSObject {
     // todo: add CLLocation or other parameters
     
+    /* DEPRECATED
     class func createMatch(categories: [String], location: CLLocation, completion: ((result: PFObject?, error: NSError?)->Void)) {
         PFCloud.callFunctionInBackground("createMatchRequest", withParameters: ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude]) { (results, error) -> Void in
             print("results: \(results)")
@@ -19,7 +20,9 @@ class MatchRequest: NSObject {
             completion(result: match, error: error)
         }
     }
-
+    */
+    
+    /* DEPRECATED
     class func queryMatches(location: CLLocation?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
@@ -37,6 +40,7 @@ class MatchRequest: NSObject {
             completion(results: matches, error: error)
         }
     }
+    */
     
     class func inviteMatch(fromMatch: PFObject, toMatch: PFObject, completion: ((results: AnyObject?, error: NSError?) -> Void)) {
         PFCloud.callFunctionInBackground("inviteMatch", withParameters: ["from": fromMatch.objectId!, "to": toMatch.objectId!]) { (results, error) -> Void in

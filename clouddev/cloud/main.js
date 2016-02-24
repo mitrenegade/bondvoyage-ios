@@ -349,6 +349,7 @@ var sendPushForInvitationResponse = function(response, fromMatch, toMatch, statu
             }
         });
     }
+
 // MATCHES
 Parse.Cloud.define("createMatchRequest", function(request, response) {
     var Match = Parse.Object.extend("Match")
@@ -537,5 +538,231 @@ Parse.Cloud.define("inviteMatch", function(request, response) {
     )
 });
 
+//******************* V2 Activities
+Parse.Cloud.define("createActivity", function(request, response) {
+    var Activity = Parse.Object.extend("Activity")
+    var activity = new Activity()
+    if (request.user == undefined) {
+        response.error("User is not logged in")
+        return
+    }
+    else {
+        activity.set("user", request.user)
+    }
 
+    var categories = request.params.categories
+    categories = categories.map(toLowerCase)
+    activity.set("categories", categories)
+    activity.set("status", "active")
+
+    // location
+    if (request.params.lat != undefined && request.params.lon != undefined) {
+        var geopoint = new Parse.GeoPoint(request.params.lat, request.params.lon)
+        console.log("Creating geopoint for new activity at lat " + request.params.lat + " lon " + request.params.lon + " geopoint " + geopoint)
+        activity.set("geopoint", geopoint)
+    }
+
+    // todo: time
+
+    activity.save().then(
+        function(object) {
+            console.log("createActivity completed with activity: " + object)
+            response.success(object)
+        },
+        function(error) {
+            console.log("error in createActivity: " + error)
+            response.error(error)
+        }
+    )
+});
+
+Parse.Cloud.define("queryActivities", function(request, response) {
+    //var location = request.params.location // not used
+    var categories = request.params.categories
+ 
+    var query = new Parse.Query("Activity")
+
+    if (categories != undefined && categories.length > 0) {
+        categories = categories.map(toLowerCase)
+        console.log("searching for " + categories.length + " categories: " + categories)
+        query.containsAll("categories", categories)
+    }
+    query.descending("updatedAt")
+    query.notEqualTo("user", request.user)
+    query.notContainedIn("status", ["cancelled", "declined"])
+    /*
+    if (request.params.lat != undefined && request.params.lon != undefined) {
+        var point = new Parse.GeoPoint(request.params.lat, request.params.lon)
+        query.withinKilometers("geopoint", point, 5)
+    }
+    */
+
+    console.log("calling query.find")
+    query.find({
+        success: function(results) {
+            console.log("Result count " + results.length)
+            response.success(results)
+        },
+        error: function(error) {
+            console.log("query failed: error " + error)
+            response.error(error)
+        }         
+    })
+});
+
+Parse.Cloud.define("joinActivity", function(request, response) {
+    var fromUser = request.user
+    var activityId = request.params.activity
+    var placeId = request.params.place
+
+    var query = new Parse.Query("Activity")
+    query.get(activityId).then(
+        function(activity) {
+            activity.set("status", "pending")
+            activity.save()
+
+            // add user to list of joiners
+            activity.addUnique("joining", fromUser.id)
+            var userPlace = {}
+            userPlace[fromUser.id] = placeId
+            activity.addUnique("places", userPlace)
+            activity.save().then(
+                function(object) {
+                    console.log("Sending push message to activity id " + activity.id)
+                    sendPushForActivities(response, activity, fromUser)
+                }, function(error) {
+                    console.log("Could not save activity for connecting")
+                    response.error("Could not join activity")
+                }
+            )
+        },
+        function(error) {
+            console.log("Could not load activity for connecting")
+            response.error("Could not find the activity to join")
+        }  
+    )
+});
+
+Parse.Cloud.define("cancelActivity", function(request, response) {
+    // used for cancelling an unmatched invitation
+    var activityId = request.params.activity
+    var query = new Parse.Query("Activity")
+    query.get(activityId).then(
+        function(activity) {
+            activity.set("status", "cancelled")
+            activity.save().then(
+                function(object) {
+                    console.log("cancelActivity completed with result: " + object)
+                    response.success(object)
+                },
+                function(error) {
+                    console.log("error in cancelActivity: " + error)
+                    response.error(error)
+                }
+            )
+        },
+        function(error) {
+            console.log("Could not load activity for cancelling")
+            response.error("Could not find activity to cancel")
+        }     
+    )    
+});
+
+Parse.Cloud.define("respondToJoin", function(request, response) {
+    // TODO: implement
+
+    // declined and accepted is sent by the invitee; cancelled is sent by the inviter
+    var fromId = request.params.from
+    var toId = request.params.to
+    var responseType = request.params.responseType // "declined", "cancelled", "accepted"
+    console.log("RespondToInvite from " + fromId + " to " + toId + " responseType " + responseType)
+    var query = new Parse.Query("Match")
+    query.get(fromId).then(
+        function(fromMatch) {
+            fromMatch.set("status", responseType)
+            if (responseType == undefined) {
+                fromMatch.set("status", "cancelled")
+            }
+            fromMatch.save()
+            var queryTo = new Parse.Query("Match")
+            queryTo.get(toId).then(
+                function(toMatch) {
+                    if (responseType == undefined || responseType == "cancelled" || responseType == "declined") {
+                        // reset status so invitee can continue to be invited
+                        toMatch.set("status", "active")
+                        toMatch.unset("inviteFrom")
+                    }
+                    toMatch.save().then(
+                        function(object) {
+                            console.log("RespondToInvite completed")
+                            if (responseType == undefined || responseType == "cancelled") {
+                                console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
+                                sendPushForInvitationResponse(response, fromMatch, toMatch, responseType)
+                            }
+                            else if (responseType == "declined" || responseType == "accepted") {
+                                console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
+                                sendPushForInvitationResponse(response, fromMatch, toMatch, responseType)
+                            }
+                            else {
+                                console.log("here")
+                                response.error("Invalid response type")
+                            }
+                        },
+                        function(error) {
+                            console.log("error in RespondToInvite: " + error)
+                            response.error(error)
+                        }
+                    )
+                },
+                function(error) {
+                    console.log("Could not load match for RespondToInvite")
+                    response.error("Could not find match to respond to")
+                }
+            )    
+        },
+        function(error) {
+            console.log("Could not load match for RespondToInvite")
+            response.error("Could not find match to respond to")
+        }
+    )    
+});
+
+var sendPushForActivities = function(response, activity, fromUser) {
+    console.log("inside send push")
+    var toUser = activity.get("user")
+    console.log("from user id " + fromUser.id + " to user id " + toUser.id)
+    var name = fromUser.get("firstName")
+    if (name == undefined) {
+        name = fromUser.get("lastName")
+    }
+    var categories = activity.get("categories")
+    var message = name + " has sent you an invitation to bond over " + categories[0]
+    if (name == undefined) {
+        message = "You have received an invitation to bond over " + categories[0]
+    }
+
+    var toId = toUser.id
+    var channel = "channel" + toId
+    console.log("push message: " + message + " channel: " + channel)
+    Parse.Push.send({
+        channels: [ channel ],
+        data: {
+            alert: message,
+            from: fromUser,
+            activity: activity,
+            sound: "default"
+        }
+    }, {
+        success: function()
+        {
+            console.log("Invite push notification sent to " + channel)
+            response.success()
+            },
+        error: function(error) {
+            // Handle error
+            console.log("Invite push notification failed: " + error)
+            response.error(error)
+            }
+        });
+    }
 
