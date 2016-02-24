@@ -9,12 +9,13 @@
 import UIKit
 import ParseUI
 
-class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, SettingsDelegate {
+class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLogout", name: "logout", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {

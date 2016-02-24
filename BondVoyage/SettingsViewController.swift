@@ -10,17 +10,11 @@
 import UIKit
 import Parse
 
-protocol SettingsDelegate: class {
-    func didLogout()
-}
-
 class SettingsViewController: UITableViewController {
-    weak var delegate: SettingsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "close")
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,10 +22,6 @@ class SettingsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func close() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -68,14 +58,24 @@ class SettingsViewController: UITableViewController {
         
         let row: Int = indexPath.row
         if row == 0 {
-            self.performSegueWithIdentifier("toProfile", sender: nil)
+            self.goToProfile()
         }
         else if row == 1 {
-            self.performSegueWithIdentifier("toSearchPreferences", sender: nil)
+            self.goToSearchPreferences()
         }
         else if row == 2 {
             PFUser.logOut()
-            self.delegate?.didLogout()
+            NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
         }
+    }
+    
+    func goToSearchPreferences() {
+        let controller: SearchPreferencesViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SearchPreferencesViewController") as! SearchPreferencesViewController
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func goToProfile() {
+        let controller: ProfileViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
