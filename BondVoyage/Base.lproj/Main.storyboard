@@ -416,13 +416,13 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cza-QT-RZa" userLabel="View - invitation">
                                 <rect key="frame" x="20" y="471" width="560" height="81"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mjE-CG-4mL">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mjE-CG-4mL" customClass="AsyncImageView">
                                         <rect key="frame" x="8" y="11" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="mjE-CG-4mL" secondAttribute="height" multiplier="1:1" id="aZ9-mp-m1d"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invitation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iL-9h-Xct">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0iL-9h-Xct">
                                         <rect key="frame" x="76" y="11" width="476" height="60"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -444,15 +444,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cza-QT-RZa" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leadingMargin" id="1Xz-xB-mbI"/>
                             <constraint firstAttribute="trailing" secondItem="QPZ-Iu-Flh" secondAttribute="trailing" constant="20" id="4DT-OH-f82"/>
                             <constraint firstItem="Ezw-AK-vec" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leading" id="8Ej-77-F6b"/>
                             <constraint firstItem="CkW-dZ-Mpq" firstAttribute="top" secondItem="Ezw-AK-vec" secondAttribute="bottom" id="8lw-ZB-d6f"/>
+                            <constraint firstItem="cza-QT-RZa" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leading" constant="20" id="CXC-SO-PyH"/>
                             <constraint firstItem="cza-QT-RZa" firstAttribute="top" secondItem="QPZ-Iu-Flh" secondAttribute="bottom" constant="8" id="Qoj-kt-MiB"/>
+                            <constraint firstAttribute="trailing" secondItem="cza-QT-RZa" secondAttribute="trailing" constant="20" id="SZL-FR-pZ5"/>
                             <constraint firstItem="K5x-sB-Act" firstAttribute="top" secondItem="cza-QT-RZa" secondAttribute="bottom" constant="8" id="U8k-xQ-bQu"/>
                             <constraint firstItem="Ezw-AK-vec" firstAttribute="top" secondItem="lvC-Gj-nF9" secondAttribute="top" id="VN1-Dq-BBv"/>
                             <constraint firstItem="CkW-dZ-Mpq" firstAttribute="top" secondItem="K5x-sB-Act" secondAttribute="bottom" constant="20" id="WCD-r6-LjC"/>
-                            <constraint firstItem="cza-QT-RZa" firstAttribute="trailing" secondItem="lvC-Gj-nF9" secondAttribute="trailingMargin" id="WLa-Ad-cKg"/>
                             <constraint firstAttribute="trailing" secondItem="Ec5-lT-6kk" secondAttribute="trailing" constant="20" id="bIy-GB-4L5"/>
                             <constraint firstItem="K5x-sB-Act" firstAttribute="leading" secondItem="lvC-Gj-nF9" secondAttribute="leading" id="hZh-p5-vnT"/>
                             <constraint firstAttribute="trailing" secondItem="K5x-sB-Act" secondAttribute="trailing" id="iPV-Bm-8AR"/>
@@ -468,7 +468,9 @@
                         <outlet property="bgImage" destination="Ezw-AK-vec" id="EP8-pT-wtJ"/>
                         <outlet property="constraintInvitationHeight" destination="ZXs-cb-gvV" id="1Gf-V1-ID2"/>
                         <outlet property="labelDetails" destination="QPZ-Iu-Flh" id="qf8-V4-3eJ"/>
+                        <outlet property="labelInvitation" destination="0iL-9h-Xct" id="jac-dn-UBS"/>
                         <outlet property="labelTitle" destination="Ec5-lT-6kk" id="Tdw-I7-PQJ"/>
+                        <outlet property="photoView" destination="mjE-CG-4mL" id="Xi1-f6-25f"/>
                         <outlet property="progressView" destination="K5x-sB-Act" id="rDm-CZ-c8w"/>
                         <outlet property="viewInvitation" destination="cza-QT-RZa" id="9Fd-wb-T2h"/>
                     </connections>

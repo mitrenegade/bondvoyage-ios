@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import AsyncImageView
 
 class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     
@@ -15,7 +16,10 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelDetails: UILabel!
     @IBOutlet weak var progressView: ProgressView!
+
     @IBOutlet weak var viewInvitation: UIView!
+    @IBOutlet weak var photoView: AsyncImageView!
+    @IBOutlet weak var labelInvitation: UILabel!
     @IBOutlet weak var constraintInvitationHeight: NSLayoutConstraint!
 
     var user: PFUser!
@@ -90,8 +94,32 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
 
             if self.currentActivity!.valueForKey("status") as? String == "pending" {
                 self.labelTitle.text = "You have received an invitation to bond"
-                self.labelDetails.text = "Loading invitation details."
+                self.labelInvitation.text = "Loading invitation details."
                 self.constraintInvitationHeight.constant = 81
+                
+                // join requests exist
+                if let userIds: [String] = self.currentActivity!.objectForKey("joining") as? [String] {
+                    let userId = userIds[0]
+                    let query: PFQuery = PFUser.query()!
+                    query.whereKey("objectId", equalTo: userId)
+                    query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                        if results != nil && results!.count > 0 {
+                            let user: PFUser = results![0] as! PFUser
+                            if let name: String = user.objectForKey("firstName") as? String {
+                                self.labelTitle.text = "You have received an invitation from \(name)"
+                                
+                                self.labelInvitation.text = "\(name) wants to bond over \(category)"
+                            }
+                            
+                            if let photoURL: String = user.objectForKey("photoUrl") as? String {
+                                self.photoView.imageURL = NSURL(string: photoURL)
+                            }
+                            
+                            // TODO: goToAccept when clicked
+                            //                        self.goToAcceptInvite(user)
+                        }
+                    }
+                }
             }
             else if self.currentActivity!.valueForKey("status") as? String == "declined" {
                 /* TODO - cannot come here. If invitation is declined, it becomes active
@@ -111,21 +139,6 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                 self.labelDetails.text = "Please hit back to search for more activities."
                 self.progressView.stopActivity()
                 return
-            }
-            
-            // join requests exist
-            if let users: [PFUser] = self.currentActivity!.objectForKey("joining") as? [PFUser] {
-                let user = users[0]
-                user.fetchInBackgroundWithBlock({ (object, error) -> Void in
-                    if self.currentActivity!.valueForKey("status") as? String == "pending" {
-                        if let name: String = user.objectForKey("firstName") as? String {
-                            self.labelTitle.text = "You have received an invitation from \(name)"
-                            self.labelDetails.text = "\(name) wants to bond over \(category)"
-                        }
-                        // TODO: goToAccept when clicked
-//                        self.goToAcceptInvite(user)
-                    }
-                })
             }
         }
     }
