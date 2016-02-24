@@ -164,15 +164,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         
-        if self.selectedCategory != nil {
-            // show all the users in the category
-            self.goToCategory(self.filteredActivities!, index: indexPath.row)
-        }
-        else {
-            // only show the one user that was clicked
-            let activity: PFObject = self.nearbyActivities![indexPath.row]
-            self.goToUser(activity)
-        }
+        let activity: PFObject = self.nearbyActivities![indexPath.row]
+        self.goToActivity(activity)
     }
     
     func toggleCategories(show: Bool) {
@@ -244,7 +237,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func goToUser(activity: PFObject) {
+    func goToActivity(activity: PFObject) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             if TESTING {
                 self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
@@ -254,9 +247,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 return
             }
         }
-        self.performSegueWithIdentifier("GoToNearbyActivities", sender: [activity])
+        self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
     }
     
+    /* NOT USED
     func goToCategory(activities: [PFObject], index: Int) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             if TESTING {
@@ -275,6 +269,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         mutable.insert(activity, atIndex: 0)
         self.performSegueWithIdentifier("GoToNearbyActivities", sender: mutable)
     }
+    */
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
@@ -282,6 +277,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         if segue.identifier == "embedCategoriesVCSegue" {
             self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
             self.categoriesVC.delegate = self
+        }
+        else if segue.identifier == "GoToActivityDetail" {
+            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
+            controller.activity = sender as! PFObject
         }
         else if segue.identifier == "GoToNearbyActivities" {
             let controller: InviteViewController = segue.destinationViewController as! InviteViewController

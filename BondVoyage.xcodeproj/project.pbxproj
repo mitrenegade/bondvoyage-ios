@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62223C5E02C10845D64B6A0B /* Pods.framework */; };
 		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
+		8E39C2191C7E6CA800C9B995 /* ActivityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */; };
+		8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */; };
 		8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */; };
 		8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */; };
 		8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */; };
@@ -84,6 +86,8 @@
 		2852CA77D6571005D3434276 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewController.swift; sourceTree = "<group>"; };
+		8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFObject+Activity.swift"; sourceTree = "<group>"; };
 		8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesViewController.swift; sourceTree = "<group>"; };
 		8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPreferencesViewController.swift; path = ViewControllers/SearchPreferencesViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */,
 				8EC310AA1C7BAE0700992E7A /* GoogleDataProvider.swift */,
 				8EC310AC1C7BAE4800992E7A /* BVPlace.swift */,
 				AC1698451C1C7AB200E3DAAE /* UserRequest.swift */,
@@ -347,6 +352,7 @@
 				8EA047CC1C4FDDE200CCCAC3 /* InviteViewController.swift */,
 				8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */,
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
+				8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -573,6 +579,7 @@
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
+				8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
 				E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
@@ -596,6 +603,7 @@
 				8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */,
 				8EC310AD1C7BAE4800992E7A /* BVPlace.swift in Sources */,
 				C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */,
+				8E39C2191C7E6CA800C9B995 /* ActivityDetailViewController.swift in Sources */,
 				8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
