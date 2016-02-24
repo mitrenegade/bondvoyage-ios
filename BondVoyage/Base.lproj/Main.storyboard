@@ -390,10 +390,19 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg6" translatesAutoresizingMaskIntoConstraints="NO" id="Ezw-AK-vec">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-lT-6kk">
+                                <rect key="frame" x="20" y="72" width="560" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="KQK-PC-rvU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="io7-Vc-9xm">
                                 <rect key="frame" x="20" y="152" width="560" height="400"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPZ-Iu-Flh">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPZ-Iu-Flh">
                                         <rect key="frame" x="8" y="8" width="544" height="384"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
@@ -407,15 +416,6 @@
                                     <constraint firstAttribute="bottom" secondItem="QPZ-Iu-Flh" secondAttribute="bottom" constant="8" id="dTp-AR-exM"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-lT-6kk">
-                                <rect key="frame" x="20" y="72" width="560" height="60"/>
-                                <color key="backgroundColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="KQK-PC-rvU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K5x-sB-Act" customClass="ProgressView" customModule="BondVoyage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="560" width="600" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -448,6 +448,7 @@
                         <outlet property="labelDetails" destination="QPZ-Iu-Flh" id="qf8-V4-3eJ"/>
                         <outlet property="labelTitle" destination="Ec5-lT-6kk" id="Tdw-I7-PQJ"/>
                         <outlet property="progressView" destination="K5x-sB-Act" id="rDm-CZ-c8w"/>
+                        <outlet property="viewDetails" destination="io7-Vc-9xm" id="bS9-in-7t5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="njm-lv-vo9" userLabel="First Responder" sceneMemberID="firstResponder"/>

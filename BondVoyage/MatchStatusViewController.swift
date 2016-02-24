@@ -13,12 +13,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
+    @IBOutlet weak var viewDetails: UIView!
     @IBOutlet weak var labelDetails: UILabel!
     @IBOutlet weak var progressView: ProgressView!
 
     var user: PFUser!
     var currentActivity: PFObject? // the user's created bond request
     var blurAdded: Bool = false
+    var locationString: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +34,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         self.progressView.startActivity()
         self.user = self.currentActivity!.objectForKey("user") as! PFUser
         user.fetchInBackgroundWithBlock({ (object, error) -> Void in
+            self.labelTitle.hidden = false
+            self.viewDetails.hidden = false
             self.refresh()
         })
+        
+        if let geopoint: PFGeoPoint = self.currentActivity!.objectForKey("geopoint") as? PFGeoPoint {
+            self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,11 +82,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                 self.labelDetails.text = "Loading invitation details."
             }
             else if self.currentActivity!.valueForKey("status") as? String == "declined" {
+                /* TODO - cannot come here. If invitation is declined, it becomes active
                 self.labelTitle.text = "Your invitation was declined"
                 self.labelDetails.text = "Sorry, looks like this bond will not be accepted."
+                */
                 self.progressView.stopActivity()
             }
             else if self.currentActivity!.valueForKey("status") as? String == "accepted" {
+                /* TODO: display suggested places from other user */
                 self.goToPlaces()
                 return
             }
@@ -90,7 +101,15 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                 return
             }
             let category: String = (self.currentActivity!.objectForKey("categories") as! [String])[0]
+            // general info
+            self.labelTitle.text = "You are interested in \(category)"
+            if self.locationString != nil {
+                self.labelTitle.text = "\(self.labelTitle.text!) near \(self.locationString!)"
+            }
             
+            self.labelDetails.text = "You are waiting for someone else to join you for \(category). Click Back to cancel and search for something else."
+            
+            // join requests exist
             if let users: [PFUser] = self.currentActivity!.objectForKey("joining") as? [PFUser] {
                 let user = users[0]
                 user.fetchInBackgroundWithBlock({ (object, error) -> Void in
@@ -101,13 +120,33 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                         }
                         self.goToAcceptInvite(user)
                     }
-                    else if self.currentActivity!.valueForKey("status") as? String == "declined" {
-                        if let name: String = user.objectForKey("firstName") as? String {
-                            self.labelTitle.text = "Your invitation was declined"
-                            self.labelDetails.text = "Sorry, looks like \(name) declined your invitation to bond over \(category)."
+                })
+            }
+        }
+    }
+    
+    func reverseGeocode(coord: CLLocation) {
+        let coder = CLGeocoder()
+        coder.reverseGeocodeLocation(coord) { (results, error) -> Void in
+            if error != nil {
+                print("error: \(error!.userInfo)")
+            }
+            else {
+                print("result: \(results)")
+                if let placemarks: [CLPlacemark]? = results as [CLPlacemark]? {
+                    if let placemark: CLPlacemark = placemarks!.first as CLPlacemark! {
+                        print("name \(placemark.name) address \(placemark.addressDictionary)")
+                        if let dict: [String: AnyObject] = placemark.addressDictionary as? [String: AnyObject] {
+                            if let lines = dict["FormattedAddressLines"] {
+                                print("lines: \(lines)")
+                                if lines.count > 0 {
+                                    self.locationString = lines[0] as? String
+                                }
+                                self.refresh()
+                            }
                         }
                     }
-                })
+                }
             }
         }
     }
