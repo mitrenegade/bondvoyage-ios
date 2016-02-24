@@ -14,6 +14,7 @@
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -283,17 +284,18 @@
                         <segue destination="u5m-vY-rgh" kind="relationship" relationship="viewControllers" id="YJb-xC-w4W"/>
                         <segue destination="xPb-CS-Ee1" kind="relationship" relationship="viewControllers" id="Ddd-wo-FEd"/>
                         <segue destination="Xvr-Id-WNH" kind="relationship" relationship="viewControllers" id="sZU-5c-DEq"/>
+                        <segue destination="SLi-Ju-8E8" kind="relationship" relationship="viewControllers" id="h4L-ks-Cba"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2eH-yV-lGM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1050" y="-891"/>
+            <point key="canvasLocation" x="-1010" y="-895"/>
         </scene>
         <!--Nearby-->
         <scene sceneID="sjZ-E8-yNI">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="u5m-vY-rgh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Nearby" id="dc2-4x-gnk"/>
+                    <tabBarItem key="tabBarItem" title="Nearby" image="icon-search" id="dc2-4x-gnk"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vut-Vg-1W2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -382,10 +384,10 @@
             </objects>
             <point key="canvasLocation" x="223" y="-1374"/>
         </scene>
-        <!--View Controller-->
+        <!--New Activity-->
         <scene sceneID="Oz5-su-UjT">
             <objects>
-                <viewController id="FiL-Bv-w2E" sceneMemberID="viewController">
+                <viewController title="New Activity" id="FiL-Bv-w2E" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aaT-iw-30Z"/>
                         <viewControllerLayoutGuide type="bottom" id="jci-uz-x8z"/>
@@ -405,7 +407,7 @@
         <scene sceneID="4eW-yU-7io">
             <objects>
                 <navigationController id="xPb-CS-Ee1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="New Activity" id="IPc-wf-V01"/>
+                    <tabBarItem key="tabBarItem" title="New Activity" image="icon-plus" id="IPc-wf-V01"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fQO-2A-gFZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -451,7 +453,7 @@
         <scene sceneID="Jcm-tv-1Bb">
             <objects>
                 <navigationController id="Xvr-Id-WNH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Activities" id="XR6-rP-9hO"/>
+                    <tabBarItem key="tabBarItem" title="Activities" image="icon-star" id="XR6-rP-9hO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k5Y-P1-vlW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -679,9 +681,70 @@
             </objects>
             <point key="canvasLocation" x="-1722" y="-880"/>
         </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="wSf-Xf-Iok">
+            <objects>
+                <tableViewController id="6cf-OO-9mh" customClass="SettingsViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Lvy-EB-1wg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="9mH-aO-pad" style="IBUITableViewCellStyleDefault" id="xq0-o0-9VX">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xq0-o0-9VX" id="dX3-5Q-prM">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9mH-aO-pad">
+                                            <rect key="frame" x="15" y="0.0" width="550" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6cf-OO-9mh" id="oPZ-E3-cXa"/>
+                            <outlet property="delegate" destination="6cf-OO-9mh" id="96O-Sb-s3B"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="QOf-fr-pan"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lLL-Iw-fma" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="472" y="1120"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="RGX-Mb-jiF">
+            <objects>
+                <navigationController id="SLi-Ju-8E8" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="icon-profile" id="Y2d-j6-VUZ"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c84-3G-sgJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="6cf-OO-9mh" kind="relationship" relationship="rootViewController" id="Cx1-6h-erD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ovz-kC-rWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-314" y="1129"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bg6" width="2000" height="1333"/>
+        <image name="icon-plus" width="40" height="40"/>
+        <image name="icon-profile" width="40" height="40"/>
+        <image name="icon-search" width="40" height="40"/>
+        <image name="icon-star" width="40" height="40"/>
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
