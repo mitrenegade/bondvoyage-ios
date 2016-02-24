@@ -9,23 +9,26 @@
 import UIKit
 import CoreLocation
 import AsyncImageView
+import Parse
 
 class SuggestedPlacesViewController: UITableViewController {
 
-    var relevantInterest: String?
     let dataProvider = GoogleDataProvider()
     
+    var currentActivity: PFObject?
     var places: [BVPlace]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 39.950956, longitude: -75.165741)
-        dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms: self.relevantInterest!) { (results, errorString) -> Void in
-            print("results \(results)")
-            if !results.isEmpty {
-                self.places = results
-                self.tableView.reloadData()
+        if let categories: [String] = self.currentActivity!.objectForKey("categories") as? [String] {
+            dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms:categories[0]) { (results, errorString) -> Void in
+                print("results \(results)")
+                if !results.isEmpty {
+                    self.places = results
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -84,6 +87,7 @@ class SuggestedPlacesViewController: UITableViewController {
             let controller: PlacesViewController = segue.destinationViewController as! PlacesViewController
             controller.place = place
             controller.recommendations = self.places
+            controller.currentActivity = self.currentActivity
         }
     }
 }

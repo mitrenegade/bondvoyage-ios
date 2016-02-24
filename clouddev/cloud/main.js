@@ -613,6 +613,7 @@ Parse.Cloud.define("queryActivities", function(request, response) {
 Parse.Cloud.define("joinActivity", function(request, response) {
     var fromUser = request.user
     var activityId = request.params.activity
+    var placeId = request.params.place
 
     var query = new Parse.Query("Activity")
     query.get(activityId).then(
@@ -621,10 +622,19 @@ Parse.Cloud.define("joinActivity", function(request, response) {
             activity.save()
 
             // add user to list of joiners
-            activity.addUnique("joining", fromUser)
-
-            console.log("Sending push message to activity id " + activity.id)
-            sendPushForActivities(response, activity, fromUser)
+            activity.addUnique("joining", fromUser.id)
+            var userPlace = {}
+            userPlace[fromUser.id] = placeId
+            activity.addUnique("places", userPlace)
+            activity.save().then(
+                function(object) {
+                    console.log("Sending push message to activity id " + activity.id)
+                    sendPushForActivities(response, activity, fromUser)
+                }, function(error) {
+                    console.log("Could not save activity for connecting")
+                    response.error("Could not join activity")
+                }
+            )
         },
         function(error) {
             console.log("Could not load activity for connecting")
@@ -725,7 +735,7 @@ var sendPushForActivities = function(response, activity, fromUser) {
     if (name == undefined) {
         name = fromUser.get("lastName")
     }
-    var categories = fromMatch.get("categories")
+    var categories = activity.get("categories")
     var message = name + " has sent you an invitation to bond over " + categories[0]
     if (name == undefined) {
         message = "You have received an invitation to bond over " + categories[0]

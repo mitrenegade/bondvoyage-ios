@@ -34,6 +34,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     var recommendations: [BVPlace]?
     var currentPage: Int = 0
     var marker: GMSMarker!
+    var currentActivity: PFObject?
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -124,9 +125,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     @IBAction func didClickButton(button: UIButton) {
         if button == self.buttonGo {
             print("Go")
-            self.simpleAlert("You are all set", message: "You have accepted this invitation. Have a good time!", completion: { () -> Void in
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-            })
+            self.goToJoinActivity()
         }
         else if button == self.buttonNext {
             print("Next")
@@ -141,6 +140,20 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         }
     }
     
+    func goToJoinActivity() {
+        self.activityIndicator.startAnimating()
+        ActivityRequest.joinActivity(self.currentActivity!, suggestedPlace: self.place, completion: { (results, error) -> Void in
+            
+            self.activityIndicator.stopAnimating()
+            if error != nil {
+                self.simpleAlert("Could not join", defaultMessage: "There was an error joining the activity.", error: error)
+            }
+            else {
+                print("here")
+            }
+        })
+    }
+
     /*
     // MARK: - Navigation
 

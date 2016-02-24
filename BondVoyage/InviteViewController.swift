@@ -107,26 +107,11 @@ class InviteViewController: UIViewController {
         }
     }
 
-    /*
-    func goToMatchStatus() {
-        self.activityIndicator.startAnimating()
-        MatchRequest.inviteMatch(self.fromMatch!, toMatch: self.matches![self.currentPage()], completion: { (results, error) -> Void in
-            self.activityIndicator.stopAnimating()
-            if error != nil {
-                self.simpleAlert("Could not invite", defaultMessage: "There was an error sending your invite.", error: error)
-            }
-            else {
-                self.performSegueWithIdentifier("GoToCurrentActivity", sender: self)
-            }
-        })
-    }
-    */
     
     func goToSelectPlace() {
         let activity = self.activities![self.currentPage()]
         let controller: SuggestedPlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("SuggestedPlacesViewController") as! SuggestedPlacesViewController
-        let categories: [String] = activity.objectForKey("categories") as! [String]
-        controller.relevantInterest = categories[0]
+        controller.currentActivity = activity
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
