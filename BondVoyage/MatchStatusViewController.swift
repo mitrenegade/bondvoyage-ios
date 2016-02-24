@@ -13,9 +13,10 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
-    @IBOutlet weak var viewDetails: UIView!
     @IBOutlet weak var labelDetails: UILabel!
     @IBOutlet weak var progressView: ProgressView!
+    @IBOutlet weak var viewInvitation: UIView!
+    @IBOutlet weak var constraintInvitationHeight: NSLayoutConstraint!
 
     var user: PFUser!
     var currentActivity: PFObject? // the user's created bond request
@@ -30,12 +31,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         self.bgImage.image = UIImage(named: name)!
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: self, action: "cancel")
+        
+        self.constraintInvitationHeight.constant = 0
 
         self.progressView.startActivity()
         self.user = self.currentActivity!.objectForKey("user") as! PFUser
         user.fetchInBackgroundWithBlock({ (object, error) -> Void in
             self.labelTitle.hidden = false
-            self.viewDetails.hidden = false
+            self.labelDetails.hidden = false
             self.refresh()
         })
         
@@ -77,9 +80,18 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
             // TODO: display location, time, other parameters
         }
         else {
+            let category: String = (self.currentActivity!.objectForKey("categories") as! [String])[0]
+            // general info
+            self.labelTitle.text = "You are interested in \(category)"
+            if self.locationString != nil {
+                self.labelTitle.text = "\(self.labelTitle.text!) near \(self.locationString!)"
+            }
+            self.labelDetails.text = "You are waiting for someone else to join you for \(category). Click Back to cancel and search for something else."
+
             if self.currentActivity!.valueForKey("status") as? String == "pending" {
                 self.labelTitle.text = "You have received an invitation to bond"
                 self.labelDetails.text = "Loading invitation details."
+                self.constraintInvitationHeight.constant = 81
             }
             else if self.currentActivity!.valueForKey("status") as? String == "declined" {
                 /* TODO - cannot come here. If invitation is declined, it becomes active
@@ -100,14 +112,6 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                 self.progressView.stopActivity()
                 return
             }
-            let category: String = (self.currentActivity!.objectForKey("categories") as! [String])[0]
-            // general info
-            self.labelTitle.text = "You are interested in \(category)"
-            if self.locationString != nil {
-                self.labelTitle.text = "\(self.labelTitle.text!) near \(self.locationString!)"
-            }
-            
-            self.labelDetails.text = "You are waiting for someone else to join you for \(category). Click Back to cancel and search for something else."
             
             // join requests exist
             if let users: [PFUser] = self.currentActivity!.objectForKey("joining") as? [PFUser] {
@@ -118,7 +122,8 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                             self.labelTitle.text = "You have received an invitation from \(name)"
                             self.labelDetails.text = "\(name) wants to bond over \(category)"
                         }
-                        self.goToAcceptInvite(user)
+                        // TODO: goToAccept when clicked
+//                        self.goToAcceptInvite(user)
                     }
                 })
             }
