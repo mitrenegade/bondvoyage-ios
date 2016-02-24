@@ -303,9 +303,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let nav: UINavigationController = presenter as? UINavigationController {
                     if nav.viewControllers.last!.isKindOfClass(MatchStatusViewController) {
                         let matchController: MatchStatusViewController = nav.viewControllers.last! as! MatchStatusViewController
+                        /* TODO
                         matchController.toMatch = nil
                         matchController.fromMatch = fromMatch
                         matchController.refresh()
+                        */
                         return
                     }
                 }
@@ -343,8 +345,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                         else if status == "declined" {
                             let controller: MatchStatusViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MatchStatusViewController") as! MatchStatusViewController
+                            /* TODO
                             controller.toMatch = nil
                             controller.fromMatch = fromMatch
+                            */
                             let nav = UINavigationController(rootViewController: controller)
                             presenter.presentViewController(nav, animated: true, completion: { () -> Void in
                             })

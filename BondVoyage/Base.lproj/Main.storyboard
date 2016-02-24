@@ -127,7 +127,7 @@
                         <outlet property="constraintCategoriesHeight" destination="w2V-Qg-zDR" id="fbb-tr-6Hb"/>
                         <outlet property="tableView" destination="cTU-h3-6Gk" id="uwR-OS-N8W"/>
                         <segue destination="072-If-v9q" kind="show" identifier="GoToInvite" id="tc4-2f-y8p"/>
-                        <segue destination="xUi-91-zgb" kind="show" identifier="GoToMatchStatus" id="WU3-Oy-h5m"/>
+                        <segue destination="xUi-91-zgb" kind="show" identifier="GoToCurrentActivity" id="WU3-Oy-h5m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cg-MI-x4R" userLabel="First Responder" sceneMemberID="firstResponder"/>

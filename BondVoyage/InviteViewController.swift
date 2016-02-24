@@ -135,10 +135,12 @@ class InviteViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "GoToMatchStatus" {
+        if segue.identifier == "GoToCurrentActivity" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
-            controller.requestedMatch = self.fromMatch
+            /* TODO
+            controller.currentActivity = self.fromMatch
             controller.toMatch = self.matches![self.currentPage()]
+            */
         }
     }
 }

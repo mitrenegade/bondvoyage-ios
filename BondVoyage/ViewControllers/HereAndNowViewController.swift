@@ -37,7 +37,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     var clickedAddButton: Bool = false
     
     // from SearchCategoriesDelegate
-    var requestedMatch: PFObject?
+    var currentActivity: PFObject?
     
     var promptedForPush: Bool = false
     
@@ -65,7 +65,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         self.constraintCategoriesHeight.constant = 0
         self.didSelectCategory(nil)
 
-        self.checkForExistingMatch()
+        self.checkForExistingActivity()
         
         // location
         locationManager.delegate = self
@@ -113,20 +113,20 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     // MARK: - API
-    func checkForExistingMatch() {
+    func checkForExistingActivity() {
         if PFUser.currentUser() == nil {
             return
         }
         
-        let query: PFQuery = PFQuery(className: "Match")
+        let query: PFQuery = PFQuery(className: "Activity")
         query.whereKey("user", equalTo: PFUser.currentUser()!)
         query.whereKey("status", notContainedIn: ["cancelled", "declined"])
         query.orderByDescending("updatedAt")
         query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
             if results != nil && results!.count > 0 {
-                print("existing matches: \(results!)")
-                self.requestedMatch = results![0]
-                self.goToMatchStatus(self.requestedMatch!)
+                print("existing activities: \(results!)")
+                self.currentActivity = results![0]
+                self.goToCurrentActivity(self.currentActivity!)
             }
         }
     }
@@ -241,8 +241,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             self.createActivity(category!, completion: { (result, error) -> Void in
                 self.toggleCategories(false)
                 if result != nil {
-                    let match: PFObject = result!
-                    self.goToMatchStatus(match)
+                    let activity: PFObject = result!
+                    self.goToCurrentActivity(activity)
                     self.view.endEditing(true)
                 }
                 else {
@@ -314,15 +314,15 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         // no existing requests exist. Create a request for others to match to
         let categories: [String] = [category]
         ActivityRequest.createActivity(categories, location: self.currentLocation!) { (result, error) -> Void in
-            self.requestedMatch = result
+            self.currentActivity = result
             completion(result: result, error: error)
         }
     }
     
-    func goToMatchStatus(match: PFObject) {
+    func goToCurrentActivity (activity: PFObject) {
         self.hideCategories()
-        self.requestedMatch = match
-        self.performSegueWithIdentifier("GoToMatchStatus", sender: self)
+        self.currentActivity = activity
+        self.performSegueWithIdentifier("GoToCurrentActivity", sender: self)
     }
     
     func goToUser(match: PFObject) {
@@ -363,13 +363,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             let controller: InviteViewController = segue.destinationViewController as! InviteViewController
             let matches: [PFObject] = sender as! [PFObject]
             controller.matches = matches
-            controller.fromMatch = self.requestedMatch
+            // TODO
+//            controller.fromMatch = self.requestedMatch
         }
-        else if segue.identifier == "GoToMatchStatus" {
+        else if segue.identifier == "GoToCurrentActivity" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
-            controller.requestedMatch = self.requestedMatch
-            controller.fromMatch = nil
-            controller.toMatch = nil
+            controller.currentActivity = self.currentActivity
         }
     }
     
