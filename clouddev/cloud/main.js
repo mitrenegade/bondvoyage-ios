@@ -624,7 +624,7 @@ Parse.Cloud.define("joinActivity", function(request, response) {
             activity.addUnique("joining", fromUser)
 
             console.log("Sending push message to activity id " + activity.id)
-            sendPushForActivities(response, activity)
+            sendPushForActivities(response, activity, fromUser)
         },
         function(error) {
             console.log("Could not load activity for connecting")
@@ -716,4 +716,43 @@ Parse.Cloud.define("respondToJoin", function(request, response) {
         }
     )    
 });
+
+var sendPushForActivities = function(response, activity, fromUser) {
+    console.log("inside send push")
+    var toUser = activity.get("user")
+    console.log("from user id " + fromUser.id + " to user id " + toUser.id)
+    var name = fromUser.get("firstName")
+    if (name == undefined) {
+        name = fromUser.get("lastName")
+    }
+    var categories = fromMatch.get("categories")
+    var message = name + " has sent you an invitation to bond over " + categories[0]
+    if (name == undefined) {
+        message = "You have received an invitation to bond over " + categories[0]
+    }
+
+    var toId = toUser.id
+    var channel = "channel" + toId
+    console.log("push message: " + message + " channel: " + channel)
+    Parse.Push.send({
+        channels: [ channel ],
+        data: {
+            alert: message,
+            from: fromUser,
+            activity: activity,
+            sound: "default"
+        }
+    }, {
+        success: function()
+        {
+            console.log("Invite push notification sent to " + channel)
+            response.success()
+            },
+        error: function(error) {
+            // Handle error
+            console.log("Invite push notification failed: " + error)
+            response.error(error)
+            }
+        });
+    }
 
