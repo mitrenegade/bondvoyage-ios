@@ -83,8 +83,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
 
         self.didSelectCategory(nil)
         
-        self.checkForExistingActivity()
-        
         // location
         locationManager.delegate = self
         let loc: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
@@ -105,24 +103,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     // MARK: - API
-    func checkForExistingActivity() {
-        if PFUser.currentUser() == nil {
-            return
-        }
-        
-        let query: PFQuery = PFQuery(className: "Activity")
-        query.whereKey("user", equalTo: PFUser.currentUser()!)
-        query.whereKey("status", notContainedIn: ["cancelled", "declined"])
-        query.orderByDescending("updatedAt")
-        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            if results != nil && results!.count > 0 {
-                print("existing activities: \(results!)")
-                self.currentActivity = results![0]
-                self.goToCurrentActivity(self.currentActivity!)
-            }
-        }
-    }
-    
     func loadActivitiesForCategory(category: String?, user: PFUser?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         var cat: [String]?
         if category != nil {
@@ -262,12 +242,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
         }
-    }
-    
-    func goToCurrentActivity (activity: PFObject) {
-        self.hideCategories()
-        self.currentActivity = activity
-        self.performSegueWithIdentifier("GoToCurrentActivity", sender: self)
     }
     
     func goToUser(activity: PFObject) {

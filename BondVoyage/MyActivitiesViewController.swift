@@ -79,6 +79,12 @@ class MyActivitiesViewController: HereAndNowViewController {
             }
         })
     }
+    
+    func goToCurrentActivity (activity: PFObject) {
+        self.hideCategories()
+        self.currentActivity = activity
+        self.performSegueWithIdentifier("GoToCurrentActivity", sender: self)
+    }
 
     func createActivity(category: String, completion: ((result: PFObject?, error: NSError?)->Void)) {
         if PFUser.currentUser() == nil {

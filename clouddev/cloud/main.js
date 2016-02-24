@@ -579,7 +579,7 @@ Parse.Cloud.define("createActivity", function(request, response) {
 Parse.Cloud.define("queryActivities", function(request, response) {
     //var location = request.params.location // not used
     var categories = request.params.categories
-    var user = request.params.user
+    var userId = request.params.userId
 
     var query = new Parse.Query("Activity")
 
@@ -589,14 +589,6 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         query.containsAll("categories", categories)
     }
     query.descending("updatedAt")
-    if (user == undefined) {
-        // find all activities that do not belong to current user
-        query.notEqualTo("user", request.user)
-    }
-    else {
-        // find all activities that belong to a specified user
-        query.equalTo("user", user)
-    }
     query.notContainedIn("status", ["cancelled", "declined"])
     /*
     if (request.params.lat != undefined && request.params.lon != undefined) {
@@ -605,17 +597,45 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     }
     */
 
-    console.log("calling query.find")
-    query.find({
-        success: function(results) {
-            console.log("Result count " + results.length)
-            response.success(results)
-        },
-        error: function(error) {
-            console.log("query failed: error " + error)
-            response.error(error)
-        }         
-    })
+    if (userId == undefined) {
+        // find all activities that do not belong to current user
+        query.notEqualTo("user", request.user)
+        console.log("calling query.find")
+        query.find({
+            success: function(results) {
+                console.log("Result count " + results.length)
+                response.success(results)
+            },
+            error: function(error) {
+                console.log("query failed: error " + error)
+                response.error(error)
+            }         
+        })
+    }
+    else {
+        // find all activities that belong to a specified user
+        var userQuery = new Parse.Query(Parse.User)
+        userQuery.get(userId, {
+            success: function(user){
+                console.log("calling query.find")
+                query.equalTo("user", user)
+                query.find({
+                    success: function(results) {
+                        console.log("Result count " + results.length)
+                        response.success(results)
+                    },
+                    error: function(error) {
+                        console.log("query failed: error " + error)
+                        response.error(error)
+                    }         
+                })
+            },
+            error: function(error) {
+                console.log("query failed: error " + error)
+                response.error(error)
+            }
+        })
+    }
 });
 
 Parse.Cloud.define("joinActivity", function(request, response) {

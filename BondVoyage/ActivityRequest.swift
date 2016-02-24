@@ -32,7 +32,7 @@ class ActivityRequest: NSObject {
             params["lon"] = location!.coordinate.longitude
         }
         if user != nil {
-            params["user"] = user!
+            params["userId"] = user!.objectId!
         }
         
         PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in
