@@ -295,7 +295,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             activityId = fromMatchId
         }
         
-        let query: PFQuery = PFQuery(className: "Match")
+        let query: PFQuery = PFQuery(className: "Activity")
         query.whereKey("objectId", equalTo: activityId)
         query.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
             if results != nil && results!.count > 0 {
@@ -310,6 +310,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         matchController.refresh()
                         return
                     }
+                }
+                else if let controller: MatchStatusViewController = presenter as? MatchStatusViewController {
+                    controller.currentActivity = activity
+                    controller.refresh()
+                    return
                 }
                 
                 let query: PFQuery = PFUser.query()!

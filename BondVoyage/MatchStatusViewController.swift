@@ -86,14 +86,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         else {
             let category: String = (self.currentActivity!.objectForKey("categories") as! [String])[0]
             // general info
-            self.labelTitle.text = "You are interested in \(category)"
+            self.labelTitle.text = "Activities for \(category)"
             if self.locationString != nil {
-                self.labelTitle.text = "\(self.labelTitle.text!) near \(self.locationString!)"
+                self.labelTitle.text = "Activities for \(category) near \(self.locationString!)"
             }
             self.labelDetails.text = "You are waiting for someone else to join you for \(category). Click Back to cancel and search for something else."
 
             if self.currentActivity!.valueForKey("status") as? String == "pending" {
-                self.labelTitle.text = "You have received an invitation to bond"
+                self.labelDetails.text = "You have received an invitation to bond. Click on each user to accept their bond, or click Back to cancel."
                 self.labelInvitation.text = "Loading invitation details."
                 self.constraintInvitationHeight.constant = 81
                 
@@ -106,8 +106,6 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                         if results != nil && results!.count > 0 {
                             let user: PFUser = results![0] as! PFUser
                             if let name: String = user.objectForKey("firstName") as? String {
-                                self.labelTitle.text = "You have received an invitation from \(name)"
-                                
                                 self.labelInvitation.text = "\(name) wants to bond over \(category)"
                             }
                             
