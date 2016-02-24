@@ -71,9 +71,11 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "GoToMain" {
+            /*
             let nav: UINavigationController = segue.destinationViewController as! UINavigationController
             let controller: HereAndNowViewController = nav.viewControllers[0] as! HereAndNowViewController
             controller.delegate = self
+            */
         }
     }
 }
