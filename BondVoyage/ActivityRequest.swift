@@ -21,7 +21,7 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func queryActivities(location: CLLocation?, user: PFUser?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(location: CLLocation?, user: PFUser?, joining: Bool?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
@@ -33,6 +33,9 @@ class ActivityRequest: NSObject {
         }
         if user != nil {
             params["userId"] = user!.objectId!
+        }
+        if joining != nil {
+            params["joining"] = joining!
         }
         
         PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in

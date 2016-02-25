@@ -580,6 +580,7 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     //var location = request.params.location // not used
     var categories = request.params.categories
     var userId = request.params.userId
+    var joining = request.params.joining
 
     var query = new Parse.Query("Activity")
 
@@ -617,9 +618,15 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         var userQuery = new Parse.Query(Parse.User)
         userQuery.get(userId, {
             success: function(user){
-                console.log("calling query.find")
-                query.equalTo("user", user)
                 query.notContainedIn("status", ["cancelled", "declined"])
+                if (joining != undefined && joining == true) {
+                    query.containsAll("joining", [userId])
+                    console.log("calling query.find for joining " + userId)
+                }
+                else {
+                    query.equalTo("user", user)
+                    console.log("calling query.find for user " + userId)
+                }
                 query.find({
                     success: function(results) {
                         console.log("Result count " + results.length)

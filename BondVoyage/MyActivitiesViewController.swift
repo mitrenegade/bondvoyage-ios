@@ -10,6 +10,10 @@ import UIKit
 import Parse
 
 class MyActivitiesViewController: HereAndNowViewController {
+    
+    var myActivities: [PFObject]?
+    var myJoiningActivities: [PFObject]?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,46 +27,63 @@ class MyActivitiesViewController: HereAndNowViewController {
     }
     
     override func setup() {
-        self.loadActivitiesForCategory(nil, user: PFUser.currentUser()) { (results, error) -> Void in
+        self.loadActivitiesForCategory(nil, user: PFUser.currentUser(), joining: false) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
-                    
-                    if self.selectedCategory == nil {
-                        self.nearbyActivities = results
-                    }
-                    else {
-                        self.filteredActivities = results
-                    }
+                    self.myActivities = results
                     self.tableView.reloadData()
                     self.hideCategories()
                 }
-                else {
-                    // no results, no error
-                    var message = ""
-                    if self.selectedCategory == nil {
-                        message = "There are no activities near you."
-                        self.nearbyActivities = nil
-                        self.tableView.reloadData()
-                    }
-                    else {
-                        message = "There is no one interested in \(self.selectedCategory!) near you."
-                        self.filteredActivities = nil
-                    }
-                    
-                    if PFUser.currentUser() != nil {
-                        message = "\(message) Click the button to add your own activity."
-                    }
-                    
+            }
+        }
+        self.loadActivitiesForCategory(nil, user: PFUser.currentUser(), joining: true) { (results, error) -> Void in
+            if results != nil {
+                if results!.count > 0 {
+                    self.myJoiningActivities = results
                     self.tableView.reloadData()
                     self.hideCategories()
-                    
-                    self.simpleAlert("No activities nearby", message:message)
                 }
             }
-            else {
-                let message = "There was a problem loading matches. Please try again"
-                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+        }
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "My activities"
+        }
+        else {
+            return "Activities I'm joining"
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
+        cell.adjustTableViewCellSeparatorInsets(cell)
+        if indexPath.section == 0 && self.myActivities != nil {
+            cell.configureCellForUser(self.myActivities![indexPath.row])
+        }
+        else if indexPath.section == 1 && self.myJoiningActivities != nil {
+            cell.configureCellForUser(self.myJoiningActivities![indexPath.row])
+        }
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            if self.myActivities == nil {
+                return 0
             }
+            return self.myActivities!.count
+        }
+        else {
+            if self.myJoiningActivities == nil {
+                return 0
+            }
+            return self.myJoiningActivities!.count
         }
     }
     

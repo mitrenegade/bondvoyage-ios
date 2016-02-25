@@ -103,12 +103,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     // MARK: - API
-    func loadActivitiesForCategory(category: String?, user: PFUser?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    func loadActivitiesForCategory(category: String?, user: PFUser?, joining: Bool?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         var cat: [String]?
         if category != nil {
             cat = [category!]
         }
-        ActivityRequest.queryActivities(self.currentLocation, user: user, categories: cat) { (results, error) -> Void in
+        ActivityRequest.queryActivities(self.currentLocation, user: user, joining: joining, categories: cat) { (results, error) -> Void in
             completion(results: results, error: error)
         }
     }
@@ -194,7 +194,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func didSelectCategory(category: String?) {
         // first query for existing bond requests
         self.selectedCategory = category
-        self.loadActivitiesForCategory(category?.lowercaseString, user: nil) { (results, error) -> Void in
+        self.loadActivitiesForCategory(category?.lowercaseString, user: nil, joining: false) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     
