@@ -111,6 +111,13 @@ extension PFObject {
         return false
     }
     
+    func isAcceptedActivity() -> Bool {
+        if let status = self.objectForKey("status") as? String {
+            return status == "matched"
+        }
+        return false
+    }
+    
     func suggestedPlaces() -> [[String: String]] {
         if let places: [[String: String]] = self.objectForKey("places") as? [[String: String]] {
             return places
