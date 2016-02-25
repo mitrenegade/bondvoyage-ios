@@ -698,60 +698,44 @@ Parse.Cloud.define("cancelActivity", function(request, response) {
 });
 
 Parse.Cloud.define("respondToJoin", function(request, response) {
-    // TODO: implement
-
-    // declined and accepted is sent by the invitee; cancelled is sent by the inviter
-    var fromId = request.params.from
-    var toId = request.params.to
+    var activityId = request.params.activity
     var responseType = request.params.responseType // "declined", "cancelled", "accepted"
-    console.log("RespondToInvite from " + fromId + " to " + toId + " responseType " + responseType)
-    var query = new Parse.Query("Match")
-    query.get(fromId).then(
-        function(fromMatch) {
-            fromMatch.set("status", responseType)
-            if (responseType == undefined) {
-                fromMatch.set("status", "cancelled")
+    console.log("RespondToInvite for activity " + activityId + " responseType " + responseType)
+    var query = new Parse.Query("Activity")
+    query.get(activityId).then(
+        function(activity) {
+            if (responseType == undefined || responseType == "cancelled" || responseType == "declined") {
+                // reset status so invitee can continue to be invited
+                activity.set("status", "active")
             }
-            fromMatch.save()
-            var queryTo = new Parse.Query("Match")
-            queryTo.get(toId).then(
-                function(toMatch) {
-                    if (responseType == undefined || responseType == "cancelled" || responseType == "declined") {
-                        // reset status so invitee can continue to be invited
-                        toMatch.set("status", "active")
-                        toMatch.unset("inviteFrom")
+            else {
+                activity.set("status", "matched")
+            }
+            activity.save().then(
+                function(object) {
+                    console.log("RespondToInvite completed")
+                    if (responseType == undefined || responseType == "cancelled") {
+                        console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
+                        sendPushForActivityResponse(response, activity, responseType)
                     }
-                    toMatch.save().then(
-                        function(object) {
-                            console.log("RespondToInvite completed")
-                            if (responseType == undefined || responseType == "cancelled") {
-                                console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
-                                sendPushForInvitationResponse(response, fromMatch, toMatch, responseType)
-                            }
-                            else if (responseType == "declined" || responseType == "accepted") {
-                                console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
-                                sendPushForInvitationResponse(response, fromMatch, toMatch, responseType)
-                            }
-                            else {
-                                console.log("here")
-                                response.error("Invalid response type")
-                            }
-                        },
-                        function(error) {
-                            console.log("error in RespondToInvite: " + error)
-                            response.error(error)
-                        }
-                    )
+                    else if (responseType == "declined" || responseType == "accepted") {
+                        console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
+                        sendPushForActivityResponse(response, activity, responseType)
+                    }
+                    else {
+                        console.log("here")
+                        response.error("Invalid response type")
+                    }
                 },
                 function(error) {
-                    console.log("Could not load match for RespondToInvite")
-                    response.error("Could not find match to respond to")
+                    console.log("error in RespondToInvite: " + error)
+                    response.error(error)
                 }
-            )    
+            )
         },
         function(error) {
-            console.log("Could not load match for RespondToInvite")
-            response.error("Could not find match to respond to")
+            console.log("Could not load activity for RespondToInvite")
+            response.error("Could not respond to the invitation")
         }
     )    
 });
@@ -795,3 +779,43 @@ var sendPushForActivities = function(response, activity, fromUser) {
         });
     }
 
+var sendPushForActivityResponse = function(response, activity, status) {
+    console.log("inside send push")
+    // In this case, the push goes from user to joiner
+    var user = activity.get("user")
+    var joinerId = activity.get("joining")[0]
+    console.log("from user id " + user.id + " to user id " + joinerId)
+    var name = user.get("firstName")
+    if (name == undefined) {
+        name = user.get("lastName")
+    }
+    var categories = activity.get("categories")
+    var message = name + " has " + status + " your invitation to bond over " + categories[0]
+    if (name == undefined) {
+        message = "Your invitation to bond over " + categories[0] + " was " + status
+    }
+
+    var channel = "channel" + joinerId
+    console.log("push message: " + message + " channel: " + channel)
+    Parse.Push.send({
+        channels: [ channel ],
+        data: {
+            alert: message,
+            invitedUser: user,
+            invitationStatus: status,
+            activity: activity,
+            sound: "default"
+        }
+    }, {
+        success: function()
+        {
+            console.log("Invitation status push notification sent to " + channel)
+            response.success()
+            },
+        error: function(error) {
+            // Handle error
+            console.log("Invitation status push notification failed: " + error)
+            response.error(error)
+            }
+        });
+    }

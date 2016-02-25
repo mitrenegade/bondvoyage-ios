@@ -57,12 +57,12 @@ class ActivityRequest: NSObject {
     }
     
     // TODO: accept another user to join
-    class func acceptJoin(activity: PFObject, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+    class func respondToJoin(activity: PFObject, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
         var params =  ["activity": activity.objectId!]
         if responseType != nil {
             params["responseType"] = responseType
         }
-        PFCloud.callFunctionInBackground("acceptJoin", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("respondToJoin", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             completion(results: results, error: error)
         }

@@ -135,7 +135,12 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     @IBAction func didClickButton(button: UIButton) {
         if button == self.buttonGo {
             print("Go")
-            self.goToJoinActivity()
+            if self.isJoinRequest {
+                self.goToJoinActivity()
+            }
+            else {
+                self.goToAcceptInvitation()
+            }
         }
         else if button == self.buttonNext {
             /* NOT USED
@@ -164,6 +169,18 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
                 print("here")
             }
         })
+    }
+
+    func goToAcceptInvitation() {
+        ActivityRequest.respondToJoin(self.currentActivity!, responseType: "accepted") { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not accept invitation", defaultMessage: "Please try again", error: error)
+            }
+            else {
+                print("invitation done")
+                // TODO:
+            }
+        }
     }
 
     /*
