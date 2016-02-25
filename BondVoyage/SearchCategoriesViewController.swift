@@ -26,9 +26,6 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        for _ in CategoryFactory.categories() {
-            expanded.append(false)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,12 +36,21 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.closeCategories()
+
         if PFUser.currentUser() == nil {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
         }
         else {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
         }
+    }
+    
+    func closeCategories() {
+        for _ in CategoryFactory.categories() {
+            expanded.append(false)
+        }
+        self.tableView.reloadData()
     }
     
     // MARK: - UITableViewDataSource
@@ -100,7 +106,25 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             let subs = CategoryFactory.subCategories(category)
             let index = indexPath.row - 1
             let subcategory: String = subs[index]
+            
+            self.selectCategory(subcategory)
+        }
+    }
+    
+    func selectCategory(subcategory: String) {
+        if self.delegate != nil {
+            // this controller used as a filter
             self.delegate?.didSelectCategory(subcategory)
+        }
+        else {
+            self.performSegueWithIdentifier("GoToNewActivity", sender: subcategory)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToNewActivity" {
+            let controller: NewActivityViewController = segue.destinationViewController as! NewActivityViewController
+            controller.selectedCategory = sender as? String
         }
     }
 }
