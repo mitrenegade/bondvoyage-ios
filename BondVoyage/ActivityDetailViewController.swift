@@ -177,7 +177,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             let place: BVPlace = self.places.values.first!
             let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
             controller.place = place
-            controller.isJoinRequest = false
+            controller.isRequestingJoin = self.isRequestingJoin
+            controller.isRequestedJoin = self.activity.isJoiningActivity()
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }

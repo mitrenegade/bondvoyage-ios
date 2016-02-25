@@ -98,6 +98,19 @@ extension PFObject {
         return false
     }
     
+    func isJoiningActivity() -> Bool {
+        if PFUser.currentUser() == nil {
+            return false
+        }
+        if let joining = self.objectForKey("joining") as? [String] {
+            if joining.contains(PFUser.currentUser()!.objectId!) {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     func suggestedPlaces() -> [[String: String]] {
         if let places: [[String: String]] = self.objectForKey("places") as? [[String: String]] {
             return places

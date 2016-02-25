@@ -36,7 +36,8 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     var marker: GMSMarker!
     var currentActivity: PFObject?
     
-    var isJoinRequest: Bool = false
+    var isRequestingJoin: Bool = false // true if the user is suggesting this place as part of an invitation
+    var isRequestedJoin: Bool = false // true if the user has already suggested this place
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -53,8 +54,11 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             self.currentPage = self.recommendations!.indexOf(self.place)!
         }
         
-        if self.isJoinRequest {
+        if self.isRequestingJoin {
             self.buttonGo.setTitle("SEND INVITATION TO BOND", forState: .Normal)
+        }
+        else if self.isRequestedJoin {
+            self.buttonGo.hidden = true
         }
         else {
             self.buttonGo.setTitle("ACCEPT THIS INVITATION", forState: .Normal)
@@ -135,7 +139,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     @IBAction func didClickButton(button: UIButton) {
         if button == self.buttonGo {
             print("Go")
-            if self.isJoinRequest {
+            if self.isRequestingJoin {
                 self.goToJoinActivity()
             }
             else {
