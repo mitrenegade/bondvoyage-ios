@@ -28,6 +28,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
 
     var activity: PFObject!
     var isRequestingJoin: Bool = false
+
+    var allUserIds: [String] = []
+    var users: [String: PFUser] = [:]
+    var places: [String: BVPlace] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +44,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: "goToSelectPlace")
         }
         
+        self.reloadSuggestedPlaces()
         self.refresh()
     }
 
@@ -50,6 +55,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     func refresh() {
         self.constraintTableHeight.constant = CGFloat(40 * self.tableView.numberOfRowsInSection(0))
+        self.tableView.reloadData()
         
         if self.activity.lat() == nil && self.activity.lon() == nil {
             self.constraintMapHeight.constant = 0
@@ -67,6 +73,38 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func reloadSuggestedPlaces() {
+        let dictArray: [[String: String]] = self.activity.suggestedPlaces()
+        for dict: [String: String] in dictArray {
+            for (userId, placeId) in dict {
+                // load user
+                let query: PFQuery = PFUser.query()!
+                query.whereKey("objectId", equalTo: userId)
+                query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                    if results != nil && results!.count > 0 {
+                        let user: PFUser = results![0] as! PFUser
+                        self.users[userId] = user
+                        if self.allUserIds.contains(userId) == false {
+                            self.allUserIds.append(userId)
+                        }
+                        self.refresh()
+                    }
+                }
+                
+                // load place
+                GoogleDataProvider.placeWithId(placeId, completion: { (place, error) -> Void in
+                    if place != nil {
+                        self.places[userId] = BVPlace(gPlace:place!)
+                        if self.allUserIds.contains(userId) == false {
+                            self.allUserIds.append(userId)
+                        }
+                        self.refresh()
+                    }
+                })
+            }
+        }
+    }
+    
     func goToSelectPlace() {
         let controller: SuggestedPlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("SuggestedPlacesViewController") as! SuggestedPlacesViewController
         controller.currentActivity = self.activity
@@ -79,11 +117,39 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return self.allUserIds.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as! ActivitiesCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as! UITableViewCell
+        let userId: String = self.allUserIds[indexPath.row]
+        
+        let user: PFUser? = self.users[userId]
+        let place: BVPlace? = self.places[userId]
+
+        var name: String?
+        if user != nil {
+            name = user!.valueForKey("firstName") as? String
+            if name == nil {
+                name = user!.valueForKey("lastName") as? String
+            }
+            if name == nil {
+                name = user!.username
+            }
+        }
+        
+        var title = ""
+        if name != nil && place?.name != nil {
+            title = "\(name!) wants to meet up at \(place!.name!)"
+        }
+        else if name != nil {
+            title = "\(name!) wants to meet up"
+        }
+        else if place?.name != nil {
+            title = "\(place!.name!) was suggested"
+        }
+        
+        cell.textLabel!.text = title
         
         return cell
     }
@@ -91,16 +157,6 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-    }
-
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GoToActivityDetail" {
-            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
-            controller.activity = sender as! PFObject
-            controller.isRequestingJoin = false
-        }
     }
 
 }

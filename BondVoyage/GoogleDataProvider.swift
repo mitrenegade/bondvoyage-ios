@@ -218,4 +218,10 @@ class GoogleDataProvider {
         }
     }
 
+    
+    // iOS sdk
+    class func placeWithId(placeid: String, completion: ((GMSPlace?, NSError?) -> Void)) -> () {
+        let placeClient = GMSPlacesClient()
+        placeClient.lookUpPlaceID(placeid, callback: completion)
+    }
 }

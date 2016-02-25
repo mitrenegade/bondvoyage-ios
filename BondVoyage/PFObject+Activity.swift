@@ -87,4 +87,21 @@ extension PFObject {
         }
         return nil
     }
+    
+    func isOwnActivity() -> Bool {
+        if PFUser.currentUser() == nil {
+            return false
+        }
+        if PFUser.currentUser()!.objectId == self.user().objectId {
+            return true
+        }
+        return false
+    }
+    
+    func suggestedPlaces() -> [[String: String]] {
+        if let places: [[String: String]] = self.objectForKey("places") as? [[String: String]] {
+            return places
+        }
+        return []
+    }
 }
