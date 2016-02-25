@@ -562,6 +562,10 @@ Parse.Cloud.define("createActivity", function(request, response) {
         activity.set("geopoint", geopoint)
     }
 
+    if (request.params.locationString != undefined) {
+        activity.set("locationString", request.params.locationString)
+    }
+
     // todo: time
 
     activity.save().then(

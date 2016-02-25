@@ -34,9 +34,9 @@ extension PFObject {
         return ""
     }
     
-    func city() -> String? {
-        if let city: String? = self.objectForKey("city") as? String {
-            return city
+    func locationString() -> String? {
+        if let locationString: String? = self.objectForKey("locationString") as? String {
+            return locationString
         }
         return nil
     }
@@ -61,14 +61,14 @@ extension PFObject {
         }
         
         var title = "\(self.category())"
-        if name != nil && self.city() != nil {
-            title = "\(self.category()) with \(name!) in \(self.city()!)"
+        if name != nil && self.locationString() != nil {
+            title = "\(self.category()) with \(name!) in \(self.locationString()!)"
         }
         else if name != nil {
             title = "\(title) with \(name!)"
         }
-        else if self.city() != nil {
-            title = "\(title) in \(self.city()!)"
+        else if self.locationString() != nil {
+            title = "\(title) in \(self.locationString()!)"
         }
         
         return title

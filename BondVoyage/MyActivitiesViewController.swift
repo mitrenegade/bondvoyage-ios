@@ -28,6 +28,8 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         self.navigationController!.navigationBar.addSubview(imageView)
         
         self.setup()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:created", object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -120,51 +122,6 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
     }
 
-    /*
-    func add(category: String?) {
-        self.createActivity(category!, completion: { (result, error) -> Void in
-            self.toggleCategories(false)
-            if result != nil {
-                let activity: PFObject = result!
-                self.goToCurrentActivity(activity)
-                self.view.endEditing(true)
-            }
-            else {
-                self.simpleAlert("Could not create activity", defaultMessage: "We could not create an activity for \(category!)", error: error)
-            }
-        })
-    }
-    
-    func goToCurrentActivity (activity: PFObject) {
-        self.hideCategories()
-        self.currentActivity = activity
-        self.performSegueWithIdentifier("GoToCurrentActivity", sender: self)
-    }
-
-    func createActivity(category: String, completion: ((result: PFObject?, error: NSError?)->Void)) {
-        if PFUser.currentUser() == nil {
-            completion(result: nil, error: nil)
-            return
-        }
-        if self.currentLocation == nil {
-            if TESTING {
-                self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
-            }
-            else {
-                self.warnForLocationAvailability()
-                completion(result: nil, error: nil)
-                return
-            }
-        }
-        // no existing requests exist. Create a request for others to match to
-        let categories: [String] = [category]
-        ActivityRequest.createActivity(categories, location: self.currentLocation!) { (result, error) -> Void in
-            self.currentActivity = result
-            completion(result: result, error: error)
-        }
-    }
-    */
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToActivityDetail" {
             let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController

@@ -1063,6 +1063,7 @@
                         <outlet property="inputStreet" destination="eQt-lh-oWt" id="ttQ-yw-Utw"/>
                         <outlet property="mapView" destination="xAJ-eR-FXe" id="6qJ-MU-tiO"/>
                         <outlet property="viewAddress" destination="3fy-hv-6Pd" id="CWA-vl-voW"/>
+                        <segue destination="BDS-Ez-vG3" kind="show" identifier="GoToActivityDetail" id="d5p-Y8-aSj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e78-KW-nNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1080,7 +1081,7 @@
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zua-Tk-rJN"/>
         <segue reference="N0N-Jc-ivY"/>
+        <segue reference="d5p-Y8-aSj"/>
     </inferredMetricsTieBreakers>
 </document>

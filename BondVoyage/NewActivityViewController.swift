@@ -55,7 +55,10 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
         
         self.setTitleBarColor(UIColor.blackColor(), tintColor: UIColor.whiteColor())
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        
+
+        if TESTING {
+            self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -76,7 +79,7 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
     }
 
     func warnForLocationPermission() {
-        let message: String = "WeTrain needs GPS access to find trainers near you. Please go to your phone settings to enable location access. Go there now?"
+        let message: String = "BondVoyage needs GPS access to find matches near you. Please go to your phone settings to enable location access. Go there now?"
         let alert: UIAlertController = UIAlertController(title: "Could not access location", message: message, preferredStyle: .Alert)
         alert.view.tintColor = UIColor.blackColor()
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
@@ -159,7 +162,7 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
                                     self.inputCity.text = lines[1] as? String
                                 }
                                 else {
-                                    self.inputCity.text = ""
+                                    self.inputCity.text = nil
                                 }
                             }
                         }
@@ -177,5 +180,26 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
             return
         }
 
+        ActivityRequest.createActivity([self.selectedCategory!], location: self.currentLocation!, locationString: self.inputCity.text) { (result, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not create activity", defaultMessage: "There was an error creating a new activity.", error: error)
+            }
+            else {
+                self.performSegueWithIdentifier("GoToActivityDetail", sender: result)
+                NSNotificationCenter.defaultCenter().postNotificationName("activity:created", object: nil)
+            }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToActivityDetail" {
+            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
+            controller.activity = sender as! PFObject
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "closeDetail")
+        }
+    }
+    
+    func closeDetail() {
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
 }
