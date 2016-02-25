@@ -13,8 +13,13 @@ import Parse
 class ActivityRequest: NSObject {
 
     // User creates a new activity that is available for others to join
-    class func createActivity(categories: [String], location: CLLocation, completion: ((result: PFObject?, error: NSError?)->Void)) {
-        PFCloud.callFunctionInBackground("createActivity", withParameters: ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude]) { (results, error) -> Void in
+    class func createActivity(categories: [String], location: CLLocation, locationString: String?, completion: ((result: PFObject?, error: NSError?)->Void)) {
+        var params: [String: AnyObject] = ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude]
+        if locationString != nil {
+            params["locationString"] = locationString!
+        }
+        
+        PFCloud.callFunctionInBackground("createActivity", withParameters: params) { (results, error) -> Void in
             print("results: \(results)")
             let activity: PFObject? = results as? PFObject
             completion(result: activity, error: error)
