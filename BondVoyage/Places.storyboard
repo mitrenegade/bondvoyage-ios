@@ -85,7 +85,7 @@
         <!--Places View Controller-->
         <scene sceneID="Dq6-4Y-5D3">
             <objects>
-                <viewController storyboardIdentifier="placesID" id="872-2L-cS6" customClass="PlacesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlacesViewController" id="872-2L-cS6" customClass="PlacesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JTg-wO-4ec"/>
                         <viewControllerLayoutGuide type="bottom" id="EhZ-Lt-Lzf"/>

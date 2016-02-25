@@ -330,7 +330,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         if status == "pending" {
                             let user: PFUser = results![0] as! PFUser
                             
-                            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+                            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                             controller.invitingUser = user
                             controller.invitingMatch = fromMatch
                             controller.title = "Invite"
@@ -341,7 +341,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                         else if status == "accepted" {
                             // goToPlaces
-                            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+                            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
                             controller.relevantInterests = categories
                             
                             let nav = UINavigationController(rootViewController: controller)

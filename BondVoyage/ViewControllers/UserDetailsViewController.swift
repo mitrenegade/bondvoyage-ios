@@ -169,7 +169,7 @@ class UserDetailsViewController: UIViewController {
     }
     
     func goToPlaces() {
-        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
         controller.relevantInterests = self.relevantInterests
         self.navigationController?.pushViewController(controller, animated: true)
     }

@@ -170,7 +170,23 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        // place
+        if self.places.count > 0 {
+            let place: BVPlace = self.places.values.first!
+            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
+            controller.place = place
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 
+    @IBAction func didClickUserButton(sender: UIButton) {
+        // user button
+        if self.users.count > 0 {
+            let user: PFUser = self.users.values.first!
+            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+            controller.selectedUser = user
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
 }

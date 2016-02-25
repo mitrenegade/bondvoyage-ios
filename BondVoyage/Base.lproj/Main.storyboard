@@ -124,7 +124,7 @@
         <!--User Details View Controller-->
         <scene sceneID="jZv-gK-TaP">
             <objects>
-                <viewController storyboardIdentifier="userDetailsID" automaticallyAdjustsScrollViewInsets="NO" id="kYs-rw-dsY" customClass="UserDetailsViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserDetailsViewController" automaticallyAdjustsScrollViewInsets="NO" id="kYs-rw-dsY" customClass="UserDetailsViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZmY-cK-3ui"/>
                         <viewControllerLayoutGuide type="bottom" id="NCC-0y-kZ8"/>
@@ -268,7 +268,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSC-O3-f06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1955" y="-1850"/>
+            <point key="canvasLocation" x="2067" y="-1536"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hPb-Oy-a3a">
@@ -627,12 +627,22 @@
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WhW-wC-nSW">
+                                                                    <rect key="frame" x="8" y="10" width="60" height="60"/>
+                                                                    <connections>
+                                                                        <action selector="didClickUserButton:" destination="BDS-Ez-vG3" eventType="touchUpInside" id="BKx-nB-90A"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <constraints>
+                                                                <constraint firstItem="WhW-wC-nSW" firstAttribute="trailing" secondItem="mgb-pw-Vbw" secondAttribute="trailing" id="1EI-zH-zaf"/>
                                                                 <constraint firstItem="mgb-pw-Vbw" firstAttribute="top" secondItem="F9A-iM-Fl1" secondAttribute="topMargin" constant="2" id="7V3-V1-uAW"/>
                                                                 <constraint firstItem="dJV-f8-yjv" firstAttribute="top" secondItem="dOy-jy-8jQ" secondAttribute="bottom" constant="3" id="Aqw-zr-hLh"/>
                                                                 <constraint firstItem="dOy-jy-8jQ" firstAttribute="trailing" secondItem="F9A-iM-Fl1" secondAttribute="trailingMargin" id="MAJ-9q-Bjs"/>
                                                                 <constraint firstItem="dJV-f8-yjv" firstAttribute="leading" secondItem="mgb-pw-Vbw" secondAttribute="trailing" constant="8" id="QyX-Wa-g4D"/>
+                                                                <constraint firstItem="WhW-wC-nSW" firstAttribute="leading" secondItem="mgb-pw-Vbw" secondAttribute="leading" id="Rpg-zt-gWg"/>
+                                                                <constraint firstItem="WhW-wC-nSW" firstAttribute="bottom" secondItem="mgb-pw-Vbw" secondAttribute="bottom" id="Ubk-GY-wzK"/>
+                                                                <constraint firstItem="WhW-wC-nSW" firstAttribute="top" secondItem="mgb-pw-Vbw" secondAttribute="top" id="Uuz-nk-SV6"/>
                                                                 <constraint firstItem="dOy-jy-8jQ" firstAttribute="top" secondItem="F9A-iM-Fl1" secondAttribute="topMargin" constant="2" id="WkD-hG-9LF"/>
                                                                 <constraint firstItem="dJV-f8-yjv" firstAttribute="trailing" secondItem="F9A-iM-Fl1" secondAttribute="trailingMargin" id="Z7j-zg-10F"/>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="mgb-pw-Vbw" secondAttribute="bottom" constant="1.5" id="aEr-fn-g31"/>

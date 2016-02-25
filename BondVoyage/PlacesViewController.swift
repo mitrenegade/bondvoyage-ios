@@ -71,10 +71,10 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         self.marker = GMSMarker(position: coordinate)
         self.marker.map = self.mapView
         
+        self.constraintIconWidth.constant = 0
         if let iconURLString = self.place.iconURL {
             self.iconView.imageURL = NSURL(string: iconURLString)
             // for now no icon - should be something more business specific
-            self.constraintIconWidth.constant = 0
         }
         
         if place.photo != nil {
