@@ -54,14 +54,18 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
-        self.constraintTableHeight.constant = CGFloat(40 * self.tableView.numberOfRowsInSection(0))
+        self.constraintTableHeight.constant = CGFloat(80 * self.tableView.numberOfRowsInSection(0))
         self.tableView.reloadData()
         
         if self.activity.lat() == nil && self.activity.lon() == nil {
             self.constraintMapHeight.constant = 0
         }
         else {
-            let coordinate = CLLocationCoordinate2D(latitude: self.activity.lat()!, longitude: self.activity.lon()!)
+            var coordinate = CLLocationCoordinate2D(latitude: self.activity.lat()!, longitude: self.activity.lon()!)
+            if self.places.count > 0 {
+                let place: BVPlace = self.places.values.first!
+                coordinate = place.coordinate
+            }
             let camera = GMSCameraPosition.cameraWithTarget(coordinate, zoom: 17)
             self.mapView.camera = camera
             
@@ -120,6 +124,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         return self.allUserIds.count
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as! UITableViewCell
         let userId: String = self.allUserIds[indexPath.row]
@@ -127,6 +135,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         let user: PFUser? = self.users[userId]
         let place: BVPlace? = self.places[userId]
 
+        let imageView: AsyncImageView = cell.viewWithTag(1) as! AsyncImageView
+        let labelName: UILabel = cell.viewWithTag(2) as! UILabel
+        let labelPlace: UILabel = cell.viewWithTag(3) as! UILabel
+        
         var name: String?
         if user != nil {
             name = user!.valueForKey("firstName") as? String
@@ -136,20 +148,22 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             if name == nil {
                 name = user!.username
             }
+            
+            if name != nil {
+                labelName.text = "\(name!) wants to meet up"
+            }
+            
+            if let url: String = user?.objectForKey("photoUrl") as? String {
+                imageView.imageURL = NSURL(string: url)
+            }
+            
+            imageView.layer.cornerRadius = imageView.frame.size.width / 2
+            imageView.contentMode = .ScaleAspectFill
         }
         
-        var title = ""
-        if name != nil && place?.name != nil {
-            title = "\(name!) wants to meet up at \(place!.name!)"
+        if place?.name != nil {
+            labelPlace.text = "at \(place!.name!)"
         }
-        else if name != nil {
-            title = "\(name!) wants to meet up"
-        }
-        else if place?.name != nil {
-            title = "\(place!.name!) was suggested"
-        }
-        
-        cell.textLabel!.text = title
         
         return cell
     }
