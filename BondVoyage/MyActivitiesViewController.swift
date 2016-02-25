@@ -9,16 +9,25 @@
 import UIKit
 import Parse
 
-class MyActivitiesViewController: HereAndNowViewController {
+class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var tableView: UITableView!
+
     var myActivities: [PFObject]?
     var myJoiningActivities: [PFObject]?
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // configure title bar
+        let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
+        imageView.frame = CGRectMake(0, 0, 150, 44)
+        imageView.contentMode = .ScaleAspectFit
+        imageView.backgroundColor = Constants.lightBlueColor()
+        imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
+        self.navigationController!.navigationBar.addSubview(imageView)
+        
+        self.setup()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,28 +35,27 @@ class MyActivitiesViewController: HereAndNowViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func setup() {
-        self.loadActivitiesForCategory(nil, user: PFUser.currentUser(), joining: false) { (results, error) -> Void in
+    func setup() {
+        ActivityRequest.queryActivities(nil, user: PFUser.currentUser(), joining: false, categories: nil) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     self.myActivities = results
                     self.tableView.reloadData()
-                    self.hideCategories()
                 }
             }
         }
-        self.loadActivitiesForCategory(nil, user: PFUser.currentUser(), joining: true) { (results, error) -> Void in
+        ActivityRequest.queryActivities(nil, user: PFUser.currentUser(), joining: true, categories: nil) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     self.myJoiningActivities = results
                     self.tableView.reloadData()
-                    self.hideCategories()
                 }
             }
         }
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    // MARK: - UITableViewDataSource
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
@@ -60,7 +68,11 @@ class MyActivitiesViewController: HereAndNowViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 180
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         if indexPath.section == 0 && self.myActivities != nil {
@@ -72,7 +84,7 @@ class MyActivitiesViewController: HereAndNowViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if self.myActivities == nil {
                 return 0
@@ -87,6 +99,28 @@ class MyActivitiesViewController: HereAndNowViewController {
         }
     }
     
+    // MARK: - UITableViewDelegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if PFUser.currentUser() == nil {
+            self.simpleAlert("Please log in", message: "Log in or create an account to view someone's profile")
+            return
+        }
+        
+        if indexPath.section == 0 {
+            let activity: PFObject = self.myActivities![indexPath.row]
+            self.goToActivity(activity)
+        }
+        else {
+            let activity: PFObject = self.myJoiningActivities![indexPath.row]
+            self.goToActivity(activity)
+        }
+    }
+
+    func goToActivity(activity: PFObject) {
+        self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
+    }
+
+    /*
     func add(category: String?) {
         self.createActivity(category!, completion: { (result, error) -> Void in
             self.toggleCategories(false)
@@ -129,6 +163,7 @@ class MyActivitiesViewController: HereAndNowViewController {
             completion(result: result, error: error)
         }
     }
+    */
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToActivityDetail" {

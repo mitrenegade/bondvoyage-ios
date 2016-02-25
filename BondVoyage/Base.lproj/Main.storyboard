@@ -966,7 +966,6 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="VA4-4Y-lAK"/>
                     <connections>
-                        <outlet property="constraintCategoriesHeight" destination="n93-2N-A3C" id="Rlx-AU-S3S"/>
                         <outlet property="tableView" destination="2X0-Yd-p9Z" id="Ga5-rF-wZ8"/>
                         <segue destination="BDS-Ez-vG3" kind="show" identifier="GoToActivityDetail" id="zua-Tk-rJN"/>
                     </connections>

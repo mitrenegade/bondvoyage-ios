@@ -27,8 +27,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     // search results
     @IBOutlet weak var tableView: UITableView!
-    var selectedUser: PFUser?
-    var recommendations: [PFObject]?
     
     // tableview data
     var selectedCategory: String?
@@ -101,17 +99,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
     }
-
-    // MARK: - API
-    func loadActivitiesForCategory(category: String?, user: PFUser?, joining: Bool?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
-        var cat: [String]?
-        if category != nil {
-            cat = [category!]
-        }
-        ActivityRequest.queryActivities(self.currentLocation, user: user, joining: joining, categories: cat) { (results, error) -> Void in
-            completion(results: results, error: error)
-        }
-    }
     
     // MARK: - UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -164,8 +151,14 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         
-        let activity: PFObject = self.nearbyActivities![indexPath.row]
-        self.goToActivity(activity)
+        if self.selectedCategory == nil {
+            let activity: PFObject = self.nearbyActivities![indexPath.row]
+            self.goToActivity(activity)
+        }
+        else {
+            let activity: PFObject = self.filteredActivities![indexPath.row]
+            self.goToActivity(activity)
+        }
     }
     
     func toggleCategories(show: Bool) {
@@ -194,7 +187,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func didSelectCategory(category: String?) {
         // first query for existing bond requests
         self.selectedCategory = category
-        self.loadActivitiesForCategory(category?.lowercaseString, user: nil, joining: false) { (results, error) -> Void in
+        var cat: [String]?
+        if category != nil {
+            cat = [category!]
+        }
+        ActivityRequest.queryActivities(self.currentLocation, user: nil, joining: false, categories: cat) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     
