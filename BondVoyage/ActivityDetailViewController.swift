@@ -43,6 +43,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         if self.isRequestingJoin {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: "goToSelectPlace")
         }
+        self.mapView.userInteractionEnabled = false
         
         self.reloadSuggestedPlaces()
         self.refresh()
@@ -176,6 +177,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             let place: BVPlace = self.places.values.first!
             let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
             controller.place = place
+            controller.isJoinRequest = false
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }

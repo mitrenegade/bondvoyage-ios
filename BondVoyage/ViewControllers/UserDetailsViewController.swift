@@ -51,7 +51,6 @@ class UserDetailsViewController: UIViewController {
                 self.configureDetailsForUser()
             })
         }
-        self.configureUI()
         
         self.nameLabel!.layer.shadowOpacity = 1
         self.nameLabel!.layer.shadowRadius = 2
@@ -72,6 +71,12 @@ class UserDetailsViewController: UIViewController {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Decline", style: .Done, target: self, action: "declineInvitation")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Accept", style: .Done, target: self, action: "acceptInvitation")
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.configureUI()
     }
 
     func configureDetailsForUser() {

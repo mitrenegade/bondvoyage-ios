@@ -199,7 +199,6 @@
 		8E39C21C1C7E7ECC00C9B995 /* Old */ = {
 			isa = PBXGroup;
 			children = (
-				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 				8EA047CC1C4FDDE200CCCAC3 /* InviteViewController.swift */,
 				8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */,
 			);
@@ -360,6 +359,7 @@
 				8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */,
+				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 				8E39C21C1C7E7ECC00C9B995 /* Old */,
 			);
 			name = ViewControllers;

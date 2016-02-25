@@ -36,6 +36,8 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     var marker: GMSMarker!
     var currentActivity: PFObject?
     
+    var isJoinRequest: Bool = false
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var relevantInterests: [String]?
@@ -51,6 +53,14 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             self.currentPage = self.recommendations!.indexOf(self.place)!
         }
         
+        if self.isJoinRequest {
+            self.buttonGo.setTitle("SEND INVITATION TO BOND", forState: .Normal)
+        }
+        else {
+            self.buttonGo.setTitle("ACCEPT THIS INVITATION", forState: .Normal)
+        }
+        self.mapView.userInteractionEnabled = false
+
         self.refresh()
     }
 
