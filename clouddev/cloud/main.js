@@ -589,7 +589,6 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         query.containsAll("categories", categories)
     }
     query.descending("updatedAt")
-    query.notContainedIn("status", ["cancelled", "declined"])
     /*
     if (request.params.lat != undefined && request.params.lon != undefined) {
         var point = new Parse.GeoPoint(request.params.lat, request.params.lon)
@@ -600,6 +599,7 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     if (userId == undefined) {
         // find all activities that do not belong to current user
         query.notEqualTo("user", request.user)
+        query.notContainedIn("status", ["cancelled", "declined", "pending"])
         console.log("calling query.find")
         query.find({
             success: function(results) {
@@ -619,6 +619,7 @@ Parse.Cloud.define("queryActivities", function(request, response) {
             success: function(user){
                 console.log("calling query.find")
                 query.equalTo("user", user)
+                query.notContainedIn("status", ["cancelled", "declined"])
                 query.find({
                     success: function(results) {
                         console.log("Result count " + results.length)

@@ -128,6 +128,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             self.goToJoinActivity()
         }
         else if button == self.buttonNext {
+            /* NOT USED
             print("Next")
             if self.currentPage < self.recommendations!.count - 1 {
                 self.currentPage = self.currentPage + 1
@@ -137,6 +138,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             }
             self.place = self.recommendations![self.currentPage]
             self.refresh()
+            */
         }
     }
     

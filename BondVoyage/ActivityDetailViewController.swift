@@ -27,6 +27,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var constraintTableHeight: NSLayoutConstraint!
 
     var activity: PFObject!
+    var isRequestingJoin: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         // Do any additional setup after loading the view.
         self.imageView.image = self.activity.defaultImage()
         self.labelTitle.text = self.activity.shortTitle()
+        
+        if self.isRequestingJoin {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: "goToSelectPlace")
+        }
         
         self.refresh()
     }
@@ -62,6 +67,12 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func goToSelectPlace() {
+        let controller: SuggestedPlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("SuggestedPlacesViewController") as! SuggestedPlacesViewController
+        controller.currentActivity = self.activity
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     // MARK: - UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -82,14 +93,14 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         
     }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "GoToActivityDetail" {
+            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
+            controller.activity = sender as! PFObject
+            controller.isRequestingJoin = false
+        }
     }
-    */
 
 }

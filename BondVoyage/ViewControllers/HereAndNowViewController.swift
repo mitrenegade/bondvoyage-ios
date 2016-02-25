@@ -281,6 +281,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         else if segue.identifier == "GoToActivityDetail" {
             let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
             controller.activity = sender as! PFObject
+            controller.isRequestingJoin = true
         }
         else if segue.identifier == "GoToNearbyActivities" {
             let controller: InviteViewController = segue.destinationViewController as! InviteViewController

@@ -8,9 +8,6 @@
         <mutableArray key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
         </mutableArray>
-        <mutableArray key="Lato-Regular.ttf">
-            <string>Lato-Regular</string>
-        </mutableArray>
     </customFonts>
     <scenes>
         <!--Suggested Places View Controller-->
@@ -104,19 +101,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VE3-Jv-Z6U" userLabel="View - buttons">
                                 <rect key="frame" x="0.0" y="550" width="600" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tbg-fU-h3w">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Wtt-G1-mnH"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
-                                        <state key="normal" title="WHAT ELSE?"/>
-                                        <connections>
-                                            <action selector="didClickButton:" destination="872-2L-cS6" eventType="touchUpInside" id="wAY-oc-7dz"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WlD-6o-2B6">
-                                        <rect key="frame" x="300" y="0.0" width="300" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="mqO-Ke-P8V"/>
                                         </constraints>
@@ -129,13 +115,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Tbg-fU-h3w" firstAttribute="leading" secondItem="VE3-Jv-Z6U" secondAttribute="leading" id="4zt-zm-iFk"/>
+                                    <constraint firstItem="WlD-6o-2B6" firstAttribute="leading" secondItem="VE3-Jv-Z6U" secondAttribute="leading" id="2pa-mI-ePw"/>
                                     <constraint firstAttribute="trailing" secondItem="WlD-6o-2B6" secondAttribute="trailing" id="GE3-XE-6E3"/>
-                                    <constraint firstAttribute="bottom" secondItem="Tbg-fU-h3w" secondAttribute="bottom" id="Omr-zN-Sbr"/>
                                     <constraint firstAttribute="height" constant="40" id="big-Bo-SXn"/>
                                     <constraint firstAttribute="bottom" secondItem="WlD-6o-2B6" secondAttribute="bottom" id="tYa-lT-GEy"/>
-                                    <constraint firstItem="WlD-6o-2B6" firstAttribute="leading" secondItem="Tbg-fU-h3w" secondAttribute="trailing" id="xqn-94-6WM"/>
-                                    <constraint firstItem="Tbg-fU-h3w" firstAttribute="width" secondItem="WlD-6o-2B6" secondAttribute="width" id="zix-Xy-NYe"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Il-DI-UG6">
@@ -348,7 +331,6 @@
                         <outlet property="activityIndicator" destination="QEr-I7-2kV" id="SDT-uz-4BB"/>
                         <outlet property="addressLabel" destination="bb5-qV-zIp" id="pdl-Qe-3uG"/>
                         <outlet property="buttonGo" destination="WlD-6o-2B6" id="3Bz-Jx-l5l"/>
-                        <outlet property="buttonNext" destination="Tbg-fU-h3w" id="50m-uW-4T9"/>
                         <outlet property="constraintAboutHeight" destination="3Rz-HA-bg1" id="e1E-tU-8Mc"/>
                         <outlet property="constraintIconWidth" destination="pSe-mX-xGW" id="LUA-M4-4yd"/>
                         <outlet property="constraintImageHeight" destination="WcC-jy-2hn" id="Z6l-jF-coa"/>
