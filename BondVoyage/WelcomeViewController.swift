@@ -9,12 +9,13 @@
 import UIKit
 import ParseUI
 
-class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, SettingsDelegate {
+class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLogout", name: "logout", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -71,9 +72,11 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "GoToMain" {
+            /*
             let nav: UINavigationController = segue.destinationViewController as! UINavigationController
             let controller: HereAndNowViewController = nav.viewControllers[0] as! HereAndNowViewController
             controller.delegate = self
+            */
         }
     }
 }

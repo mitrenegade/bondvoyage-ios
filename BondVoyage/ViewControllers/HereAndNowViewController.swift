@@ -50,8 +50,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // button
     @IBOutlet weak var buttonAdd: UIButton!
     
-    weak var delegate: SettingsDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // configure title bar
@@ -89,7 +87,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "goToSettings")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
         
@@ -230,7 +227,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func goToSettings() {
         let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
         let controller: SettingsViewController = nav.viewControllers[0] as! SettingsViewController
-        controller.delegate = self.delegate
         self.presentViewController(nav, animated: true, completion: nil)
     }
 

@@ -53,7 +53,8 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             self.navigationItem.hidesBackButton = true
         }
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Done, target: self, action: "validateFields")
-        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
+
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Year], fromDate: date)
@@ -142,7 +143,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     }
 
     func close() {
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: UIPickerViewDataSource

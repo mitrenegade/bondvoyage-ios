@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62223C5E02C10845D64B6A0B /* Pods.framework */; };
-		8E19458D1C606D9400C3EC41 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458C1C606D9400C3EC41 /* LoginViewController.swift */; };
 		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
+		8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */; };
+		8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */; };
 		8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */; };
 		8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
@@ -36,7 +37,6 @@
 		AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1698451C1C7AB200E3DAAE /* UserRequest.swift */; };
 		AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC75B88D1C232C5F00D74F8E /* Constants.swift */; };
 		C518526E1C341ACA00EA2328 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C518526D1C341ACA00EA2328 /* Settings.storyboard */; };
-		C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C518526F1C3420BB00EA2328 /* SignUpViewController.swift */; };
 		C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */; };
 		C5566EE61C3E1040007C22F3 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5566EE51C3E1040007C22F3 /* UIViewController+Utils.swift */; };
 		C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5566EE71C3E105F007C22F3 /* UITableViewCell+Utils.swift */; };
@@ -83,8 +83,9 @@
 		1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2852CA77D6571005D3434276 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8E19458C1C606D9400C3EC41 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesViewController.swift; sourceTree = "<group>"; };
+		8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPreferencesViewController.swift; path = ViewControllers/SearchPreferencesViewController.swift; sourceTree = "<group>"; };
 		8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendationRequest.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
@@ -111,7 +112,6 @@
 		AC1698451C1C7AB200E3DAAE /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C518526D1C341ACA00EA2328 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
-		C518526F1C3420BB00EA2328 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ViewControllers/SignUpViewController.swift; sourceTree = "<group>"; };
 		C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIAlertController+SimpleAlert.swift"; path = "Categories/UIAlertController+SimpleAlert.swift"; sourceTree = "<group>"; };
 		C5566EE51C3E1040007C22F3 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Utils.swift"; path = "Categories/UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		C5566EE71C3E105F007C22F3 /* UITableViewCell+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITableViewCell+Utils.swift"; path = "Categories/UITableViewCell+Utils.swift"; sourceTree = "<group>"; };
@@ -219,9 +219,8 @@
 			isa = PBXGroup;
 			children = (
 				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
-				C518526F1C3420BB00EA2328 /* SignUpViewController.swift */,
 				C5E094371C3703CA00CABC51 /* ProfileViewController.swift */,
-				8E19458C1C606D9400C3EC41 /* LoginViewController.swift */,
+				8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */,
 				C5E094391C37236B00CABC51 /* AboutMeViewController.swift */,
 				8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */,
 			);
@@ -343,6 +342,7 @@
 				C518526B1C341A9E00EA2328 /* Settings */,
 				8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */,
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
+				8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8EA047CC1C4FDDE200CCCAC3 /* InviteViewController.swift */,
 				8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */,
@@ -571,9 +571,8 @@
 				8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */,
 				E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */,
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
-				C51852701C3420BB00EA2328 /* SignUpViewController.swift in Sources */,
+				8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
-				8E19458D1C606D9400C3EC41 /* LoginViewController.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
 				E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
@@ -585,6 +584,7 @@
 				8EA047D31C4FF02C00CCCAC3 /* MatchStatusViewController.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,
 				8E91D4641C5D03F900C6D406 /* ActivitiesCell.swift in Sources */,
+				8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */,
 				8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
 				8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */,
