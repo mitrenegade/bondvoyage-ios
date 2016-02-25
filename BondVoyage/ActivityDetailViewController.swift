@@ -152,6 +152,21 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             
             if name != nil {
                 labelName.text = "\(name!) wants to meet up"
+                if self.activity.isAcceptedActivity() {
+                    if self.activity.isOwnActivity() {
+                        labelName.text = "You are meeting \(name!)"
+                    }
+                    else {
+                        if user!.objectId! == PFUser.currentUser()?.objectId! {
+                            labelName.text = "Your invitation was accepted"
+                        }
+                    }
+                }
+                else {
+                    if user!.objectId! == PFUser.currentUser()?.objectId! {
+                        labelName.text = "Your have sent an invitation"
+                    }
+                }
             }
             
             if let url: String = user?.objectForKey("photoUrl") as? String {

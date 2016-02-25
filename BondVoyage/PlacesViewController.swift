@@ -61,7 +61,12 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             self.buttonGo.hidden = true
         }
         else {
-            self.buttonGo.setTitle("ACCEPT THIS INVITATION", forState: .Normal)
+            if self.currentActivity!.isAcceptedActivity() {
+                self.buttonGo.hidden = true
+            }
+            else {
+                self.buttonGo.setTitle("ACCEPT THIS INVITATION", forState: .Normal)
+            }
         }
         self.mapView.userInteractionEnabled = false
 
@@ -182,7 +187,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             }
             else {
                 print("invitation done")
-                // TODO:
+                self.refresh()
             }
         }
     }
