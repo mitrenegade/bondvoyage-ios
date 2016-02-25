@@ -234,6 +234,7 @@ class BVPlace : NSObject {
 
         }
     }
+    
 /*
 Types can be found here:
 https://developers.google.com/places/documentation/supported_types

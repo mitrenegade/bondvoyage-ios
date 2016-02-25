@@ -36,6 +36,9 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     var marker: GMSMarker!
     var currentActivity: PFObject?
     
+    var isRequestingJoin: Bool = false // true if the user is suggesting this place as part of an invitation
+    var isRequestedJoin: Bool = false // true if the user has already suggested this place
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var relevantInterests: [String]?
@@ -51,6 +54,17 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             self.currentPage = self.recommendations!.indexOf(self.place)!
         }
         
+        if self.isRequestingJoin {
+            self.buttonGo.setTitle("SEND INVITATION TO BOND", forState: .Normal)
+        }
+        else if self.isRequestedJoin {
+            self.buttonGo.hidden = true
+        }
+        else {
+            self.buttonGo.setTitle("ACCEPT THIS INVITATION", forState: .Normal)
+        }
+        self.mapView.userInteractionEnabled = false
+
         self.refresh()
     }
 
@@ -71,10 +85,10 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         self.marker = GMSMarker(position: coordinate)
         self.marker.map = self.mapView
         
+        self.constraintIconWidth.constant = 0
         if let iconURLString = self.place.iconURL {
             self.iconView.imageURL = NSURL(string: iconURLString)
             // for now no icon - should be something more business specific
-            self.constraintIconWidth.constant = 0
         }
         
         if place.photo != nil {
@@ -125,9 +139,15 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     @IBAction func didClickButton(button: UIButton) {
         if button == self.buttonGo {
             print("Go")
-            self.goToJoinActivity()
+            if self.isRequestingJoin {
+                self.goToJoinActivity()
+            }
+            else {
+                self.goToAcceptInvitation()
+            }
         }
         else if button == self.buttonNext {
+            /* NOT USED
             print("Next")
             if self.currentPage < self.recommendations!.count - 1 {
                 self.currentPage = self.currentPage + 1
@@ -137,6 +157,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             }
             self.place = self.recommendations![self.currentPage]
             self.refresh()
+            */
         }
     }
     
@@ -152,6 +173,18 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
                 print("here")
             }
         })
+    }
+
+    func goToAcceptInvitation() {
+        ActivityRequest.respondToJoin(self.currentActivity!, responseType: "accepted") { (results, error) -> Void in
+            if error != nil {
+                self.simpleAlert("Could not accept invitation", defaultMessage: "Please try again", error: error)
+            }
+            else {
+                print("invitation done")
+                // TODO:
+            }
+        }
     }
 
     /*

@@ -399,7 +399,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     func previewProfile() {
         let user: PFUser = PFUser.currentUser()!
-        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
         controller.selectedUser = user
         controller.title = "My Profile"
         self.navigationController?.pushViewController(controller, animated: true)

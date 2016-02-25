@@ -81,7 +81,7 @@ class InviteViewController: UIViewController {
         for var i=0; i<self.activities!.count; i++ {
             let activity = self.activities![i]
             let user = activity.objectForKey("user") as! PFUser
-            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user
             
             controller.willMoveToParentViewController(self)

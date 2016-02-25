@@ -181,7 +181,7 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
 
     func goToPlaces() {
         let categories: [String] = self.currentActivity!.objectForKey("categories") as! [String]
-        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("placesID") as! PlacesViewController
+        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
         controller.relevantInterests = categories
         self.navigationController?.pushViewController(controller, animated: true)
     }
@@ -216,7 +216,7 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     }
     
     func goToAcceptInvite(user: PFUser) {
-        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userDetailsID") as! UserDetailsViewController
+        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
         controller.invitingUser = user
         controller.invitingMatch = self.currentActivity
         controller.delegate = self

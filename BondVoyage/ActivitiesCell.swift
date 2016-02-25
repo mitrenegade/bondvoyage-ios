@@ -16,16 +16,12 @@ class ActivitiesCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     var shadowLayer: CALayer?
     
-    var match: PFObject?
+    var activity: PFObject?
     
-    func configureCellForUser(match: PFObject) {
+    func configureCellForUser(activity: PFObject) {
         self.bgImage.crossfadeDuration = 0
 
-        self.match = match
-        let user: PFUser = match.objectForKey("user") as! PFUser
-        
-        let category = (self.match!.objectForKey("categories") as! [String])[0].capitalizeFirst
-        let city: String? = self.match!.objectForKey("city") as? String
+        self.activity = activity
         
         self.viewFrame!.layer.shadowOpacity = 1
         self.viewFrame!.layer.shadowRadius = 5
@@ -37,29 +33,11 @@ class ActivitiesCell: UITableViewCell {
         self.titleLabel!.layer.shadowColor = UIColor.blackColor().CGColor
         self.titleLabel!.layer.shadowOffset = CGSizeMake(3, 3)
 
-        self.bgImage.image = CategoryFactory.subcategoryBgImage(category)
+        self.bgImage.image = self.activity!.defaultImage()
         
+        let user: PFUser = self.activity!.objectForKey("user") as! PFUser
         user.fetchInBackgroundWithBlock { (object, error) -> Void in
-            var name: String? = user.valueForKey("firstName") as? String
-            if name == nil {
-                name = user.valueForKey("lastName") as? String
-            }
-            if name == nil {
-                name = user.username
-            }
-            
-            var title = "\(category)"
-            if name != nil && city != nil {
-                title = "\(category) with \(name!) in \(city!)"
-            }
-            else if name != nil {
-                title = "\(title) with \(name!)"
-            }
-            else if city != nil {
-                title = "\(title) in \(city!)"
-            }
-            
-            self.titleLabel.text = title
+            self.titleLabel.text = self.activity!.shortTitle()
         }
     }
 }

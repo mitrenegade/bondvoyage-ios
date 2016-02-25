@@ -88,6 +88,7 @@ class SuggestedPlacesViewController: UITableViewController {
             controller.place = place
             controller.recommendations = self.places
             controller.currentActivity = self.currentActivity
+            controller.isRequestingJoin = true
         }
     }
 }

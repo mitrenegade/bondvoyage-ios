@@ -21,7 +21,7 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func queryActivities(location: CLLocation?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(location: CLLocation?, user: PFUser?, joining: Bool?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
@@ -30,6 +30,12 @@ class ActivityRequest: NSObject {
         if location != nil {
             params["lat"] = location!.coordinate.latitude
             params["lon"] = location!.coordinate.longitude
+        }
+        if user != nil {
+            params["userId"] = user!.objectId!
+        }
+        if joining != nil {
+            params["joining"] = joining!
         }
         
         PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in
@@ -54,12 +60,12 @@ class ActivityRequest: NSObject {
     }
     
     // TODO: accept another user to join
-    class func acceptJoin(activity: PFObject, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+    class func respondToJoin(activity: PFObject, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
         var params =  ["activity": activity.objectId!]
         if responseType != nil {
             params["responseType"] = responseType
         }
-        PFCloud.callFunctionInBackground("acceptJoin", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("respondToJoin", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             completion(results: results, error: error)
         }
