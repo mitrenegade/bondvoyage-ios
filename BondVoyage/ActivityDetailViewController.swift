@@ -179,6 +179,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             controller.place = place
             controller.isRequestingJoin = self.isRequestingJoin
             controller.isRequestedJoin = self.activity.isJoiningActivity()
+            controller.currentActivity = self.activity
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }

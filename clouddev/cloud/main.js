@@ -720,19 +720,8 @@ Parse.Cloud.define("respondToJoin", function(request, response) {
             }
             activity.save().then(
                 function(object) {
-                    console.log("RespondToInvite completed")
-                    if (responseType == undefined || responseType == "cancelled") {
-                        console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
-                        sendPushForActivityResponse(response, activity, responseType)
-                    }
-                    else if (responseType == "declined" || responseType == "accepted") {
-                        console.log("Sending push message for " + responseType + " to match id " + toMatch.id + " from match id " + fromMatch.id)
-                        sendPushForActivityResponse(response, activity, responseType)
-                    }
-                    else {
-                        console.log("here")
-                        response.error("Invalid response type")
-                    }
+                    console.log("RespondToInvite Sending push message for " + responseType + " to activity id " + activity.id)
+                    sendPushForActivityResponse(response, activity, responseType)
                 },
                 function(error) {
                     console.log("error in RespondToInvite: " + error)
