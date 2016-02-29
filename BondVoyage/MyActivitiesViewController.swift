@@ -92,19 +92,37 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         return 4
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var frame = CGRectMake(0, 0, self.view.frame.size.width, 30)
+        let view: UIView = UIView(frame: frame)
+        view.backgroundColor = Constants.lightBlueColor()
+        frame = CGRectMake(10, 7, self.view.frame.size.width - 20, 20)
+        let label: UILabel = UILabel(frame: frame)
+        view.addSubview(label)
+        label.backgroundColor = UIColor.clearColor()
+        label.textColor = UIColor.blackColor()
+        label.font = UIFont(name: "Lato-Regular", size: 17)
+
         switch section {
         case 0:
-            return "My current activities"
+            label.text = "My current activities"
+            break
         case 1:
-            return "My new activities"
+            label.text = "My new activities"
+            break
         case 2:
-            return "Invitations:"
+            label.text = "Invitations"
+            break
         case 3:
-            return "I've requested to join:"
+            label.text = "I've requested to join"
+            break
         default:
-            return ""
+            label.text = ""
+            break
         }
+        
+        return view
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

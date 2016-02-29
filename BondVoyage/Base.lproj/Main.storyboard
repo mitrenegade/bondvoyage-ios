@@ -935,6 +935,7 @@
                                 </constraints>
                             </containerView>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="2X0-Yd-p9Z" secondAttribute="trailing" id="1Pp-Nj-pfW"/>
                             <constraint firstAttribute="trailing" secondItem="ccS-F3-6Px" secondAttribute="trailing" id="70D-Vf-M4Y"/>
@@ -1081,7 +1082,7 @@
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="zua-Tk-rJN"/>
         <segue reference="N0N-Jc-ivY"/>
-        <segue reference="d5p-Y8-aSj"/>
     </inferredMetricsTieBreakers>
 </document>
