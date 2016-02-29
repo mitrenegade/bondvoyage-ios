@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import AsyncImageView
 import Parse
+import PKHUD
 
 class SuggestedPlacesViewController: UITableViewController {
 
@@ -23,11 +24,16 @@ class SuggestedPlacesViewController: UITableViewController {
 
         let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 39.950956, longitude: -75.165741)
         if let categories: [String] = self.currentActivity!.objectForKey("categories") as? [String] {
+            HUD.show(.SystemActivity)
             dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms:categories[0]) { (results, errorString) -> Void in
                 print("results \(results)")
                 if !results.isEmpty {
+                    HUD.hide(animated: true, completion: nil)
                     self.places = results
                     self.tableView.reloadData()
+                }
+                else {
+                    HUD.flash(.Label("No locations found"), withDelay: 2)
                 }
             }
         }
