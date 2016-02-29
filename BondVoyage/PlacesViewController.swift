@@ -10,6 +10,11 @@ import UIKit
 import AsyncImageView
 import Parse
 import GoogleMaps
+import PKHUD
+
+protocol InvitationDelegate {
+    func didSendInvitationForPlace()
+}
 
 class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
@@ -38,6 +43,8 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     var isRequestingJoin: Bool = false // true if the user is suggesting this place as part of an invitation
     var isRequestedJoin: Bool = false // true if the user has already suggested this place
+    
+    var delegate: InvitationDelegate?
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -168,14 +175,23 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     func goToJoinActivity() {
         self.activityIndicator.startAnimating()
+        HUD.show(.SystemActivity)
         ActivityRequest.joinActivity(self.currentActivity!, suggestedPlace: self.place, completion: { (results, error) -> Void in
             
             self.activityIndicator.stopAnimating()
             if error != nil {
-                self.simpleAlert("Could not join", defaultMessage: "There was an error joining the activity.", error: error)
+                HUD.flash(.Label("There was an error joining the activity."), withDelay: 2)
             }
             else {
-                print("here")
+                HUD.show(.Label("Invitation sent."))
+                HUD.hide(animated: true, completion: { (complete) -> Void in
+                    if self.delegate != nil {
+                        self.delegate!.didSendInvitationForPlace()
+                    }
+                    else {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                })
             }
         })
     }
