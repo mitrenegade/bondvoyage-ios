@@ -24,7 +24,8 @@ class SuggestedPlacesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 39.950956, longitude: -75.165741)
+        let geopoint: PFGeoPoint = self.currentActivity!.objectForKey("geopoint") as! PFGeoPoint
+        let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: geopoint.latitude, longitude: geopoint.longitude)
         if let categories: [String] = self.currentActivity!.objectForKey("categories") as? [String] {
             HUD.show(.SystemActivity)
             dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms:categories[0]) { (results, errorString) -> Void in

@@ -11,13 +11,15 @@ import AsyncImageView
 import Parse
 import GoogleMaps
 
-class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate {
+class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewContent: UIView!
     
     @IBOutlet weak var imageView: AsyncImageView!
     @IBOutlet weak var viewTitle: UIView!
     @IBOutlet weak var labelTitle: UILabel!
+    var street: String?
+    var city: String?
     
     @IBOutlet weak var mapView: GMSMapView!
     var marker: GMSMarker?
@@ -40,10 +42,14 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.imageView.image = self.activity.defaultImage()
         self.labelTitle.text = self.activity.shortTitle()
         
+        let geopoint: PFGeoPoint = self.activity.objectForKey("geopoint") as! PFGeoPoint
+        self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
+        
         if self.isRequestingJoin {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: "goToSelectPlace")
         }
-        self.mapView.userInteractionEnabled = false
+        self.mapView.userInteractionEnabled = true
+        self.mapView.delegate = self
         
         self.reloadSuggestedPlaces()
         self.refresh()
@@ -75,6 +81,16 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             }
             self.marker = GMSMarker(position: coordinate)
             self.marker!.map = self.mapView
+        }
+        
+        if self.street != nil {
+            self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.street!)"
+        }
+        else if self.city != nil {
+            self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.city!)"
+        }
+        else {
+            self.labelTitle.text = self.activity.shortTitle()
         }
     }
     
@@ -225,4 +241,56 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     func didAcceptInvitationForPlace() {
         self.didSendInvitationForPlace()
     }
+    
+    func reverseGeocode(coord: CLLocation) {
+        let coder = CLGeocoder()
+        coder.reverseGeocodeLocation(coord) { (results, error) -> Void in
+            if error != nil {
+                print("error: \(error!.userInfo)")
+            }
+            else {
+                print("result: \(results)")
+                if let placemarks: [CLPlacemark]? = results as [CLPlacemark]? {
+                    if let placemark: CLPlacemark = placemarks!.first as CLPlacemark! {
+                        print("name \(placemark.name) address \(placemark.addressDictionary)")
+                        if let dict: [String: AnyObject] = placemark.addressDictionary as? [String: AnyObject] {
+                            if let lines = dict["FormattedAddressLines"] {
+                                print("lines: \(lines)")
+                                if lines.count > 0 {
+                                    //string = lines[0] as? String
+                                }
+                                self.refresh()
+                            }
+                            if let street = dict["Street"] as? String {
+                                self.street = street
+                                self.refresh()
+                            }
+                            else if let locality = dict["SubLocality"] as? String {
+                                self.city = locality
+                                self.refresh()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - MapViewDelegate
+    func mapView(mapView: GMSMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+        self.goToMap()
+    }
+    
+    func goToMap() {
+        let controller: MapViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("MapViewController") as! MapViewController
+        if self.places.count > 0 {
+            let place: BVPlace = self.places.values.first!
+            controller.place = place
+        }
+        controller.currentActivity = self.activity
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    //override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+   // }
 }

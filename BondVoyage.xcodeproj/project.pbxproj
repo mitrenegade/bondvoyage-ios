@@ -37,6 +37,7 @@
 		8EC4C36C1C7EA928001B7E05 /* NewActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
 		8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */; };
+		8EF6764C1C84BC8300D49A33 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF6764B1C84BC8300D49A33 /* MapViewController.swift */; };
 		AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1698451C1C7AB200E3DAAE /* UserRequest.swift */; };
 		AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC75B88D1C232C5F00D74F8E /* Constants.swift */; };
 		C518526E1C341ACA00EA2328 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C518526D1C341ACA00EA2328 /* Settings.storyboard */; };
@@ -115,6 +116,7 @@
 		8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewActivityViewController.swift; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
+		8EF6764B1C84BC8300D49A33 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		AC1698451C1C7AB200E3DAAE /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C518526D1C341ACA00EA2328 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			children = (
 				8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */,
 				8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */,
+				8EF6764B1C84BC8300D49A33 /* MapViewController.swift */,
 			);
 			name = Places;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */,
 				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,
 				8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */,
+				8EF6764C1C84BC8300D49A33 /* MapViewController.swift in Sources */,
 				8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */,
 				8EC310AB1C7BAE0700992E7A /* GoogleDataProvider.swift in Sources */,
 				C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */,
