@@ -54,7 +54,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
         self.navigationController!.navigationBar.addSubview(imageView)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "invitation:sent", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "invitation:updated", object: nil)
         
         self.setup()
     }
