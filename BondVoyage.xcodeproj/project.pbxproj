@@ -200,6 +200,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8E099EC11C850140006A0320 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */,
+				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
+				8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */,
+			);
+			name = Details;
+			sourceTree = "<group>";
+		};
 		8E39C21C1C7E7ECC00C9B995 /* Old */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,7 +246,6 @@
 		C518526B1C341A9E00EA2328 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
 				C5E094371C3703CA00CABC51 /* ProfileViewController.swift */,
 				8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */,
 				C5E094391C37236B00CABC51 /* AboutMeViewController.swift */,
@@ -361,11 +370,10 @@
 				C518526B1C341A9E00EA2328 /* Settings */,
 				8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */,
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
-				8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
-				8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */,
-				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
-				8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */,
+				8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */,
+				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
+				8E099EC11C850140006A0320 /* Details */,
 				8E39C21C1C7E7ECC00C9B995 /* Old */,
 			);
 			name = ViewControllers;

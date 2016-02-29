@@ -28,6 +28,7 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         imageView.backgroundColor = Constants.lightBlueColor()
         imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
         self.navigationController!.navigationBar.addSubview(imageView)
+        self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
         
         self.setup()
         
@@ -41,6 +42,7 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func setup() {
+
         myNewActivities.removeAll()
         myInvitedActivities.removeAll()
         myJoiningActivities.removeAll()
