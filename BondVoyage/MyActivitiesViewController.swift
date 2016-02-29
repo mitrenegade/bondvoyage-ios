@@ -13,8 +13,10 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var tableView: UITableView!
 
-    var myActivities: [PFObject]?
-    var myJoiningActivities: [PFObject]?
+    var myNewActivities: [PFObject] = [] // my activities with no invitations
+    var myInvitedActivities: [PFObject] = [] // my activities with invitations
+    var myJoiningActivities: [PFObject] = [] // activities i'm requesting to join
+    var myAcceptedActivities: [PFObject] = []  // activies i've accepted or was accepted to join
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,7 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         self.setup()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:created", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "invitation:updated", object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,18 +41,44 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func setup() {
+        myNewActivities.removeAll()
+        myInvitedActivities.removeAll()
+        myJoiningActivities.removeAll()
+        myAcceptedActivities.removeAll()
+        
         ActivityRequest.queryActivities(nil, user: PFUser.currentUser(), joining: false, categories: nil) { (results, error) -> Void in
+            // returns activities where the owner of the activity is the user
             if results != nil {
                 if results!.count > 0 {
-                    self.myActivities = results
+                    for activity: PFObject in results! {
+                        if activity.isAcceptedActivity() {
+                            self.myAcceptedActivities.append(activity)
+                            continue
+                        }
+                        if let joining: [String] = activity.objectForKey("joining") as? [String] {
+                            if joining.count > 0 {
+                                self.myInvitedActivities.append(activity)
+                                continue
+                            }
+                        }
+                        self.myNewActivities.append(activity)
+                    }
                     self.tableView.reloadData()
                 }
             }
         }
         ActivityRequest.queryActivities(nil, user: PFUser.currentUser(), joining: true, categories: nil) { (results, error) -> Void in
+            // returns activities where the owner is not the user but is in the joining list
             if results != nil {
                 if results!.count > 0 {
-                    self.myJoiningActivities = results
+                    for activity: PFObject in results! {
+                        if activity.isAcceptedActivity() {
+                            self.myAcceptedActivities.append(activity)
+                        }
+                        else {
+                            self.myJoiningActivities.append(activity)
+                        }
+                    }
                     self.tableView.reloadData()
                 }
             }
@@ -58,15 +87,21 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "My activities"
-        }
-        else {
-            return "Activities I'm joining"
+        switch section {
+        case 0:
+            return "My current activities"
+        case 1:
+            return "My new activities"
+        case 2:
+            return "Invitations:"
+        case 3:
+            return "I've requested to join:"
+        default:
+            return ""
         }
     }
     
@@ -77,27 +112,51 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
         cell.adjustTableViewCellSeparatorInsets(cell)
-        if indexPath.section == 0 && self.myActivities != nil {
-            cell.configureCellForUser(self.myActivities![indexPath.row])
+        var activity: PFObject?
+        switch indexPath.section {
+        case 0:
+            // "My current activities"
+            activity = self.myAcceptedActivities[indexPath.row]
+            break
+        case 1:
+            // "My new activities"
+            activity = self.myNewActivities[indexPath.row]
+            break
+        case 2:
+            // "Invitations:"
+            activity = self.myInvitedActivities[indexPath.row]
+            break
+        case 3:
+            // "I've requested to join:"
+            activity = self.myJoiningActivities[indexPath.row]
+            break
+        default:
+            activity = nil
+            break
         }
-        else if indexPath.section == 1 && self.myJoiningActivities != nil {
-            cell.configureCellForUser(self.myJoiningActivities![indexPath.row])
+
+        if activity != nil {
+            cell.configureCellForUser(activity!)
         }
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            if self.myActivities == nil {
-                return 0
-            }
-            return self.myActivities!.count
-        }
-        else {
-            if self.myJoiningActivities == nil {
-                return 0
-            }
-            return self.myJoiningActivities!.count
+        switch section {
+        case 0:
+            // "My current activities"
+            return self.myAcceptedActivities.count
+        case 1:
+            // "My new activities"
+            return self.myNewActivities.count
+        case 2:
+            // "Invitations:"
+            return self.myInvitedActivities.count
+        case 3:
+            // "I've requested to join:"
+            return self.myJoiningActivities.count
+        default:
+            return 0
         }
     }
     
@@ -108,13 +167,31 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
             return
         }
         
-        if indexPath.section == 0 {
-            let activity: PFObject = self.myActivities![indexPath.row]
-            self.goToActivity(activity)
+        var activity: PFObject?
+        switch indexPath.section {
+        case 0:
+            // "My current activities"
+            activity = self.myAcceptedActivities[indexPath.row]
+            break
+        case 1:
+            // "My new activities"
+            activity = self.myNewActivities[indexPath.row]
+            break
+        case 2:
+            // "Invitations:"
+            activity = self.myInvitedActivities[indexPath.row]
+            break
+        case 3:
+            // "I've requested to join:"
+            activity = self.myJoiningActivities[indexPath.row]
+            break
+        default:
+            activity = nil
+            break
         }
-        else {
-            let activity: PFObject = self.myJoiningActivities![indexPath.row]
-            self.goToActivity(activity)
+        
+        if activity != nil {
+            self.goToActivity(activity!)
         }
     }
 

@@ -14,6 +14,7 @@ import PKHUD
 
 protocol InvitationDelegate {
     func didSendInvitationForPlace()
+    func didAcceptInvitationForPlace()
 }
 
 class PlacesViewController: UIViewController, GMSMapViewDelegate {
@@ -183,6 +184,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
                 HUD.flash(.Label("There was an error joining the activity."), withDelay: 2)
             }
             else {
+                self.refresh()
                 HUD.show(.Label("Invitation sent."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
                     if self.delegate != nil {
@@ -197,13 +199,23 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     }
 
     func goToAcceptInvitation() {
+        HUD.show(.SystemActivity)
         ActivityRequest.respondToJoin(self.currentActivity!, responseType: "accepted") { (results, error) -> Void in
             if error != nil {
-                self.simpleAlert("Could not accept invitation", defaultMessage: "Please try again", error: error)
+                HUD.flash(.Label("Could not accept invitation. Please try again."), withDelay: 2)
             }
             else {
-                print("invitation done")
                 self.refresh()
+                HUD.show(.Label("Invitation accepted."))
+                HUD.hide(animated: true, completion: { (complete) -> Void in
+                    self.refresh()
+                    if self.delegate != nil {
+                        self.delegate!.didAcceptInvitationForPlace()
+                    }
+                    else {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                })
             }
         }
     }

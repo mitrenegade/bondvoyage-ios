@@ -196,6 +196,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             controller.isRequestingJoin = self.isRequestingJoin
             controller.isRequestedJoin = self.activity.isJoiningActivity()
             controller.currentActivity = self.activity
+            controller.delegate = self
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }
@@ -216,5 +217,12 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.activity.fetchInBackgroundWithBlock { (result, error) -> Void in
             self.reloadSuggestedPlaces()
         }
+        
+        // also send a notification for other views not in this chain
+        NSNotificationCenter.defaultCenter().postNotificationName("invitation:updated", object: nil)
+    }
+    
+    func didAcceptInvitationForPlace() {
+        self.didSendInvitationForPlace()
     }
 }
