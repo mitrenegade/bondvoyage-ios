@@ -11,7 +11,7 @@ import AsyncImageView
 import Parse
 import GoogleMaps
 
-class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewContent: UIView!
     
@@ -113,6 +113,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     func goToSelectPlace() {
         let controller: SuggestedPlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("SuggestedPlacesViewController") as! SuggestedPlacesViewController
         controller.currentActivity = self.activity
+        controller.delegate = self
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -206,6 +207,14 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user
             self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
+    // MARK: - InvitationDelegate
+    func didSendInvitationForPlace() {
+        self.navigationController?.popToViewController(self, animated: true)
+        self.activity.fetchInBackgroundWithBlock { (result, error) -> Void in
+            self.reloadSuggestedPlaces()
         }
     }
 }

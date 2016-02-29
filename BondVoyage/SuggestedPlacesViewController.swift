@@ -19,6 +19,8 @@ class SuggestedPlacesViewController: UITableViewController {
     var currentActivity: PFObject?
     var places: [BVPlace]?
     
+    var delegate: InvitationDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,6 +97,7 @@ class SuggestedPlacesViewController: UITableViewController {
             controller.recommendations = self.places
             controller.currentActivity = self.currentActivity
             controller.isRequestingJoin = true
+            controller.delegate = self.delegate
         }
     }
 }

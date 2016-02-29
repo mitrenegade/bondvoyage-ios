@@ -12,6 +12,10 @@ import Parse
 import GoogleMaps
 import PKHUD
 
+protocol InvitationDelegate {
+    func didSendInvitationForPlace()
+}
+
 class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
@@ -39,6 +43,8 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     var isRequestingJoin: Bool = false // true if the user is suggesting this place as part of an invitation
     var isRequestedJoin: Bool = false // true if the user has already suggested this place
+    
+    var delegate: InvitationDelegate?
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -179,7 +185,12 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             else {
                 HUD.show(.Label("Invitation sent."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
-                    self.navigationController?.popViewControllerAnimated(true)
+                    if self.delegate != nil {
+                        self.delegate!.didSendInvitationForPlace()
+                    }
+                    else {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
                 })
             }
         })
