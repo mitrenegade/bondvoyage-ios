@@ -37,13 +37,6 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         super.viewWillAppear(animated)
         
         self.closeCategories()
-
-        if PFUser.currentUser() == nil {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log In", style: .Done, target: self, action: "goToLogin")
-        }
-        else {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Done, target: self, action: "goToSettings")
-        }
     }
     
     func closeCategories() {
