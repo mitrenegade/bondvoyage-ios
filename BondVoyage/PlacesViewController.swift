@@ -76,8 +76,10 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
                 self.buttonGo.setTitle("ACCEPT THIS INVITATION", forState: .Normal)
             }
         }
-        self.mapView.userInteractionEnabled = false
-
+        
+        self.mapView.userInteractionEnabled = true
+        self.mapView.delegate = self
+        
         self.refresh()
     }
 
@@ -220,14 +222,21 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - MapViewDelegate
+    func mapView(mapView: GMSMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+        self.goToMap()
     }
-    */
+    
+    func goToMap() {
+        self.performSegueWithIdentifier("GoToMapView", sender: nil)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToMapView" {
+            let controller: MapViewController = segue.destinationViewController as! MapViewController
+            controller.currentActivity = self.currentActivity
+            controller.place = self.place
+        }
+    }
 
 }

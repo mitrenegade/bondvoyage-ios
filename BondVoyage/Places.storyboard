@@ -82,10 +82,10 @@
             </objects>
             <point key="canvasLocation" x="-1948" y="-241"/>
         </scene>
-        <!--Places View Controller-->
+        <!--Places-->
         <scene sceneID="Dq6-4Y-5D3">
             <objects>
-                <viewController storyboardIdentifier="PlacesViewController" id="872-2L-cS6" customClass="PlacesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlacesViewController" id="872-2L-cS6" userLabel="Places" customClass="PlacesViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JTg-wO-4ec"/>
                         <viewControllerLayoutGuide type="bottom" id="EhZ-Lt-Lzf"/>
@@ -327,11 +327,48 @@
                         <outlet property="mapView" destination="k3P-rb-uqe" id="rEM-Uc-wNl"/>
                         <outlet property="placeNameLabel" destination="Jpz-eq-cRs" id="FFP-dU-HnS"/>
                         <outlet property="scrollView" destination="4Il-DI-UG6" id="fWi-mC-CvX"/>
+                        <segue destination="ZjU-Fw-75m" kind="show" identifier="GoToMapView" id="2aC-BJ-M3Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PsO-0G-Tiq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-601" y="-241"/>
+        </scene>
+        <!--MapView-->
+        <scene sceneID="19P-Rs-UDa">
+            <objects>
+                <viewController storyboardIdentifier="MapViewController" id="ZjU-Fw-75m" userLabel="MapView" customClass="MapViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BpG-i5-Ffy"/>
+                        <viewControllerLayoutGuide type="bottom" id="29b-q0-7LN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2w5-2a-ebY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="590"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nX9-Rd-k2y" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="590"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ZjU-Fw-75m" id="zLR-FG-s4w"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nX9-Rd-k2y" firstAttribute="leading" secondItem="2w5-2a-ebY" secondAttribute="leading" id="dfh-lK-eSb"/>
+                            <constraint firstItem="nX9-Rd-k2y" firstAttribute="top" secondItem="2w5-2a-ebY" secondAttribute="top" id="ugc-Yc-kaY"/>
+                            <constraint firstItem="29b-q0-7LN" firstAttribute="top" secondItem="nX9-Rd-k2y" secondAttribute="bottom" id="ugn-Cv-roX"/>
+                            <constraint firstAttribute="trailing" secondItem="nX9-Rd-k2y" secondAttribute="trailing" id="xRb-O5-iIG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="nX9-Rd-k2y" id="A6d-Lp-kRw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JSQ-S9-b3p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="72" y="-236"/>
         </scene>
     </scenes>
 </document>

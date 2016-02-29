@@ -11,7 +11,7 @@ import AsyncImageView
 import Parse
 import GoogleMaps
 
-class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate {
+class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewContent: UIView!
     
@@ -48,7 +48,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         if self.isRequestingJoin {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: "goToSelectPlace")
         }
-        self.mapView.userInteractionEnabled = false
+        self.mapView.userInteractionEnabled = true
+        self.mapView.delegate = self
         
         self.reloadSuggestedPlaces()
         self.refresh()
@@ -274,4 +275,18 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
     }
+    
+    // MARK: - MapViewDelegate
+    func mapView(mapView: GMSMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+        self.goToMap()
+    }
+    
+    func goToMap() {
+        let controller: MapViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("MapViewController") as! MapViewController
+        controller.currentActivity = self.activity
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    //override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+   // }
 }
