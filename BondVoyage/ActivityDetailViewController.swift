@@ -283,6 +283,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     func goToMap() {
         let controller: MapViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("MapViewController") as! MapViewController
+        if self.places.count > 0 {
+            let place: BVPlace = self.places.values.first!
+            controller.place = place
+        }
         controller.currentActivity = self.activity
         self.navigationController?.pushViewController(controller, animated: true)
     }

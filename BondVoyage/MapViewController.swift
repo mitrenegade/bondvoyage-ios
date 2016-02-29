@@ -44,6 +44,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         }
         self.marker = GMSMarker(position: coordinate)
         self.marker.map = self.mapView
+        if self.place != nil {
+            self.marker.title = self.place!.name
+        }
+        else if self.currentActivity != nil {
+            self.marker.title = currentActivity!.locationString()
+        }
         
+        self.mapView.selectedMarker = self.marker
     }
 }
