@@ -279,6 +279,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
                         <segue destination="u5m-vY-rgh" kind="relationship" relationship="viewControllers" id="YJb-xC-w4W"/>
@@ -295,7 +296,13 @@
         <scene sceneID="sjZ-E8-yNI">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="u5m-vY-rgh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Nearby" image="icon-search" id="dc2-4x-gnk"/>
+                    <tabBarItem key="tabBarItem" title="Nearby" image="icon-search" id="dc2-4x-gnk">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.18288590604026847" green="0.76179739932885904" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vut-Vg-1W2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -389,7 +396,13 @@
         <scene sceneID="4eW-yU-7io">
             <objects>
                 <navigationController id="xPb-CS-Ee1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="New Activity" image="icon-plus" id="IPc-wf-V01"/>
+                    <tabBarItem key="tabBarItem" title="New Activity" image="icon-plus" id="IPc-wf-V01">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fQO-2A-gFZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -406,7 +419,13 @@
         <scene sceneID="Jcm-tv-1Bb">
             <objects>
                 <navigationController id="Xvr-Id-WNH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Activities" image="icon-star" id="XR6-rP-9hO"/>
+                    <tabBarItem key="tabBarItem" title="Activities" image="icon-star" id="XR6-rP-9hO">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="deviceRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k5Y-P1-vlW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -845,7 +864,13 @@
         <scene sceneID="RGX-Mb-jiF">
             <objects>
                 <navigationController id="SLi-Ju-8E8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="icon-settings" id="Y2d-j6-VUZ"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="icon-settings" id="Y2d-j6-VUZ">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="c84-3G-sgJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
