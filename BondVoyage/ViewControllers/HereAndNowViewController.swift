@@ -54,6 +54,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
         self.navigationController!.navigationBar.addSubview(imageView)
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "invitation:sent", object: nil)
+        
         self.setup()
     }
 
@@ -333,5 +335,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
         self.toggleCategories(!self.showingCategories)
+    }
+    
+    // MARK: InvitationDelegate side effects
+    func updateActivities() {
+        // after user sends an invitation, that activity should be removed from here
+        self.didSelectCategory(self.selectedCategory)
     }
 }

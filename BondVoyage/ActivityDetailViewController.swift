@@ -216,5 +216,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.activity.fetchInBackgroundWithBlock { (result, error) -> Void in
             self.reloadSuggestedPlaces()
         }
+        
+        // also send a notification for other views not in this chain
+        NSNotificationCenter.defaultCenter().postNotificationName("invitation:sent", object: nil)
     }
 }
