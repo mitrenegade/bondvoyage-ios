@@ -26,7 +26,7 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
 
     var requestMarker: GMSMarker?
 
-    var selectedCategory: String?
+    var selectedCategories: [String]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +53,6 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
         self.buttonRequest.layer.zPosition = 1
         self.buttonRequest.alpha = 1
         
-        self.setTitleBarColor(UIColor.blackColor(), tintColor: UIColor.whiteColor())
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-
         if TESTING {
             self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
         }
@@ -180,7 +177,10 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
             return
         }
 
-        ActivityRequest.createActivity([self.selectedCategory!], location: self.currentLocation!, locationString: self.inputCity.text) { (result, error) -> Void in
+        if self.selectedCategories == nil {
+            self.selectedCategories = ["Other"]
+        }
+        ActivityRequest.createActivity(self.selectedCategories!, location: self.currentLocation!, locationString: self.inputCity.text) { (result, error) -> Void in
             if error != nil {
                 self.simpleAlert("Could not create activity", defaultMessage: "There was an error creating a new activity.", error: error)
             }

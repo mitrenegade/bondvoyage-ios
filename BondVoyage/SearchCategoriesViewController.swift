@@ -13,7 +13,7 @@ import Parse
 let kNearbyEventCellIdentifier = "nearbyEventCell"
 
 protocol SearchCategoriesDelegate: class {
-    func didSelectCategory(category: String?)
+    func didSelectCategory(subcategory: String?, category: String?)
 }
 class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -21,6 +21,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     var expanded: [Bool] = [Bool]()
     
     weak var delegate: SearchCategoriesDelegate?
+    
+    var newSubcategory: String?
+    var newCategory: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +53,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func closeCategories() {
-        for _ in CategoryFactory.categories() {
+        for _ in CATEGORIES {
             expanded.append(false)
         }
         self.tableView.reloadData()
@@ -61,27 +64,42 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell")!
-            cell.textLabel!.text = CategoryFactory.categories()[indexPath.section]
+            let category: CATEGORY = CATEGORIES[indexPath.section]
+            cell.textLabel!.text = CategoryFactory.categoryReadableString(category)
             cell.backgroundColor = UIColor.clearColor()
             return cell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("SubcategoryCell")!
-        let category = CategoryFactory.categories()[indexPath.section]
-        let subs = CategoryFactory.subCategories(category)
-        let index = indexPath.row - 1
+        let category = CATEGORIES[indexPath.section]
+        if category == .Other {
+            cell.textLabel!.text = "Other"
+        }
+        else {
+            if indexPath.row == 1 {
+                cell.textLabel!.text = "Any"
+            }
+            else {
+                let subs: [SUBCATEGORY] = SUBCATEGORIES[category]!
+                let index = indexPath.row - 2
+                cell.textLabel!.text = CategoryFactory.subcategoryReadableString(subs[index])
+            }
+        }
+        
         cell.backgroundColor = UIColor.whiteColor()
-        cell.textLabel!.text = subs[index]
         return cell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return CategoryFactory.categories().count
+        return CATEGORIES.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.expanded[section] {
-            let category: String = CategoryFactory.categories()[section]
-            return CategoryFactory.subCategories(category).count + 1
+            let category: CATEGORY = CATEGORIES[section]
+            if category == .Other {
+                return SUBCATEGORIES[category]!.count + 1
+            }
+            return SUBCATEGORIES[category]!.count + 2 // including Other
         }
         return 1
     }
@@ -103,31 +121,56 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             }
             expanded[indexPath.section] = !expanded[indexPath.section]
             self.tableView.reloadData()
+            if expanded[indexPath.section] {
+                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            }
         }
         else {
-            let category = CategoryFactory.categories()[indexPath.section]
-            let subs = CategoryFactory.subCategories(category)
-            let index = indexPath.row - 1
-            let subcategory: String = subs[index]
-            
-            self.selectCategory(subcategory)
+            let category = CATEGORIES[indexPath.section]
+            if category == .Other {
+                self.selectCategory(nil, category: category.rawValue)
+            }
+            else {
+                if indexPath.row == 1 {
+                    self.selectCategory(nil, category: category.rawValue)
+                }
+                else {
+                    let subs: [SUBCATEGORY] = SUBCATEGORIES[category]!
+                    let index = indexPath.row - 2
+                    let subcategory: SUBCATEGORY = subs[index]
+                    
+                    self.selectCategory(subcategory.rawValue, category: category.rawValue)
+                }
+            }
         }
     }
     
-    func selectCategory(subcategory: String) {
+    func selectCategory(subcategory: String?, category: String) {
         if self.delegate != nil {
             // this controller used as a filter
-            self.delegate?.didSelectCategory(subcategory)
+            self.delegate?.didSelectCategory(subcategory, category: category)
         }
         else {
-            self.performSegueWithIdentifier("GoToNewActivity", sender: subcategory)
+            self.newSubcategory = subcategory
+            self.newCategory = category
+            self.performSegueWithIdentifier("GoToNewActivity", sender: nil)
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToNewActivity" {
             let controller: NewActivityViewController = segue.destinationViewController as! NewActivityViewController
-            controller.selectedCategory = sender as? String
+            if self.newSubcategory != nil {
+                controller.selectedCategories = [self.newSubcategory!]
+            }
+            else if self.newCategory != nil {
+                let subcategories: [SUBCATEGORY] = SUBCATEGORIES[CategoryFactory.categoryForString(self.newCategory!)!]!
+                let subcategoryStrings: [String] = subcategories.map({ (subcategory) -> String in
+                    return subcategory.rawValue.lowercaseString
+                })
+
+                controller.selectedCategories = subcategoryStrings
+            }
         }
     }
 }

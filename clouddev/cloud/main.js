@@ -591,7 +591,7 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     if (categories != undefined && categories.length > 0) {
         categories = categories.map(toLowerCase)
         console.log("searching for " + categories.length + " categories: " + categories)
-        query.containsAll("categories", categories)
+        query.containedIn("categories", categories)
     }
     query.descending("updatedAt")
     /*

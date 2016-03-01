@@ -9,107 +9,110 @@
 import UIKit
 
 enum CATEGORY: String {
-    case Arts = "Arts and Culture"
-    case Business, Community, Education, Entertainment
-    case Food = "Food and Drink"
-    case Health = "Health and Fitness"
-    case Music
-    case Outdoors = "Outdoors and Adventure"
-    case Sports = "Sports and Recreation"
-    case Technology, Other
+    case Food
+    case Drink
+    case Entertainment
+    case Fitness
+    case HealthRelaxation
+    case SportsRecreation
+    case MusicArts
+    case CultureSightseeing
+    case RetailShopping
+    case Beaches
+    case Nightlife
+    case OutdoorExtremeSports
+    case Other
 }
 
 enum SUBCATEGORY: String {
-    // arts
-    case Museums
-    case Gallery = "Art gallery"
-    // business
-    case Networking
-    // community
-    case Volunteering
-    // education
-    case Tutoring
-    // entertainment
-    case Movies
-    case Theatre
-    case Bowling
-    // food
-    case Brunch
-    case Dinner
-    case Drinks
-    case BBQ
-    // health
-    case Yoga
-    case Workout
-    case Jogging
-    case Gym
-    // music
-    case Dancing
-    case Concert
-    case Jam = "Jam session"
-    case Live = "Live music"
-    case Opera
-    // outdoors
-    case Hiking
-    case Volleyball
-    case Beach
-    // sports
-    case Pickup = "Pickup sports"
-    case WatchGame = "Watch the game"
-    case SportsMatch = "Go to a match"
-    // Technology
-    case VideoGames = "Play video games"
-    case LaserTag = "Laser tag"
+    case Anything
+    case Seafood, Steakhouse, Pizza, AsianFood, ItalianFood, MediterraneanFood, AmericanFood, MexicanFood, DessertSweets
+    case Beer, Wine, Coffee, Tea, Cocktails
+    case Movies, Bowling, LaserTag, Paintball, Gokarting, Minigolf, AmusementParks, WaterParks, Arcade, PoolHall, PokerCardGames, Chess, Checkers, Backgammon
+    case Yoga, Pilates, Zumba, Kickboxing, Bootcamp, Crossfit, Barre, Spinning, PoleDancing, PersonalTraining, GroupClasses
+    case Spa, Nails, BeautySalon
+    case GoToAGame, WatchAGame, PickupGame, Basketball, Soccer, Football, Baseball, Softball, Volleyball, Hockey, Lacrosse, Skiing, Tennis
+    case Concerts, Theatre, LiveMusic, JamSession, ArtGallery
+    case Landmarks, Museums, Tours, LocalActivities
+    case Malls, Boutiques, DesignerLuxuryBrands, DiscountStores, BigNameRetail
+    case PopularBeaches, PartyBeaches, QuietBeaches, NudeBeaches, LocalBeaches
+    case Dancing, Bars, Clubs, Lounges, StripClub
+    case SailingBoating, Cycling, Hiking, MountainClimbing, Golf, ZipLine, Kayaking, WhiteWaterRafting, Surfing, SkyDiving, Tubing
+    case Other
 }
 
-var CATEGORIES: [CATEGORY] = [.Arts, .Business, .Community, .Education, .Entertainment, .Food, .Health, .Music, .Outdoors, .Sports, .Technology]
+var CATEGORIES: [CATEGORY] = [
+    .Food,
+    .Drink,
+    .Entertainment,
+    .Fitness,
+    .HealthRelaxation,
+    .SportsRecreation,
+    .MusicArts,
+    .CultureSightseeing,
+    .RetailShopping,
+    .Beaches,
+    .Nightlife,
+    .OutdoorExtremeSports,
+    .Other
+]
+
 var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
-    .Arts: [.Museums, .Gallery],
-    .Business: [.Networking],
-    .Community: [.Volunteering],
-    .Education: [.Tutoring],
-    .Entertainment: [.Movies, .Theatre, .Bowling],
-    .Food: [.Brunch, .Dinner, .Drinks, .BBQ],
-    .Health: [.Yoga, .Workout, .Jogging, .Gym],
-    .Music: [.Concert, .Jam, .Live, .Opera],
-    .Outdoors: [.Hiking, .Volleyball, .Beach],
-    .Sports: [.Pickup, .WatchGame, .SportsMatch],
-    .Technology: [.VideoGames, .LaserTag]
+    .Food:[.Seafood, .Steakhouse, .Pizza, .AsianFood, .ItalianFood, .MediterraneanFood, .AmericanFood, .MexicanFood, .DessertSweets],
+    .Drink:[.Beer, .Wine, .Coffee, .Tea, .Cocktails],
+    .Entertainment:[.Movies, .Bowling, .LaserTag, .Paintball, .Gokarting, .Minigolf, .AmusementParks, .WaterParks, .Arcade, .PoolHall, .PokerCardGames, .Chess, .Checkers, .Backgammon],
+    .Fitness:[.Yoga, .Pilates, .Zumba, .Kickboxing, .Bootcamp, .Crossfit, .Barre, .Spinning, .PoleDancing, .PersonalTraining, .GroupClasses],
+    .HealthRelaxation: [.Spa, .Nails, .BeautySalon],
+    .SportsRecreation:[.GoToAGame, .WatchAGame, .PickupGame, .Basketball, .Soccer, .Football, .Baseball, .Softball, .Volleyball, .Hockey, .Lacrosse, .Skiing, .Tennis],
+    .MusicArts:[.Concerts, .Theatre, .LiveMusic, .JamSession, .ArtGallery],
+    .CultureSightseeing:[.Landmarks, .Museums, .Tours, .LocalActivities],
+    .RetailShopping:[.Malls, .Boutiques, .DesignerLuxuryBrands, .DiscountStores, .BigNameRetail],
+    .Beaches:[.PopularBeaches, .PartyBeaches, .QuietBeaches, .NudeBeaches, .LocalBeaches],
+    .Nightlife:[.Dancing, .Bars, .Clubs, .Lounges, .StripClub],
+    .OutdoorExtremeSports:[.SailingBoating, .Cycling, .Hiking, .MountainClimbing, .Golf, .ZipLine, .Kayaking, .WhiteWaterRafting, .Surfing, .SkyDiving, .Tubing],
+    .Other:[.Other]
 ]
 
 var BG_CATEGORIES: [CATEGORY: String] = [
-    .Arts: "category_art",
-    .Business: "category_business",
-    .Community: "category_community",
-    .Education: "category_education",
-    .Entertainment: "category_entertainment",
     .Food: "category_food",
-    .Health: "category_health",
-    .Music: "category_music",
-    .Outdoors: "category_outdoors",
-    .Sports: "category_sports",
-    .Technology: "category_technology"
+    .Drink: "event_starbucks",
+    .Entertainment: "category_entertainment",
+    .Fitness: "category_health",
+    .HealthRelaxation: "category_community",
+    .SportsRecreation: "category_sports",
+    .MusicArts: "category_music",
+    .CultureSightseeing: "event_ducktours",
+    .RetailShopping: "category_technology",
+    .Beaches: "category_outdoors",
+    .Nightlife: "event_salsa",
+    .OutdoorExtremeSports: "category_outdoors",
+    .Other: "event_karaoke"
 ]
+
 class CategoryFactory: NSObject {
 
-    class func categories() -> [String] {
-        return CATEGORIES.map({ (category) -> String in
-            return category.rawValue
-        })
-    }
-    
-    class func subCategories(category: String) -> [String] {
+    // MARK: - string to CATEGORY/SUBCATEGORY enum types
+    class func categoryForString(string: String) -> CATEGORY? {
         for cat: CATEGORY in CATEGORIES {
-            if cat.rawValue.lowercaseString == category.lowercaseString {
-                let sub: [SUBCATEGORY] = SUBCATEGORIES[cat]!
-                return sub.map({ (subcategory) -> String in
-                    return subcategory.rawValue
-                })
+            if cat.rawValue.lowercaseString == string.lowercaseString {
+                return cat
             }
         }
-        return []
+        return nil
     }
     
+    class func subcategoryForString(string: String) -> SUBCATEGORY? {
+        for cat: CATEGORY in CATEGORIES {
+            for sub: SUBCATEGORY in SUBCATEGORIES[cat]! {
+                if sub.rawValue.lowercaseString == string.lowercaseString {
+                    return sub
+                }
+            }
+        }
+        return nil
+    }
+    
+    // MARK: background images
     class func categoryBgImage(category: String) -> UIImage {
         for cat: CATEGORY in CATEGORIES {
             if cat.rawValue.lowercaseString == category.lowercaseString {
@@ -131,5 +134,103 @@ class CategoryFactory: NSObject {
             }
         }
         return UIImage(named: "event_starbucks.jpg")!
+    }
+    
+    // MARK: category titles
+    class func categoryReadableString(category: CATEGORY) -> String {
+        switch category {
+        case .HealthRelaxation: return "Health and Relaxation"
+        case .SportsRecreation: return "Sports and Recreation"
+        case .MusicArts: return "Music and the Arts"
+        case .CultureSightseeing: return "Culture and Sightseeing"
+        case .RetailShopping: return "Retail Therapy and Shopping"
+        case .OutdoorExtremeSports: return "Outdoor Activities, Extreme Sports"
+        default:
+            return category.rawValue
+        }
+    }
+    
+    class func subcategoryReadableString(subcategory: SUBCATEGORY) -> String {
+        switch subcategory {
+        case .AsianFood: return "Asian Food"
+        case .ItalianFood: return "Italian Food"
+        case .MediterraneanFood: return "Mediterranean Food"
+        case .AmericanFood: return "American Food"
+        case .MexicanFood: return "Mexican Food"
+        case .DessertSweets: return "Dessert and Sweets"
+        case .LaserTag: return "Laser Tag"
+        case .Gokarting: return "Go Karting"
+        case .AmusementParks: return "Amusement Parks"
+        case .WaterParks: return "Water Parks"
+        case .Arcade: return "Games and Arcades"
+        case .PoolHall: return "Pool halls"
+        case .PokerCardGames: return "Poker and card games"
+        case .PoleDancing: return "Pole Dancing"
+        case .PersonalTraining: return "Personal Training"
+        case .GroupClasses: return "Group Classes"
+        case .BeautySalon: return "Beauty Salon"
+        case .GoToAGame: return "Go to a Game"
+        case .WatchAGame: return "Watch a Game"
+        case .PickupGame: return "Join a Pickup Game"
+        case .LiveMusic: return "Live Music Acts"
+        case .JamSession: return "Join a Jam Session"
+        case .ArtGallery: return "Art Gallery"
+        case .Landmarks: return "Famous Sites and Landmarks"
+        case .LocalActivities: return "Local life and activities"
+        case .DesignerLuxuryBrands: return "Designer, Luxury and Name Brands"
+        case .DiscountStores: return "Discount Stores"
+        case .BigNameRetail: return "Big Name Retailers"
+        case .StripClub: return "Gentlemen's Clubs"
+        case .SailingBoating: return "Sailing and Boating"
+        case .MountainClimbing: return "Mountain Climbing"
+        case .ZipLine: return "Zip Lining"
+        case .WhiteWaterRafting: return "White Water Rafting"
+        case .SkyDiving: return "Sky Diving"
+        default: return subcategory.rawValue
+        }
+    }
+    
+    // MARK: custom search terms
+    class func searchTerms(string: String) -> String? {
+        let category = self.categoryForString(string)
+        let subcategory = self.subcategoryForString(string)
+        
+        if category != nil {
+            switch category! {
+            case .OutdoorExtremeSports:
+                return "extreme sports"
+            case .RetailShopping:
+                return "shopping"
+            default:
+                return category!.rawValue
+            }
+        }
+        else if subcategory != nil {
+            switch subcategory! {
+            case .Other:
+                return ""
+            case .GoToAGame:
+                return "sports"
+            case .WatchAGame:
+                return "sports"
+            case .PickupGame:
+                return "sports"
+            case .JamSession:
+                return "music"
+            case .LocalActivities:
+                return "events"
+            case .Landmarks:
+                return "landmarks"
+            case .DesignerLuxuryBrands:
+                return "designer shopping"
+            case .BigNameRetail:
+                return "retail"
+            case .GroupClasses:
+                return "group fitness"
+            default:
+                return subcategory!.rawValue
+            }
+        }
+        return nil
     }
 }

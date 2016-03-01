@@ -29,7 +29,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var tableView: UITableView!
     
     // tableview data
-    var selectedCategory: String?
+    var selectedSubcategory: String?
     var nearbyActivities: [PFObject]?
     var filteredActivities: [PFObject]?
     
@@ -81,7 +81,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         
         self.constraintCategoriesHeight.constant = 0
 
-        self.didSelectCategory(nil)
+        self.didSelectCategory(nil, category: nil)
         
         // location
         locationManager.delegate = self
@@ -110,10 +110,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
         cell.adjustTableViewCellSeparatorInsets(cell)
-        if self.selectedCategory == nil && nearbyActivities != nil {
+        if self.selectedSubcategory == nil && nearbyActivities != nil {
             cell.configureCellForUser(self.nearbyActivities![indexPath.row])
         }
-        else if self.selectedCategory != nil && filteredActivities != nil {
+        else if self.selectedSubcategory != nil && filteredActivities != nil {
             cell.configureCellForUser(self.filteredActivities![indexPath.row])
         }
         return cell
@@ -121,7 +121,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows = 0
-        if self.selectedCategory != nil {
+        if self.selectedSubcategory != nil {
             if let count: Int = self.filteredActivities?.count {
                 rows = count
             }
@@ -153,7 +153,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         
-        if self.selectedCategory == nil {
+        if self.selectedSubcategory == nil {
             let activity: PFObject = self.nearbyActivities![indexPath.row]
             self.goToActivity(activity)
         }
@@ -175,7 +175,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
         else {
             self.hideCategories()
-            self.didSelectCategory(nil)
+            self.didSelectCategory(nil, category: nil)
         }
     }
     
@@ -186,18 +186,26 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     // MARK: - SearchCategoriesDelegate
-    func didSelectCategory(category: String?) {
+    func didSelectCategory(subcategory: String?, category: String?) {
         // first query for existing bond requests
-        self.selectedCategory = category
+        self.selectedSubcategory = subcategory
         var cat: [String]?
-        if category != nil {
-            cat = [category!]
+        if subcategory != nil {
+            // a specific subcategory
+            cat = [subcategory!]
+        }
+        else if category != nil {
+            // All in a category
+            let subcategories: [SUBCATEGORY] = SUBCATEGORIES[CategoryFactory.categoryForString(category!)!]!
+            cat = subcategories.map({ (subcategory) -> String in
+                return subcategory.rawValue.lowercaseString
+            })
         }
         ActivityRequest.queryActivities(self.currentLocation, user: nil, joining: false, categories: cat) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     
-                    if self.selectedCategory == nil {
+                    if self.selectedSubcategory == nil {
                         self.nearbyActivities = results
                     }
                     else {
@@ -209,13 +217,13 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 else {
                     // no results, no error
                     var message = ""
-                    if self.selectedCategory == nil {
+                    if self.selectedSubcategory == nil {
                         message = "There are no activities near you."
                         self.nearbyActivities = nil
                         self.tableView.reloadData()
                     }
                     else {
-                        message = "There is no one interested in \(self.selectedCategory!) near you."
+                        message = "There is no one interested in \(self.selectedSubcategory!) near you."
                         self.filteredActivities = nil
                     }
 
@@ -340,6 +348,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: InvitationDelegate side effects
     func updateActivities() {
         // after user sends an invitation, that activity should be removed from here
-        self.didSelectCategory(self.selectedCategory)
+        self.didSelectCategory(self.selectedSubcategory, category: nil)
     }
 }
