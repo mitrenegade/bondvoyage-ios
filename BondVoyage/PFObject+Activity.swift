@@ -27,11 +27,16 @@ extension PFObject {
         }
     }
     
-    func category() -> String {
+    func subcategory() -> SUBCATEGORY {
+        // converts a string format of the category to the enum
+        // if multiple exists, returns the first one
         if let categories: [String] = self.objectForKey("categories") as? [String] {
-            return categories[0].capitalizeFirst
+            let subcategory: String = categories[0].capitalizeFirst
+            if let sub = CategoryFactory.subcategoryForString(subcategory) {
+                return sub
+            }
         }
-        return ""
+        return .Other
     }
     
     func locationString() -> String? {
@@ -42,7 +47,7 @@ extension PFObject {
     }
 
     func defaultImage() -> UIImage {
-        return CategoryFactory.subcategoryBgImage(self.category())
+        return CategoryFactory.subcategoryBgImage(self.subcategory().rawValue)
     }
     
     func user() -> PFUser {
@@ -60,9 +65,9 @@ extension PFObject {
             name = self.user().username
         }
         
-        var title = "\(self.category())"
+        var title = CategoryFactory.subcategoryReadableString(self.subcategory())
         if name != nil && self.locationString() != nil {
-            title = "\(self.category()) with \(name!) in \(self.locationString()!)"
+            title = "\(title) with \(name!) in \(self.locationString()!)"
         }
         else if name != nil {
             title = "\(title) with \(name!)"

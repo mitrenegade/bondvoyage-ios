@@ -26,7 +26,7 @@ enum CATEGORY: String {
 
 enum SUBCATEGORY: String {
     case Anything
-    case Seafood, Steakhouse, Pizza, Asian, Italian, Mediterranean, American, Mexican, DessertSweets
+    case Seafood, Steakhouse, Pizza, AsianFood, ItalianFood, MediterraneanFood, AmericanFood, MexicanFood, DessertSweets
     case Beer, Wine, Coffee, Tea, Cocktails
     case Movies, Bowling, LaserTag, Paintball, Gokarting, Minigolf, AmusementParks, WaterParks, Arcade, PoolHall, PokerCardGames, Chess, Checkers, Backgammon
     case Yoga, Pilates, Zumba, Kickboxing, Bootcamp, Crossfit, Barre, Spinning, PoleDancing, PersonalTraining, GroupClasses
@@ -58,7 +58,7 @@ var CATEGORIES: [CATEGORY] = [
 ]
 
 var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
-    .Food:[.Seafood, .Steakhouse, .Pizza, .Asian, .Italian, .Mediterranean, .American, .Mexican, .DessertSweets],
+    .Food:[.Seafood, .Steakhouse, .Pizza, .AsianFood, .ItalianFood, .MediterraneanFood, .AmericanFood, .MexicanFood, .DessertSweets],
     .Drink:[.Beer, .Wine, .Coffee, .Tea, .Cocktails],
     .Entertainment:[.Movies, .Bowling, .LaserTag, .Paintball, .Gokarting, .Minigolf, .AmusementParks, .WaterParks, .Arcade, .PoolHall, .PokerCardGames, .Chess, .Checkers, .Backgammon],
     .Fitness:[.Yoga, .Pilates, .Zumba, .Kickboxing, .Bootcamp, .Crossfit, .Barre, .Spinning, .PoleDancing, .PersonalTraining, .GroupClasses],
@@ -152,6 +152,11 @@ class CategoryFactory: NSObject {
     
     class func subcategoryReadableString(subcategory: SUBCATEGORY) -> String {
         switch subcategory {
+        case .AsianFood: return "Asian Food"
+        case .ItalianFood: return "Italian Food"
+        case .MediterraneanFood: return "Mediterranean Food"
+        case .AmericanFood: return "American Food"
+        case .MexicanFood: return "Mexican Food"
         case .DessertSweets: return "Dessert and Sweets"
         case .LaserTag: return "Laser Tag"
         case .Gokarting: return "Go Karting"
