@@ -27,8 +27,9 @@ class SuggestedPlacesViewController: UITableViewController {
         let geopoint: PFGeoPoint = self.currentActivity!.objectForKey("geopoint") as! PFGeoPoint
         let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: geopoint.latitude, longitude: geopoint.longitude)
         if let categories: [String] = self.currentActivity!.objectForKey("categories") as? [String] {
+            let search = CategoryFactory.searchTerms(categories[0])
             HUD.show(.SystemActivity)
-            dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms:categories[0]) { (results, errorString) -> Void in
+            dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms:search) { (results, errorString) -> Void in
                 print("results \(results)")
                 if !results.isEmpty {
                     HUD.hide(animated: true, completion: nil)
