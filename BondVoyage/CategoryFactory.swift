@@ -9,86 +9,88 @@
 import UIKit
 
 enum CATEGORY: String {
-    case Arts = "Arts and Culture"
-    case Business, Community, Education, Entertainment
-    case Food = "Food and Drink"
-    case Health = "Health and Fitness"
-    case Music
-    case Outdoors = "Outdoors and Adventure"
+    case Food
+    case Drink
+    case Entertainment
+    case Fitness
+    case Health = "Health and Relaxation"
     case Sports = "Sports and Recreation"
-    case Technology, Other
+    case Music = "Music and the Arts"
+    case Culture = "Culture and Sightseeing"
+    case Retail = "Retail Therapy and Shopping"
+    case Beaches
+    case Nightlife
+    case Outdoor = "Outdoor Activities and Extreme Sports"
+    case Other
 }
 
 enum SUBCATEGORY: String {
-    // arts
-    case Museums
-    case Gallery = "Art gallery"
-    // business
-    case Networking
-    // community
-    case Volunteering
-    // education
-    case Tutoring
-    // entertainment
-    case Movies
-    case Theatre
-    case Bowling
-    // food
-    case Brunch
-    case Dinner
-    case Drinks
-    case BBQ
-    // health
-    case Yoga
-    case Workout
-    case Jogging
-    case Gym
-    // music
-    case Dancing
-    case Concert
-    case Jam = "Jam session"
-    case Live = "Live music"
-    case Opera
-    // outdoors
-    case Hiking
-    case Volleyball
-    case Beach
-    // sports
-    case Pickup = "Pickup sports"
-    case WatchGame = "Watch the game"
-    case SportsMatch = "Go to a match"
-    // Technology
-    case VideoGames = "Play video games"
-    case LaserTag = "Laser tag"
+    case Anything
+    case Seafood, Steakhouse, Pizza, Asian, Italian, Mediterranean, American, Mexican, Dessert = "Dessert and Sweets"
+    case Beer, Wine, Coffee, Tea, Cocktails
+    case Movies, Bowling, LaserTag = "Laser Tag", Paintball, Gokarting = "Go Karting", Minigolf, AmusementParks = "Amusement Parks", WaterParks = "Water Parks", Arcade = "Games and Arcades", Pool = "Pool halls", Poker = "Poker and card games"
+    case Yoga, Pilates, Zumba, Kickboxing, Bootcamp, Crossfit, Barre, Spinning, Pole = "Pole Dancing", PersonalTraining = "Personal Training", Group = "Group Classes"
+    case Spa, Nails, Salon = "Beauty Salon"
+    case GoToAGame = "Go to a game", WatchAGame = "Watch a game", PickupGame = "Join a pickup game", Basketball, Soccer, Football, Baseball, Softball, Volleyball, Hockey, Lacrosse, Skiing, Tennis
+    case Concerts, Theatre, LiveMusic = "Live Music Acts", Jam = "Join a jam session", Art = "Art Gallery"
+    case Landmarks = "Famous Sites and Landmarks", Museums, Tours, Local = "Local life and activities"
+    case Malls, Boutiques, Designer = "Designer, Luxury and Name Brands", Discount = "Discount Stores", Retail = "Big Name Retailers"
+    case PopularBeaches = "Popular", PartyBeaches = "Party", QuietBeaches = "Quiet", NudeBeaches = "Nude", LocalBeaches = "Local"
+    case Dancing, Bars, Clubs, Lounges, StripClub = "Gentlemen's Club"
+    case Sailing = "Sailing and Boating", Cycling, Hiking, Climbing = "Mountain Climbing", Golf, ZipLine = "Zip Lining", Kayaking, Rafting = "White Water Rafting", Surfing, SkyDiving = "Sky Diving", Tubing
 }
 
-var CATEGORIES: [CATEGORY] = [.Arts, .Business, .Community, .Education, .Entertainment, .Food, .Health, .Music, .Outdoors, .Sports, .Technology]
+var CATEGORIES: [CATEGORY] = [
+    .Food,
+    .Drink,
+    .Entertainment,
+    .Fitness,
+    .Sports,
+    .Music,
+    .Culture,
+    .Retail,
+    .Beaches,
+    .Nightlife,
+    .Outdoor,
+    .Other
+]
 var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
-    .Arts: [.Museums, .Gallery],
-    .Business: [.Networking],
-    .Community: [.Volunteering],
-    .Education: [.Tutoring],
-    .Entertainment: [.Movies, .Theatre, .Bowling],
-    .Food: [.Brunch, .Dinner, .Drinks, .BBQ],
-    .Health: [.Yoga, .Workout, .Jogging, .Gym],
-    .Music: [.Concert, .Jam, .Live, .Opera],
-    .Outdoors: [.Hiking, .Volleyball, .Beach],
-    .Sports: [.Pickup, .WatchGame, .SportsMatch],
-    .Technology: [.VideoGames, .LaserTag]
+    .Food:[.Seafood, .Steakhouse, .Pizza, .Asian, .Italian, .Mediterranean, .American, .Mexican, .Dessert],
+    .Drink:[.Beer, .Wine, .Coffee, .Tea, .Cocktails],
+    .Entertainment:[.Movies, .Bowling, .LaserTag, .Paintball, .Gokarting, .Minigolf, .AmusementParks, .WaterParks, .Arcade, .Pool, .Poker],
+    .Fitness:[.Yoga, .Pilates, .Zumba, .Kickboxing, .Bootcamp, .Crossfit, .Barre, .Spinning, .Pole, .PersonalTraining, .Group],
+    .Health: [.Spa, .Nails, .Salon],
+    .Sports:[.GoToAGame, .WatchAGame, .PickupGame, .Basketball, .Soccer, .Football, .Baseball, .Softball, .Volleyball, .Hockey, .Lacrosse, .Skiing, .Tennis],
+    .Music:[.Concerts, .Theatre, .LiveMusic, .Jam, .Art],
+    .Culture:[.Landmarks, .Museums, .Tours, .Local],
+    .Retail:[.Malls, .Boutiques, .Designer, .Discount, .Retail],
+    .Beaches:[.PopularBeaches, .PartyBeaches, .QuietBeaches, .NudeBeaches, .LocalBeaches],
+    .Nightlife:[.Dancing, .Bars, .Clubs, .Lounges, .StripClub],
+    .Outdoor:[.Sailing, .Cycling, .Hiking, .Climbing, .Golf, .ZipLine, .Kayaking, .Rafting, .Surfing, .SkyDiving, .Tubing],
+    .Other:[]
 ]
 
 var BG_CATEGORIES: [CATEGORY: String] = [
-    .Arts: "category_art",
-    .Business: "category_business",
-    .Community: "category_community",
-    .Education: "category_education",
-    .Entertainment: "category_entertainment",
     .Food: "category_food",
-    .Health: "category_health",
-    .Music: "category_music",
-    .Outdoors: "category_outdoors",
+    .Drink: "event_starbucks",
+    .Entertainment: "category_entertainment",
+    .Fitness: "category_health",
     .Sports: "category_sports",
-    .Technology: "category_technology"
+    .Music: "category_music",
+    .Culture: "event_ducktours",
+    .Retail: "category_technology",
+    .Beaches: "category_outdoors",
+    .Nightlife: "event_salsa",
+    .Outdoor: "category_outdoors",
+    .Other: "event_karaoke"
+]
+
+var SEARCH_CATEGORIES: [SUBCATEGORY: String] = [
+    .PopularBeaches: "popular beach",
+    .PartyBeaches: "party beach",
+    .QuietBeaches: "quiet beach",
+    .NudeBeaches: "nude beach",
+    .LocalBeaches: "local beach"
 ]
 class CategoryFactory: NSObject {
 
@@ -131,5 +133,16 @@ class CategoryFactory: NSObject {
             }
         }
         return UIImage(named: "event_starbucks.jpg")!
+    }
+    
+    class func subcategorySearchTerms(subcategory: SUBCATEGORY, category: CATEGORY) -> String {
+        if subcategory == .Anything {
+            return category.rawValue
+        }
+        
+        if let terms = SEARCH_CATEGORIES[subcategory] {
+            return terms
+        }
+        return subcategory.rawValue
     }
 }
