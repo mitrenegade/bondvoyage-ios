@@ -13,7 +13,7 @@ import Parse
 let kNearbyEventCellIdentifier = "nearbyEventCell"
 
 protocol SearchCategoriesDelegate: class {
-    func didSelectCategory(category: String?)
+    func didSelectCategory(subcategory: String?, category: String?)
 }
 class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -67,10 +67,21 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("SubcategoryCell")!
         let category = CategoryFactory.categoryStrings()[indexPath.section]
-        let subs = CategoryFactory.subCategoryStrings(category)
-        let index = indexPath.row - 1
+        if category == "Other" {
+            cell.textLabel!.text = "Other"
+        }
+        else {
+            if indexPath.row == 1 {
+                cell.textLabel!.text = "Any"
+            }
+            else {
+                let subs = CategoryFactory.subCategoryStrings(category)
+                let index = indexPath.row - 2
+                cell.textLabel!.text = subs[index]
+            }
+        }
+        
         cell.backgroundColor = UIColor.whiteColor()
-        cell.textLabel!.text = subs[index]
         return cell
     }
     
@@ -81,7 +92,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.expanded[section] {
             let category: String = CategoryFactory.categoryStrings()[section]
-            return CategoryFactory.subCategoryStrings(category).count + 1
+            if category == "Other" {
+                return CategoryFactory.subCategoryStrings(category).count + 1
+            }
+            return CategoryFactory.subCategoryStrings(category).count + 2 // including Other
         }
         return 1
     }
@@ -109,18 +123,28 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
         else {
             let category = CategoryFactory.categoryStrings()[indexPath.section]
-            let subs = CategoryFactory.subCategoryStrings(category)
-            let index = indexPath.row - 1
-            let subcategory: String = subs[index]
-            
-            self.selectCategory(subcategory)
+            if category == "Other" {
+                self.selectCategory("Other", category: "Other")
+            }
+            else {
+                if indexPath.row == 1 {
+                    self.selectCategory(nil, category: category)
+                }
+                else {
+                    let subs = CategoryFactory.subCategoryStrings(category)
+                    let index = indexPath.row - 2
+                    let subcategory: String = subs[index]
+                    
+                    self.selectCategory(subcategory, category: category)
+                }
+            }
         }
     }
     
-    func selectCategory(subcategory: String) {
+    func selectCategory(subcategory: String?, category: String) {
         if self.delegate != nil {
             // this controller used as a filter
-            self.delegate?.didSelectCategory(subcategory)
+            self.delegate?.didSelectCategory(subcategory, category: category)
         }
         else {
             self.performSegueWithIdentifier("GoToNewActivity", sender: subcategory)
