@@ -49,7 +49,7 @@
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E5U-Bl-P0I" userLabel="View - header">
                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
-                                                        <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="P53-IH-5dZ"/>
                                                             <constraint firstAttribute="height" constant="60" id="rz6-hS-GEP"/>
@@ -64,7 +64,7 @@
                                                         <rect key="frame" x="8" y="8" width="584" height="44"/>
                                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                                                         <state key="normal" title="Profile Information">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gH8-SA-81r" userLabel="View - First name">
@@ -325,7 +325,7 @@
                                                         </constraints>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="Wrb-h9-EL5" secondAttribute="trailing" id="2Vn-RX-Tan"/>
                                                     <constraint firstItem="E5U-Bl-P0I" firstAttribute="top" secondItem="fOw-hN-Z2b" secondAttribute="top" id="2XE-FV-Cuy"/>
@@ -448,7 +448,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="SGs-Pj-Nx4" firstAttribute="leading" secondItem="vve-G6-LDj" secondAttribute="leadingMargin" id="I7f-v2-Z7l"/>
                             <constraint firstItem="6Oh-Ut-HcX" firstAttribute="trailing" secondItem="vve-G6-LDj" secondAttribute="trailingMargin" id="Ss6-54-pNu"/>
@@ -484,8 +484,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="648"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uFk-rd-TqM">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="584"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFk-rd-TqM">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="648"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JgP-9U-hVd">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="648"/>
@@ -500,11 +500,11 @@
                                                                 <rect key="frame" x="8" y="8" width="584" height="44"/>
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                                                                 <state key="normal" title="Group Size">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="bDE-M1-TIv"/>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="wwT-ed-ywu"/>
@@ -542,11 +542,11 @@
                                                                 <rect key="frame" x="8" y="8" width="584" height="44"/>
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                                                                 <state key="normal" title="Age Range">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" red="0.308323558" green="0.50645535539999997" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="En6-a5-pYn"/>
                                                             <constraint firstAttribute="height" constant="60" id="fbs-0e-53T"/>
@@ -598,9 +598,9 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="uFk-rd-TqM" secondAttribute="trailing" id="5VR-mV-0Xc"/>
                             <constraint firstItem="uFk-rd-TqM" firstAttribute="leading" secondItem="Nqq-L6-eJ4" secondAttribute="leading" id="6nG-j7-NXO"/>
-                            <constraint firstItem="uFk-rd-TqM" firstAttribute="top" secondItem="G7c-QB-RLx" secondAttribute="bottom" id="KMw-gv-7f0"/>
                             <constraint firstItem="JgP-9U-hVd" firstAttribute="height" secondItem="Nqq-L6-eJ4" secondAttribute="height" id="Lrn-Ee-5gS"/>
                             <constraint firstItem="JgP-9U-hVd" firstAttribute="width" secondItem="Nqq-L6-eJ4" secondAttribute="width" id="O54-XV-JyJ"/>
+                            <constraint firstItem="uFk-rd-TqM" firstAttribute="top" secondItem="Nqq-L6-eJ4" secondAttribute="topMargin" id="Phu-Z6-dw5"/>
                             <constraint firstItem="xVW-fb-aOI" firstAttribute="top" secondItem="uFk-rd-TqM" secondAttribute="bottom" id="cP9-OA-Otf"/>
                         </constraints>
                     </view>

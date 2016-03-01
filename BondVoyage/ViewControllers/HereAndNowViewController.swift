@@ -53,6 +53,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         imageView.backgroundColor = Constants.lightBlueColor()
         imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
         self.navigationController!.navigationBar.addSubview(imageView)
+        self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "invitation:updated", object: nil)
         
@@ -77,7 +78,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     func setup() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
-        self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
         
         self.constraintCategoriesHeight.constant = 0
 

@@ -26,6 +26,16 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        // configure title bar
+        if self.navigationController != nil {
+            let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
+            imageView.frame = CGRectMake(0, 0, 150, 44)
+            imageView.contentMode = .ScaleAspectFit
+            imageView.backgroundColor = Constants.lightBlueColor()
+            imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
+            self.navigationController!.navigationBar.addSubview(imageView)
+            self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
+        }
     }
 
     override func didReceiveMemoryWarning() {

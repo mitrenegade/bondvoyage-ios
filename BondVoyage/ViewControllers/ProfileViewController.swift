@@ -118,7 +118,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         }
         
         self.imagePhoto.layer.cornerRadius = self.imagePhoto.frame.size.width / 2
-        self.imagePhoto.layer.borderColor = Constants.blueColor().CGColor
+        self.imagePhoto.layer.borderColor = Constants.lightBlueColor().CGColor
         self.imagePhoto.layer.borderWidth = 2
     }
 
