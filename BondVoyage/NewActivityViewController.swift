@@ -181,7 +181,7 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
         }
 
         if self.selectedCategories == nil {
-            self.selectedCategories = CategoryFactory.subCategoryStrings("Other")
+            self.selectedCategories = ["Other"]
         }
         ActivityRequest.createActivity(self.selectedCategories!, location: self.currentLocation!, locationString: self.inputCity.text) { (result, error) -> Void in
             if error != nil {

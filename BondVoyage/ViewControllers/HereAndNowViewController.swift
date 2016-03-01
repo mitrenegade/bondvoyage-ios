@@ -196,7 +196,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
         else if category != nil {
             // All in a category
-            cat = CategoryFactory.subCategoryStrings(category!)
+            let subcategories: [SUBCATEGORY] = SUBCATEGORIES[CategoryFactory.categoryForString(category!)!]!
+            cat = subcategories.map({ (subcategory) -> String in
+                return subcategory.rawValue.lowercaseString
+            })
         }
         ActivityRequest.queryActivities(self.currentLocation, user: nil, joining: false, categories: cat) { (results, error) -> Void in
             if results != nil {

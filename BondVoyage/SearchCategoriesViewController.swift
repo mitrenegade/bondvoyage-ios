@@ -53,7 +53,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func closeCategories() {
-        for _ in CategoryFactory.categoryStrings() {
+        for _ in CATEGORIES {
             expanded.append(false)
         }
         self.tableView.reloadData()
@@ -64,13 +64,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell")!
-            cell.textLabel!.text = CategoryFactory.categoryStrings()[indexPath.section]
+            let category: CATEGORY = CATEGORIES[indexPath.section]
+            cell.textLabel!.text = CategoryFactory.categoryReadableString(category)
             cell.backgroundColor = UIColor.clearColor()
             return cell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("SubcategoryCell")!
-        let category = CategoryFactory.categoryStrings()[indexPath.section]
-        if category == "Other" {
+        let category = CATEGORIES[indexPath.section]
+        if category == .Other {
             cell.textLabel!.text = "Other"
         }
         else {
@@ -78,9 +79,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
                 cell.textLabel!.text = "Any"
             }
             else {
-                let subs = CategoryFactory.subCategoryStrings(category)
+                let subs: [SUBCATEGORY] = SUBCATEGORIES[category]!
                 let index = indexPath.row - 2
-                cell.textLabel!.text = subs[index]
+                cell.textLabel!.text = CategoryFactory.subcategoryReadableString(subs[index])
             }
         }
         
@@ -89,16 +90,16 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return CategoryFactory.categoryStrings().count
+        return CATEGORIES.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.expanded[section] {
-            let category: String = CategoryFactory.categoryStrings()[section]
-            if category == "Other" {
-                return CategoryFactory.subCategoryStrings(category).count + 1
+            let category: CATEGORY = CATEGORIES[section]
+            if category == .Other {
+                return SUBCATEGORIES[category]!.count + 1
             }
-            return CategoryFactory.subCategoryStrings(category).count + 2 // including Other
+            return SUBCATEGORIES[category]!.count + 2 // including Other
         }
         return 1
     }
@@ -125,20 +126,20 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             }
         }
         else {
-            let category = CategoryFactory.categoryStrings()[indexPath.section]
-            if category == "Other" {
-                self.selectCategory("Other", category: "Other")
+            let category = CATEGORIES[indexPath.section]
+            if category == .Other {
+                self.selectCategory(nil, category: category.rawValue)
             }
             else {
                 if indexPath.row == 1 {
-                    self.selectCategory(nil, category: category)
+                    self.selectCategory(nil, category: category.rawValue)
                 }
                 else {
-                    let subs = CategoryFactory.subCategoryStrings(category)
+                    let subs: [SUBCATEGORY] = SUBCATEGORIES[category]!
                     let index = indexPath.row - 2
-                    let subcategory: String = subs[index]
+                    let subcategory: SUBCATEGORY = subs[index]
                     
-                    self.selectCategory(subcategory, category: category)
+                    self.selectCategory(subcategory.rawValue, category: category.rawValue)
                 }
             }
         }
@@ -163,7 +164,12 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
                 controller.selectedCategories = [self.newSubcategory!]
             }
             else if self.newCategory != nil {
-                controller.selectedCategories = CategoryFactory.subCategoryStrings(self.newCategory!)
+                let subcategories: [SUBCATEGORY] = SUBCATEGORIES[CategoryFactory.categoryForString(self.newCategory!)!]!
+                let subcategoryStrings: [String] = subcategories.map({ (subcategory) -> String in
+                    return subcategory.rawValue.lowercaseString
+                })
+
+                controller.selectedCategories = subcategoryStrings
             }
         }
     }

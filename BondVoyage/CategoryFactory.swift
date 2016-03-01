@@ -112,23 +112,6 @@ class CategoryFactory: NSObject {
         return nil
     }
     
-    // MARK: category strings used for web and ordering
-    class func categoryStrings() -> [String] {
-        return CATEGORIES.map({ (category) -> String in
-            return category.rawValue
-        })
-    }
-    
-    class func subCategoryStrings(category: String) -> [String] {
-        if let cat: CATEGORY = self.categoryForString(category) {
-            let sub: [SUBCATEGORY] = SUBCATEGORIES[cat]!
-            return sub.map({ (subcategory) -> String in
-                return subcategory.rawValue
-            })
-        }
-        return []
-    }
-    
     // MARK: background images
     class func categoryBgImage(category: String) -> UIImage {
         for cat: CATEGORY in CATEGORIES {
