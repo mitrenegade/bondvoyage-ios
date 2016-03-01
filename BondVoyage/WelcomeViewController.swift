@@ -8,6 +8,8 @@
 
 import UIKit
 import ParseUI
+import FBSDKCoreKit
+
 
 class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
 
@@ -56,6 +58,28 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
     
     func didLogin() {
         self.performSegueWithIdentifier("GoToMain", sender: nil)
+        let request: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+        request.startWithCompletionHandler { (connection, result, error) -> Void in
+            print("\(result) \nerror: \(error)")
+            if result != nil {
+                if let name = result["name"] as? String {
+                    print("name: \(name)")
+                    if PFUser.currentUser()?.objectForKey("firstName") == nil {
+                        PFUser.currentUser()?.setValue(name, forKey: "firstName")
+                    }
+                }
+                if let fbid = result["id"] as? String {
+                    print("facebook id: \(fbid)")
+                    PFUser.currentUser()?.setValue(fbid, forKey: "facebook_id")
+                    
+                    if PFUser.currentUser()?.objectForKey("photoUrl") == nil {
+                        let url = "https://graph.facebook.com/\(fbid)/picture?type=large&return_ssl_resources=1"
+                        PFUser.currentUser()?.setObject(url, forKey: "photoUrl")
+                    }
+                }
+                PFUser.currentUser()?.saveInBackground()
+            }
+        }
     }
     
     // MARK: SettingsDelegate
