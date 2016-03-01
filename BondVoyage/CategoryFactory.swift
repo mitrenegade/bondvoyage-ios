@@ -20,7 +20,7 @@ enum CATEGORY: String {
     case Retail = "Retail Therapy and Shopping"
     case Beaches
     case Nightlife
-    case Outdoor = "Outdoor Activities and Extreme Sports"
+    case Outdoor = "Outdoor Activities, Extreme Sports"
     case Other
 }
 
@@ -38,6 +38,7 @@ enum SUBCATEGORY: String {
     case PopularBeaches = "Popular", PartyBeaches = "Party", QuietBeaches = "Quiet", NudeBeaches = "Nude", LocalBeaches = "Local"
     case Dancing, Bars, Clubs, Lounges, StripClub = "Gentlemen's Club"
     case Sailing = "Sailing and Boating", Cycling, Hiking, Climbing = "Mountain Climbing", Golf, ZipLine = "Zip Lining", Kayaking, Rafting = "White Water Rafting", Surfing, SkyDiving = "Sky Diving", Tubing
+    case Other
 }
 
 var CATEGORIES: [CATEGORY] = [
@@ -54,6 +55,7 @@ var CATEGORIES: [CATEGORY] = [
     .Outdoor,
     .Other
 ]
+
 var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
     .Food:[.Seafood, .Steakhouse, .Pizza, .Asian, .Italian, .Mediterranean, .American, .Mexican, .Dessert],
     .Drink:[.Beer, .Wine, .Coffee, .Tea, .Cocktails],
@@ -67,7 +69,7 @@ var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
     .Beaches:[.PopularBeaches, .PartyBeaches, .QuietBeaches, .NudeBeaches, .LocalBeaches],
     .Nightlife:[.Dancing, .Bars, .Clubs, .Lounges, .StripClub],
     .Outdoor:[.Sailing, .Cycling, .Hiking, .Climbing, .Golf, .ZipLine, .Kayaking, .Rafting, .Surfing, .SkyDiving, .Tubing],
-    .Other:[]
+    .Other:[.Other]
 ]
 
 var BG_CATEGORIES: [CATEGORY: String] = [
@@ -138,6 +140,9 @@ class CategoryFactory: NSObject {
     class func subcategorySearchTerms(subcategory: SUBCATEGORY, category: CATEGORY) -> String {
         if subcategory == .Anything {
             return category.rawValue
+        }
+        if subcategory == .Other {
+            return ""
         }
         
         if let terms = SEARCH_CATEGORIES[subcategory] {

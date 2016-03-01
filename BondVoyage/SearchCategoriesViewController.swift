@@ -103,6 +103,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             }
             expanded[indexPath.section] = !expanded[indexPath.section]
             self.tableView.reloadData()
+            if expanded[indexPath.section] {
+                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+            }
         }
         else {
             let category = CategoryFactory.categories()[indexPath.section]
