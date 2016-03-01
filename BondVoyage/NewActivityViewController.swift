@@ -53,9 +53,6 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
         self.buttonRequest.layer.zPosition = 1
         self.buttonRequest.alpha = 1
         
-        self.setTitleBarColor(UIColor.blackColor(), tintColor: UIColor.whiteColor())
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-
         if TESTING {
             self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
         }

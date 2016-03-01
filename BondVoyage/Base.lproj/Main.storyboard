@@ -1080,7 +1080,6 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Select Workout Location" id="fzN-Up-7Kb"/>
                     <connections>
                         <outlet property="buttonRequest" destination="ziv-at-zKt" id="wjW-ZS-eIp"/>
                         <outlet property="iconLocation" destination="fl8-4B-ENx" id="1eS-rP-pyU"/>
@@ -1106,7 +1105,7 @@
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zua-Tk-rJN"/>
         <segue reference="N0N-Jc-ivY"/>
+        <segue reference="d5p-Y8-aSj"/>
     </inferredMetricsTieBreakers>
 </document>
