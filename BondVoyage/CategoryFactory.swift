@@ -35,7 +35,7 @@ enum SUBCATEGORY: String {
     case Concerts, Theatre, LiveMusic = "Live Music Acts", Jam = "Join a jam session", Art = "Art Gallery"
     case Landmarks = "Famous Sites and Landmarks", Museums, Tours, Local = "Local life and activities"
     case Malls, Boutiques, Designer = "Designer, Luxury and Name Brands", Discount = "Discount Stores", Retail = "Big Name Retailers"
-    case PopularBeaches = "Popular", PartyBeaches = "Party", QuietBeaches = "Quiet", NudeBeaches = "Nude", LocalBeaches = "Local"
+    case PopularBeaches = "Popular Beach", PartyBeaches = "Party Beach", QuietBeaches = "Quiet Beach", NudeBeaches = "Nude Beach", LocalBeaches = "Local Beach"
     case Dancing, Bars, Clubs, Lounges, StripClub = "Gentlemen's Club"
     case Sailing = "Sailing and Boating", Cycling, Hiking, Climbing = "Mountain Climbing", Golf, ZipLine = "Zip Lining", Kayaking, Rafting = "White Water Rafting", Surfing, SkyDiving = "Sky Diving", Tubing
     case Other
@@ -178,16 +178,6 @@ class CategoryFactory: NSObject {
                 return "events"
             case .Landmarks:
                 return "landmarks"
-            case .PopularBeaches:
-                return subcategory!.rawValue + " beaches"
-            case .PartyBeaches:
-                return subcategory!.rawValue + " beaches"
-            case .QuietBeaches:
-                return subcategory!.rawValue + " beaches"
-            case .LocalBeaches:
-                return subcategory!.rawValue + " beaches"
-            case .NudeBeaches:
-                return subcategory!.rawValue + " beaches"
             case .Designer:
                 return "designer shopping"
             case .Retail:

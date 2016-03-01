@@ -191,8 +191,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         self.selectedSubcategory = subcategory
         var cat: [String]?
         if subcategory != nil {
-            // a specific category
-            cat = [category!]
+            // a specific subcategory
+            cat = [subcategory!]
         }
         else if category != nil {
             // All in a category

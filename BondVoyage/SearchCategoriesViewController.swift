@@ -22,6 +22,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     weak var delegate: SearchCategoriesDelegate?
     
+    var newSubcategory: String?
+    var newCategory: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -147,14 +150,21 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             self.delegate?.didSelectCategory(subcategory, category: category)
         }
         else {
-            self.performSegueWithIdentifier("GoToNewActivity", sender: subcategory)
+            self.newSubcategory = subcategory
+            self.newCategory = category
+            self.performSegueWithIdentifier("GoToNewActivity", sender: nil)
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToNewActivity" {
             let controller: NewActivityViewController = segue.destinationViewController as! NewActivityViewController
-            controller.selectedCategory = sender as? String
+            if self.newSubcategory != nil {
+                controller.selectedCategories = [self.newSubcategory!]
+            }
+            else if self.newCategory != nil {
+                controller.selectedCategories = CategoryFactory.subCategoryStrings(self.newCategory!)
+            }
         }
     }
 }
