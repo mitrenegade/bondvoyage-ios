@@ -13,31 +13,31 @@ enum CATEGORY: String {
     case Drink
     case Entertainment
     case Fitness
-    case Health = "Health and Relaxation"
-    case Sports = "Sports and Recreation"
-    case Music = "Music and the Arts"
-    case Culture = "Culture and Sightseeing"
-    case Retail = "Retail Therapy and Shopping"
+    case HealthRelaxation
+    case SportsRecreation
+    case MusicArts
+    case CultureSightseeing
+    case RetailShopping
     case Beaches
     case Nightlife
-    case Outdoor = "Outdoor Activities, Extreme Sports"
+    case OutdoorExtremeSports
     case Other
 }
 
 enum SUBCATEGORY: String {
     case Anything
-    case Seafood, Steakhouse, Pizza, Asian, Italian, Mediterranean, American, Mexican, Dessert = "Dessert and Sweets"
+    case Seafood, Steakhouse, Pizza, Asian, Italian, Mediterranean, American, Mexican, DessertSweets
     case Beer, Wine, Coffee, Tea, Cocktails
-    case Movies, Bowling, LaserTag = "Laser Tag", Paintball, Gokarting = "Go Karting", Minigolf, AmusementParks = "Amusement Parks", WaterParks = "Water Parks", Arcade = "Games and Arcades", Pool = "Pool halls", Poker = "Poker and card games", Chess, Checkers, Backgammon
-    case Yoga, Pilates, Zumba, Kickboxing, Bootcamp, Crossfit, Barre, Spinning, Pole = "Pole Dancing", PersonalTraining = "Personal Training", Group = "Group Classes"
-    case Spa, Nails, Salon = "Beauty Salon"
-    case GoToAGame = "Go to a game", WatchAGame = "Watch a game", PickupGame = "Join a pickup game", Basketball, Soccer, Football, Baseball, Softball, Volleyball, Hockey, Lacrosse, Skiing, Tennis
-    case Concerts, Theatre, LiveMusic = "Live Music Acts", Jam = "Join a jam session", Art = "Art Gallery"
-    case Landmarks = "Famous Sites and Landmarks", Museums, Tours, Local = "Local life and activities"
-    case Malls, Boutiques, Designer = "Designer, Luxury and Name Brands", Discount = "Discount Stores", Retail = "Big Name Retailers"
-    case PopularBeaches = "Popular Beach", PartyBeaches = "Party Beach", QuietBeaches = "Quiet Beach", NudeBeaches = "Nude Beach", LocalBeaches = "Local Beach"
-    case Dancing, Bars, Clubs, Lounges, StripClub = "Gentlemen's Club"
-    case Sailing = "Sailing and Boating", Cycling, Hiking, Climbing = "Mountain Climbing", Golf, ZipLine = "Zip Lining", Kayaking, Rafting = "White Water Rafting", Surfing, SkyDiving = "Sky Diving", Tubing
+    case Movies, Bowling, LaserTag, Paintball, Gokarting, Minigolf, AmusementParks, WaterParks, Arcade, PoolHall, PokerCardGames, Chess, Checkers, Backgammon
+    case Yoga, Pilates, Zumba, Kickboxing, Bootcamp, Crossfit, Barre, Spinning, PoleDancing, PersonalTraining, GroupClasses
+    case Spa, Nails, BeautySalon
+    case GoToAGame, WatchAGame, PickupGame, Basketball, Soccer, Football, Baseball, Softball, Volleyball, Hockey, Lacrosse, Skiing, Tennis
+    case Concerts, Theatre, LiveMusic, JamSession, ArtGallery
+    case Landmarks, Museums, Tours, LocalActivities
+    case Malls, Boutiques, DesignerLuxuryBrands, DiscountStores, BigNameRetail
+    case PopularBeaches, PartyBeaches, QuietBeaches, NudeBeaches, LocalBeaches
+    case Dancing, Bars, Clubs, Lounges, StripClub
+    case SailingBoating, Cycling, Hiking, MountainClimbing, Golf, ZipLine, Kayaking, WhiteWaterRafting, Surfing, SkyDiving, Tubing
     case Other
 }
 
@@ -46,29 +46,30 @@ var CATEGORIES: [CATEGORY] = [
     .Drink,
     .Entertainment,
     .Fitness,
-    .Sports,
-    .Music,
-    .Culture,
-    .Retail,
+    .HealthRelaxation,
+    .SportsRecreation,
+    .MusicArts,
+    .CultureSightseeing,
+    .RetailShopping,
     .Beaches,
     .Nightlife,
-    .Outdoor,
+    .OutdoorExtremeSports,
     .Other
 ]
 
 var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
-    .Food:[.Seafood, .Steakhouse, .Pizza, .Asian, .Italian, .Mediterranean, .American, .Mexican, .Dessert],
+    .Food:[.Seafood, .Steakhouse, .Pizza, .Asian, .Italian, .Mediterranean, .American, .Mexican, .DessertSweets],
     .Drink:[.Beer, .Wine, .Coffee, .Tea, .Cocktails],
-    .Entertainment:[.Movies, .Bowling, .LaserTag, .Paintball, .Gokarting, .Minigolf, .AmusementParks, .WaterParks, .Arcade, .Pool, .Poker, .Chess, .Checkers, .Backgammon],
-    .Fitness:[.Yoga, .Pilates, .Zumba, .Kickboxing, .Bootcamp, .Crossfit, .Barre, .Spinning, .Pole, .PersonalTraining, .Group],
-    .Health: [.Spa, .Nails, .Salon],
-    .Sports:[.GoToAGame, .WatchAGame, .PickupGame, .Basketball, .Soccer, .Football, .Baseball, .Softball, .Volleyball, .Hockey, .Lacrosse, .Skiing, .Tennis],
-    .Music:[.Concerts, .Theatre, .LiveMusic, .Jam, .Art],
-    .Culture:[.Landmarks, .Museums, .Tours, .Local],
-    .Retail:[.Malls, .Boutiques, .Designer, .Discount, .Retail],
+    .Entertainment:[.Movies, .Bowling, .LaserTag, .Paintball, .Gokarting, .Minigolf, .AmusementParks, .WaterParks, .Arcade, .PoolHall, .PokerCardGames, .Chess, .Checkers, .Backgammon],
+    .Fitness:[.Yoga, .Pilates, .Zumba, .Kickboxing, .Bootcamp, .Crossfit, .Barre, .Spinning, .PoleDancing, .PersonalTraining, .GroupClasses],
+    .HealthRelaxation: [.Spa, .Nails, .BeautySalon],
+    .SportsRecreation:[.GoToAGame, .WatchAGame, .PickupGame, .Basketball, .Soccer, .Football, .Baseball, .Softball, .Volleyball, .Hockey, .Lacrosse, .Skiing, .Tennis],
+    .MusicArts:[.Concerts, .Theatre, .LiveMusic, .JamSession, .ArtGallery],
+    .CultureSightseeing:[.Landmarks, .Museums, .Tours, .LocalActivities],
+    .RetailShopping:[.Malls, .Boutiques, .DesignerLuxuryBrands, .DiscountStores, .BigNameRetail],
     .Beaches:[.PopularBeaches, .PartyBeaches, .QuietBeaches, .NudeBeaches, .LocalBeaches],
     .Nightlife:[.Dancing, .Bars, .Clubs, .Lounges, .StripClub],
-    .Outdoor:[.Sailing, .Cycling, .Hiking, .Climbing, .Golf, .ZipLine, .Kayaking, .Rafting, .Surfing, .SkyDiving, .Tubing],
+    .OutdoorExtremeSports:[.SailingBoating, .Cycling, .Hiking, .MountainClimbing, .Golf, .ZipLine, .Kayaking, .WhiteWaterRafting, .Surfing, .SkyDiving, .Tubing],
     .Other:[.Other]
 ]
 
@@ -77,18 +78,20 @@ var BG_CATEGORIES: [CATEGORY: String] = [
     .Drink: "event_starbucks",
     .Entertainment: "category_entertainment",
     .Fitness: "category_health",
-    .Sports: "category_sports",
-    .Music: "category_music",
-    .Culture: "event_ducktours",
-    .Retail: "category_technology",
+    .HealthRelaxation: "category_community",
+    .SportsRecreation: "category_sports",
+    .MusicArts: "category_music",
+    .CultureSightseeing: "event_ducktours",
+    .RetailShopping: "category_technology",
     .Beaches: "category_outdoors",
     .Nightlife: "event_salsa",
-    .Outdoor: "category_outdoors",
+    .OutdoorExtremeSports: "category_outdoors",
     .Other: "event_karaoke"
 ]
 
 class CategoryFactory: NSObject {
 
+    // MARK: - string to CATEGORY/SUBCATEGORY enum types
     class func categoryForString(string: String) -> CATEGORY? {
         for cat: CATEGORY in CATEGORIES {
             if cat.rawValue.lowercaseString == string.lowercaseString {
@@ -109,6 +112,7 @@ class CategoryFactory: NSObject {
         return nil
     }
     
+    // MARK: category strings used for web and ordering
     class func categoryStrings() -> [String] {
         return CATEGORIES.map({ (category) -> String in
             return category.rawValue
@@ -125,6 +129,7 @@ class CategoryFactory: NSObject {
         return []
     }
     
+    // MARK: background images
     class func categoryBgImage(category: String) -> UIImage {
         for cat: CATEGORY in CATEGORIES {
             if cat.rawValue.lowercaseString == category.lowercaseString {
@@ -148,15 +153,65 @@ class CategoryFactory: NSObject {
         return UIImage(named: "event_starbucks.jpg")!
     }
     
+    // MARK: category titles
+    class func categoryReadableString(category: CATEGORY) -> String {
+        switch category {
+        case .HealthRelaxation: return "Health and Relaxation"
+        case .SportsRecreation: return "Sports and Recreation"
+        case .MusicArts: return "Music and the Arts"
+        case .CultureSightseeing: return "Culture and Sightseeing"
+        case .RetailShopping: return "Retail Therapy and Shopping"
+        case .OutdoorExtremeSports: return "Outdoor Activities, Extreme Sports"
+        default:
+            return category.rawValue
+        }
+    }
+    
+    class func subcategoryReadableString(subcategory: SUBCATEGORY) -> String {
+        switch subcategory {
+        case .DessertSweets: return "Dessert and Sweets"
+        case .LaserTag: return "Laser Tag"
+        case .Gokarting: return "Go Karting"
+        case .AmusementParks: return "Amusement Parks"
+        case .WaterParks: return "Water Parks"
+        case .Arcade: return "Games and Arcades"
+        case .PoolHall: return "Pool halls"
+        case .PokerCardGames: return "Poker and card games"
+        case .PoleDancing: return "Pole Dancing"
+        case .PersonalTraining: return "Personal Training"
+        case .GroupClasses: return "Group Classes"
+        case .BeautySalon: return "Beauty Salon"
+        case .GoToAGame: return "Go to a Game"
+        case .WatchAGame: return "Watch a Game"
+        case .PickupGame: return "Join a Pickup Game"
+        case .LiveMusic: return "Live Music Acts"
+        case .JamSession: return "Join a Jam Session"
+        case .ArtGallery: return "Art Gallery"
+        case .Landmarks: return "Famous Sites and Landmarks"
+        case .LocalActivities: return "Local life and activities"
+        case .DesignerLuxuryBrands: return "Designer, Luxury and Name Brands"
+        case .DiscountStores: return "Discount Stores"
+        case .BigNameRetail: return "Big Name Retailers"
+        case .StripClub: return "Gentlemen's Clubs"
+        case .SailingBoating: return "Sailing and Boating"
+        case .MountainClimbing: return "Mountain Climbing"
+        case .ZipLine: return "Zip Lining"
+        case .WhiteWaterRafting: return "White Water Rafting"
+        case .SkyDiving: return "Sky Diving"
+        default: return subcategory.rawValue
+        }
+    }
+    
+    // MARK: custom search terms
     class func searchTerms(string: String) -> String? {
         let category = self.categoryForString(string)
         let subcategory = self.subcategoryForString(string)
         
         if category != nil {
             switch category! {
-            case .Outdoor:
+            case .OutdoorExtremeSports:
                 return "extreme sports"
-            case .Retail:
+            case .RetailShopping:
                 return "shopping"
             default:
                 return category!.rawValue
@@ -172,17 +227,17 @@ class CategoryFactory: NSObject {
                 return "sports"
             case .PickupGame:
                 return "sports"
-            case .Jam:
+            case .JamSession:
                 return "music"
-            case .Local:
+            case .LocalActivities:
                 return "events"
             case .Landmarks:
                 return "landmarks"
-            case .Designer:
+            case .DesignerLuxuryBrands:
                 return "designer shopping"
-            case .Retail:
+            case .BigNameRetail:
                 return "retail"
-            case .Group:
+            case .GroupClasses:
                 return "group fitness"
             default:
                 return subcategory!.rawValue
