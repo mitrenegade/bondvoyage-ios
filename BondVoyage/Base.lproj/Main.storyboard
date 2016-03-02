@@ -11,6 +11,7 @@
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
         </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
@@ -1033,7 +1034,8 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="B2l-4m-6mI"/>
                                         </constraints>
-                                        <state key="normal" title="New activity">
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
+                                        <state key="normal" title="CREATE NEW ACTIVITY">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
