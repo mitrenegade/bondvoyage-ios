@@ -608,8 +608,8 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         // find all activities that do not belong to current user
         query.notEqualTo("user", request.user)
         query.equalTo("status", "active")
-        query.notEqualTo("declined", request.user)
-        console.log("calling query.find")
+        query.notContainedIn("declined", [request.user.id])
+        console.log("calling query.find. declined must not include " + request.user.id)
         query.find({
             success: function(results) {
                 console.log("Result count " + results.length)
