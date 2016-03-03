@@ -554,6 +554,9 @@ Parse.Cloud.define("createActivity", function(request, response) {
     categories = categories.map(toLowerCase)
     activity.set("categories", categories)
     activity.set("status", "active")
+    activity.set("declined", [])
+    activity.set("joining", [])
+    activity.set("places", {})
 
     // location
     if (request.params.lat != undefined && request.params.lon != undefined) {
@@ -605,6 +608,7 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         // find all activities that do not belong to current user
         query.notEqualTo("user", request.user)
         query.equalTo("status", "active")
+        query.notEqualTo("declined", request.user)
         console.log("calling query.find")
         query.find({
             success: function(results) {
@@ -729,6 +733,7 @@ Parse.Cloud.define("respondToJoin", function(request, response) {
                         return i != joiningUserId
                     })
                     activity.set("joining", joining)
+                    activity.addUnique("declined", joiningUserId)
 
                     // remove suggested places
                     var places = activity.get("places")
