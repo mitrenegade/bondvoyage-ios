@@ -554,6 +554,9 @@ Parse.Cloud.define("createActivity", function(request, response) {
     categories = categories.map(toLowerCase)
     activity.set("categories", categories)
     activity.set("status", "active")
+    activity.set("declined", [])
+    activity.set("joining", [])
+    activity.set("places", {})
 
     // location
     if (request.params.lat != undefined && request.params.lon != undefined) {
@@ -605,7 +608,8 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         // find all activities that do not belong to current user
         query.notEqualTo("user", request.user)
         query.equalTo("status", "active")
-        console.log("calling query.find")
+        query.notContainedIn("declined", [request.user.id])
+        console.log("calling query.find. declined must not include " + request.user.id)
         query.find({
             success: function(results) {
                 console.log("Result count " + results.length)
@@ -663,9 +667,12 @@ Parse.Cloud.define("joinActivity", function(request, response) {
 
             // add user to list of joiners
             activity.addUnique("joining", fromUser.id)
-            var userPlace = {}
-            userPlace[fromUser.id] = placeId
-            activity.addUnique("places", userPlace)
+            var places = activity.get("places")
+            if (places == undefined) {
+                places = {}
+            }
+            places[fromUser.id] = placeId
+            activity.set("places", places)
             activity.save().then(
                 function(object) {
                     console.log("Sending push message to activity id " + activity.id)
@@ -711,6 +718,7 @@ Parse.Cloud.define("cancelActivity", function(request, response) {
 Parse.Cloud.define("respondToJoin", function(request, response) {
     var activityId = request.params.activity
     var responseType = request.params.responseType // "declined", "cancelled", "accepted"
+    var joiningUserId = request.params.userId
     console.log("RespondToInvite for activity " + activityId + " responseType " + responseType)
     var query = new Parse.Query("Activity")
     query.get(activityId).then(
@@ -718,6 +726,23 @@ Parse.Cloud.define("respondToJoin", function(request, response) {
             if (responseType == undefined || responseType == "cancelled" || responseType == "declined") {
                 // reset status so invitee can continue to be invited
                 activity.set("status", "active")
+                if (joiningUserId != undefined) {
+                    // remove userId from joining - is this needed?
+                    var joining = activity.get("joining")
+                    joining = joining.filter(function(i) {
+                        return i != joiningUserId
+                    })
+                    activity.set("joining", joining)
+                    activity.addUnique("declined", joiningUserId)
+
+                    // remove suggested places
+                    var places = activity.get("places")
+                    if (places != undefined) {
+                        console.log("places(" + joiningUserId + ") = " + places[joiningUserId])
+                        places[joiningUserId] = undefined
+                    }
+                    activity.set("places", places)
+                }
             }
             else {
                 activity.set("status", "matched")

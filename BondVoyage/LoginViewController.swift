@@ -59,6 +59,7 @@ class LoginViewController: PFLogInViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.whiteColor().CGColor
     }
+    
     /*
     // MARK: - Navigation
 

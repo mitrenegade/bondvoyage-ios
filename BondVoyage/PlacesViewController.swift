@@ -22,6 +22,8 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet weak var buttonGo: UIButton!
     @IBOutlet weak var buttonNext: UIButton!
+    @IBOutlet weak var constraintButtonGoHeight: NSLayoutConstraint!
+    @IBOutlet weak var constraintButtonNextHeight: NSLayoutConstraint!
 
     @IBOutlet weak var imageView: AsyncImageView!
     @IBOutlet weak var constraintImageHeight: NSLayoutConstraint!
@@ -44,6 +46,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
     
     var isRequestingJoin: Bool = false // true if the user is suggesting this place as part of an invitation
     var isRequestedJoin: Bool = false // true if the user has already suggested this place
+    var joiningUserId: String?
     
     var delegate: InvitationDelegate?
     
@@ -64,16 +67,20 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         
         if self.isRequestingJoin {
             self.buttonGo.setTitle("SEND INVITATION TO BOND", forState: .Normal)
+            self.constraintButtonNextHeight.constant = 0
         }
         else if self.isRequestedJoin {
-            self.buttonGo.hidden = true
+            self.constraintButtonGoHeight.constant = 0
+            self.constraintButtonNextHeight.constant = 0
         }
         else {
             if self.currentActivity!.isAcceptedActivity() {
-                self.buttonGo.hidden = true
+                self.constraintButtonGoHeight.constant = 0
+                self.constraintButtonNextHeight.constant = 0
             }
             else {
                 self.buttonGo.setTitle("ACCEPT THIS INVITATION", forState: .Normal)
+                self.buttonNext.setTitle("NO THANKS", forState: .Normal)
             }
         }
         
@@ -162,17 +169,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             }
         }
         else if button == self.buttonNext {
-            /* NOT USED
-            print("Next")
-            if self.currentPage < self.recommendations!.count - 1 {
-                self.currentPage = self.currentPage + 1
-            }
-            else {
-                self.currentPage = 0
-            }
-            self.place = self.recommendations![self.currentPage]
-            self.refresh()
-            */
+            self.goToRejectInvitation()
         }
     }
     
@@ -202,13 +199,35 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
 
     func goToAcceptInvitation() {
         HUD.show(.SystemActivity)
-        ActivityRequest.respondToJoin(self.currentActivity!, responseType: "accepted") { (results, error) -> Void in
+        ActivityRequest.respondToJoin(self.currentActivity!, joiningUserId: self.joiningUserId, responseType: "accepted") { (results, error) -> Void in
             if error != nil {
                 HUD.flash(.Label("Could not accept invitation. Please try again."), withDelay: 2)
             }
             else {
                 self.refresh()
                 HUD.show(.Label("Invitation accepted."))
+                HUD.hide(animated: true, completion: { (complete) -> Void in
+                    self.refresh()
+                    if self.delegate != nil {
+                        self.delegate!.didAcceptInvitationForPlace()
+                    }
+                    else {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                })
+            }
+        }
+    }
+
+    func goToRejectInvitation() {
+        HUD.show(.SystemActivity)
+        ActivityRequest.respondToJoin(self.currentActivity!, joiningUserId: self.joiningUserId, responseType: "declined") { (results, error) -> Void in
+            if error != nil {
+                HUD.flash(.Label("Could not decline invitation. Please try again."), withDelay: 2)
+            }
+            else {
+                self.refresh()
+                HUD.show(.Label("Invitation declined."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
                     self.refresh()
                     if self.delegate != nil {
