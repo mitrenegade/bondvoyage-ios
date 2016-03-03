@@ -95,8 +95,11 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func reloadSuggestedPlaces() {
-        let dictArray: [[String: String]] = self.activity.suggestedPlaces()
-        for dict: [String: String] in dictArray {
+        self.allUserIds.removeAll()
+        self.users.removeAll()
+        self.places.removeAll()
+
+        if let dict: [String: String] = self.activity.suggestedPlaces() {
             for (userId, placeId) in dict {
                 // load user
                 let query: PFQuery = PFUser.query()!
@@ -205,13 +208,15 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         // place
-        if self.places.count > 0 {
-            let place: BVPlace = self.places.values.first!
+        let row = indexPath.row
+        let userId = self.allUserIds[row]
+        if let place: BVPlace = self.places[userId] {
             let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
             controller.place = place
             controller.isRequestingJoin = self.isRequestingJoin
             controller.isRequestedJoin = self.activity.isJoiningActivity()
             controller.currentActivity = self.activity
+            controller.joiningUserId = userId
             controller.delegate = self
             self.navigationController?.pushViewController(controller, animated: true)
         }

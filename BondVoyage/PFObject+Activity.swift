@@ -123,10 +123,10 @@ extension PFObject {
         return false
     }
     
-    func suggestedPlaces() -> [[String: String]] {
-        if let places: [[String: String]] = self.objectForKey("places") as? [[String: String]] {
+    func suggestedPlaces() -> [String: String] {
+        if let places: [String: String] = self.objectForKey("places") as? [String: String] {
             return places
         }
-        return []
+        return [:]
     }
 }

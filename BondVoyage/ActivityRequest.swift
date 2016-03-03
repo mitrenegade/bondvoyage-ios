@@ -65,8 +65,11 @@ class ActivityRequest: NSObject {
     }
     
     // TODO: accept another user to join
-    class func respondToJoin(activity: PFObject, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+    class func respondToJoin(activity: PFObject, joiningUserId: String?, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
         var params =  ["activity": activity.objectId!]
+        if joiningUserId != nil {
+            params["userId"] = joiningUserId!
+        }
         if responseType != nil {
             params["responseType"] = responseType
         }
