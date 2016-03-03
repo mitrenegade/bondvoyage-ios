@@ -32,8 +32,7 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         
         self.setup()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:created", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "invitation:updated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:updated", object: nil)
     }
 
     override func didReceiveMemoryWarning() {

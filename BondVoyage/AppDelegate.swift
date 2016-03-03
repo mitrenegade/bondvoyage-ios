@@ -252,6 +252,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else if let _ = userInfo["invitationStatus"] {
             self.goToHandleNotification(userInfo)
         }
+        
+        // always cause the feed to reload
+        NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
     }
     
     // MARK: - Logging/analytics
