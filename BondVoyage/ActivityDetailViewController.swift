@@ -52,7 +52,6 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.mapView.delegate = self
         
         self.reloadSuggestedPlaces()
-        self.refresh()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,8 +60,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
-        self.constraintTableHeight.constant = CGFloat(80 * self.tableView.numberOfRowsInSection(0))
         self.tableView.reloadData()
+        self.constraintTableHeight.constant = CGFloat(80 * self.tableView.numberOfRowsInSection(0))
         
         if self.activity.lat() == nil && self.activity.lon() == nil {
             self.constraintMapHeight.constant = 0
@@ -100,6 +99,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.places.removeAll()
 
         if let dict: [String: String] = self.activity.suggestedPlaces() {
+            if dict.count == 0 {
+                self.refresh()
+            }
             for (userId, placeId) in dict {
                 // load user
                 let query: PFQuery = PFUser.query()!
