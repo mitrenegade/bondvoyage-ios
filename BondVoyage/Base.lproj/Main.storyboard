@@ -423,7 +423,7 @@
                     <tabBarItem key="tabBarItem" title="Activities" image="icon-star" id="XR6-rP-9hO">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                <color key="value" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
