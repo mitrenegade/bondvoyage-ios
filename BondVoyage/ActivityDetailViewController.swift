@@ -242,7 +242,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         // also send a notification for other views not in this chain
-        NSNotificationCenter.defaultCenter().postNotificationName("invitation:updated", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
     }
     
     func didAcceptInvitationForPlace() {

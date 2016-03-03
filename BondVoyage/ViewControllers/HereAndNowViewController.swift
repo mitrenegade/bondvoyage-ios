@@ -55,7 +55,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationController!.navigationBar.addSubview(imageView)
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "invitation:updated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "activity:updated", object: nil)
         
         self.setup()
     }

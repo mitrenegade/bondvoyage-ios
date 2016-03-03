@@ -186,7 +186,7 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
             }
             else {
                 self.performSegueWithIdentifier("GoToActivityDetail", sender: result)
-                NSNotificationCenter.defaultCenter().postNotificationName("activity:created", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
             }
         }
     }
