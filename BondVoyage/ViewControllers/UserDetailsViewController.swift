@@ -101,12 +101,28 @@ class UserDetailsViewController: UIViewController {
             self.scrollViewContainer.image = UIImage(named: "profile-icon")
         }
 
-        let firstName = user!.valueForKey("firstName")!
-        self.nameLabel.text = "\(firstName)"
-
-        let currentYear = components.year
-        let age = currentYear - (user!.valueForKey("birthYear") as! Int)
-        self.genderAndAgeLabel.text = "\(user!.valueForKey("gender")!), age: \(age)"
+        if let firstName = user!.valueForKey("firstName") as? String {
+            self.nameLabel.text = "\(firstName)"
+        }
+        else if let username = user!.valueForKey("username") as? String {
+            self.nameLabel.text = "\(username)"
+        }
+        
+        var genderAgeString: String?  = nil
+        if let gender = user!.valueForKey("gender") as? String {
+            genderAgeString = gender
+        }
+        if let year = user!.valueForKey("birthYear") as? Int {
+            let currentYear = components.year
+            let age = currentYear - year
+            if genderAgeString != nil {
+                genderAgeString = "\(genderAgeString), age: \(age)"
+            }
+            else {
+                genderAgeString = "age: \(age)"
+            }
+        }
+        self.genderAndAgeLabel.text = genderAgeString
 
         self.configureInterestsLabel()
     }
