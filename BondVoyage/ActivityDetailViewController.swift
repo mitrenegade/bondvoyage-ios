@@ -246,6 +246,11 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         // owner's profile
         if sender == self.profileButton {
             print("profile")
+            if let user: PFUser = self.activity.user() {
+                let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                controller.selectedUser = user
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         }
         else {
             // user button
