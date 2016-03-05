@@ -29,7 +29,7 @@ class SuggestedPlacesViewController: UITableViewController {
         if let categories: [String] = self.currentActivity!.objectForKey("categories") as? [String] {
             let search = CategoryFactory.searchTerms(categories[0])
             HUD.show(.SystemActivity)
-            dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 500, types: nil, searchTerms:search) { (results, errorString) -> Void in
+            dataProvider.fetchPlacesNearCoordinate(coordinate, radius: 8000, types: nil, searchTerms:search) { (results, errorString) -> Void in
                 print("results \(results)")
                 if !results.isEmpty {
                     HUD.hide(animated: true, completion: nil)
