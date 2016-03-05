@@ -346,6 +346,13 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 self.presentViewController(picker, animated: true, completion: nil)
             }
         }))
+        if let fbid = PFUser.currentUser()?.valueForKey("facebook_id") {
+            alert.addAction(UIAlertAction(title: "Facebook", style: .Default, handler: { (action) -> Void in
+                let url = "https://graph.facebook.com/v2.5/\(fbid)/picture?type=large&return_ssl_resources=1&width=1125"
+                PFUser.currentUser()?.setObject(url, forKey: "photoUrl")
+                self.imagePhoto.imageURL = NSURL(string: url)
+            }))
+        }
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -375,9 +382,19 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         self.imagePhoto.image = image
-        self.imagePhoto.imageURL = nil
         self.selectedPhoto = image
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        let data: NSData = UIImageJPEGRepresentation(self.selectedPhoto!, 0.8)!
+        let file: PFFile = PFFile(name: "profile.jpg", data: data)!
+        PFUser.currentUser()!.setObject(file, forKey: "photo")
+        file.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if success {
+                PFUser.currentUser()!.setObject(file.url!, forKey: "photoUrl")
+                self.imagePhoto.imageURL = NSURL(string:file.url!)
+                PFUser.currentUser()!.saveInBackground()
+            }
+            picker.dismissViewControllerAnimated(true, completion: nil)
+        })
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
