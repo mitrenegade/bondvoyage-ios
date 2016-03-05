@@ -67,6 +67,13 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
                     self.tableView.reloadData()
                 }
             }
+            if error != nil && error!.code == 209 {
+                self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                    PFUser.logOut()
+                    NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                })
+                return
+            }
         }
         ActivityRequest.queryActivities(nil, user: PFUser.currentUser(), joining: true, categories: nil) { (results, error) -> Void in
             // returns activities where the owner is not the user but is in the joining list
@@ -82,6 +89,13 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
                     }
                     self.tableView.reloadData()
                 }
+            }
+            if error != nil && error!.code == 209 {
+                self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                    PFUser.logOut()
+                    NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                })
+                return
             }
         }
     }

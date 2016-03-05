@@ -207,6 +207,13 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
         
         ActivityRequest.cancelActivity(self.currentActivity!) { (results, error) -> Void in
             if error != nil {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Could not cancel activity", message: "You were logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
                 self.simpleAlert("Could not cancel activity", defaultMessage: "Your current activity could not be cancelled", error: error)
             }
             else {

@@ -180,6 +180,13 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
             
             self.activityIndicator.stopAnimating()
             if error != nil {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to join activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
                 HUD.flash(.Label("There was an error joining the activity."), withDelay: 2)
             }
             else {
@@ -201,6 +208,13 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         HUD.show(.SystemActivity)
         ActivityRequest.respondToJoin(self.currentActivity!, joiningUserId: self.joiningUserId, responseType: "accepted") { (results, error) -> Void in
             if error != nil {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to accept invitations.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
                 HUD.flash(.Label("Could not accept invitation. Please try again."), withDelay: 2)
             }
             else {
@@ -223,6 +237,13 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
         HUD.show(.SystemActivity)
         ActivityRequest.respondToJoin(self.currentActivity!, joiningUserId: self.joiningUserId, responseType: "declined") { (results, error) -> Void in
             if error != nil {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to decline invitations.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
                 HUD.flash(.Label("Could not decline invitation. Please try again."), withDelay: 2)
             }
             else {
