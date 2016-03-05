@@ -14,7 +14,6 @@
 		8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */; };
 		8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */; };
 		8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */; };
-		8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
 		8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */; };
 		8E7867431C7BAA4F0017841E /* SuggestedPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */; };
@@ -25,7 +24,6 @@
 		8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */; };
 		8EA047CD1C4FDDE200CCCAC3 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CC1C4FDDE200CCCAC3 /* InviteViewController.swift */; };
 		8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */; };
-		8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047D01C4FE9F700CCCAC3 /* MatchRequest.swift */; };
 		8EA047D31C4FF02C00CCCAC3 /* MatchStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */; };
 		8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADA1C440B15002DDA70 /* BVSlider.swift */; };
 		8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */; };
@@ -93,7 +91,6 @@
 		8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesViewController.swift; sourceTree = "<group>"; };
 		8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPreferencesViewController.swift; path = ViewControllers/SearchPreferencesViewController.swift; sourceTree = "<group>"; };
-		8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendationRequest.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
 		8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestedPlacesViewController.swift; sourceTree = "<group>"; };
@@ -104,7 +101,6 @@
 		8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCategoriesViewController.swift; sourceTree = "<group>"; };
 		8EA047CC1C4FDDE200CCCAC3 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
-		8EA047D01C4FE9F700CCCAC3 /* MatchRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchRequest.swift; sourceTree = "<group>"; };
 		8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchStatusViewController.swift; sourceTree = "<group>"; };
 		8EBEDADA1C440B15002DDA70 /* BVSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVSlider.swift; sourceTree = "<group>"; };
 		8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderFilterView.swift; sourceTree = "<group>"; };
@@ -235,8 +231,6 @@
 				8EC310AA1C7BAE0700992E7A /* GoogleDataProvider.swift */,
 				8EC310AC1C7BAE4800992E7A /* BVPlace.swift */,
 				AC1698451C1C7AB200E3DAAE /* UserRequest.swift */,
-				8E4D133D1C47683E00A11E1F /* RecommendationRequest.swift */,
-				8EA047D01C4FE9F700CCCAC3 /* MatchRequest.swift */,
 				8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */,
 				8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */,
 			);
@@ -596,7 +590,6 @@
 				8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */,
 				E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */,
 				E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */,
-				8E4D133E1C47683E00A11E1F /* RecommendationRequest.swift in Sources */,
 				E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */,
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */,
@@ -617,7 +610,6 @@
 				8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */,
 				8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
-				8EA047D11C4FE9F700CCCAC3 /* MatchRequest.swift in Sources */,
 				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,
 				8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */,
 				8EF6764C1C84BC8300D49A33 /* MapViewController.swift in Sources */,

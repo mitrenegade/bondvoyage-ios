@@ -44,7 +44,7 @@ class ActivityRequest: NSObject {
         }
         
         PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in
-            print("results: \(results)")
+            print("results: \(results) error: \(error)")
             let activities: [PFObject]? = results as? [PFObject]
             completion(results: activities, error: error)
         }

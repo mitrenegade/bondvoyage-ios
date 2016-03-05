@@ -164,30 +164,6 @@ class UserDetailsViewController: UIViewController {
     func dismiss() {
         self.navigationController?.popViewControllerAnimated(true)
     }
-
-    func acceptInvitation() {
-        let toMatch: PFObject = self.invitingMatch!.valueForKey("inviteTo") as! PFObject
-        MatchRequest.respondToInvite(self.invitingMatch!, toMatch: toMatch, responseType: "accepted") { (results, error) -> Void in
-            if error != nil {
-                self.simpleAlert("Could not accept invitation", defaultMessage: "Please try again", error: error)
-            }
-            else {
-                self.goToPlaces()
-            }
-        }
-    }
-    
-    func declineInvitation() {
-        let toMatch: PFObject = self.invitingMatch!.valueForKey("inviteTo") as! PFObject
-        MatchRequest.respondToInvite(self.invitingMatch!, toMatch: toMatch, responseType: "declined") { (results, error) -> Void in
-            if error != nil {
-                self.simpleAlert("Could not decline invitation", defaultMessage: "Please try again", error: error)
-            }
-            else {
-                self.close()
-            }
-        }
-    }
     
     func goToPlaces() {
         let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
