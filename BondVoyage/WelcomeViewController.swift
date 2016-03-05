@@ -73,7 +73,7 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
                     PFUser.currentUser()?.setValue(fbid, forKey: "facebook_id")
                     
                     if PFUser.currentUser()?.objectForKey("photoUrl") == nil {
-                        let url = "https://graph.facebook.com/\(fbid)/picture?type=large&return_ssl_resources=1"
+                        let url = "https://graph.facebook.com/v2.5/\(fbid)/picture?type=large&return_ssl_resources=1&width=1125"
                         PFUser.currentUser()?.setObject(url, forKey: "photoUrl")
                     }
                 }
