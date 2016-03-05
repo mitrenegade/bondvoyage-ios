@@ -110,13 +110,13 @@ class UserDetailsViewController: UIViewController {
         
         var genderAgeString: String?  = nil
         if let gender = user!.valueForKey("gender") as? String {
-            genderAgeString = gender
+            genderAgeString = gender.capitalizedString
         }
         if let year = user!.valueForKey("birthYear") as? Int {
             let currentYear = components.year
             let age = currentYear - year
             if genderAgeString != nil {
-                genderAgeString = "\(genderAgeString), age: \(age)"
+                genderAgeString = "\(genderAgeString!), age: \(age)"
             }
             else {
                 genderAgeString = "age: \(age)"

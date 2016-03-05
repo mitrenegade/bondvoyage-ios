@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-let TESTING: Bool = false
+let TESTING: Bool = true
 let PHILADELPHIA_LAT = 39.949508
 let PHILADELPHIA_LON = -75.171886
 
