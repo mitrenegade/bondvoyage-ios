@@ -35,6 +35,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     var users: [String: PFUser] = [:]
     var places: [String: BVPlace] = [:]
     
+    @IBOutlet weak var profileView: AsyncImageView!
+    @IBOutlet weak var constraintProfileWidth: NSLayoutConstraint!
+    @IBOutlet weak var profileButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,6 +56,20 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.mapView.delegate = self
         
         self.reloadSuggestedPlaces()
+        
+        // activity's user
+        if let user: PFUser = self.activity.user() {
+            user.fetchInBackgroundWithBlock({ (result, error) -> Void in
+                if result != nil {
+                    if let photoURL: String = result!.valueForKey("photoUrl") as? String {
+                        self.profileView.imageURL = NSURL(string: photoURL)
+                    }
+                    else {
+                        self.profileView.image = UIImage(named: "profile-icon")
+                    }
+                }
+            })
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -152,7 +170,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as UITableViewCell
         let userId: String = self.allUserIds[indexPath.row]
         
         let user: PFUser? = self.users[userId]
@@ -225,12 +243,21 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     @IBAction func didClickUserButton(sender: UIButton) {
-        // user button
-        if self.users.count > 0 {
-            let user: PFUser = self.users.values.first!
-            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
-            controller.selectedUser = user
-            self.navigationController?.pushViewController(controller, animated: true)
+        // owner's profile
+        if sender == self.profileButton {
+            print("profile")
+        }
+        else {
+            // user button
+            let cell: UITableViewCell = sender.superview!.superview! as! UITableViewCell
+            let indexPath = self.tableView.indexPathForCell(cell)!
+            if indexPath.row < self.users.count {
+                let userId = self.allUserIds[indexPath.row]
+                let user: PFUser = self.users[userId]!
+                let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                controller.selectedUser = user
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
     
@@ -297,7 +324,4 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         controller.currentActivity = self.activity
         self.navigationController?.pushViewController(controller, animated: true)
     }
-    
-    //override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-   // }
 }
