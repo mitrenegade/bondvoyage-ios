@@ -21,6 +21,7 @@ let kCellIdentifier = "ActivitiesCell"
 class HereAndNowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, CLLocationManagerDelegate {
 
     // categories dropdown
+    @IBOutlet weak var buttonSearch: UIButton!
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
     var categoriesVC: SearchCategoriesViewController!
     var showingCategories: Bool = false
@@ -193,6 +194,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         if subcategory != nil {
             // a specific subcategory
             cat = [subcategory!]
+            self.buttonSearch.setTitle("I'm in the mood for \(subcategory!)", forState: .Normal)
         }
         else if category != nil {
             // All in a category
@@ -200,6 +202,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             cat = subcategories.map({ (subcategory) -> String in
                 return subcategory.rawValue.lowercaseString
             })
+            self.buttonSearch.setTitle("I'm in the mood for \(category!)", forState: .Normal)
+        }
+        else {
+            self.buttonSearch.setTitle("I'm in the mood for...", forState: .Normal)
         }
         ActivityRequest.queryActivities(self.currentLocation, user: nil, joining: false, categories: cat) { (results, error) -> Void in
             if results != nil {
@@ -329,7 +335,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
-        self.toggleCategories(!self.showingCategories)
+        if sender == self.buttonSearch {
+            self.toggleCategories(!self.showingCategories)
+        }
+        else if sender == self.navigationItem.rightBarButtonItem {
+            print("filter")
+        }
     }
     
     // MARK: InvitationDelegate side effects
