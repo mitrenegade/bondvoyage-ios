@@ -47,7 +47,7 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         myJoiningActivities.removeAll()
         myAcceptedActivities.removeAll()
         
-        ActivityRequest.queryActivities(nil, user: PFUser.currentUser(), joining: false, categories: nil) { (results, error) -> Void in
+        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil) { (results, error) -> Void in
             // returns activities where the owner of the activity is the user
             if results != nil {
                 if results!.count > 0 {
@@ -75,7 +75,7 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
                 return
             }
         }
-        ActivityRequest.queryActivities(nil, user: PFUser.currentUser(), joining: true, categories: nil) { (results, error) -> Void in
+        ActivityRequest.queryActivities(PFUser.currentUser(), joining: true, categories: nil, location: nil, distance: nil) { (results, error) -> Void in
             // returns activities where the owner is not the user but is in the joining list
             if results != nil {
                 if results!.count > 0 {

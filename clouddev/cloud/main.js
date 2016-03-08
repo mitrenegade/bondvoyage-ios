@@ -589,6 +589,13 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     var userId = request.params.userId
     var joining = request.params.joining
 
+    // search preferences
+    var ageMin = request.params.ageMin
+    var ageMax = request.params.ageMax
+    var groupMin = request.params.groupMin
+    var groupMax = request.params.groupMax
+    var distanceMax = request.params.distanceMax
+
     var query = new Parse.Query("Activity")
 
     if (categories != undefined && categories.length > 0) {
@@ -597,12 +604,6 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         query.containedIn("categories", categories)
     }
     query.descending("updatedAt")
-    /*
-    if (request.params.lat != undefined && request.params.lon != undefined) {
-        var point = new Parse.GeoPoint(request.params.lat, request.params.lon)
-        query.withinKilometers("geopoint", point, 5)
-    }
-    */
 
     if (userId == undefined) {
         // find all activities that do not belong to current user
@@ -610,6 +611,14 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         query.equalTo("status", "active")
         query.notContainedIn("declined", [request.user.id])
         console.log("calling query.find. declined must not include " + request.user.id)
+
+        // distance filter
+        if (request.params.lat != undefined && request.params.lon != undefined && distanceMax != undefined) {
+            var point = new Parse.GeoPoint(request.params.lat, request.params.lon)
+            console.log("Activity query filtering by location " + point + " distance " + distanceMax)
+            query.withinMiles("geopoint", point, distanceMax)
+        }
+
         query.find({
             success: function(results) {
                 console.log("Result count " + results.length)

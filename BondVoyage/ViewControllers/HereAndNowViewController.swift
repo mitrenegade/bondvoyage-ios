@@ -43,6 +43,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // location
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+    var distanceMax: Double = Double(RANGE_DISTANCE_MAX)
 
     var placePicker: GMSPlacePicker?
 
@@ -82,8 +83,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
         
         self.constraintCategoriesHeight.constant = 0
-
-        self.didSelectCategory(nil, category: nil)
         
         // location
         locationManager.delegate = self
@@ -216,7 +215,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             self.buttonSearch.setTitle("I'm in the mood for...", forState: .Normal)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "clearSearch")
         }
-        ActivityRequest.queryActivities(self.currentLocation, user: nil, joining: false, categories: cat) { (results, error) -> Void in
+        
+        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: distanceMax) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     
@@ -341,6 +341,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first as CLLocation? {
             print("\(location)")
+            if self.currentLocation == nil {
+                // initiate search now
+                self.currentLocation = location
+                self.didSelectCategory(nil, category: nil)
+            }
             self.currentLocation = location
         }
     }
