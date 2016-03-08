@@ -1,5 +1,5 @@
 //
-//  InviteViewController.swift
+//  ActivityBrowserViewController.swift
 //  BondVoyage
 //
 //  Created by Bobby Ren on 1/20/16.
@@ -9,19 +9,15 @@
 import UIKit
 import Parse
 
-class InviteViewController: UIViewController {
+class ActivityBrowserViewController: UIViewController {
     
-    @IBOutlet weak var progressView: ProgressView!
-    @IBOutlet weak var bgView: UIImageView!
-    @IBOutlet weak var buttonUp: UIButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    var scrollView: UIScrollView!
     var didSetupScroll: Bool = false
     
     var category: String?
     var activities: [PFObject]?
+    var currentActivity: PFObject?
+    var isRequestingJoin: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,15 +70,21 @@ class InviteViewController: UIViewController {
             return
         }
 
+        var frame = self.view.frame
+        frame.origin.y = 0
+        self.scrollView = UIScrollView(frame: frame)
+        self.view.addSubview(self.scrollView)
+        
         let width: CGFloat = self.view.frame.size.width
         let height: CGFloat = self.scrollView.frame.size.height
         self.scrollView.pagingEnabled = true
 
+        var currentOffset: CGFloat = 0
         for var i=0; i<self.activities!.count; i++ {
             let activity = self.activities![i]
-            let user = activity.objectForKey("user") as! PFUser
-            let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
-            controller.selectedUser = user
+            let controller: ActivityDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ActivityDetailViewController") as! ActivityDetailViewController
+            controller.isRequestingJoin = self.isRequestingJoin
+            controller.activity = activity
             
             controller.willMoveToParentViewController(self)
             self.addChildViewController(controller)
@@ -90,23 +92,18 @@ class InviteViewController: UIViewController {
             let frame = CGRectMake(width * CGFloat(i), 0, width, height)
             controller.view.frame = frame
             controller.didMoveToParentViewController(self)
-            controller.configureUI() // force resize
+//            controller.configureUI() // force resize
+            
+            if activity == self.currentActivity {
+                currentOffset = CGFloat(i) * width
+            }
         }
         self.scrollView.contentSize = CGSizeMake(CGFloat(self.activities!.count) * width, height)
+        self.scrollView.contentOffset = CGPointMake(currentOffset, 0)
     }
     
     func refresh() {
-        if self.activities == nil {
-            self.buttonUp.hidden = true
-        }
-        else if self.activities!.count == 0 {
-            self.buttonUp.hidden = true
-        }
-        else {
-            self.buttonUp.hidden = false
-        }
     }
-
     
     func goToSelectPlace() {
         let activity = self.activities![self.currentPage()]

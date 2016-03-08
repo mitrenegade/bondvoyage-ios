@@ -155,11 +155,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         
         if self.selectedSubcategory == nil {
             let activity: PFObject = self.nearbyActivities![indexPath.row]
-            self.goToActivity(activity)
+            self.goToActivity(activity, activities: self.nearbyActivities!)
         }
         else {
             let activity: PFObject = self.filteredActivities![indexPath.row]
-            self.goToActivity(activity)
+            self.goToActivity(activity, activities: self.filteredActivities!)
         }
     }
     
@@ -251,7 +251,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func goToActivity(activity: PFObject) {
+    func goToActivity(activity: PFObject, activities: [PFObject]) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             if TESTING {
                 self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
@@ -261,7 +261,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 return
             }
         }
-        self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
+        let controller: ActivityBrowserViewController = ActivityBrowserViewController()
+        controller.activities = activities
+        controller.currentActivity = activity
+        controller.isRequestingJoin = true
+        let nav: UINavigationController = UINavigationController(rootViewController: controller)
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
     }
     
     /* NOT USED
@@ -291,16 +296,6 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         if segue.identifier == "embedCategoriesVCSegue" {
             self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
             self.categoriesVC.delegate = self
-        }
-        else if segue.identifier == "GoToActivityDetail" {
-            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
-            controller.activity = sender as! PFObject
-            controller.isRequestingJoin = true
-        }
-        else if segue.identifier == "GoToNearbyActivities" {
-            let controller: InviteViewController = segue.destinationViewController as! InviteViewController
-            let activities: [PFObject] = sender as! [PFObject]
-            controller.activities = activities
         }
         else if segue.identifier == "GoToCurrentActivity" {
             let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController

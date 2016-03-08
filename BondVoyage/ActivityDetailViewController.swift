@@ -44,7 +44,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
 
         // Do any additional setup after loading the view.
         self.imageView.image = self.activity.defaultImage()
-        self.labelTitle.text = self.activity.shortTitle()
+        self.labelTitle.text = ""
         
         let geopoint: PFGeoPoint = self.activity.objectForKey("geopoint") as! PFGeoPoint
         self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
@@ -59,8 +59,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         // activity's user
         if let user: PFUser = self.activity.user() {
-            user.fetchInBackgroundWithBlock({ (result, error) -> Void in
+            user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
                 if result != nil {
+                    self.labelTitle.text = self.activity.shortTitle()
+
                     if let photoURL: String = result!.valueForKey("photoUrl") as? String {
                         self.profileView.imageURL = NSURL(string: photoURL)
                     }
@@ -100,14 +102,16 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             self.marker!.map = self.mapView
         }
         
-        if self.street != nil {
-            self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.street!)"
-        }
-        else if self.city != nil {
-            self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.city!)"
-        }
-        else {
-            self.labelTitle.text = self.activity.shortTitle()
+        self.activity.user().fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+            if self.street != nil {
+                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.street!)"
+            }
+            else if self.city != nil {
+                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.city!)"
+            }
+            else {
+                self.labelTitle.text = self.activity.shortTitle()
+            }
         }
     }
     
