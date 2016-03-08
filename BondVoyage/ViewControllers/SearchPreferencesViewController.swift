@@ -19,6 +19,7 @@ class SearchPreferencesViewController: UIViewController {
 
     @IBOutlet weak var ageFilterView: AgeRangeFilterView!
     @IBOutlet weak var groupFilterView: GroupSizeFilterView!
+    @IBOutlet weak var distanceFilterView: DistanceFilterView!
     
     weak var delegate: SearchPreferencesDelegate?
     
@@ -31,6 +32,7 @@ class SearchPreferencesViewController: UIViewController {
         
         self.ageFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
         self.groupFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
+        self.distanceFilterView.configure(RANGE_DISTANCE_MIN, maxDist: RANGE_DISTANCE_MAX, lower: RANGE_DISTANCE_MIN, upper: RANGE_DISTANCE_MAX)
 
         // load preferences
         if PFUser.currentUser() == nil {
@@ -73,9 +75,9 @@ class SearchPreferencesViewController: UIViewController {
     }
     
     func clearFilters() {
-        // todo: clear filters
         self.ageFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
         self.groupFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
+        self.distanceFilterView.configure(RANGE_DISTANCE_MIN, maxDist: RANGE_DISTANCE_MAX, lower: RANGE_DISTANCE_MIN, upper: RANGE_DISTANCE_MAX)
         
         self.saveFilters()
     }
@@ -89,11 +91,15 @@ class SearchPreferencesViewController: UIViewController {
         let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
         let groupMin = Int(self.groupFilterView.rangeSlider!.lowerValue)
         let groupMax = Int(self.groupFilterView.rangeSlider!.upperValue)
+        let distMin = Double(self.distanceFilterView.rangeSlider!.lowerValue)
+        let distMax = Double(self.distanceFilterView.rangeSlider!.upperValue)
         
         prefObject!.setValue(ageMin, forKey: "ageMin")
         prefObject!.setValue(ageMax, forKey: "ageMax")
         prefObject!.setValue(groupMin, forKey: "groupMin")
         prefObject!.setValue(groupMax, forKey: "groupMax")
+        prefObject!.setValue(distMin, forKey: "distanceMin")
+        prefObject!.setValue(distMax, forKey: "distanceMax")
         prefObject!.setValue(PFUser.currentUser()!, forKey: "user")
         prefObject!.pinInBackground()
         
@@ -134,6 +140,17 @@ class SearchPreferencesViewController: UIViewController {
                 groupMax = upper
             }
             self.groupFilterView.setSliderValues(lower: groupMin, upper: groupMax)
+
+            // distance preferences
+            var distMin = Int(self.distanceFilterView.rangeSlider!.minimumValue)
+            var distMax = Int(self.distanceFilterView.rangeSlider!.maximumValue)
+            if let lower: Int = prefObject.objectForKey("distanceMin") as? Int {
+                distMin = lower
+            }
+            if let upper: Int = prefObject.objectForKey("distanceMax") as? Int {
+                distMax = upper
+            }
+            self.distanceFilterView.setSliderValues(lower: distMin, upper: distMax)
         }
     }
     /*

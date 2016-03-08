@@ -30,6 +30,8 @@ var RANGE_AGE_MAX = 85
 var RANGE_AGE_MIN = 16
 var RANGE_GROUP_MAX = 20
 var RANGE_GROUP_MIN = 1
+var RANGE_DISTANCE_MAX = 50
+var RANGE_DISTANCE_MIN = 0
 
 enum Gender: String {
     case Female, Male, Other

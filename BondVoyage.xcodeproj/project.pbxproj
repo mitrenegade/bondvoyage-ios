@@ -21,6 +21,7 @@
 		8E9515151C605F82007F8BCB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */; };
 		8E9515161C605F83007F8BCB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */; };
 		8E9515171C605F83007F8BCB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515141C605F82007F8BCB /* FBSDKShareKit.framework */; };
+		8E9C88391C8F3346005B09F2 /* DistanceFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9C88381C8F3346005B09F2 /* DistanceFilterView.swift */; };
 		8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */; };
 		8EA047CD1C4FDDE200CCCAC3 /* ActivityBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CC1C4FDDE200CCCAC3 /* ActivityBrowserViewController.swift */; };
 		8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */; };
@@ -98,6 +99,7 @@
 		8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		8E9515141C605F82007F8BCB /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		8E9C88381C8F3346005B09F2 /* DistanceFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceFilterView.swift; sourceTree = "<group>"; };
 		8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCategoriesViewController.swift; sourceTree = "<group>"; };
 		8EA047CC1C4FDDE200CCCAC3 /* ActivityBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityBrowserViewController.swift; sourceTree = "<group>"; };
 		8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */,
 				8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */,
 				8EBEDAE01C4423FC002DDA70 /* GroupSizeFilterView.swift */,
+				8E9C88381C8F3346005B09F2 /* DistanceFilterView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 				8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */,
 				8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */,
 				E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */,
+				8E9C88391C8F3346005B09F2 /* DistanceFilterView.swift in Sources */,
 				E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */,
 				E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */,
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
