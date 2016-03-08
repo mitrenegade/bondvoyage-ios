@@ -11,6 +11,7 @@
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
         </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
@@ -324,15 +325,15 @@
                         <viewControllerLayoutGuide type="bottom" id="mqW-rs-n94"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vZK-4f-cFT">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rkZ-Ko-YNH">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="1j3-jT-8bV" style="IBUITableViewCellStyleDefault" id="mLz-vT-h11">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mLz-vT-h11" id="ujE-7O-Gu2">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -349,7 +350,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="SubcategoryCell" textLabel="00x-D0-gs4" style="IBUITableViewCellStyleDefault" id="FtT-Gc-f5s">
-                                        <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FtT-Gc-f5s" id="VZ0-w9-n4K">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -548,10 +549,10 @@
                         <viewControllerLayoutGuide type="bottom" id="KiL-MT-2Rf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Te9-bj-Dre">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zSj-fz-kac">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zSj-fz-kac">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uh3-R5-hNF">
@@ -610,10 +611,10 @@
                                                 </constraints>
                                             </view>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gbc-ZF-sDJ">
-                                                <rect key="frame" x="0.0" y="380" width="600" height="220"/>
+                                                <rect key="frame" x="0.0" y="380" width="600" height="180"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="220" id="R7w-CA-nfO"/>
+                                                    <constraint firstAttribute="height" constant="180" id="R7w-CA-nfO"/>
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="JoinCell" rowHeight="80" id="uoh-c8-67Y">
@@ -677,6 +678,20 @@
                                                     <outlet property="delegate" destination="BDS-Ez-vG3" id="taz-NE-vSv"/>
                                                 </connections>
                                             </tableView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFn-Fn-Yxr">
+                                                <rect key="frame" x="0.0" y="560" width="600" height="40"/>
+                                                <color key="backgroundColor" red="0.18039215689999999" green="0.73725490199999999" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="oSq-f5-W9I"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                                <state key="normal" title="Invite to Bond">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="didClickUserButton:" destination="BDS-Ez-vG3" eventType="touchUpInside" id="R5w-ob-c0N"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -685,13 +700,17 @@
                                             <constraint firstAttribute="trailing" secondItem="k8s-XB-kiW" secondAttribute="trailing" id="CXF-PP-dwB"/>
                                             <constraint firstAttribute="trailing" secondItem="VQ5-Za-ep6" secondAttribute="trailing" id="PNk-6F-zOo"/>
                                             <constraint firstItem="Zfd-kn-EKa" firstAttribute="leading" secondItem="uh3-R5-hNF" secondAttribute="leading" id="Rpa-AZ-cyU"/>
+                                            <constraint firstItem="qFn-Fn-Yxr" firstAttribute="leading" secondItem="uh3-R5-hNF" secondAttribute="leading" id="U4P-im-Q5v"/>
+                                            <constraint firstAttribute="bottom" secondItem="qFn-Fn-Yxr" secondAttribute="bottom" id="UZW-S3-mrW"/>
                                             <constraint firstItem="Gbc-ZF-sDJ" firstAttribute="top" secondItem="Zfd-kn-EKa" secondAttribute="bottom" id="Us2-9D-NWt"/>
                                             <constraint firstAttribute="trailing" secondItem="Gbc-ZF-sDJ" secondAttribute="trailing" id="VEl-Qw-e29"/>
                                             <constraint firstItem="Zfd-kn-EKa" firstAttribute="top" secondItem="VQ5-Za-ep6" secondAttribute="bottom" id="VXX-At-Lcb"/>
                                             <constraint firstItem="k8s-XB-kiW" firstAttribute="top" secondItem="uh3-R5-hNF" secondAttribute="top" id="YOp-Rf-g7j"/>
                                             <constraint firstAttribute="trailing" secondItem="Zfd-kn-EKa" secondAttribute="trailing" id="c1N-7a-E7M"/>
                                             <constraint firstItem="VQ5-Za-ep6" firstAttribute="leading" secondItem="uh3-R5-hNF" secondAttribute="leading" id="gKg-gU-9xd"/>
-                                            <constraint firstAttribute="bottom" secondItem="Gbc-ZF-sDJ" secondAttribute="bottom" id="kM2-hz-mmR"/>
+                                            <constraint firstAttribute="bottom" secondItem="Gbc-ZF-sDJ" secondAttribute="bottom" constant="40" id="kM2-hz-mmR"/>
+                                            <constraint firstAttribute="trailing" secondItem="qFn-Fn-Yxr" secondAttribute="trailing" id="lkv-TJ-dNF"/>
+                                            <constraint firstItem="qFn-Fn-Yxr" firstAttribute="top" secondItem="Gbc-ZF-sDJ" secondAttribute="bottom" id="wrj-hG-kgW"/>
                                             <constraint firstItem="k8s-XB-kiW" firstAttribute="leading" secondItem="uh3-R5-hNF" secondAttribute="leading" id="yAx-HM-P2N"/>
                                         </constraints>
                                     </view>
@@ -706,14 +725,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="zSj-fz-kac" firstAttribute="bottom" secondItem="Te9-bj-Dre" secondAttribute="bottomMargin" id="49y-mc-GVe"/>
                             <constraint firstItem="zSj-fz-kac" firstAttribute="top" secondItem="Te9-bj-Dre" secondAttribute="top" id="Ehz-1b-Gfe"/>
-                            <constraint firstItem="KiL-MT-2Rf" firstAttribute="top" secondItem="zSj-fz-kac" secondAttribute="bottom" constant="-49" id="URC-Rd-4Xe"/>
                             <constraint firstItem="uh3-R5-hNF" firstAttribute="width" secondItem="Te9-bj-Dre" secondAttribute="width" id="ZXh-81-Vff"/>
                             <constraint firstAttribute="trailing" secondItem="zSj-fz-kac" secondAttribute="trailing" id="lkH-Gt-8k9"/>
                             <constraint firstItem="zSj-fz-kac" firstAttribute="leading" secondItem="Te9-bj-Dre" secondAttribute="leading" id="wMQ-KB-hKx"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonInvite" destination="qFn-Fn-Yxr" id="r2N-Fz-ujv"/>
+                        <outlet property="constraintButtonHeight" destination="oSq-f5-W9I" id="Kql-a9-rmh"/>
                         <outlet property="constraintMapHeight" destination="Hjq-A4-Q57" id="QlO-Al-OqN"/>
                         <outlet property="constraintTableHeight" destination="R7w-CA-nfO" id="mjD-mf-4KI"/>
                         <outlet property="imageView" destination="k8s-XB-kiW" id="2PT-4C-si0"/>
@@ -728,7 +749,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmJ-0o-hdn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2050" y="-875"/>
+            <point key="canvasLocation" x="2080" y="-865"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="RL9-cL-SPH">
@@ -935,13 +956,13 @@
                         <viewControllerLayoutGuide type="bottom" id="LUE-tC-RFu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wz6-Bi-Kic">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAJ-eR-FXe" customClass="GMSMapView">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAJ-eR-FXe" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="-160" width="600" height="0.0"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" image="icon-location" translatesAutoresizingMaskIntoConstraints="NO" id="fl8-4B-ENx">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" image="icon-location" translatesAutoresizingMaskIntoConstraints="NO" id="fl8-4B-ENx">
                                         <rect key="frame" x="283" y="-18" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="AOc-uv-BWg"/>
@@ -959,7 +980,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fy-hv-6Pd">
-                                <rect key="frame" x="0.0" y="-152" width="600" height="144"/>
+                                <rect key="frame" x="0.0" y="335" width="600" height="144"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City, State or Zip" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BFb-MQ-oPh">
                                         <rect key="frame" x="8" y="58" width="584" height="30"/>
@@ -1051,7 +1072,7 @@
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Mrg-4z-aGR"/>
+        <segue reference="N0N-Jc-ivY"/>
         <segue reference="d5p-Y8-aSj"/>
     </inferredMetricsTieBreakers>
 </document>

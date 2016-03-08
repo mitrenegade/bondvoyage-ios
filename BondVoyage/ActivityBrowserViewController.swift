@@ -23,7 +23,8 @@ class ActivityBrowserViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: "cancel")
+        self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "close")
         self.title = "Invite"
     }
     
@@ -41,19 +42,8 @@ class ActivityBrowserViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func cancel() {
-        // TODO: if inviteViewController is own
-        /*
-        MatchRequest.cancelMatch(self.fromMatch!) { (results, error) -> Void in
-            if error != nil {
-                self.simpleAlert("Could not cancel match", defaultMessage: "Your current match could not be cancelled", error: error)
-            }
-            else {
-                self.navigationController!.popToRootViewControllerAnimated(true)
-            }
-        }
-        */
-        self.navigationController!.popToRootViewControllerAnimated(true)
+    func close() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func didClickButton(button: UIButton) {
@@ -112,15 +102,4 @@ class ActivityBrowserViewController: UIViewController {
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "GoToCurrentActivity" {
-            let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
-            /* TODO
-            controller.currentActivity = self.fromMatch
-            controller.toMatch = self.matches![self.currentPage()]
-            */
-        }
-    }
 }

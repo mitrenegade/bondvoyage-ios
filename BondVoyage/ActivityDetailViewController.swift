@@ -28,6 +28,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var constraintTableHeight: NSLayoutConstraint!
 
+    @IBOutlet weak var buttonInvite: UIButton!
+    @IBOutlet weak var constraintButtonHeight: NSLayoutConstraint!
+    
     var activity: PFObject!
     var isRequestingJoin: Bool = false
 
@@ -49,12 +52,12 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         let geopoint: PFGeoPoint = self.activity.objectForKey("geopoint") as! PFGeoPoint
         self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
         
-        if self.isRequestingJoin {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: "goToSelectPlace")
-        }
         self.mapView.userInteractionEnabled = true
         self.mapView.delegate = self
         
+        if !self.isRequestingJoin {
+            self.constraintButtonHeight.constant = 0
+        }
         self.reloadSuggestedPlaces()
         
         // activity's user
@@ -255,6 +258,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                 controller.selectedUser = user
                 self.navigationController?.pushViewController(controller, animated: true)
             }
+        }
+            // invite
+        else if sender == self.buttonInvite {
+            self.goToSelectPlace()
         }
         else {
             // user button
