@@ -43,6 +43,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // location
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+    var lastLocation: CLLocation?
     var distanceMax: Double = Double(RANGE_DISTANCE_MAX)
 
     var placePicker: GMSPlacePicker?
@@ -341,9 +342,9 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first as CLLocation? {
             print("\(location)")
-            if self.currentLocation == nil {
+            if self.currentLocation == nil || self.lastLocation == nil || self.currentLocation!.distanceFromLocation(self.lastLocation!) > 100 {
                 // initiate search now
-                self.currentLocation = location
+                self.lastLocation = self.currentLocation
                 self.didSelectCategory(nil, category: nil)
             }
             self.currentLocation = location
