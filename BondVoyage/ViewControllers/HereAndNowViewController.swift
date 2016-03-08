@@ -241,13 +241,16 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                     }
 
                     if PFUser.currentUser() != nil {
-                        message = "\(message) Go to New Activity to add your own activity."
+                        message = "\(message) Select a different filter or go to New Activity to add your own activity."
                     }
 
                     self.tableView.reloadData()
                     self.hideCategories()
                     
-                    self.simpleAlert("No activities nearby", message:message)
+                    self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
+                        self.clearFilters()
+                        self.tableView.reloadData()
+                    })
                 }
             }
             else {
@@ -347,6 +350,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
         else if sender == self.navigationItem.rightBarButtonItem {
             print("filter")
+            let controller: SearchPreferencesViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SearchPreferencesViewController") as! SearchPreferencesViewController
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
