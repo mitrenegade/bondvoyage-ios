@@ -117,6 +117,9 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                     }
                 })
             }
+            else {
+                completion()
+            }
         }
     }
     
