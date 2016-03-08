@@ -17,7 +17,13 @@ class DistanceFilterView: RangeFilterView {
     
     override func updateLabel() {
         if self.rangeSlider != nil {
-            let max:Double = self.rangeSlider!.upperValue
+            var max:Double = self.rangeSlider!.upperValue
+            if self.rangeSlider!.upperValue > 50 && self.rangeSlider!.upperValue <= 52 {
+                max = 100
+            }
+            else if self.rangeSlider!.upperValue > 52 {
+                max = 500
+            }
             self.label.text = NSString(format: "Within %2.1f miles", max) as String
         }
     }
@@ -25,7 +31,15 @@ class DistanceFilterView: RangeFilterView {
     override func setSliderValues(lower lower: Int, upper: Int) {
         // HACK: always hides lower value
         self.rangeSlider?.lowerValue = -100
-        self.rangeSlider!.upperValue = min(self.rangeSlider!.maximumValue, Double(upper))
+        if upper <= 50 {
+            self.rangeSlider!.upperValue = min(self.rangeSlider!.maximumValue, Double(upper))
+        }
+        else if upper <= 100 {
+            self.rangeSlider!.upperValue = 52
+        }
+        else {
+            self.rangeSlider!.upperValue = 54
+        }
         self.updateLabel()
     }
 }

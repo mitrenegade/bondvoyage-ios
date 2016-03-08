@@ -91,7 +91,15 @@ class SearchPreferencesViewController: UIViewController {
         let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
         let groupMin = Int(self.groupFilterView.rangeSlider!.lowerValue)
         let groupMax = Int(self.groupFilterView.rangeSlider!.upperValue)
-        let distMax = Double(self.distanceFilterView.rangeSlider!.upperValue)
+        var distMax = Double(self.distanceFilterView.rangeSlider!.upperValue)
+        
+        if self.distanceFilterView.rangeSlider!.upperValue > 50 && self.distanceFilterView.rangeSlider!.upperValue <= 52 {
+            distMax = 100
+        }
+        else if self.distanceFilterView.rangeSlider!.upperValue > 52 {
+            distMax = 500
+        }
+
         
         prefObject!.setValue(ageMin, forKey: "ageMin")
         prefObject!.setValue(ageMax, forKey: "ageMax")
