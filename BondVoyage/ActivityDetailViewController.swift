@@ -28,6 +28,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var constraintTableHeight: NSLayoutConstraint!
 
+    @IBOutlet weak var buttonInvite: UIButton!
+    @IBOutlet weak var constraintButtonHeight: NSLayoutConstraint!
+    
     var activity: PFObject!
     var isRequestingJoin: Bool = false
 
@@ -39,28 +42,33 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var constraintProfileWidth: NSLayoutConstraint!
     @IBOutlet weak var profileButton: UIButton!
     
+    weak var browser: ActivityBrowserViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.imageView.image = self.activity.defaultImage()
-        self.labelTitle.text = self.activity.shortTitle()
+        self.labelTitle.text = ""
         
         let geopoint: PFGeoPoint = self.activity.objectForKey("geopoint") as! PFGeoPoint
         self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
         
-        if self.isRequestingJoin {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: "goToSelectPlace")
-        }
         self.mapView.userInteractionEnabled = true
         self.mapView.delegate = self
         
+        if !self.isRequestingJoin {
+            self.constraintButtonHeight.constant = 0
+            self.buttonInvite.hidden = true
+        }
         self.reloadSuggestedPlaces()
         
         // activity's user
         if let user: PFUser = self.activity.user() {
-            user.fetchInBackgroundWithBlock({ (result, error) -> Void in
+            user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
                 if result != nil {
+                    self.labelTitle.text = self.activity.shortTitle()
+
                     if let photoURL: String = result!.valueForKey("photoUrl") as? String {
                         self.profileView.imageURL = NSURL(string: photoURL)
                     }
@@ -100,14 +108,16 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             self.marker!.map = self.mapView
         }
         
-        if self.street != nil {
-            self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.street!)"
-        }
-        else if self.city != nil {
-            self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.city!)"
-        }
-        else {
-            self.labelTitle.text = self.activity.shortTitle()
+        self.activity.user().fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+            if self.street != nil {
+                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.street!)"
+            }
+            else if self.city != nil {
+                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.city!)"
+            }
+            else {
+                self.labelTitle.text = self.activity.shortTitle()
+            }
         }
     }
     
@@ -252,6 +262,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }
+            // invite
+        else if sender == self.buttonInvite {
+            self.goToSelectPlace()
+        }
         else {
             // user button
             let cell: UITableViewCell = sender.superview!.superview! as! UITableViewCell
@@ -268,7 +282,16 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - InvitationDelegate
     func didSendInvitationForPlace() {
-        self.navigationController?.popToViewController(self, animated: true)
+        self.constraintButtonHeight.constant = 0 // why does this not hide the button?
+        self.buttonInvite.hidden = true
+
+        if self.browser != nil {
+            self.browser!.didSendInvitationForPlace()
+        }
+        else {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+        
         self.activity.fetchInBackgroundWithBlock { (result, error) -> Void in
             self.reloadSuggestedPlaces()
         }
