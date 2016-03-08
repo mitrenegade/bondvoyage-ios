@@ -57,6 +57,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         if !self.isRequestingJoin {
             self.constraintButtonHeight.constant = 0
+            self.buttonInvite.hidden = true
         }
         self.reloadSuggestedPlaces()
         
@@ -279,7 +280,11 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - InvitationDelegate
     func didSendInvitationForPlace() {
-        self.navigationController?.popToViewController(self, animated: true)
+        self.constraintButtonHeight.constant = 0 // why does this not hide the button?
+        self.buttonInvite.hidden = true
+
+        self.navigationController?.popToRootViewControllerAnimated(true)
+
         self.activity.fetchInBackgroundWithBlock { (result, error) -> Void in
             self.reloadSuggestedPlaces()
         }

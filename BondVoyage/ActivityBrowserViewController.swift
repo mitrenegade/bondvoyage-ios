@@ -46,10 +46,6 @@ class ActivityBrowserViewController: UIViewController {
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func didClickButton(button: UIButton) {
-        self.goToSelectPlace()
-    }
-        
     func currentPage() -> Int {
         let page = Int(floor(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
         return page
@@ -82,7 +78,6 @@ class ActivityBrowserViewController: UIViewController {
             let frame = CGRectMake(width * CGFloat(i), 0, width, height)
             controller.view.frame = frame
             controller.didMoveToParentViewController(self)
-//            controller.configureUI() // force resize
             
             if activity == self.currentActivity {
                 currentOffset = CGFloat(i) * width
@@ -91,15 +86,4 @@ class ActivityBrowserViewController: UIViewController {
         self.scrollView.contentSize = CGSizeMake(CGFloat(self.activities!.count) * width, height)
         self.scrollView.contentOffset = CGPointMake(currentOffset, 0)
     }
-    
-    func refresh() {
-    }
-    
-    func goToSelectPlace() {
-        let activity = self.activities![self.currentPage()]
-        let controller: SuggestedPlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("SuggestedPlacesViewController") as! SuggestedPlacesViewController
-        controller.currentActivity = activity
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-
 }
