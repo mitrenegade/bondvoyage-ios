@@ -9,16 +9,23 @@
 import UIKit
 
 class DistanceFilterView: RangeFilterView {
-    func configure(minDist: Int, maxDist: Int, lower: Int, upper: Int) {
-        self.setSliderRange(min: minDist, max: maxDist)
-        self.setSliderValues(lower: lower, upper: upper)
+    // HACK: this is a range filter but only display/read max range
+    func configure(maxDist: Int, upper: Int) {
+        self.setSliderRange(min: RANGE_DISTANCE_MIN, max: maxDist)
+        self.setSliderValues(lower: -100, upper: upper)
     }
     
     override func updateLabel() {
         if self.rangeSlider != nil {
-            let min:Double = self.rangeSlider!.lowerValue
             let max:Double = self.rangeSlider!.upperValue
-            self.label.text = NSString(format: "%2.1f to %2.1f miles", min, max) as String
+            self.label.text = NSString(format: "Within %2.1f miles", max) as String
         }
+    }
+
+    override func setSliderValues(lower lower: Int, upper: Int) {
+        // HACK: always hides lower value
+        self.rangeSlider?.lowerValue = -100
+        self.rangeSlider!.upperValue = min(self.rangeSlider!.maximumValue, Double(upper))
+        self.updateLabel()
     }
 }
