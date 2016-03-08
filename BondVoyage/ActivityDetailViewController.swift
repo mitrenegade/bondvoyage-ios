@@ -42,6 +42,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var constraintProfileWidth: NSLayoutConstraint!
     @IBOutlet weak var profileButton: UIButton!
     
+    weak var browser: ActivityBrowserViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -283,8 +285,13 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.constraintButtonHeight.constant = 0 // why does this not hide the button?
         self.buttonInvite.hidden = true
 
-        self.navigationController?.popToRootViewControllerAnimated(true)
-
+        if self.browser != nil {
+            self.browser!.didSendInvitationForPlace()
+        }
+        else {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+        
         self.activity.fetchInBackgroundWithBlock { (result, error) -> Void in
             self.reloadSuggestedPlaces()
         }

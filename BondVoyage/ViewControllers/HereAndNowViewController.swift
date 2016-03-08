@@ -155,11 +155,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         
         if self.selectedSubcategory == nil {
             let activity: PFObject = self.nearbyActivities![indexPath.row]
-            self.goToActivity(activity, activities: self.nearbyActivities!)
+            self.goToActivity(activity)
         }
         else {
             let activity: PFObject = self.filteredActivities![indexPath.row]
-            self.goToActivity(activity, activities: self.filteredActivities!)
+            self.goToActivity(activity)
         }
     }
     
@@ -251,26 +251,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func goToActivity(activity: PFObject, activities: [PFObject]) {
-        if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
-            if TESTING {
-                self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
-            }
-            else {
-                self.warnForLocationAvailability()
-                return
-            }
-        }
-        let controller: ActivityBrowserViewController = ActivityBrowserViewController()
-        controller.activities = activities
-        controller.currentActivity = activity
-        controller.isRequestingJoin = true
-        let nav: UINavigationController = UINavigationController(rootViewController: controller)
-        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
-    }
-    
-    /* NOT USED
-    func goToCategory(activities: [PFObject], index: Int) {
+    func goToActivity(activity: PFObject) {
         if self.currentLocation == nil || self.currentLocation!.horizontalAccuracy >= 100 {
             if TESTING {
                 self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
@@ -281,14 +262,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
         
-        self.hideCategories()
-        let activity: PFObject = activities[index]
-        var mutable: [PFObject] = activities
-        mutable.removeAtIndex(index)
-        mutable.insert(activity, atIndex: 0)
-        self.performSegueWithIdentifier("GoToNearbyActivities", sender: mutable)
+        self.performSegueWithIdentifier("GoToActivityBrowser", sender: activity)
     }
-    */
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
@@ -297,9 +272,19 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             self.categoriesVC = segue.destinationViewController as! SearchCategoriesViewController
             self.categoriesVC.delegate = self
         }
-        else if segue.identifier == "GoToCurrentActivity" {
-            let controller: MatchStatusViewController = segue.destinationViewController as! MatchStatusViewController
-            controller.currentActivity = self.currentActivity
+        else if segue.identifier == "GoToActivityBrowser" {
+            let controller: ActivityBrowserViewController = segue.destinationViewController as! ActivityBrowserViewController
+            let activity = sender as! PFObject
+            controller.currentActivity = activity
+            controller.isRequestingJoin = true
+
+            if self.selectedSubcategory == nil {
+                controller.activities = self.nearbyActivities
+            }
+            else {
+                controller.activities = self.filteredActivities
+            }
+
         }
     }
     

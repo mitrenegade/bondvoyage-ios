@@ -114,11 +114,45 @@
                     <connections>
                         <outlet property="constraintCategoriesHeight" destination="w2V-Qg-zDR" id="fbb-tr-6Hb"/>
                         <outlet property="tableView" destination="cTU-h3-6Gk" id="uwR-OS-N8W"/>
+                        <segue destination="NQ0-Md-vts" kind="show" identifier="GoToActivityBrowser" id="Ciz-es-DWv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cg-MI-x4R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="488" y="-1855"/>
+        </scene>
+        <!--Activity Browser View Controller-->
+        <scene sceneID="lxU-fP-2gw">
+            <objects>
+                <viewController storyboardIdentifier="ActivityBrowserViewController" id="NQ0-Md-vts" customClass="ActivityBrowserViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="enG-F2-gEe"/>
+                        <viewControllerLayoutGuide type="bottom" id="YDQ-dw-xYZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="n86-qC-kWP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ie-8H-Z4z">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2Ie-8H-Z4z" firstAttribute="leading" secondItem="n86-qC-kWP" secondAttribute="leading" id="2hE-c5-yFg"/>
+                            <constraint firstItem="2Ie-8H-Z4z" firstAttribute="top" secondItem="n86-qC-kWP" secondAttribute="top" id="WbI-MJ-ALN"/>
+                            <constraint firstItem="YDQ-dw-xYZ" firstAttribute="top" secondItem="2Ie-8H-Z4z" secondAttribute="bottom" id="eLn-1R-PjS"/>
+                            <constraint firstAttribute="trailing" secondItem="2Ie-8H-Z4z" secondAttribute="trailing" id="mR9-Sj-gCu"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="CJQ-du-d5K"/>
+                    <connections>
+                        <outlet property="scrollView" destination="2Ie-8H-Z4z" id="jbT-0L-pyQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R49-hW-tmv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1258" y="-1855"/>
         </scene>
         <!--User Details View Controller-->
         <scene sceneID="jZv-gK-TaP">
@@ -325,15 +359,15 @@
                         <viewControllerLayoutGuide type="bottom" id="mqW-rs-n94"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vZK-4f-cFT">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rkZ-Ko-YNH">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
                                 <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="1j3-jT-8bV" style="IBUITableViewCellStyleDefault" id="mLz-vT-h11">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mLz-vT-h11" id="ujE-7O-Gu2">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -350,7 +384,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="SubcategoryCell" textLabel="00x-D0-gs4" style="IBUITableViewCellStyleDefault" id="FtT-Gc-f5s">
-                                        <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="72" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FtT-Gc-f5s" id="VZ0-w9-n4K">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -749,7 +783,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmJ-0o-hdn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2080" y="-865"/>
+            <point key="canvasLocation" x="2016" y="-921"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="RL9-cL-SPH">
@@ -956,13 +990,13 @@
                         <viewControllerLayoutGuide type="bottom" id="LUE-tC-RFu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wz6-Bi-Kic">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAJ-eR-FXe" customClass="GMSMapView">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAJ-eR-FXe" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="-160" width="600" height="0.0"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" image="icon-location" translatesAutoresizingMaskIntoConstraints="NO" id="fl8-4B-ENx">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" image="icon-location" translatesAutoresizingMaskIntoConstraints="NO" id="fl8-4B-ENx">
                                         <rect key="frame" x="283" y="-18" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="AOc-uv-BWg"/>
@@ -980,7 +1014,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fy-hv-6Pd">
-                                <rect key="frame" x="0.0" y="335" width="600" height="144"/>
+                                <rect key="frame" x="0.0" y="-152" width="600" height="144"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City, State or Zip" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BFb-MQ-oPh">
                                         <rect key="frame" x="8" y="58" width="584" height="30"/>
@@ -1072,7 +1106,7 @@
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="N0N-Jc-ivY"/>
-        <segue reference="d5p-Y8-aSj"/>
+        <segue reference="zua-Tk-rJN"/>
+        <segue reference="Mrg-4z-aGR"/>
     </inferredMetricsTieBreakers>
 </document>

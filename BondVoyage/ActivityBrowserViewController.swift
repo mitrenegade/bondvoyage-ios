@@ -11,7 +11,7 @@ import Parse
 
 class ActivityBrowserViewController: UIViewController {
     
-    var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView!
     var didSetupScroll: Bool = false
     
     var category: String?
@@ -43,7 +43,7 @@ class ActivityBrowserViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     func currentPage() -> Int {
@@ -56,10 +56,10 @@ class ActivityBrowserViewController: UIViewController {
             return
         }
 
-        var frame = self.view.frame
-        frame.origin.y = 0
-        self.scrollView = UIScrollView(frame: frame)
-        self.view.addSubview(self.scrollView)
+        //var frame = self.view.frame
+        //frame.origin.y = 0
+        //self.scrollView = UIScrollView(frame: frame)
+        //self.view.addSubview(self.scrollView)
         
         let width: CGFloat = self.view.frame.size.width
         let height: CGFloat = self.scrollView.frame.size.height
@@ -71,6 +71,8 @@ class ActivityBrowserViewController: UIViewController {
             let controller: ActivityDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ActivityDetailViewController") as! ActivityDetailViewController
             controller.isRequestingJoin = self.isRequestingJoin
             controller.activity = activity
+            
+            controller.browser = self
             
             controller.willMoveToParentViewController(self)
             self.addChildViewController(controller)
@@ -85,5 +87,10 @@ class ActivityBrowserViewController: UIViewController {
         }
         self.scrollView.contentSize = CGSizeMake(CGFloat(self.activities!.count) * width, height)
         self.scrollView.contentOffset = CGPointMake(currentOffset, 0)
+    }
+    
+    func didSendInvitationForPlace() {
+        // not a delegate call but direct call by ActivityDetail
+        self.navigationController?.popToViewController(self, animated: true)
     }
 }
