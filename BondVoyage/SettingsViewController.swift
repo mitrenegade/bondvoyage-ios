@@ -22,8 +22,6 @@ class SettingsViewController: UITableViewController {
         imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
         self.navigationController!.navigationBar.addSubview(imageView)
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
-
-        self.navigationItem
     }
 
     override func didReceiveMemoryWarning() {
