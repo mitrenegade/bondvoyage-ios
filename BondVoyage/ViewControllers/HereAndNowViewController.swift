@@ -251,8 +251,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                     self.hideCategories()
                     
                     self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        self.clearSearch()
-                        self.tableView.reloadData()
+                        if self.selectedSubcategory != nil || self.selectedCategory != nil {
+                            // only clear and re-search if user filtered.
+                            self.clearSearch()
+                            self.tableView.reloadData()
+                        }
                     })
                 }
             }
@@ -344,6 +347,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             print("\(location)")
             if self.currentLocation == nil || self.lastLocation == nil || self.currentLocation!.distanceFromLocation(self.lastLocation!) > 100 {
                 // initiate search now
+                self.currentLocation = location
                 self.lastLocation = self.currentLocation
                 self.didSelectCategory(nil, category: nil)
             }
