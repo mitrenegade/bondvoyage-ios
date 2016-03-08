@@ -9,6 +9,7 @@
         <mutableArray key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -114,11 +115,56 @@
                                                     <constraint firstItem="WNj-2k-GRI" firstAttribute="leading" secondItem="rPB-VU-fRx" secondAttribute="leading" id="sBG-kY-Z6b"/>
                                                 </constraints>
                                             </view>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fs6-rJ-RTZ" userLabel="View - distance">
+                                                <rect key="frame" x="0.0" y="280" width="600" height="140"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9O-cC-w1Z" userLabel="View - header">
+                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IkS-5p-mCO">
+                                                                <rect key="frame" x="8" y="8" width="584" height="44"/>
+                                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
+                                                                <state key="normal" title="Distance">
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </state>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="gEd-kP-WC8"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="s1o-JB-YNd"/>
+                                                        </constraints>
+                                                        <variation key="default">
+                                                            <mask key="constraints">
+                                                                <exclude reference="s1o-JB-YNd"/>
+                                                            </mask>
+                                                        </variation>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uSc-Q9-S9u" customClass="DistanceFilterView" customModule="BondVoyage" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="60" width="600" height="80"/>
+                                                        <color key="backgroundColor" red="0.66063236120000002" green="0.71561389649999996" blue="0.76888457779999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="uSc-Q9-S9u" firstAttribute="leading" secondItem="Fs6-rJ-RTZ" secondAttribute="leading" id="1dg-0A-txk"/>
+                                                    <constraint firstAttribute="bottom" secondItem="uSc-Q9-S9u" secondAttribute="bottom" id="3ww-XC-h0M"/>
+                                                    <constraint firstAttribute="height" constant="140" id="KFQ-t9-qhv"/>
+                                                    <constraint firstItem="a9O-cC-w1Z" firstAttribute="leading" secondItem="Fs6-rJ-RTZ" secondAttribute="leading" id="Lgr-vP-J29"/>
+                                                    <constraint firstAttribute="trailing" secondItem="uSc-Q9-S9u" secondAttribute="trailing" id="XIh-zd-fEh"/>
+                                                    <constraint firstItem="a9O-cC-w1Z" firstAttribute="top" secondItem="Fs6-rJ-RTZ" secondAttribute="top" id="dv8-Bz-0bA"/>
+                                                    <constraint firstAttribute="trailing" secondItem="a9O-cC-w1Z" secondAttribute="trailing" id="hYO-lN-1JF"/>
+                                                    <constraint firstItem="uSc-Q9-S9u" firstAttribute="top" secondItem="a9O-cC-w1Z" secondAttribute="bottom" id="jx1-Ss-XVS"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Fs6-rJ-RTZ" secondAttribute="trailing" id="0Qa-8l-0tJ"/>
                                             <constraint firstItem="JZC-1O-Aa6" firstAttribute="top" secondItem="JgP-9U-hVd" secondAttribute="top" id="0ma-oF-Dg5"/>
                                             <constraint firstItem="rPB-VU-fRx" firstAttribute="leading" secondItem="JgP-9U-hVd" secondAttribute="leading" id="6yq-Fp-Xtf"/>
+                                            <constraint firstItem="Fs6-rJ-RTZ" firstAttribute="leading" secondItem="JgP-9U-hVd" secondAttribute="leading" id="Afb-Ko-EoA"/>
+                                            <constraint firstItem="Fs6-rJ-RTZ" firstAttribute="top" secondItem="rPB-VU-fRx" secondAttribute="bottom" id="LrS-G7-WvC"/>
                                             <constraint firstAttribute="trailing" secondItem="rPB-VU-fRx" secondAttribute="trailing" id="YG0-Db-eWW"/>
                                             <constraint firstItem="rPB-VU-fRx" firstAttribute="top" secondItem="JZC-1O-Aa6" secondAttribute="bottom" id="a2o-ta-4hY"/>
                                             <constraint firstAttribute="trailing" secondItem="JZC-1O-Aa6" secondAttribute="trailing" id="jTd-f0-8bo"/>
@@ -151,6 +197,7 @@
                     <connections>
                         <outlet property="ageFilterView" destination="YDZ-kQ-UKO" id="Spc-le-ISL"/>
                         <outlet property="contentView" destination="JgP-9U-hVd" id="dBW-70-bMI"/>
+                        <outlet property="distanceFilterView" destination="uSc-Q9-S9u" id="wgR-70-3QC"/>
                         <outlet property="groupFilterView" destination="5vy-bi-FvY" id="wX0-ru-QaJ"/>
                         <outlet property="scrollView" destination="uFk-rd-TqM" id="MS9-Zo-RPW"/>
                     </connections>

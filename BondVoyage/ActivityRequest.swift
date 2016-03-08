@@ -26,15 +26,16 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func queryActivities(location: CLLocation?, user: PFUser?, joining: Bool?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, joining: Bool?, categories: [String]?, location: CLLocation?, distance: Double?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
             params["categories"] = categories
         }
-        if location != nil {
+        if location != nil && distance != nil {
             params["lat"] = location!.coordinate.latitude
             params["lon"] = location!.coordinate.longitude
+            params["distanceMax"] = distance!
         }
         if user != nil {
             params["userId"] = user!.objectId!

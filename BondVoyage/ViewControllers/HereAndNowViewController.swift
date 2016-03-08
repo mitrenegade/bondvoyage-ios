@@ -43,6 +43,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // location
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+    var lastLocation: CLLocation?
+    var distanceMax: Double = Double(RANGE_DISTANCE_MAX)
 
     var placePicker: GMSPlacePicker?
 
@@ -59,7 +61,13 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "activity:updated", object: nil)
         
-        self.setup()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
+        
+        self.constraintCategoriesHeight.constant = 0
+
+        self.loadPrefsWithCompletion { () -> Void in
+            self.startLocation()
+        }
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -78,13 +86,41 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func setup() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
-        
-        self.constraintCategoriesHeight.constant = 0
-
-        self.didSelectCategory(nil, category: nil)
-        
+    func loadPrefsWithCompletion(completion: (()->Void)) {
+        if PFUser.currentUser() == nil {
+            completion()
+            return
+        }
+        PFUser.currentUser()!.fetchIfNeededInBackgroundWithBlock { (user, error) -> Void in
+            if let prefObject: PFObject = user!.objectForKey("preferences") as? PFObject {
+                // load from local store
+                prefObject.fetchFromLocalDatastoreInBackgroundWithBlock({ (object, error) -> Void in
+                    if error == nil {
+                        if let upper: Double = prefObject.objectForKey("distanceMax") as? Double {
+                            self.distanceMax = upper
+                        }
+                        completion()
+                    }
+                    else {
+                        // load from web
+                        prefObject.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                            if error != nil {
+                                completion()
+                            }
+                            else {
+                                if let upper: Double = prefObject.objectForKey("distanceMax") as? Double {
+                                    self.distanceMax = upper
+                                }
+                                completion()
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    }
+    
+    func startLocation() {
         // location
         locationManager.delegate = self
         let loc: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
@@ -216,7 +252,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             self.buttonSearch.setTitle("I'm in the mood for...", forState: .Normal)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "clearSearch")
         }
-        ActivityRequest.queryActivities(self.currentLocation, user: nil, joining: false, categories: cat) { (results, error) -> Void in
+        
+        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: distanceMax) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     
@@ -250,8 +287,11 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                     self.hideCategories()
                     
                     self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        self.clearSearch()
-                        self.tableView.reloadData()
+                        if self.selectedSubcategory != nil || self.selectedCategory != nil {
+                            // only clear and re-search if user filtered.
+                            self.clearSearch()
+                            self.tableView.reloadData()
+                        }
                     })
                 }
             }
@@ -341,6 +381,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first as CLLocation? {
             print("\(location)")
+            if self.currentLocation == nil || self.lastLocation == nil || self.currentLocation!.distanceFromLocation(self.lastLocation!) > 100 {
+                // initiate search now
+                self.currentLocation = location
+                self.lastLocation = self.currentLocation
+                self.didSelectCategory(nil, category: nil)
+            }
             self.currentLocation = location
         }
     }
@@ -367,6 +413,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: SearchPreferencesDelegate
     func didUpdateSearchPreferences() {
         // perform current search again. didSelectCategory will handle search preferences
-        self.didSelectCategory(self.selectedSubcategory, category: self.selectedCategory)
+        self.loadPrefsWithCompletion { () -> Void in
+            self.didSelectCategory(self.selectedSubcategory, category: self.selectedCategory)
+        }
     }
 }
