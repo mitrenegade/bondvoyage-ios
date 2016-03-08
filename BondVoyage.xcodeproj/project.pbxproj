@@ -210,6 +210,7 @@
 		8E39C21C1C7E7ECC00C9B995 /* Old */ = {
 			isa = PBXGroup;
 			children = (
+				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
 				8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */,
 			);
 			name = Old;
@@ -366,7 +367,6 @@
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */,
-				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
 				8E099EC11C850140006A0320 /* Details */,
 				8E39C21C1C7E7ECC00C9B995 /* Old */,
 			);

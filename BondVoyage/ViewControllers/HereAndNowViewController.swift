@@ -18,9 +18,10 @@ let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
 let kCellIdentifier = "ActivitiesCell"
 
-class HereAndNowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, CLLocationManagerDelegate {
+class HereAndNowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, CLLocationManagerDelegate, SearchPreferencesDelegate {
 
     // categories dropdown
+    @IBOutlet weak var buttonSearch: UIButton!
     @IBOutlet weak var constraintCategoriesHeight: NSLayoutConstraint!
     var categoriesVC: SearchCategoriesViewController!
     var showingCategories: Bool = false
@@ -30,6 +31,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     // tableview data
     var selectedSubcategory: String?
+    var selectedCategory: String?
     var nearbyActivities: [PFObject]?
     var filteredActivities: [PFObject]?
     
@@ -185,14 +187,21 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         // don't animate or tableview looks weird
     }
 
+    func clearSearch() {
+        self.didSelectCategory(nil, category: nil)
+    }
+    
     // MARK: - SearchCategoriesDelegate
     func didSelectCategory(subcategory: String?, category: String?) {
         // first query for existing bond requests
         self.selectedSubcategory = subcategory
+        self.selectedCategory = category
         var cat: [String]?
         if subcategory != nil {
             // a specific subcategory
             cat = [subcategory!]
+            self.buttonSearch.setTitle("I'm in the mood for \(subcategory!)", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: "clearSearch")
         }
         else if category != nil {
             // All in a category
@@ -200,6 +209,12 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             cat = subcategories.map({ (subcategory) -> String in
                 return subcategory.rawValue.lowercaseString
             })
+            self.buttonSearch.setTitle("I'm in the mood for \(category!)", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: "clearSearch")
+        }
+        else {
+            self.buttonSearch.setTitle("I'm in the mood for...", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "clearSearch")
         }
         ActivityRequest.queryActivities(self.currentLocation, user: nil, joining: false, categories: cat) { (results, error) -> Void in
             if results != nil {
@@ -228,13 +243,16 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                     }
 
                     if PFUser.currentUser() != nil {
-                        message = "\(message) Click the button to add your own activity."
+                        message = "\(message) Select a different filter or go to New Activity to add your own activity."
                     }
 
                     self.tableView.reloadData()
                     self.hideCategories()
                     
-                    self.simpleAlert("No activities nearby", message:message)
+                    self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
+                        self.clearSearch()
+                        self.tableView.reloadData()
+                    })
                 }
             }
             else {
@@ -329,12 +347,26 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: add button
     @IBAction func didClickButton(sender: UIButton) {
-        self.toggleCategories(!self.showingCategories)
+        if sender == self.buttonSearch {
+            self.toggleCategories(!self.showingCategories)
+        }
+        else if sender == self.navigationItem.rightBarButtonItem {
+            print("filter")
+            let controller: SearchPreferencesViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("SearchPreferencesViewController") as! SearchPreferencesViewController
+            controller.delegate = self
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     // MARK: InvitationDelegate side effects
     func updateActivities() {
         // after user sends an invitation, that activity should be removed from here
         self.didSelectCategory(self.selectedSubcategory, category: nil)
+    }
+    
+    // MARK: SearchPreferencesDelegate
+    func didUpdateSearchPreferences() {
+        // perform current search again. didSelectCategory will handle search preferences
+        self.didSelectCategory(self.selectedSubcategory, category: self.selectedCategory)
     }
 }

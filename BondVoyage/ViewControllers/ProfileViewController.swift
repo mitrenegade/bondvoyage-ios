@@ -52,8 +52,15 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             // comes from signing up
             self.navigationItem.hidesBackButton = true
         }
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Done, target: self, action: "validateFields")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
+        let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
+        imageView.frame = CGRectMake(0, 0, 150, 44)
+        imageView.contentMode = .ScaleAspectFit
+        imageView.backgroundColor = Constants.lightBlueColor()
+        imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
+        self.navigationController!.navigationBar.addSubview(imageView)
+        self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
 
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
@@ -73,7 +80,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.Black
         keyboardDoneButtonView.tintColor = UIColor.whiteColor()
-        let button: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: "dismissKeyboard")
+        let button: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Done, target: self, action: "dismissKeyboard")
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
@@ -142,8 +149,9 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    func close() {
-        self.navigationController?.popViewControllerAnimated(true)
+    func logout() {
+        PFUser.logOut()
+        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
     }
     
     // MARK: UIPickerViewDataSource
@@ -205,20 +213,8 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             return true
         }
         
-        if textField == self.inputFirstName {
-            self.inputLastName.becomeFirstResponder()
-        }
-        else if textField == self.inputLastName {
-            self.inputBirthYear.becomeFirstResponder()
-        }
-        else if textField == self.inputBirthYear {
-            self.inputGender.becomeFirstResponder()
-        }
-        else if textField == self.inputGender {
-            textField.resignFirstResponder()
-            return true
-        }
-        return false
+        self.validateFields(textField)
+        return true
     }
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
@@ -253,7 +249,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         self.view.layoutIfNeeded()
     }
 
-    func validateFields() {
+    func validateFields(input: UITextField) {
         cancelEditing = true
         self.view.endEditing(true)
         self.firstName = self.inputFirstName.text
@@ -302,7 +298,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 }
 
                 self.appDelegate().logUser()
-                self.close()
             }
             else {
                 var message = "There was an error updating your profile."

@@ -9,6 +9,10 @@
 import UIKit
 import Parse
 
+protocol SearchPreferencesDelegate: class {
+    func didUpdateSearchPreferences()
+}
+
 class SearchPreferencesViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
@@ -16,12 +20,14 @@ class SearchPreferencesViewController: UIViewController {
     @IBOutlet weak var ageFilterView: AgeRangeFilterView!
     @IBOutlet weak var groupFilterView: GroupSizeFilterView!
     
+    weak var delegate: SearchPreferencesDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "close")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear Filters", style: .Plain, target: self, action: "clearFilters")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply Filters", style: .Plain, target: self, action: "saveFilters")
         
         self.ageFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
         self.groupFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
@@ -66,7 +72,15 @@ class SearchPreferencesViewController: UIViewController {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    func save() {
+    func clearFilters() {
+        // todo: clear filters
+        self.ageFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
+        self.groupFilterView.configure(RANGE_GROUP_MIN, maxSize: RANGE_GROUP_MAX, lower: RANGE_GROUP_MIN, upper: RANGE_GROUP_MAX)
+        
+        self.saveFilters()
+    }
+    
+    func saveFilters() {
         var prefObject: PFObject? = PFUser.currentUser()!.objectForKey("preferences") as? PFObject
         if prefObject == nil {
             prefObject = PFObject(className: "SearchPreference")
@@ -90,6 +104,9 @@ class SearchPreferencesViewController: UIViewController {
             }
         })
         
+        if self.delegate != nil {
+            self.delegate!.didUpdateSearchPreferences()
+        }
         self.close()
     }
     
