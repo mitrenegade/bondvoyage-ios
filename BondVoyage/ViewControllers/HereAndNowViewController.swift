@@ -61,7 +61,13 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateActivities", name: "activity:updated", object: nil)
         
-        self.setup()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
+        
+        self.constraintCategoriesHeight.constant = 0
+
+        self.loadPrefsWithCompletion { () -> Void in
+            self.startLocation()
+        }
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -80,11 +86,41 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func setup() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "didClickButton:")
-        
-        self.constraintCategoriesHeight.constant = 0
-        
+    func loadPrefsWithCompletion(completion: (()->Void)) {
+        if PFUser.currentUser() == nil {
+            completion()
+            return
+        }
+        PFUser.currentUser()!.fetchIfNeededInBackgroundWithBlock { (user, error) -> Void in
+            if let prefObject: PFObject = user!.objectForKey("preferences") as? PFObject {
+                // load from local store
+                prefObject.fetchFromLocalDatastoreInBackgroundWithBlock({ (object, error) -> Void in
+                    if error == nil {
+                        if let upper: Double = prefObject.objectForKey("distanceMax") as? Double {
+                            self.distanceMax = upper
+                        }
+                        completion()
+                    }
+                    else {
+                        // load from web
+                        prefObject.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                            if error != nil {
+                                completion()
+                            }
+                            else {
+                                if let upper: Double = prefObject.objectForKey("distanceMax") as? Double {
+                                    self.distanceMax = upper
+                                }
+                                completion()
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    }
+    
+    func startLocation() {
         // location
         locationManager.delegate = self
         let loc: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
@@ -377,6 +413,8 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: SearchPreferencesDelegate
     func didUpdateSearchPreferences() {
         // perform current search again. didSelectCategory will handle search preferences
-        self.didSelectCategory(self.selectedSubcategory, category: self.selectedCategory)
+        self.loadPrefsWithCompletion { () -> Void in
+            self.didSelectCategory(self.selectedSubcategory, category: self.selectedCategory)
+        }
     }
 }
