@@ -79,7 +79,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     func selectCategory(category: CATEGORY) {
         self.newCategory = category
-        self.performSegueWithIdentifier("GoToNewActivity", sender: nil)
+        self.performSegueWithIdentifier("GoToWhenWhere", sender: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
