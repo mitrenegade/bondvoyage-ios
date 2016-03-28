@@ -52,6 +52,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         let category: CATEGORY = CATEGORIES[indexPath.row]
         cell.titleLabel!.text = CategoryFactory.categoryReadableString(category)
         cell.backgroundColor = UIColor.clearColor()
+        cell.bgImage.image = CategoryFactory.categoryBgImage(category.rawValue)
         return cell
     }
     
