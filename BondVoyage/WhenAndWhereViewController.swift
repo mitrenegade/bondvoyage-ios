@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -18,7 +18,10 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var viewWho: UIView!
     @IBOutlet weak var viewAges: UIView!
     
-    @IBOutlet weak var inputWhere, inputWhen, inputAboutMe: UITextField!
+    @IBOutlet weak var inputWhere: UITextField!
+    @IBOutlet weak var inputWhen: UITextField!
+    @IBOutlet weak var inputAboutMe: UITextField!
+    var currentInput: UITextField?
     
     @IBOutlet weak var tableViewWho: UITableView!
     @IBOutlet weak var constraintTableViewHeight: NSLayoutConstraint!
@@ -44,8 +47,23 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         pickerWhere.delegate = self
         pickerWhen.delegate = self
         pickerMe.delegate = self
-        
+        inputWhere.inputView = pickerWhere
+        inputWhen.inputView = pickerWhen
+        inputAboutMe.inputView = pickerMe
+
+        let keyboardDoneButtonView = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        keyboardDoneButtonView.barStyle = UIBarStyle.Black
+        keyboardDoneButtonView.tintColor = UIColor.whiteColor()
+        let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
+        let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        keyboardDoneButtonView.setItems([flex, close], animated: true)
+        for input: UITextField in [inputWhere, inputWhen, inputAboutMe] {
+            input.inputAccessoryView = keyboardDoneButtonView
+        }
+
         self.ageFilterView.configure(RANGE_AGE_MIN, maxAge: RANGE_AGE_MAX, lower: RANGE_AGE_MIN, upper: RANGE_AGE_MAX)
+        self.ageFilterView.label.textColor = UIColor.blackColor()
         
         self.constraintTableViewHeight.constant = ROW_HEIGHT * CGFloat(PERSON_TYPES.count)
     }
@@ -61,14 +79,18 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PersonTypeCell", forIndexPath: indexPath)
-        cell.textLabel?.font = UIFont(name: "Avenir-Next", size: 15)
+        cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 14)
         cell.textLabel?.text = PERSON_TYPES[indexPath.row]
         
+        cell.backgroundColor = UIColor.clearColor()
+        
         if self.selectedTypes[indexPath.row] {
-            cell.backgroundColor = UIColor.greenColor()
+            cell.contentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.25)
+            cell.textLabel?.textColor = UIColor.blackColor()
         }
         else {
-            cell.backgroundColor = UIColor.redColor()
+            cell.contentView.backgroundColor = UIColor.clearColor()
+            cell.textLabel?.textColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         }
         return cell
     }
@@ -90,7 +112,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
             return 1
         }
         else if pickerView == self.pickerMe {
-            return PERSON_TYPES.count
+            return PERSON_TYPES.count + 1
         }
         return 0
     }
@@ -102,13 +124,94 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         if pickerView == self.pickerWhen {
             return "Now"
         }
-        return PERSON_TYPES[row]
+        if pickerView == self.pickerMe {
+            if row == 0 {
+                return "Select one"
+            }
+            return PERSON_TYPES[row - 1]
+        }
+        return nil
     }
     
     // MARK: - UIPickerViewDelegate
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("Row selected: \(row)")
+        if pickerView == self.pickerMe {
+            self.inputAboutMe.text = self.pickerView(self.pickerMe, titleForRow: row, forComponent: component)
+        }
     }
+    
+    // MARK: - TextFieldDelegate
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if textField == self.inputWhere && self.inputWhere.text?.isEmpty == true {
+            self.simpleAlert("Other cities coming soon", message: "BondVoyage is currently only available in Boston.", completion: { () -> Void in
+                self.inputWhere.text = "Boston"
+            })
+            return false
+        }
+        else if textField == self.inputWhen && self.inputWhen.text?.isEmpty == true {
+            self.simpleAlert("Scheduling coming soon", message: "Search for activities to do right now. Scheduling future activities will be available soon", completion: { () -> Void in
+                self.inputWhen.text = "Now"
+            })
+            return false
+        }
+        return true
+    }
+    /*
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        self.validateFields(textField)
+        return true
+    }
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        self.currentInput = textField
+        let view: UIView = self.currentInput!.superview!
+        var rect: CGRect = view.frame
+        rect.origin.y = view.superview!.frame.origin.y
+        self.scrollView.scrollRectToVisible(rect, animated: true)
+        return true
+    }
+    
+    func dismissKeyboard() {
+        self.currentInput!.resignFirstResponder()
+    }
+    */
+    
+    func endEditing() {
+        self.view.endEditing(true)
+    }
+    
+    /*
+    // MARK: - keyboard notifications
+    func keyboardWillShow(n: NSNotification) {
+        let size = n.userInfo![UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size
+//        self.constraintBottomOffset.constant = size!.height
+        
+        self.view.layoutIfNeeded()
+    }
+    
+    func keyboardWillHide(n: NSNotification) {
+//        self.constraintBottomOffset.constant = 0
+        self.view.layoutIfNeeded()
+    }
+    
+    func validateFields(input: UITextField) {
+        self.view.endEditing(true)
+        self.firstName = self.inputFirstName.text
+        self.lastName = self.inputLastName.text
+        if self.inputBirthYear.text != "Select your birth year" {
+            self.birthYear = Int(self.inputBirthYear.text!)
+        }
+        
+        self.updateProfile()
+    }
+    */
+
     /*
     // MARK: - Navigation
 
