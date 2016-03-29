@@ -18,10 +18,13 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBOutlet weak var contentView: UIView!
 
     var currentInput: UITextField?
-    @IBOutlet weak var inputFirstName: UITextField!
+    @IBOutlet weak var inputName: UITextField!
     @IBOutlet weak var inputBirthYear: UITextField!
     @IBOutlet weak var inputGender: UITextField!
-
+    @IBOutlet weak var inputOccupation: UITextField!
+    @IBOutlet weak var inputEducation: UITextField!
+    @IBOutlet weak var inputLanguages: UITextField!
+    
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
     @IBOutlet weak var buttonAbout: UIButton!
@@ -32,9 +35,11 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     var isSignup: Bool = false
     var selectedPhoto: UIImage?
 
-    var firstName: String?
-    var lastName: String?
+    var name: String?
     var birthYear: Int?
+    var occupation: String?
+    var education: String?
+    var languages: String?
 
     var currentYear: Int = 2016
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
@@ -77,7 +82,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputFirstName, inputGender, inputBirthYear] {
+        for input: UITextField in [inputName, inputGender, inputBirthYear, inputOccupation, inputEducation, inputLanguages] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
         
@@ -94,13 +99,22 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
                 }
             })
                 
-            if let firstName: String = user.objectForKey("firstName") as? String{
-                self.inputFirstName.text = firstName
+            if let firstName: String = user.objectForKey("firstName") as? String {
+                self.inputName.text = firstName
             }
-            if let birthYear: Int = user.objectForKey("birthYear") as? Int{
+            if let birthYear: Int = user.objectForKey("birthYear") as? Int {
                 self.inputBirthYear.text = "\(birthYear)"
             }
-            if let gender: String = user.objectForKey("gender") as? String{
+            if let occupation: String = user.objectForKey("occupation") as? String {
+                self.inputOccupation.text = occupation
+            }
+            if let education: String = user.objectForKey("education") as? String {
+                self.inputEducation.text = education
+            }
+            if let languages: String = user.objectForKey("languages") as? String {
+                self.inputLanguages.text = languages
+            }
+            if let gender: String = user.objectForKey("gender") as? String {
                 if gender == "male" {
                     self.gender = .Male
                 }
@@ -242,7 +256,10 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     func validateFields(input: UITextField) {
         cancelEditing = true
         self.view.endEditing(true)
-        self.firstName = self.inputFirstName.text
+        self.name = self.inputName.text
+        self.occupation = self.inputOccupation.text
+        self.education = self.inputEducation.text
+        self.languages = self.inputLanguages.text
         if self.inputBirthYear.text != "Select your birth year" {
             self.birthYear = Int(self.inputBirthYear.text!)
         }
@@ -257,14 +274,22 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             return
         }
         
-        if self.firstName != nil {
-            user!.setValue(self.firstName, forKey: "firstName")
+        if self.name != nil {
+            user!.setValue(self.name, forKey: "firstName")
         }
         
-        if self.lastName != nil {
-            user!.setValue(self.lastName, forKey: "lastName")
+        if self.occupation != nil {
+            user!.setValue(self.occupation, forKey: "occupation")
         }
-        
+
+        if self.education != nil {
+            user!.setValue(self.education, forKey: "education")
+        }
+
+        if self.languages != nil {
+            user!.setValue(self.languages, forKey: "languages")
+        }
+
         if self.birthYear != nil {
             user!.setValue(self.birthYear, forKey: "birthYear")
         }
