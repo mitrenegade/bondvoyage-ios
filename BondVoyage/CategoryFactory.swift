@@ -41,20 +41,12 @@ enum SUBCATEGORY: String {
     case Other
 }
 
+// THESE ARE THE ONLY CATEGORIES USED
 var CATEGORIES: [CATEGORY] = [
     .Food,
-    .Drink,
-    .Entertainment,
-    .Fitness,
-    .HealthRelaxation,
-    .SportsRecreation,
-    .MusicArts,
-    .CultureSightseeing,
-    .RetailShopping,
-    .Beaches,
     .Nightlife,
-    .OutdoorExtremeSports,
-    .Other
+    .CultureSightseeing,
+    .Fitness
 ]
 
 var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
@@ -139,12 +131,18 @@ class CategoryFactory: NSObject {
     // MARK: category titles
     class func categoryReadableString(category: CATEGORY) -> String {
         switch category {
+        case .Food: return "Food & Casual Drink"
+        case .Nightlife: return "Nightlife & Entertainment"
+        case .CultureSightseeing: return "Culture & Sightseeing"
+        case .Fitness: return "Fitness, Sport & Recreation"
+            
+            /*
         case .HealthRelaxation: return "Health and Relaxation"
         case .SportsRecreation: return "Sports and Recreation"
         case .MusicArts: return "Music and the Arts"
-        case .CultureSightseeing: return "Culture and Sightseeing"
         case .RetailShopping: return "Retail Therapy and Shopping"
         case .OutdoorExtremeSports: return "Outdoor Activities, Extreme Sports"
+            */
         default:
             return category.rawValue
         }

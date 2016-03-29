@@ -31,7 +31,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     
     // tableview data
     var selectedSubcategory: String?
-    var selectedCategory: String?
+    var selectedCategory: CATEGORY?
     var nearbyActivities: [PFObject]?
     var filteredActivities: [PFObject]?
     
@@ -216,7 +216,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         }
         else {
             self.hideCategories()
-            self.didSelectCategory(nil, category: nil)
+            self.didSelectCategory(nil)
         }
     }
     
@@ -227,27 +227,17 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     func clearSearch() {
-        self.didSelectCategory(nil, category: nil)
+        self.didSelectCategory(nil)
     }
     
     // MARK: - SearchCategoriesDelegate
-    func didSelectCategory(subcategory: String?, category: String?) {
+    func didSelectCategory(category: CATEGORY?) {
         // first query for existing bond requests
-        self.selectedSubcategory = subcategory
+        self.selectedSubcategory = nil
         self.selectedCategory = category
         var cat: [String]?
-        if subcategory != nil {
-            // a specific subcategory
-            cat = [subcategory!]
-            self.buttonSearch.setTitle("I'm in the mood for \(subcategory!)", forState: .Normal)
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: "clearSearch")
-        }
-        else if category != nil {
-            // All in a category
-            let subcategories: [SUBCATEGORY] = SUBCATEGORIES[CategoryFactory.categoryForString(category!)!]!
-            cat = subcategories.map({ (subcategory) -> String in
-                return subcategory.rawValue.lowercaseString
-            })
+        if category != nil {
+            cat = [category!.rawValue]
             self.buttonSearch.setTitle("I'm in the mood for \(category!)", forState: .Normal)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: "clearSearch")
         }
@@ -388,7 +378,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 // initiate search now
                 self.currentLocation = location
                 self.lastLocation = self.currentLocation
-                self.didSelectCategory(nil, category: nil)
+                self.didSelectCategory(nil)
             }
             self.currentLocation = location
         }
@@ -410,14 +400,14 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: InvitationDelegate side effects
     func updateActivities() {
         // after user sends an invitation, that activity should be removed from here
-        self.didSelectCategory(self.selectedSubcategory, category: nil)
+        self.didSelectCategory(nil)
     }
     
     // MARK: SearchPreferencesDelegate
     func didUpdateSearchPreferences() {
         // perform current search again. didSelectCategory will handle search preferences
         self.loadPrefsWithCompletion { () -> Void in
-            self.didSelectCategory(self.selectedSubcategory, category: self.selectedCategory)
+            self.didSelectCategory(self.selectedCategory)
         }
     }
 }
