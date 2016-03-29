@@ -16,9 +16,8 @@ let date = NSDate()
 let calendar = NSCalendar.currentCalendar()
 let components = calendar.components([.Day , .Month , .Year], fromDate: date)
 
-let kCellIdentifier = "ActivitiesCell"
-
 class HereAndNowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchCategoriesDelegate, CLLocationManagerDelegate, SearchPreferencesDelegate {
+    let kCellIdentifier = "ActivitiesCell"
 
     // categories dropdown
     @IBOutlet weak var buttonSearch: UIButton!
@@ -152,10 +151,10 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         if self.selectedSubcategory == nil && nearbyActivities != nil {
-            cell.configureCellForUser(self.nearbyActivities![indexPath.row])
+            cell.configureCellForActivity(self.nearbyActivities![indexPath.row])
         }
         else if self.selectedSubcategory != nil && filteredActivities != nil {
-            cell.configureCellForUser(self.filteredActivities![indexPath.row])
+            cell.configureCellForActivity(self.filteredActivities![indexPath.row])
         }
         return cell
     }

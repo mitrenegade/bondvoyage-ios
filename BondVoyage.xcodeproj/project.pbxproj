@@ -12,7 +12,7 @@
 		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
 		8E39C2191C7E6CA800C9B995 /* ActivityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */; };
 		8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */; };
-		8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */; };
+		8E406E6B1C7E3B6E00E6F77C /* RequestedBondsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6A1C7E3B6E00E6F77C /* RequestedBondsViewController.swift */; };
 		8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */; };
 		8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
@@ -37,6 +37,8 @@
 		8EC310AD1C7BAE4800992E7A /* BVPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC310AC1C7BAE4800992E7A /* BVPlace.swift */; };
 		8EC310AF1C7BAFCA00992E7A /* LocationPhiladelphia.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */; };
 		8EC4C36C1C7EA928001B7E05 /* NewActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */; };
+		8EC4E2431CAB0C5600FC071A /* MatchedBondsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4E2421CAB0C5600FC071A /* MatchedBondsViewController.swift */; };
+		8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4E2441CAB11E400FC071A /* UserCell.swift */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
 		8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */; };
 		8EF6764C1C84BC8300D49A33 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF6764B1C84BC8300D49A33 /* MapViewController.swift */; };
@@ -92,7 +94,7 @@
 		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewController.swift; sourceTree = "<group>"; };
 		8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFObject+Activity.swift"; sourceTree = "<group>"; };
-		8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyActivitiesViewController.swift; sourceTree = "<group>"; };
+		8E406E6A1C7E3B6E00E6F77C /* RequestedBondsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestedBondsViewController.swift; sourceTree = "<group>"; };
 		8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPreferencesViewController.swift; path = ViewControllers/SearchPreferencesViewController.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
@@ -117,6 +119,8 @@
 		8EC310AC1C7BAE4800992E7A /* BVPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVPlace.swift; sourceTree = "<group>"; };
 		8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LocationPhiladelphia.gpx; sourceTree = "<group>"; };
 		8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewActivityViewController.swift; sourceTree = "<group>"; };
+		8EC4E2421CAB0C5600FC071A /* MatchedBondsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchedBondsViewController.swift; sourceTree = "<group>"; };
+		8EC4E2441CAB11E400FC071A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
 		8EF6764B1C84BC8300D49A33 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */,
+				8EC4E2441CAB11E400FC071A /* UserCell.swift */,
 				8E9B14011CA95F0D005701EE /* CategoryCell.swift */,
 				8EA047CE1C4FDEA900CCCAC3 /* ProgressView.swift */,
 				8EBEDADA1C440B15002DDA70 /* BVSlider.swift */,
@@ -375,7 +380,8 @@
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */,
 				8E73665A1CA9F46500F3642E /* InviteViewController.swift */,
-				8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */,
+				8E406E6A1C7E3B6E00E6F77C /* RequestedBondsViewController.swift */,
+				8EC4E2421CAB0C5600FC071A /* MatchedBondsViewController.swift */,
 				8E099EC11C850140006A0320 /* Details */,
 				8E39C21C1C7E7ECC00C9B995 /* Old */,
 			);
@@ -603,7 +609,7 @@
 				E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */,
 				E56E32911C2AE7E4001A2349 /* HereAndNowViewController.swift in Sources */,
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
-				8E406E6B1C7E3B6E00E6F77C /* MyActivitiesViewController.swift in Sources */,
+				8E406E6B1C7E3B6E00E6F77C /* RequestedBondsViewController.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
 				8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
@@ -611,10 +617,12 @@
 				8E9B14021CA95F0D005701EE /* CategoryCell.swift in Sources */,
 				8EA047CD1C4FDDE200CCCAC3 /* ActivityBrowserViewController.swift in Sources */,
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
+				8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */,
 				8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */,
 				8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */,
 				8E73665B1CA9F46500F3642E /* InviteViewController.swift in Sources */,
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
+				8EC4E2431CAB0C5600FC071A /* MatchedBondsViewController.swift in Sources */,
 				8EA047D31C4FF02C00CCCAC3 /* MatchStatusViewController.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,
 				8EC4C36C1C7EA928001B7E05 /* NewActivityViewController.swift in Sources */,
