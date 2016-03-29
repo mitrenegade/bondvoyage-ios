@@ -39,11 +39,11 @@ enum Gender: String {
     case Female, Male, Other
 }
 
-enum VoyagerType: Int {
-    case NewToCity = 0
-    case Local = 1
-    case Leisure = 2
-    case Business = 3
+enum VoyagerType: String {
+    case NewToCity = "New to the city"
+    case Local = "Local to the city"
+    case Leisure = "Traveling for leisure"
+    case Business = "Traveling for business"
 }
 
 class Constants: NSObject {

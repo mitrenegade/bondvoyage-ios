@@ -585,6 +585,16 @@ Parse.Cloud.define("createActivity", function(request, response) {
         activity.set("aboutOthers", request.params.aboutOthers)
     }
 
+    // age range
+    var ageMin = request.params.ageMin
+    var ageMax = request.params.ageMax
+    if (ageMin != undefined) {
+        activity.set("ageMin", ageMin)
+    }
+    if (ageMax != undefined) {
+        activity.set("ageMax", ageMax)
+    }
+
     activity.save().then(
         function(object) {
             console.log("createActivity completed with activity: " + object)
