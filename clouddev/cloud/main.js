@@ -557,6 +557,7 @@ Parse.Cloud.define("createActivity", function(request, response) {
     activity.set("declined", [])
     activity.set("joining", [])
     activity.set("places", {})
+    activity.set("aboutOthers", []) 
 
     // location
     if (request.params.lat != undefined && request.params.lon != undefined) {
@@ -569,7 +570,20 @@ Parse.Cloud.define("createActivity", function(request, response) {
         activity.set("locationString", request.params.locationString)
     }
 
-    // todo: time
+    // time
+    if (request.params.time != undefined) {
+        activity.set("time", request.params.time)
+    }
+
+    // about self
+    if (request.params.aboutSelf != undefined) {
+        activity.set("aboutSelf", request.params.aboutSelf)
+    }
+
+    // about others
+    if (request.params.aboutOthers != undefined) {
+        activity.set("aboutOthers", request.params.aboutOthers)
+    }
 
     activity.save().then(
         function(object) {
@@ -851,5 +865,24 @@ var sendPushForActivityResponse = function(response, activity, status) {
             console.log("Invitation status push notification failed: " + error)
             response.error(error)
             }
-        });
-    }
+        }
+    );
+}
+
+//******************* V3 Activities
+Parse.Cloud.define("createOrUpdateActivity", function(request, response) {
+    // TODO: implement this if we want to be able to update an activity the user has already created
+    // to prevent duplicate activities for the same location within the same time
+    var categories = request.params.categories
+    var userId = request.params.userId
+    var joining = request.params.joining
+
+    Parse.Cloud.run('queryActivities', {}, {
+        success: function(results) {
+            // TODO: if location, time are close, then update the existing activity instead
+        },
+        error: function(results) {
+            // TODO: if query fails, just create a new one
+        }
+    });
+});

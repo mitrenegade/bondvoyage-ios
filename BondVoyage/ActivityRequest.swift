@@ -13,10 +13,16 @@ import Parse
 class ActivityRequest: NSObject {
 
     // User creates a new activity that is available for others to join
-    class func createActivity(categories: [String], location: CLLocation, locationString: String?, completion: ((result: PFObject?, error: NSError?)->Void)) {
-        var params: [String: AnyObject] = ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude]
+    class func createActivity(categories: [String], location: CLLocation, locationString: String?, aboutSelf: String?, aboutOthers: [VoyagerType], completion: ((result: PFObject?, error: NSError?)->Void)) {
+        let aboutOthersRaw: [Int] = aboutOthers.map { (v) -> Int in
+            return v.rawValue
+        }
+        var params: [String: AnyObject] = ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude, "time": NSDate(), "aboutOthers": aboutOthersRaw]
         if locationString != nil {
             params["locationString"] = locationString!
+        }
+        if aboutSelf != nil {
+            params["aboutSelf"] = aboutSelf
         }
         
         PFCloud.callFunctionInBackground("createActivity", withParameters: params) { (results, error) -> Void in

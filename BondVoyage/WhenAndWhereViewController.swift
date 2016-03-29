@@ -27,6 +27,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var tableViewWho: UITableView!
     @IBOutlet weak var constraintTableViewHeight: NSLayoutConstraint!
+    var aboutSelf: VoyagerType?
     var selectedTypes: [Bool] = [false, false, false, false]
     
     @IBOutlet weak var ageFilterView: AgeRangeFilterView!
@@ -40,7 +41,8 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     var selectedActivities: [PFObject]?
     
     let ROW_HEIGHT: CGFloat = 44
-    let PERSON_TYPES = ["New to the city", "Local to the city", "On leisure", "Traveling for business"]
+    let PERSON_TYPES_DESC = ["New to the city", "Local to the city", "On leisure", "Traveling for business"]
+    let PERSON_TYPES: [VoyagerType] = [.NewToCity, .Local, .Leisure, .Business]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,9 +82,20 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func createActivity() {
-        // TODO: validate
         self.navigationItem.rightBarButtonItem?.enabled = false
-        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston") { (result, error) -> Void in
+        // validate
+        var aboutSelf: String? = self.inputAboutMe.text
+        if self.inputAboutMe.text != nil && self.inputAboutMe.text!.isEmpty {
+            aboutSelf = nil
+        }
+        
+        var aboutOthers = [VoyagerType]()
+        for var i = 0; i < self.selectedTypes.count; i++ {
+            if self.selectedTypes[i] {
+                aboutOthers.append(PERSON_TYPES[i])
+            }
+        }
+        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: aboutSelf, aboutOthers:aboutOthers ) { (result, error) -> Void in
             if error != nil {
                 self.navigationItem.rightBarButtonItem?.enabled = true
                 print("Error: \(error)")
@@ -143,7 +156,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PersonTypeCell", forIndexPath: indexPath)
         cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        cell.textLabel?.text = PERSON_TYPES[indexPath.row]
+        cell.textLabel?.text = PERSON_TYPES_DESC[indexPath.row]
         
         cell.backgroundColor = UIColor.clearColor()
         
@@ -191,7 +204,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
             if row == 0 {
                 return "Select one"
             }
-            return PERSON_TYPES[row - 1]
+            return PERSON_TYPES_DESC[row - 1]
         }
         return nil
     }
@@ -201,6 +214,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         print("Row selected: \(row)")
         if pickerView == self.pickerMe {
             self.inputAboutMe.text = self.pickerView(self.pickerMe, titleForRow: row, forComponent: component)
+            self.aboutSelf = PERSON_TYPES[row]
         }
     }
     

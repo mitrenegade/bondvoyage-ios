@@ -39,6 +39,13 @@ enum Gender: String {
     case Female, Male, Other
 }
 
+enum VoyagerType: Int {
+    case NewToCity = 0
+    case Local = 1
+    case Leisure = 2
+    case Business = 3
+}
+
 class Constants: NSObject {
     class func sliderTrackColor() -> UIColor{
         return UIColor(red: 167.0/256.0, green: 168.0/256.0, blue: 171.0/256.0, alpha: 1.0)

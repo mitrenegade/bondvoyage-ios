@@ -75,7 +75,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let category = CATEGORIES[indexPath.section]
+        let category = CATEGORIES[indexPath.row]
         self.selectCategory(category)
     }
     
