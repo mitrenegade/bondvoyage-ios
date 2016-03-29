@@ -53,13 +53,8 @@ class UserDetailsViewController: UIViewController {
         }
         
         if self.navigationController != nil {
-            let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
-            imageView.frame = CGRectMake(0, 0, 150, 44)
-            imageView.contentMode = .ScaleAspectFit
-            imageView.backgroundColor = Constants.lightBlueColor()
-            imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
-            self.navigationController!.navigationBar.addSubview(imageView)
             self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
+            self.title = "My Profile"
         }
         
         self.nameLabel!.layer.shadowOpacity = 1
@@ -71,8 +66,8 @@ class UserDetailsViewController: UIViewController {
     }
 
     func configureUI() {
-        self.nameView.backgroundColor = UIColor.BV_backgroundGrayColor()
-        self.interestsView.backgroundColor = UIColor.BV_backgroundGrayColor()
+        self.nameView.backgroundColor = Constants.BV_backgroundGrayColor()
+        self.interestsView.backgroundColor = Constants.BV_backgroundGrayColor()
         self.constraintNameViewTopOffset.constant = self.view.frame.size.height - self.nameView.frame.size.height - self.interestsView.frame.size.height
         self.scrollViewContainer.contentMode = .ScaleAspectFill
         

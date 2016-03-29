@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  EditProfileViewController.swift
 //  BondVoyage
 //
 //  Created by Bobby Ren on 1/1/16.
@@ -11,7 +11,7 @@ import Parse
 import Photos
 import AsyncImageView
 
-class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -19,7 +19,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
 
     var currentInput: UITextField?
     @IBOutlet weak var inputFirstName: UITextField!
-    @IBOutlet weak var inputLastName: UITextField!
     @IBOutlet weak var inputBirthYear: UITextField!
     @IBOutlet weak var inputGender: UITextField!
 
@@ -51,12 +50,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             // comes from signing up
             self.navigationItem.hidesBackButton = true
         }
-        let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
-        imageView.frame = CGRectMake(0, 0, 150, 44)
-        imageView.contentMode = .ScaleAspectFit
-        imageView.backgroundColor = Constants.lightBlueColor()
-        imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
-        self.navigationController!.navigationBar.addSubview(imageView)
+        self.title = "Edit Profile"
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
 
         //self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
@@ -83,7 +77,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputFirstName, inputLastName, inputGender, inputBirthYear] {
+        for input: UITextField in [inputFirstName, inputGender, inputBirthYear] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
         
@@ -102,9 +96,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 
             if let firstName: String = user.objectForKey("firstName") as? String{
                 self.inputFirstName.text = firstName
-            }
-            if let lastName: String = user.objectForKey("lastName") as? String{
-                self.inputLastName.text = lastName
             }
             if let birthYear: Int = user.objectForKey("birthYear") as? Int{
                 self.inputBirthYear.text = "\(birthYear)"
@@ -252,7 +243,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         cancelEditing = true
         self.view.endEditing(true)
         self.firstName = self.inputFirstName.text
-        self.lastName = self.inputLastName.text
         if self.inputBirthYear.text != "Select your birth year" {
             self.birthYear = Int(self.inputBirthYear.text!)
         }

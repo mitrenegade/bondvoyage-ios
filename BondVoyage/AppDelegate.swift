@@ -23,13 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Configure Navigation Bar Appearance
-        UINavigationBar.appearance().tintColor = UIColor.BV_defaultBlueColor()
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UINavigationBar.appearance().tintColor = Constants.BV_defaultBlueColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Constants.BV_defaultBlueColor()]
         let img = UIImage()
         UINavigationBar.appearance().shadowImage = img
         UINavigationBar.appearance().setBackgroundImage(img, forBarMetrics: UIBarMetrics.Default)
         UINavigationBar.appearance().translucent = false
-        UINavigationBar.appearance().barTintColor = UIColor.BV_navigationBarGrayColor()
+        UINavigationBar.appearance().barTintColor = Constants.BV_navigationBarGrayColor()
         
         // Override point for customization after application launch.
         Parse.enableLocalDatastore()

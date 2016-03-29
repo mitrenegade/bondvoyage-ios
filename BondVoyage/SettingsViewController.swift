@@ -82,7 +82,7 @@ class SettingsViewController: UITableViewController {
     }
 
     func goToProfile() {
-        let controller: ProfileViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        let controller: EditProfileViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("EditProfileViewController") as! EditProfileViewController
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
