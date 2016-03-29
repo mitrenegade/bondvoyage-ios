@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  EditProfileViewController.swift
 //  BondVoyage
 //
 //  Created by Bobby Ren on 1/1/16.
@@ -11,22 +11,23 @@ import Parse
 import Photos
 import AsyncImageView
 
-class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
 
     var currentInput: UITextField?
-    @IBOutlet weak var inputFirstName: UITextField!
-    @IBOutlet weak var inputLastName: UITextField!
+    @IBOutlet weak var inputName: UITextField!
     @IBOutlet weak var inputBirthYear: UITextField!
     @IBOutlet weak var inputGender: UITextField!
-
+    @IBOutlet weak var inputOccupation: UITextField!
+    @IBOutlet weak var inputEducation: UITextField!
+    @IBOutlet weak var inputLanguages: UITextField!
+    
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
     @IBOutlet weak var buttonAbout: UIButton!
-    @IBOutlet weak var buttonPreview: UIButton!
     
     var pickerBirthYear: UIPickerView = UIPickerView()
     var pickerGender: UIPickerView = UIPickerView()
@@ -34,9 +35,11 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     var isSignup: Bool = false
     var selectedPhoto: UIImage?
 
-    var firstName: String?
-    var lastName: String?
+    var name: String?
     var birthYear: Int?
+    var occupation: String?
+    var education: String?
+    var languages: String?
 
     var currentYear: Int = 2016
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
@@ -52,15 +55,10 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             // comes from signing up
             self.navigationItem.hidesBackButton = true
         }
-        let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
-        imageView.frame = CGRectMake(0, 0, 150, 44)
-        imageView.contentMode = .ScaleAspectFit
-        imageView.backgroundColor = Constants.lightBlueColor()
-        imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
-        self.navigationController!.navigationBar.addSubview(imageView)
+        self.title = "Edit Profile"
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
+        //self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
 
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
@@ -84,7 +82,7 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Done, target: self, action: "endEditing")
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputFirstName, inputLastName, inputGender, inputBirthYear] {
+        for input: UITextField in [inputName, inputGender, inputBirthYear, inputOccupation, inputEducation, inputLanguages] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
         
@@ -101,16 +99,22 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 }
             })
                 
-            if let firstName: String = user.objectForKey("firstName") as? String{
-                self.inputFirstName.text = firstName
+            if let firstName: String = user.objectForKey("firstName") as? String {
+                self.inputName.text = firstName
             }
-            if let lastName: String = user.objectForKey("lastName") as? String{
-                self.inputLastName.text = lastName
-            }
-            if let birthYear: Int = user.objectForKey("birthYear") as? Int{
+            if let birthYear: Int = user.objectForKey("birthYear") as? Int {
                 self.inputBirthYear.text = "\(birthYear)"
             }
-            if let gender: String = user.objectForKey("gender") as? String{
+            if let occupation: String = user.objectForKey("occupation") as? String {
+                self.inputOccupation.text = occupation
+            }
+            if let education: String = user.objectForKey("education") as? String {
+                self.inputEducation.text = education
+            }
+            if let languages: String = user.objectForKey("languages") as? String {
+                self.inputLanguages.text = languages
+            }
+            if let gender: String = user.objectForKey("gender") as? String {
                 if gender == "male" {
                     self.gender = .Male
                 }
@@ -252,8 +256,10 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     func validateFields(input: UITextField) {
         cancelEditing = true
         self.view.endEditing(true)
-        self.firstName = self.inputFirstName.text
-        self.lastName = self.inputLastName.text
+        self.name = self.inputName.text
+        self.occupation = self.inputOccupation.text
+        self.education = self.inputEducation.text
+        self.languages = self.inputLanguages.text
         if self.inputBirthYear.text != "Select your birth year" {
             self.birthYear = Int(self.inputBirthYear.text!)
         }
@@ -268,14 +274,22 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             return
         }
         
-        if self.firstName != nil {
-            user!.setValue(self.firstName, forKey: "firstName")
+        if self.name != nil {
+            user!.setValue(self.name, forKey: "firstName")
         }
         
-        if self.lastName != nil {
-            user!.setValue(self.lastName, forKey: "lastName")
+        if self.occupation != nil {
+            user!.setValue(self.occupation, forKey: "occupation")
         }
-        
+
+        if self.education != nil {
+            user!.setValue(self.education, forKey: "education")
+        }
+
+        if self.languages != nil {
+            user!.setValue(self.languages, forKey: "languages")
+        }
+
         if self.birthYear != nil {
             user!.setValue(self.birthYear, forKey: "birthYear")
         }
@@ -404,17 +418,6 @@ class ProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         else if sender == self.buttonAbout {
             self.performSegueWithIdentifier("toAboutMe", sender: self)
         }
-        else if sender == self.buttonPreview {
-            self.previewProfile()
-        }
-    }
-    
-    func previewProfile() {
-        let user: PFUser = PFUser.currentUser()!
-        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
-        controller.selectedUser = user
-        controller.title = "My Profile"
-        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     /*

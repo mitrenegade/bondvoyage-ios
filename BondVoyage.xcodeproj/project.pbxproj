@@ -51,7 +51,7 @@
 		C55D92581C34412900970123 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C55D92541C34412900970123 /* Lato-Light.ttf */; };
 		C55D92591C34412900970123 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C55D92551C34412900970123 /* Lato-Regular.ttf */; };
 		C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094351C3651E800CABC51 /* SettingsViewController.swift */; };
-		C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094371C3703CA00CABC51 /* ProfileViewController.swift */; };
+		C5E094381C3703CA00CABC51 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094371C3703CA00CABC51 /* EditProfileViewController.swift */; };
 		C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094391C37236B00CABC51 /* AboutMeViewController.swift */; };
 		E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A071C1539CF00D23C26 /* AppDelegate.swift */; };
 		E5508A0D1C1539CF00D23C26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0B1C1539CF00D23C26 /* Main.storyboard */; };
@@ -63,7 +63,6 @@
 		E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836631C38BEB9003BD54F /* SingleFilterView.swift */; };
 		E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C836661C38BEF5003BD54F /* RangeFilterView.swift */; };
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
-		E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */; };
 		E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */; };
 		E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */; };
 /* End PBXBuildFile section */
@@ -132,7 +131,7 @@
 		C55D92541C34412900970123 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		C55D92551C34412900970123 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		C5E094351C3651E800CABC51 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		C5E094371C3703CA00CABC51 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = ViewControllers/ProfileViewController.swift; sourceTree = "<group>"; };
+		C5E094371C3703CA00CABC51 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileViewController.swift; path = ViewControllers/EditProfileViewController.swift; sourceTree = "<group>"; };
 		C5E094391C37236B00CABC51 /* AboutMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutMeViewController.swift; sourceTree = "<group>"; };
 		E5508A041C1539CF00D23C26 /* BondVoyage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondVoyage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A071C1539CF00D23C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,7 +149,6 @@
 		E5C836631C38BEB9003BD54F /* SingleFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleFilterView.swift; path = Views/SingleFilterView.swift; sourceTree = "<group>"; };
 		E5C836661C38BEF5003BD54F /* RangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeFilterView.swift; path = Views/RangeFilterView.swift; sourceTree = "<group>"; };
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
-		E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BVColors.swift"; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,7 +248,7 @@
 		C518526B1C341A9E00EA2328 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C5E094371C3703CA00CABC51 /* ProfileViewController.swift */,
+				C5E094371C3703CA00CABC51 /* EditProfileViewController.swift */,
 				8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */,
 				C5E094391C37236B00CABC51 /* AboutMeViewController.swift */,
 				8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */,
@@ -363,7 +361,6 @@
 				C5566EE71C3E105F007C22F3 /* UITableViewCell+Utils.swift */,
 				C5566EE51C3E1040007C22F3 /* UIViewController+Utils.swift */,
 				C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */,
-				E5CD98F11C4ABE1F0058CABD /* UIColor+BVColors.swift */,
 				8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */,
 			);
 			name = Categories;
@@ -610,7 +607,6 @@
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
 				8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
-				E5CD98F21C4ABE1F0058CABD /* UIColor+BVColors.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
 				8E9B14021CA95F0D005701EE /* CategoryCell.swift in Sources */,
 				8EA047CD1C4FDDE200CCCAC3 /* ActivityBrowserViewController.swift in Sources */,
@@ -626,7 +622,7 @@
 				8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */,
 				8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
-				C5E094381C3703CA00CABC51 /* ProfileViewController.swift in Sources */,
+				C5E094381C3703CA00CABC51 /* EditProfileViewController.swift in Sources */,
 				8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */,
 				8EF6764C1C84BC8300D49A33 /* MapViewController.swift in Sources */,
 				8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */,

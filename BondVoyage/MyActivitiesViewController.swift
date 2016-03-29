@@ -33,6 +33,8 @@ class MyActivitiesViewController: UIViewController, UITableViewDataSource, UITab
         self.setup()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:updated", object: nil)
+        
+        self.setLeftProfileButton()
     }
 
     override func didReceiveMemoryWarning() {
