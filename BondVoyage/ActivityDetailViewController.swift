@@ -257,7 +257,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         if sender == self.profileButton {
             print("profile")
             if let user: PFUser = self.activity.user() {
-                let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                 controller.selectedUser = user
                 self.navigationController?.pushViewController(controller, animated: true)
             }
@@ -273,7 +273,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             if indexPath.row < self.users.count {
                 let userId = self.allUserIds[indexPath.row]
                 let user: PFUser = self.users[userId]!
-                let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                 controller.selectedUser = user
                 self.navigationController?.pushViewController(controller, animated: true)
             }

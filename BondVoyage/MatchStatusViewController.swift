@@ -223,7 +223,7 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     }
     
     func goToAcceptInvite(user: PFUser) {
-        let controller: UserDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+        let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
         controller.invitingUser = user
         controller.invitingMatch = self.currentActivity
         controller.delegate = self

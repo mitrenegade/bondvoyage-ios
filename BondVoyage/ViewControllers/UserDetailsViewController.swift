@@ -52,6 +52,16 @@ class UserDetailsViewController: UIViewController {
             })
         }
         
+        if self.navigationController != nil {
+            let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
+            imageView.frame = CGRectMake(0, 0, 150, 44)
+            imageView.contentMode = .ScaleAspectFit
+            imageView.backgroundColor = Constants.lightBlueColor()
+            imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
+            self.navigationController!.navigationBar.addSubview(imageView)
+            self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
+        }
+        
         self.nameLabel!.layer.shadowOpacity = 1
         self.nameLabel!.layer.shadowRadius = 2
         self.nameLabel!.layer.shadowColor = UIColor.blackColor().CGColor
@@ -70,6 +80,10 @@ class UserDetailsViewController: UIViewController {
             self.title = "Invitation"
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Decline", style: .Done, target: self, action: "declineInvitation")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Accept", style: .Done, target: self, action: "acceptInvitation")
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "goToEditProfile")
         }
     }
     
@@ -181,17 +195,15 @@ class UserDetailsViewController: UIViewController {
         }
     }
     
-    // MARK: - Helper Methods
-
-    func stringFromArray(arr: Array<String>) -> String {
-        var interestsString = String()
-        for interest in arr {
-            if interestsString.characters.count == 0 {
-                interestsString = interest
-            } else {
-                interestsString = interestsString + ", " + interest
-            }
-        }
-        return interestsString
+    func goToEditProfile() {
+        self.performSegueWithIdentifier("GoToEditProfile", sender: nil)
     }
+    
+    /*
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToEditProfile" {
+            
+        }
+    }
+    */
 }
