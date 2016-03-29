@@ -43,6 +43,9 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     let ROW_HEIGHT: CGFloat = 44
     let PERSON_TYPES: [VoyagerType] = [.NewToCity, .Local, .Leisure, .Business]
     
+    let defaultCity = "Boston"
+    let defaultTime = "Now"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,7 +84,6 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func createActivity() {
-        self.navigationItem.rightBarButtonItem?.enabled = false
         // validate
         var aboutSelf: String? = self.inputAboutMe.text
         if self.inputAboutMe.text != nil && self.inputAboutMe.text!.isEmpty {
@@ -98,9 +100,27 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
             return v.rawValue
         }
         
+        if aboutSelf == nil {
+            self.simpleAlert("Please describe yourself", message: "Please select an option under I am...")
+            return
+        }
+        if aboutOthers.count == 0 {
+            self.simpleAlert("Please select at least one option", message: "Please make at least one selection describing who you want to meet.")
+            return
+        }
+        
+        if self.inputWhere.text == nil || self.inputWhere.text!.isEmpty {
+            self.inputWhere.text = self.defaultCity
+        }
+
+        if self.inputWhen.text == nil || self.inputWhen.text!.isEmpty {
+            self.inputWhen.text = self.defaultTime
+        }
+
         let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
         let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
         
+        self.navigationItem.rightBarButtonItem?.enabled = false
         ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: aboutSelf, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
             if error != nil {
                 self.navigationItem.rightBarButtonItem?.enabled = true
@@ -201,10 +221,10 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == self.pickerWhere {
-            return "Boston"
+            return self.defaultCity
         }
         if pickerView == self.pickerWhen {
-            return "Now"
+            return self.defaultTime
         }
         if pickerView == self.pickerMe {
             if row == 0 {
@@ -233,14 +253,14 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - TextFieldDelegate
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         if textField == self.inputWhere && self.inputWhere.text?.isEmpty == true {
-            self.simpleAlert("Other cities coming soon", message: "BondVoyage is currently only available in Boston.", completion: { () -> Void in
+            self.simpleAlert("Other cities coming soon", message: "BondVoyage is currently only available in \(self.defaultCity).", completion: { () -> Void in
                 self.inputWhere.text = "Boston"
             })
             return false
         }
         else if textField == self.inputWhen && self.inputWhen.text?.isEmpty == true {
             self.simpleAlert("Scheduling coming soon", message: "Search for activities to do right now. Scheduling future activities will be available soon", completion: { () -> Void in
-                self.inputWhen.text = "Now"
+                self.inputWhen.text = self.defaultTime
             })
             return false
         }
