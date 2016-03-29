@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreLocation
+import Parse
 
 class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
@@ -28,10 +30,14 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     var selectedTypes: [Bool] = [false, false, false, false]
     
     @IBOutlet weak var ageFilterView: AgeRangeFilterView!
-
+    
     var pickerWhere: UIPickerView = UIPickerView()
     var pickerWhen: UIPickerView = UIPickerView()
     var pickerMe: UIPickerView = UIPickerView()
+    
+    var category: CATEGORY?
+    var currentLocation: CLLocation?
+    var selectedActivities: [PFObject]?
     
     let ROW_HEIGHT: CGFloat = 44
     let PERSON_TYPES = ["New to the city", "Local to the city", "On leisure", "Traveling for business"]
@@ -66,6 +72,63 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         self.ageFilterView.label.textColor = UIColor.blackColor()
         
         self.constraintTableViewHeight.constant = ROW_HEIGHT * CGFloat(PERSON_TYPES.count)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Go", style: .Plain, target: self, action: "createActivity")
+    }
+    
+    func createActivity() {
+        // TODO: validate
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
+        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Here") { (result, error) -> Void in
+            if error != nil {
+                self.navigationItem.rightBarButtonItem?.enabled = true
+                print("Error: \(error)")
+                
+                print("We could not create an activity for you but you can still browse existing ones.")
+            }
+            else {
+                print("result: \(result)")
+                self.requestActivities()
+            }
+        }
+    }
+    
+    func requestActivities() {
+        let cat: [String] = [self.category!.rawValue]
+        self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
+        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX)) { (results, error) -> Void in
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            if results != nil {
+                if results!.count > 0 {
+                    self.selectedActivities = results
+                    self.performSegueWithIdentifier("GoToInvite", sender: nil)
+                }
+                else {
+                    // no results, no error
+                    var message = "There is no one interested in \(self.category!.rawValue) near you."
+                    if PFUser.currentUser() != nil {
+                        message = "\(message) Select a different filter or go to New Activity to add your own activity."
+                    }
+                    
+                    self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
+                        
+                        // todo: close?
+                    })
+                }
+            }
+            else {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
+                let message = "There was a problem loading matches. Please try again"
+                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+            }
+        }
     }
     
     // MARK: UITableViewDatasource
@@ -212,14 +275,15 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "GoToInvite" {
+            let controller = segue.destinationViewController as! InviteViewController
+            controller.category = self.category
+            controller.activities = self.selectedActivities
+        }
     }
-    */
 
 }

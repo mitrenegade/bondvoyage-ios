@@ -83,10 +83,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GoToNewActivity" {
-            let controller: NewActivityViewController = segue.destinationViewController as! NewActivityViewController
+        if segue.identifier == "GoToWhenWhere" {
+            let controller: WhenAndWhereViewController = segue.destinationViewController as! WhenAndWhereViewController
             if self.newCategory != nil {
-                controller.selectedCategories = [self.newCategory!.rawValue]
+                controller.category = self.newCategory!
             }
         }
     }

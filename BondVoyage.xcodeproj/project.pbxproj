@@ -17,6 +17,7 @@
 		8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */; };
 		8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E507B501C4AB5330019FF19 /* Places.storyboard */; };
 		8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */; };
+		8E73665B1CA9F46500F3642E /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E73665A1CA9F46500F3642E /* InviteViewController.swift */; };
 		8E7867431C7BAA4F0017841E /* SuggestedPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */; };
 		8E91D4641C5D03F900C6D406 /* ActivitiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */; };
 		8E9515151C605F82007F8BCB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */; };
@@ -97,6 +98,7 @@
 		8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPreferencesViewController.swift; path = ViewControllers/SearchPreferencesViewController.swift; sourceTree = "<group>"; };
 		8E507B501C4AB5330019FF19 /* Places.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Places.storyboard; sourceTree = "<group>"; };
 		8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
+		8E73665A1CA9F46500F3642E /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestedPlacesViewController.swift; sourceTree = "<group>"; };
 		8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesCell.swift; sourceTree = "<group>"; };
 		8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */,
+				8E73665A1CA9F46500F3642E /* InviteViewController.swift */,
 				8E406E6A1C7E3B6E00E6F77C /* MyActivitiesViewController.swift */,
 				8E099EC11C850140006A0320 /* Details */,
 				8E39C21C1C7E7ECC00C9B995 /* Old */,
@@ -614,6 +617,7 @@
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
 				8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */,
 				8E507B541C4AB7A60019FF19 /* PlacesViewController.swift in Sources */,
+				8E73665B1CA9F46500F3642E /* InviteViewController.swift in Sources */,
 				AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */,
 				8EA047D31C4FF02C00CCCAC3 /* MatchStatusViewController.swift in Sources */,
 				C5467E331C3C94C8001A0B82 /* UIAlertController+SimpleAlert.swift in Sources */,

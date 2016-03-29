@@ -14,6 +14,7 @@
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
         </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
@@ -350,7 +351,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSC-O3-f06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2067" y="-1536"/>
+            <point key="canvasLocation" x="2162" y="-1674"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hPb-Oy-a3a">
@@ -655,7 +656,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="njm-lv-vo9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1663" y="-140"/>
+            <point key="canvasLocation" x="1848" y="500"/>
         </scene>
         <!--Activity Detail View Controller-->
         <scene sceneID="uRt-a8-fYY">
@@ -666,11 +667,11 @@
                         <viewControllerLayoutGuide type="bottom" id="KiL-MT-2Rf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Te9-bj-Dre">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="649"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zSj-fz-kac">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="649"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uh3-R5-hNF">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -866,7 +867,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmJ-0o-hdn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2016" y="-921"/>
+            <point key="canvasLocation" x="1950" y="-86.5"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="RL9-cL-SPH">
@@ -1136,7 +1137,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e78-KW-nNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2440" y="-140"/>
+            <point key="canvasLocation" x="2503" y="448"/>
         </scene>
         <!--When And Where View Controller-->
         <scene sceneID="8zQ-Ce-YCd">
@@ -1399,6 +1400,7 @@
                         <outlet property="viewWhen" destination="8gX-vY-kLn" id="nra-Nc-WAL"/>
                         <outlet property="viewWhere" destination="YIB-K1-dyG" id="zHZ-up-Aub"/>
                         <outlet property="viewWho" destination="U1q-I0-64z" id="Tba-oi-VOb"/>
+                        <segue destination="BxF-8G-ESc" kind="show" identifier="GoToInvite" id="pTl-Pe-knB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4fx-1n-GHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1851,6 +1853,82 @@
             </objects>
             <point key="canvasLocation" x="1179" y="1136"/>
         </scene>
+        <!--Invite View Controller-->
+        <scene sceneID="qdZ-Xt-u5e">
+            <objects>
+                <viewController id="BxF-8G-ESc" customClass="InviteViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zGF-OS-6IX"/>
+                        <viewControllerLayoutGuide type="bottom" id="IwF-HT-GAK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Prn-gC-3MV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="649"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eXm-y0-6U4">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PNe-xw-WJm">
+                                <rect key="frame" x="0.0" y="540" width="600" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZY-HU-HEM">
+                                        <rect key="frame" x="8" y="5" width="584" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="gCg-O4-PmC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                        <state key="normal" title="INVITE TO BOND"/>
+                                        <connections>
+                                            <action selector="didClickButton:" destination="BxF-8G-ESc" eventType="touchUpInside" id="0Kw-dm-1YU"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="mZY-HU-HEM" secondAttribute="trailing" constant="8" id="V0o-xA-Bcu"/>
+                                    <constraint firstAttribute="height" constant="60" id="Xjp-FD-9H0"/>
+                                    <constraint firstItem="mZY-HU-HEM" firstAttribute="leading" secondItem="PNe-xw-WJm" secondAttribute="leading" constant="8" id="oFJ-dO-1Af"/>
+                                    <constraint firstItem="mZY-HU-HEM" firstAttribute="centerY" secondItem="PNe-xw-WJm" secondAttribute="centerY" id="zak-EM-1qa"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D9d-2P-gZ6">
+                                <rect key="frame" x="0.0" y="64" width="600" height="476"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </scrollView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ONh-1L-kBX">
+                                <rect key="frame" x="282" y="305" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eXm-y0-6U4" firstAttribute="top" secondItem="zGF-OS-6IX" secondAttribute="bottom" id="0Co-xg-zF7"/>
+                            <constraint firstItem="ONh-1L-kBX" firstAttribute="centerY" secondItem="Prn-gC-3MV" secondAttribute="centerY" id="C9D-A0-yMy"/>
+                            <constraint firstAttribute="trailing" secondItem="PNe-xw-WJm" secondAttribute="trailing" id="DIr-Jk-ozZ"/>
+                            <constraint firstItem="PNe-xw-WJm" firstAttribute="top" secondItem="D9d-2P-gZ6" secondAttribute="bottom" id="JmG-NB-sWm"/>
+                            <constraint firstItem="eXm-y0-6U4" firstAttribute="leading" secondItem="Prn-gC-3MV" secondAttribute="leading" id="LmM-Vq-Dh7"/>
+                            <constraint firstItem="PNe-xw-WJm" firstAttribute="leading" secondItem="Prn-gC-3MV" secondAttribute="leading" id="MTS-WX-zf7"/>
+                            <constraint firstItem="D9d-2P-gZ6" firstAttribute="leading" secondItem="Prn-gC-3MV" secondAttribute="leading" id="Z6l-lN-EzJ"/>
+                            <constraint firstItem="D9d-2P-gZ6" firstAttribute="top" secondItem="zGF-OS-6IX" secondAttribute="bottom" id="d83-8i-OQl"/>
+                            <constraint firstAttribute="trailing" secondItem="eXm-y0-6U4" secondAttribute="trailing" id="hBi-s9-fZU"/>
+                            <constraint firstItem="IwF-HT-GAK" firstAttribute="top" secondItem="eXm-y0-6U4" secondAttribute="bottom" id="mAI-nN-XpA"/>
+                            <constraint firstItem="ONh-1L-kBX" firstAttribute="centerX" secondItem="Prn-gC-3MV" secondAttribute="centerX" id="pwC-lA-JOA"/>
+                            <constraint firstItem="IwF-HT-GAK" firstAttribute="top" secondItem="PNe-xw-WJm" secondAttribute="bottom" id="qvW-pM-ulQ"/>
+                            <constraint firstAttribute="trailing" secondItem="D9d-2P-gZ6" secondAttribute="trailing" id="x5b-hS-5Yu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="ONh-1L-kBX" id="Z8N-Wl-ZQn"/>
+                        <outlet property="bgView" destination="eXm-y0-6U4" id="zrP-Lo-a25"/>
+                        <outlet property="buttonUp" destination="mZY-HU-HEM" id="Klf-jj-9Wd"/>
+                        <outlet property="scrollView" destination="D9d-2P-gZ6" id="W8k-My-aT2"/>
+                        <segue destination="BDS-Ez-vG3" kind="show" identifier="GoToActivityDetail" id="zyT-a6-GeL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pAz-MH-fZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1950" y="-900.5"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bg6" width="2000" height="1333"/>
@@ -1862,4 +1940,7 @@
         <image name="icon-star" width="40" height="40"/>
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="zyT-a6-GeL"/>
+    </inferredMetricsTieBreakers>
 </document>
