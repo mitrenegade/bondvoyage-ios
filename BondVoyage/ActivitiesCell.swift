@@ -18,7 +18,7 @@ class ActivitiesCell: UITableViewCell {
     
     var activity: PFObject?
     
-    func configureCellForUser(activity: PFObject) {
+    func configureCellForActivity(activity: PFObject) {
         self.bgImage.crossfadeDuration = 0
 
         self.activity = activity

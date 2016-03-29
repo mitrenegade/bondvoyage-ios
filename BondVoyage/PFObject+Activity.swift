@@ -27,7 +27,7 @@ extension PFObject {
         }
     }
     
-    func subcategory() -> SUBCATEGORY {
+    func subcategory() -> SUBCATEGORY? {
         // converts a string format of the category to the enum
         // if multiple exists, returns the first one
         if let categories: [String] = self.objectForKey("categories") as? [String] {
@@ -36,9 +36,21 @@ extension PFObject {
                 return sub
             }
         }
-        return .Other
+        return nil
     }
-    
+
+    func category() -> CATEGORY? {
+        // converts a string format of the category to the enum
+        // if multiple exists, returns the first one
+        if let categories: [String] = self.objectForKey("categories") as? [String] {
+            let category: String = categories[0].capitalizeFirst
+            if let cat = CategoryFactory.categoryForString(category) {
+                return cat
+            }
+        }
+        return nil
+    }
+
     func locationString() -> String? {
         if let locationString: String? = self.objectForKey("locationString") as? String {
             return locationString
@@ -47,7 +59,13 @@ extension PFObject {
     }
 
     func defaultImage() -> UIImage {
-        return CategoryFactory.subcategoryBgImage(self.subcategory().rawValue)
+        if self.subcategory() != nil {
+            return CategoryFactory.subcategoryBgImage(self.subcategory()!.rawValue)
+        }
+        if self.category() != nil {
+            return CategoryFactory.categoryBgImage(self.category()!.rawValue)
+        }
+        return CategoryFactory.subcategoryBgImage("Other")
     }
     
     func user() -> PFUser {
@@ -65,12 +83,19 @@ extension PFObject {
             name = self.user().username
         }
         
-        var title = CategoryFactory.subcategoryReadableString(self.subcategory())
+        var title = ""
+        if self.subcategory() != nil {
+            title = "\(CategoryFactory.subcategoryReadableString(self.subcategory()!)) with "
+        }
+        else if self.category() != nil {
+            title = "\(CategoryFactory.categoryReadableString(self.category()!)) with"
+        }
+        
         if name != nil && self.locationString() != nil {
-            title = "\(title) with \(name!) in \(self.locationString()!)"
+            title = "\(title)\(name!) in \(self.locationString()!)"
         }
         else if name != nil {
-            title = "\(title) with \(name!)"
+            title = "\(title)\(name!)"
         }
         else if self.locationString() != nil {
             title = "\(title) in \(self.locationString()!)"

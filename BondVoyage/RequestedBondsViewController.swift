@@ -10,6 +10,7 @@ import UIKit
 import Parse
 
 class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    let kCellIdentifier = "UserCell"
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -77,14 +78,14 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 180
+        return 120
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! ActivitiesCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! UserCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         let activity: PFObject = self.activities[indexPath.row]
-        cell.configureCellForUser(activity)
+        cell.configureCellForActivity(activity)
         return cell
     }
     

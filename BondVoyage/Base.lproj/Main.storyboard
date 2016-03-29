@@ -13,8 +13,10 @@
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
-            <string>Lato-Bold</string>
-            <string>Lato-Bold</string>
+        </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -781,7 +783,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ActivitiesCell" rowHeight="84" id="x2V-pM-Ryy" customClass="ActivitiesCell" customModule="BondVoyage" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" rowHeight="84" id="x2V-pM-Ryy" customClass="UserCell" customModule="BondVoyage" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="84"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x2V-pM-Ryy" id="eE3-cX-W4G">
@@ -792,12 +794,14 @@
                                                     <rect key="frame" x="10" y="10" width="580" height="64"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ob2-Li-igr" customClass="AsyncImageView">
-                                                            <rect key="frame" x="4" y="4" width="572" height="56"/>
+                                                            <rect key="frame" x="4" y="4" width="56" height="56"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="Ob2-Li-igr" secondAttribute="height" multiplier="1:1" id="mfo-Wo-1Eu"/>
+                                                            </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDb-wG-avr">
-                                                            <rect key="frame" x="8" y="8" width="564" height="48"/>
-                                                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDb-wG-avr">
+                                                            <rect key="frame" x="68" y="8" width="504" height="48"/>
+                                                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -805,11 +809,10 @@
                                                     <constraints>
                                                         <constraint firstItem="Ob2-Li-igr" firstAttribute="top" secondItem="nNu-D2-jZN" secondAttribute="top" constant="4" id="0BA-bq-Ajn"/>
                                                         <constraint firstAttribute="bottom" secondItem="Ob2-Li-igr" secondAttribute="bottom" constant="4" id="4hS-9f-GI4"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Ob2-Li-igr" secondAttribute="trailing" constant="4" id="Qae-mq-pag"/>
+                                                        <constraint firstItem="YDb-wG-avr" firstAttribute="leading" secondItem="Ob2-Li-igr" secondAttribute="trailing" constant="8" id="BVl-XL-htm"/>
                                                         <constraint firstAttribute="bottom" secondItem="YDb-wG-avr" secondAttribute="bottom" constant="8" id="dNq-tT-DMO"/>
                                                         <constraint firstAttribute="trailing" secondItem="YDb-wG-avr" secondAttribute="trailing" constant="8" id="dnv-2V-4Nf"/>
                                                         <constraint firstItem="YDb-wG-avr" firstAttribute="top" secondItem="nNu-D2-jZN" secondAttribute="top" constant="8" id="f14-Nx-viQ"/>
-                                                        <constraint firstItem="YDb-wG-avr" firstAttribute="leading" secondItem="nNu-D2-jZN" secondAttribute="leading" constant="8" id="puO-iR-BxM"/>
                                                         <constraint firstItem="Ob2-Li-igr" firstAttribute="leading" secondItem="nNu-D2-jZN" secondAttribute="leading" constant="4" id="yqN-eH-Chh"/>
                                                     </constraints>
                                                 </view>
@@ -823,7 +826,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="bgImage" destination="Ob2-Li-igr" id="D9X-KI-7bG"/>
+                                            <outlet property="imagePhoto" destination="Ob2-Li-igr" id="Mg2-0d-poU"/>
                                             <outlet property="titleLabel" destination="YDb-wG-avr" id="7HQ-DP-HB3"/>
                                             <outlet property="viewFrame" destination="nNu-D2-jZN" id="g6J-Ia-whb"/>
                                         </connections>
@@ -1336,51 +1339,52 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ActivitiesCell" rowHeight="84" id="Wpt-us-qPt" customClass="ActivitiesCell" customModule="BondVoyage" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" rowHeight="84" id="3XO-MH-jYc" customClass="UserCell" customModule="BondVoyage" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="84"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wpt-us-qPt" id="Frm-IB-uo1">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3XO-MH-jYc" id="WNf-Zl-bYi">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="84"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfF-Wt-JUT" userLabel="View - frame">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NOJ-wN-2Vh" userLabel="View - frame">
                                                     <rect key="frame" x="10" y="10" width="580" height="64"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f9v-9X-ZBd" customClass="AsyncImageView">
-                                                            <rect key="frame" x="4" y="4" width="572" height="56"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SOt-BT-mJA" customClass="AsyncImageView">
+                                                            <rect key="frame" x="4" y="4" width="56" height="56"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="SOt-BT-mJA" secondAttribute="height" multiplier="1:1" id="x0n-fK-ufE"/>
+                                                            </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTl-uq-c81">
-                                                            <rect key="frame" x="8" y="8" width="564" height="48"/>
-                                                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kr5-vs-UEM">
+                                                            <rect key="frame" x="68" y="8" width="504" height="48"/>
+                                                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="f9v-9X-ZBd" secondAttribute="trailing" constant="4" id="1mW-va-bWr"/>
-                                                        <constraint firstAttribute="bottom" secondItem="NTl-uq-c81" secondAttribute="bottom" constant="8" id="2RR-Jz-isb"/>
-                                                        <constraint firstItem="f9v-9X-ZBd" firstAttribute="leading" secondItem="hfF-Wt-JUT" secondAttribute="leading" constant="4" id="9qC-KN-g52"/>
-                                                        <constraint firstItem="f9v-9X-ZBd" firstAttribute="top" secondItem="hfF-Wt-JUT" secondAttribute="top" constant="4" id="Cxv-uZ-g5e"/>
-                                                        <constraint firstItem="NTl-uq-c81" firstAttribute="top" secondItem="hfF-Wt-JUT" secondAttribute="top" constant="8" id="NWe-hQ-EGf"/>
-                                                        <constraint firstAttribute="bottom" secondItem="f9v-9X-ZBd" secondAttribute="bottom" constant="4" id="RPi-7g-uNl"/>
-                                                        <constraint firstAttribute="trailing" secondItem="NTl-uq-c81" secondAttribute="trailing" constant="8" id="dek-3x-9PW"/>
-                                                        <constraint firstItem="NTl-uq-c81" firstAttribute="leading" secondItem="hfF-Wt-JUT" secondAttribute="leading" constant="8" id="yS3-Il-m5C"/>
+                                                        <constraint firstAttribute="bottom" secondItem="SOt-BT-mJA" secondAttribute="bottom" constant="4" id="3SP-Mc-nKA"/>
+                                                        <constraint firstItem="kr5-vs-UEM" firstAttribute="leading" secondItem="SOt-BT-mJA" secondAttribute="trailing" constant="8" id="4DB-wh-l98"/>
+                                                        <constraint firstItem="kr5-vs-UEM" firstAttribute="top" secondItem="NOJ-wN-2Vh" secondAttribute="top" constant="8" id="LHS-Qe-4N7"/>
+                                                        <constraint firstItem="SOt-BT-mJA" firstAttribute="leading" secondItem="NOJ-wN-2Vh" secondAttribute="leading" constant="4" id="T7Y-dg-P8e"/>
+                                                        <constraint firstAttribute="bottom" secondItem="kr5-vs-UEM" secondAttribute="bottom" constant="8" id="Url-FY-ISC"/>
+                                                        <constraint firstAttribute="trailing" secondItem="kr5-vs-UEM" secondAttribute="trailing" constant="8" id="sGC-5C-AdZ"/>
+                                                        <constraint firstItem="SOt-BT-mJA" firstAttribute="top" secondItem="NOJ-wN-2Vh" secondAttribute="top" constant="4" id="t4y-Nj-ASZ"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstItem="hfF-Wt-JUT" firstAttribute="trailing" secondItem="Frm-IB-uo1" secondAttribute="trailingMargin" constant="-2" id="MIP-vM-e89"/>
-                                                <constraint firstItem="hfF-Wt-JUT" firstAttribute="top" secondItem="Frm-IB-uo1" secondAttribute="topMargin" constant="2" id="PZr-7S-UCP"/>
-                                                <constraint firstItem="hfF-Wt-JUT" firstAttribute="bottom" secondItem="Frm-IB-uo1" secondAttribute="bottomMargin" constant="-2" id="exz-Id-iZI"/>
-                                                <constraint firstItem="hfF-Wt-JUT" firstAttribute="leading" secondItem="Frm-IB-uo1" secondAttribute="leadingMargin" constant="2" id="ldU-Tw-bu7"/>
+                                                <constraint firstItem="NOJ-wN-2Vh" firstAttribute="top" secondItem="WNf-Zl-bYi" secondAttribute="topMargin" constant="2" id="N8w-Wl-IfG"/>
+                                                <constraint firstItem="NOJ-wN-2Vh" firstAttribute="leading" secondItem="WNf-Zl-bYi" secondAttribute="leadingMargin" constant="2" id="Y61-pN-bZ5"/>
+                                                <constraint firstItem="NOJ-wN-2Vh" firstAttribute="trailing" secondItem="WNf-Zl-bYi" secondAttribute="trailingMargin" constant="-2" id="mbt-Ea-hY4"/>
+                                                <constraint firstItem="NOJ-wN-2Vh" firstAttribute="bottom" secondItem="WNf-Zl-bYi" secondAttribute="bottomMargin" constant="-2" id="voX-h7-XCx"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="bgImage" destination="f9v-9X-ZBd" id="G9g-pa-I4Q"/>
-                                            <outlet property="titleLabel" destination="NTl-uq-c81" id="brQ-WM-iHN"/>
-                                            <outlet property="viewFrame" destination="hfF-Wt-JUT" id="OXZ-kB-Bwf"/>
+                                            <outlet property="imagePhoto" destination="SOt-BT-mJA" id="nHZ-Ly-kwL"/>
+                                            <outlet property="titleLabel" destination="kr5-vs-UEM" id="aEG-jS-esG"/>
+                                            <outlet property="viewFrame" destination="NOJ-wN-2Vh" id="o5v-C4-gda"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
