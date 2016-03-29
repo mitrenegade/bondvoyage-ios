@@ -57,6 +57,9 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         inputWhen.inputView = pickerWhen
         inputAboutMe.inputView = pickerMe
 
+        // location is always Boston
+        self.currentLocation = CLLocation(latitude: BOSTON_LAT, longitude: BOSTON_LON)
+
         let keyboardDoneButtonView = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.Black
@@ -79,8 +82,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     func createActivity() {
         // TODO: validate
         self.navigationItem.rightBarButtonItem?.enabled = false
-        self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
-        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Here") { (result, error) -> Void in
+        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston") { (result, error) -> Void in
             if error != nil {
                 self.navigationItem.rightBarButtonItem?.enabled = true
                 print("Error: \(error)")
@@ -96,7 +98,6 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     
     func requestActivities() {
         let cat: [String] = [self.category!.rawValue]
-        self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
         ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX)) { (results, error) -> Void in
             self.navigationItem.rightBarButtonItem?.enabled = true
             if results != nil {
@@ -106,14 +107,13 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
                 }
                 else {
                     // no results, no error
-                    var message = "There is no one interested in \(self.category!.rawValue) near you."
+                    var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.category!)) near you."
                     if PFUser.currentUser() != nil {
-                        message = "\(message) Select a different filter or go to New Activity to add your own activity."
+                        message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
                     }
                     
                     self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        
-                        // todo: close?
+                        self.navigationController?.popToRootViewControllerAnimated(true)
                     })
                 }
             }
