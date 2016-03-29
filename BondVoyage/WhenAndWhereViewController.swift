@@ -137,7 +137,18 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     
     func requestActivities() {
         let cat: [String] = [self.category!.rawValue]
-        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX)) { (results, error) -> Void in
+
+        var aboutOthers = [VoyagerType]()
+        for var i = 0; i < self.selectedTypes.count; i++ {
+            if self.selectedTypes[i] {
+                aboutOthers.append(PERSON_TYPES[i])
+            }
+        }
+        let aboutOthersRaw = aboutOthers.map { (v) -> String in
+            return v.rawValue
+        }
+        
+        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX), aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw) { (results, error) -> Void in
             self.navigationItem.rightBarButtonItem?.enabled = true
             if results != nil {
                 if results!.count > 0 {

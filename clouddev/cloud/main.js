@@ -616,9 +616,13 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     // search preferences
     var ageMin = request.params.ageMin
     var ageMax = request.params.ageMax
-    var groupMin = request.params.groupMin
-    var groupMax = request.params.groupMax
+
+    // not used
     var distanceMax = request.params.distanceMax
+
+    // aboutSelf vs aboutOthers
+    var aboutSelf = request.params.aboutSelf
+    var aboutOthers = request.params.aboutOthers
 
     var query = new Parse.Query("Activity")
 
@@ -635,6 +639,15 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         query.equalTo("status", "active")
         query.notContainedIn("declined", [request.user.id])
         console.log("calling query.find. declined must not include " + request.user.id)
+
+        if (aboutSelf != undefined) {
+            query.containedIn("aboutOthers", aboutSelf)
+        }
+        if (aboutOthers != undefined) {
+            query.containedIn("aboutMe", aboutOthers)
+        }
+
+        // todo: age filter
 
         // distance filter
         if (request.params.lat != undefined && request.params.lon != undefined && distanceMax != undefined) {

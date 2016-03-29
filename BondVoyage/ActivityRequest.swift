@@ -33,7 +33,7 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func queryActivities(user: PFUser?, joining: Bool?, categories: [String]?, location: CLLocation?, distance: Double?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, joining: Bool?, categories: [String]?, location: CLLocation?, distance: Double?, aboutSelf: String?, aboutOthers: [String], completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
@@ -49,6 +49,14 @@ class ActivityRequest: NSObject {
         }
         if joining != nil {
             params["joining"] = joining!
+        }
+        if aboutSelf != nil {
+            // if this is a new activity, send in aboutSelf
+            // if this is a query for matched or requested bonds, don't use aboutSelf
+            params["aboutSelf"] = aboutSelf!
+        }
+        if aboutOthers.count > 0 {
+            params["aboutOthers"] = aboutOthers
         }
         
         PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in

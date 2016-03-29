@@ -20,7 +20,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
     override func setup() {
         
         activities.removeAll()
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil) { (results, error) -> Void in
+        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             // returns activities where the owner of the activity is the user
             if results != nil {
                 if results!.count > 0 {
@@ -40,7 +40,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
                 return
             }
         }
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: true, categories: nil, location: nil, distance: nil) { (results, error) -> Void in
+        ActivityRequest.queryActivities(PFUser.currentUser(), joining: true, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             // returns activities where the owner is not the user but is in the joining list
             if results != nil {
                 if results!.count > 0 {
