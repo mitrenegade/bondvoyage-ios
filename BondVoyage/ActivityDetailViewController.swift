@@ -11,7 +11,7 @@ import AsyncImageView
 import Parse
 import GoogleMaps
 
-class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate {
+class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate, UITextViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewContent: UIView!
     
@@ -20,7 +20,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var labelTitle: UILabel!
     var street: String?
     var city: String?
-
+    
+    var recommendedVenueNames: [String]!
+    var recommendedVenueStreets: [String]!
+    var recommendedVenueCityState: [String]!
     /*
     @IBOutlet weak var mapView: GMSMapView!
     var marker: GMSMarker?
@@ -190,14 +193,60 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         string = "\(string)\n\nWe recommend the following venues: \n\n"
         
-        let names = ["Cactus Club", "Meadhall", "The Elephant and Bell"]
-        let street = ["939 Boylston St", "4 Cambridge Center", "45 Union St"]
-        let citystate = ["Boston, MA 02215", "Cambridge, MA 02142", "Boston, MA 02108"]
-        for var i=0; i<names.count; i++ {
-            string = "\(string)\(names[i])\n\(street[i])\n\(citystate[i])\n\n"
+        self.recommendedVenueNames = ["Cactus Club", "Meadhall", "The Elephant and Bell"]
+        self.recommendedVenueStreets = ["939 Boylston St", "4 Cambridge Center", "45 Union St"]
+        self.recommendedVenueCityState = ["Boston, MA 02215", "Cambridge, MA 02142", "Boston, MA 02108"]
+        for var i=0; i<self.recommendedVenueNames.count; i++ {
+            string = "\(string)\(self.recommendedVenueNames[i])\n\(self.recommendedVenueStreets[i])\n\(self.recommendedVenueCityState[i])\n\n"
         }
-        self.textView.text = string
+        
+        let attrs = [NSFontAttributeName : UIFont(name: "AvenirNext-Medium", size: 14.0)!]
+        let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: attrs)
+        
+        for var i=0; i<self.recommendedVenueNames.count; i++ {
+            let name = self.recommendedVenueNames[i]
+            var range = (attributedString.string as NSString).rangeOfString(self.recommendedVenueNames[i])
+            attributedString.addAttribute(NSLinkAttributeName, value: "bondvoyage://\(name)", range: range)
+            range = (attributedString.string as NSString).rangeOfString(self.recommendedVenueStreets[i])
+            attributedString.addAttribute(NSLinkAttributeName, value: "bondvoyage://\(name)", range: range)
+            range = (attributedString.string as NSString).rangeOfString(self.recommendedVenueCityState[i])
+            attributedString.addAttribute(NSLinkAttributeName, value: "bondvoyage://\(name)", range: range)
+        }
+        
+        self.textView.attributedText = attributedString
         self.textView.contentOffset = CGPointMake(0, 0)
+    }
+    
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        for var i=0; i<self.recommendedVenueNames.count; i++ {
+            let name = self.recommendedVenueNames[i]
+            if URL.absoluteString == name {
+                print("name \(name)")
+            }
+            
+            let address = "\(self.recommendedVenueNames[i]) \(self.recommendedVenueStreets[i]) \(self.recommendedVenueCityState[i])"
+            self.openInMaps(address)
+            
+            // open a different url
+            return false
+        }
+        return false
+    }
+    
+    func openInMaps(address: String) {
+        let escapedString = address.stringByReplacingOccurrencesOfString(" ", withString: "+")
+        print("original \(address) escaped \(escapedString)")
+        let url: NSURL? = NSURL(string: "comgooglemaps://?q=\(escapedString)")
+        if url != nil && UIApplication.sharedApplication().canOpenURL(url!) {
+            UIApplication.sharedApplication().openURL(url!)
+        }
+        else {
+            var message = "BondVoyage could not open the map app for this address"
+            if address.characters.count > 0 {
+                message = "\(message): \(address)"
+            }
+            self.simpleAlert("Could not open Google Maps", message: message)
+        }
     }
     
     func reloadSuggestedPlaces() {

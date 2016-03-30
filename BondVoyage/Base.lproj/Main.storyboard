@@ -566,6 +566,9 @@
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <dataDetectorType key="dataDetectorTypes" address="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BDS-Ez-vG3" id="cN1-Uo-EQ2"/>
+                                                </connections>
                                             </textView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
