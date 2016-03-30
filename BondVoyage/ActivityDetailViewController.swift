@@ -20,7 +20,11 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var labelTitle: UILabel!
     var street: String?
     var city: String?
-    
+
+    // recommendations
+    @IBOutlet weak var labelCongrats: UILabel!
+    @IBOutlet weak var tableViewVenues: UITableView!
+    @IBOutlet weak var constraintTableViewVenueHeight: NSLayoutConstraint!
     var recommendedVenueNames: [String]!
     var recommendedVenueStreets: [String]!
     var recommendedVenueCityState: [String]!
@@ -75,6 +79,13 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             self.buttonInvite.hidden = true
         }
         */
+        
+        // static recommendations
+        self.recommendedVenueNames = ["Cactus Club", "Meadhall", "The Elephant and Bell"]
+        self.recommendedVenueStreets = ["939 Boylston St", "4 Cambridge Center", "45 Union St"]
+        self.recommendedVenueCityState = ["Boston, MA 02215", "Cambridge, MA 02142", "Boston, MA 02108"]
+        self.constraintTableViewVenueHeight.constant = 3 * 80
+
         self.refreshTitle()
         self.refreshPlaces()
     }
@@ -177,6 +188,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refreshPlaces() {
+        // name
         var string: String = "Congratulations on your successful bond"
         if self.matchedUser != nil && self.matchedUser!.objectForKey("firstName") != nil {
             let name = self.matchedUser!.objectForKey("firstName")!
@@ -191,46 +203,11 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             string = "\(string)."
         }
         
-        string = "\(string)\n\nWe recommend the following venues: \n\n"
-        
-        self.recommendedVenueNames = ["Cactus Club", "Meadhall", "The Elephant and Bell"]
-        self.recommendedVenueStreets = ["939 Boylston St", "4 Cambridge Center", "45 Union St"]
-        self.recommendedVenueCityState = ["Boston, MA 02215", "Cambridge, MA 02142", "Boston, MA 02108"]
-        for var i=0; i<self.recommendedVenueNames.count; i++ {
-            string = "\(string)\(self.recommendedVenueNames[i])\n\(self.recommendedVenueStreets[i])\n\(self.recommendedVenueCityState[i])\n\n"
-        }
-        
-        let attrs = [NSFontAttributeName : UIFont(name: "AvenirNext-Medium", size: 14.0)!]
-        let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: attrs)
-        
-        for var i=0; i<self.recommendedVenueNames.count; i++ {
-            let name = self.recommendedVenueNames[i]
-            var range = (attributedString.string as NSString).rangeOfString(self.recommendedVenueNames[i])
-            attributedString.addAttribute(NSLinkAttributeName, value: "bondvoyage://\(name)", range: range)
-            range = (attributedString.string as NSString).rangeOfString(self.recommendedVenueStreets[i])
-            attributedString.addAttribute(NSLinkAttributeName, value: "bondvoyage://\(name)", range: range)
-            range = (attributedString.string as NSString).rangeOfString(self.recommendedVenueCityState[i])
-            attributedString.addAttribute(NSLinkAttributeName, value: "bondvoyage://\(name)", range: range)
-        }
-        
-        self.textView.attributedText = attributedString
-        self.textView.contentOffset = CGPointMake(0, 0)
-    }
+        string = "\(string) We recommend the following venues: \n\n"
+        self.labelCongrats.text = string
     
-    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-        for var i=0; i<self.recommendedVenueNames.count; i++ {
-            let name = self.recommendedVenueNames[i]
-            if URL.absoluteString == name {
-                print("name \(name)")
-            }
-            
-            let address = "\(self.recommendedVenueNames[i]) \(self.recommendedVenueStreets[i]) \(self.recommendedVenueCityState[i])"
-            self.openInMaps(address)
-            
-            // open a different url
-            return false
-        }
-        return false
+        // places tableview
+        self.tableViewVenues.reloadData()
     }
     
     func openInMaps(address: String) {
@@ -300,7 +277,12 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allUserIds.count
+        if tableView == self.tableViewVenues {
+            return 3
+        }
+        else {
+            return self.allUserIds.count
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -308,55 +290,22 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as UITableViewCell
-        let userId: String = self.allUserIds[indexPath.row]
-        
-        let user: PFUser? = self.users[userId]
-        let place: BVPlace? = self.places[userId]
-
-        let imageView: AsyncImageView = cell.viewWithTag(1) as! AsyncImageView
-        let labelName: UILabel = cell.viewWithTag(2) as! UILabel
-        let labelPlace: UILabel = cell.viewWithTag(3) as! UILabel
-        
-        var name: String?
-        if user != nil {
-            name = user!.valueForKey("firstName") as? String
-            if name == nil {
-                name = user!.valueForKey("lastName") as? String
-            }
-            if name == nil {
-                name = user!.username
-            }
-            
-            if name != nil {
-                labelName.text = "\(name!) wants to meet up"
-                if self.activity.isAcceptedActivity() {
-                    if self.activity.isOwnActivity() {
-                        labelName.text = "You are meeting \(name!)"
-                    }
-                    else {
-                        if user!.objectId! == PFUser.currentUser()?.objectId! {
-                            labelName.text = "Your invitation was accepted"
-                        }
-                    }
-                }
-                else {
-                    if user!.objectId! == PFUser.currentUser()?.objectId! {
-                        labelName.text = "Your have sent an invitation"
-                    }
-                }
-            }
-            
-            if let url: String = user?.objectForKey("photoUrl") as? String {
-                imageView.imageURL = NSURL(string: url)
-            }
-            
-            imageView.layer.cornerRadius = imageView.frame.size.width / 2
-            imageView.contentMode = .ScaleAspectFill
+        let cell = tableView.dequeueReusableCellWithIdentifier("VenueCell", forIndexPath: indexPath)
+        if tableView == self.tableViewVenues {
+            let label: UILabel = cell.viewWithTag(1) as! UILabel
+            let address = "\(self.recommendedVenueNames[indexPath.row])\n\(self.recommendedVenueStreets[indexPath.row])\n\(self.recommendedVenueCityState[indexPath.row])"
+            label.text = address
         }
-        
-        if place?.name != nil {
-            labelPlace.text = "at \(place!.name!)"
+        else {
+            /*
+            let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as! JoinCell
+            let userId: String = self.allUserIds[indexPath.row]
+            
+            let user: PFUser? = self.users[userId]
+            let place: BVPlace? = self.places[userId]
+            
+            cell.configureWithActivity(self.activity, user: user, place: place)
+            */
         }
         
         return cell
@@ -365,18 +314,24 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        // place
-        let row = indexPath.row
-        let userId = self.allUserIds[row]
-        if let place: BVPlace = self.places[userId] {
-            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
-            controller.place = place
-            controller.isRequestingJoin = self.isRequestingJoin
-            controller.isRequestedJoin = self.activity.isJoiningActivity()
-            controller.currentActivity = self.activity
-            controller.joiningUserId = userId
-            controller.delegate = self
-            self.navigationController?.pushViewController(controller, animated: true)
+        if tableView == self.tableViewVenues {
+            let address = "\(self.recommendedVenueNames[indexPath.row]) \(self.recommendedVenueStreets[indexPath.row]) \(self.recommendedVenueCityState[indexPath.row])"
+            self.openInMaps(address)
+        }
+        else {
+            // place
+            let row = indexPath.row
+            let userId = self.allUserIds[row]
+            if let place: BVPlace = self.places[userId] {
+                let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
+                controller.place = place
+                controller.isRequestingJoin = self.isRequestingJoin
+                controller.isRequestedJoin = self.activity.isJoiningActivity()
+                controller.currentActivity = self.activity
+                controller.joiningUserId = userId
+                controller.delegate = self
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
 
