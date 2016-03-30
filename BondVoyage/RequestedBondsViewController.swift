@@ -34,7 +34,12 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:updated", object: nil)
         
         self.setLeftProfileButton()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
+        let button: UIButton = UIButton(frame: CGRectMake(0, 0, 30, 30))
+        let image = UIImage(named: "icon-refresh")!.imageWithRenderingMode(.AlwaysTemplate)
+        button.setImage(image, forState: .Normal)
+        button.addTarget(self, action: "setup", forControlEvents: .TouchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
     }
 
     override func didReceiveMemoryWarning() {
