@@ -11,7 +11,7 @@ import AsyncImageView
 import Parse
 import GoogleMaps
 
-class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate {
+class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate, UITextViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewContent: UIView!
     
@@ -20,7 +20,15 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var labelTitle: UILabel!
     var street: String?
     var city: String?
-    
+
+    // recommendations
+    @IBOutlet weak var labelCongrats: UILabel!
+    @IBOutlet weak var tableViewVenues: UITableView!
+    @IBOutlet weak var constraintTableViewVenueHeight: NSLayoutConstraint!
+    var recommendedVenueNames: [String]!
+    var recommendedVenueStreets: [String]!
+    var recommendedVenueCityState: [String]!
+    /*
     @IBOutlet weak var mapView: GMSMapView!
     var marker: GMSMarker?
     @IBOutlet weak var constraintMapHeight: NSLayoutConstraint!
@@ -30,6 +38,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
 
     @IBOutlet weak var buttonInvite: UIButton!
     @IBOutlet weak var constraintButtonHeight: NSLayoutConstraint!
+    */
+    
+    @IBOutlet weak var textView: UITextView!
     
     var activity: PFObject!
     var isRequestingJoin: Bool = false
@@ -44,6 +55,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     weak var browser: ActivityBrowserViewController?
     
+    var matchedUser: PFUser?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,32 +65,29 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.labelTitle.text = ""
         
         let geopoint: PFGeoPoint = self.activity.objectForKey("geopoint") as! PFGeoPoint
-        self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
+        // TODO: enable this when we use actual phone locations again
+        //self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
         
-        self.mapView.userInteractionEnabled = true
+        // hide map. TODO: Enable map if user locations are used
+        /*
+        self.mapView.userInteractionEnabled = false
         self.mapView.delegate = self
+        self.constraintMapHeight.constant = 0
         
         if !self.isRequestingJoin {
             self.constraintButtonHeight.constant = 0
             self.buttonInvite.hidden = true
         }
-        self.reloadSuggestedPlaces()
+        */
         
-        // activity's user
-        if let user: PFUser = self.activity.user() {
-            user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
-                if result != nil {
-                    self.labelTitle.text = self.activity.shortTitle()
+        // static recommendations
+        self.recommendedVenueNames = ["Cactus Club", "Meadhall", "The Elephant and Bell"]
+        self.recommendedVenueStreets = ["939 Boylston St", "4 Cambridge Center", "45 Union St"]
+        self.recommendedVenueCityState = ["Boston, MA 02215", "Cambridge, MA 02142", "Boston, MA 02108"]
+        self.constraintTableViewVenueHeight.constant = 3 * 80
 
-                    if let photoURL: String = result!.valueForKey("photoUrl") as? String {
-                        self.profileView.imageURL = NSURL(string: photoURL)
-                    }
-                    else {
-                        self.profileView.image = UIImage(named: "profile-icon")
-                    }
-                }
-            })
-        }
+        self.refreshTitle()
+        self.refreshPlaces()
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,6 +96,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
+        /*
         self.tableView.reloadData()
         self.constraintTableHeight.constant = CGFloat(80 * self.tableView.numberOfRowsInSection(0))
         
@@ -106,18 +117,112 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             }
             self.marker = GMSMarker(position: coordinate)
             self.marker!.map = self.mapView
+        }  
+        self.refreshPlaces()
+        self.refreshTitle()
+        */
+    }
+    
+    func refreshTitle() {
+        // activity's user
+        if self.activity.isOwnActivity() {
+            if let userIds: [String] = self.activity!.objectForKey("joining") as? [String] {
+                let userId = userIds[0]
+                let query: PFQuery = PFUser.query()!
+                query.whereKey("objectId", equalTo: userId)
+                query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                    if results != nil && results!.count > 0 {
+                        let user: PFUser = results![0] as! PFUser
+                        self.matchedUser = user
+                        
+                        if let name: String = user.objectForKey("firstName") as? String {
+                            let categoryString = CategoryFactory.categoryReadableString(self.activity!.category()!)
+                            if self.activity!.isAcceptedActivity() {
+                                if self.activity!.category() != nil {
+                                    self.labelTitle.text = "\(categoryString) with \(name)"
+                                }
+                                else {
+                                    self.labelTitle.text = "Matched with \(name)"
+                                }
+                            }
+                            else {
+                                var categoryTitle: String = ""
+                                if self.activity!.category() != nil {
+                                    categoryTitle = " over \(categoryString)"
+                                }
+                                self.labelTitle.text = "\(name) matched with you\(categoryTitle)"
+                            }
+                        }
+                        
+                        if let photoURL: String = user.valueForKey("photoUrl") as? String {
+                            self.profileView.imageURL = NSURL(string: photoURL)
+                        }
+                        else {
+                            self.profileView.image = UIImage(named: "profile-icon")
+                        }
+                    }
+                    
+                    self.refreshPlaces()
+                }
+            }
+        }
+        else {
+            if let user: PFUser = self.activity.user() {
+                user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
+                    self.matchedUser = user
+                    if result != nil {
+                        self.labelTitle.text = self.activity.shortTitle()
+                        
+                        if let photoURL: String = result!.valueForKey("photoUrl") as? String {
+                            self.profileView.imageURL = NSURL(string: photoURL)
+                        }
+                        else {
+                            self.profileView.image = UIImage(named: "profile-icon")
+                        }
+                    }
+                    
+                    self.refreshPlaces()
+                })
+            }
+        }
+    }
+    
+    func refreshPlaces() {
+        // name
+        var string: String = "Congratulations on your successful bond"
+        if self.matchedUser != nil && self.matchedUser!.objectForKey("firstName") != nil {
+            let name = self.matchedUser!.objectForKey("firstName")!
+            string = "\(string) with \(name)"
         }
         
-        self.activity.user().fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            if self.street != nil {
-                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.street!)"
+        if self.activity.category() != nil {
+            let category = CategoryFactory.categoryReadableString(self.activity.category()!)
+            string = "\(string) for \(category)."
+        }
+        else {
+            string = "\(string)."
+        }
+        
+        string = "\(string) We recommend the following venues: \n\n"
+        self.labelCongrats.text = string
+    
+        // places tableview
+        self.tableViewVenues.reloadData()
+    }
+    
+    func openInMaps(address: String) {
+        let escapedString = address.stringByReplacingOccurrencesOfString(" ", withString: "+")
+        print("original \(address) escaped \(escapedString)")
+        let url: NSURL? = NSURL(string: "comgooglemaps://?q=\(escapedString)")
+        if url != nil && UIApplication.sharedApplication().canOpenURL(url!) {
+            UIApplication.sharedApplication().openURL(url!)
+        }
+        else {
+            var message = "BondVoyage could not open the map app for this address"
+            if address.characters.count > 0 {
+                message = "\(message): \(address)"
             }
-            else if self.city != nil {
-                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.city!)"
-            }
-            else {
-                self.labelTitle.text = self.activity.shortTitle()
-            }
+            self.simpleAlert("Could not open Google Maps", message: message)
         }
     }
     
@@ -172,7 +277,12 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allUserIds.count
+        if tableView == self.tableViewVenues {
+            return 3
+        }
+        else {
+            return self.allUserIds.count
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -180,55 +290,22 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as UITableViewCell
-        let userId: String = self.allUserIds[indexPath.row]
-        
-        let user: PFUser? = self.users[userId]
-        let place: BVPlace? = self.places[userId]
-
-        let imageView: AsyncImageView = cell.viewWithTag(1) as! AsyncImageView
-        let labelName: UILabel = cell.viewWithTag(2) as! UILabel
-        let labelPlace: UILabel = cell.viewWithTag(3) as! UILabel
-        
-        var name: String?
-        if user != nil {
-            name = user!.valueForKey("firstName") as? String
-            if name == nil {
-                name = user!.valueForKey("lastName") as? String
-            }
-            if name == nil {
-                name = user!.username
-            }
-            
-            if name != nil {
-                labelName.text = "\(name!) wants to meet up"
-                if self.activity.isAcceptedActivity() {
-                    if self.activity.isOwnActivity() {
-                        labelName.text = "You are meeting \(name!)"
-                    }
-                    else {
-                        if user!.objectId! == PFUser.currentUser()?.objectId! {
-                            labelName.text = "Your invitation was accepted"
-                        }
-                    }
-                }
-                else {
-                    if user!.objectId! == PFUser.currentUser()?.objectId! {
-                        labelName.text = "Your have sent an invitation"
-                    }
-                }
-            }
-            
-            if let url: String = user?.objectForKey("photoUrl") as? String {
-                imageView.imageURL = NSURL(string: url)
-            }
-            
-            imageView.layer.cornerRadius = imageView.frame.size.width / 2
-            imageView.contentMode = .ScaleAspectFill
+        let cell = tableView.dequeueReusableCellWithIdentifier("VenueCell", forIndexPath: indexPath)
+        if tableView == self.tableViewVenues {
+            let label: UILabel = cell.viewWithTag(1) as! UILabel
+            let address = "\(self.recommendedVenueNames[indexPath.row])\n\(self.recommendedVenueStreets[indexPath.row])\n\(self.recommendedVenueCityState[indexPath.row])"
+            label.text = address
         }
-        
-        if place?.name != nil {
-            labelPlace.text = "at \(place!.name!)"
+        else {
+            /*
+            let cell = tableView.dequeueReusableCellWithIdentifier("JoinCell")! as! JoinCell
+            let userId: String = self.allUserIds[indexPath.row]
+            
+            let user: PFUser? = self.users[userId]
+            let place: BVPlace? = self.places[userId]
+            
+            cell.configureWithActivity(self.activity, user: user, place: place)
+            */
         }
         
         return cell
@@ -237,18 +314,24 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        // place
-        let row = indexPath.row
-        let userId = self.allUserIds[row]
-        if let place: BVPlace = self.places[userId] {
-            let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
-            controller.place = place
-            controller.isRequestingJoin = self.isRequestingJoin
-            controller.isRequestedJoin = self.activity.isJoiningActivity()
-            controller.currentActivity = self.activity
-            controller.joiningUserId = userId
-            controller.delegate = self
-            self.navigationController?.pushViewController(controller, animated: true)
+        if tableView == self.tableViewVenues {
+            let address = "\(self.recommendedVenueNames[indexPath.row]) \(self.recommendedVenueStreets[indexPath.row]) \(self.recommendedVenueCityState[indexPath.row])"
+            self.openInMaps(address)
+        }
+        else {
+            // place
+            let row = indexPath.row
+            let userId = self.allUserIds[row]
+            if let place: BVPlace = self.places[userId] {
+                let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
+                controller.place = place
+                controller.isRequestingJoin = self.isRequestingJoin
+                controller.isRequestedJoin = self.activity.isJoiningActivity()
+                controller.currentActivity = self.activity
+                controller.joiningUserId = userId
+                controller.delegate = self
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
 
@@ -262,10 +345,13 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }
+            /*
             // invite
         else if sender == self.buttonInvite {
             self.goToSelectPlace()
         }
+        */
+            /*
         else {
             // user button
             let cell: UITableViewCell = sender.superview!.superview! as! UITableViewCell
@@ -278,10 +364,12 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }
+        */
     }
     
     // MARK: - InvitationDelegate
     func didSendInvitationForPlace() {
+        /*
         self.constraintButtonHeight.constant = 0 // why does this not hide the button?
         self.buttonInvite.hidden = true
 
@@ -298,6 +386,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         // also send a notification for other views not in this chain
         NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
+        */
     }
     
     func didAcceptInvitationForPlace() {

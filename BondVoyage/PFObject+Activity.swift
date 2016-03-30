@@ -85,17 +85,14 @@ extension PFObject {
         
         var title = ""
         if self.subcategory() != nil {
-            title = "\(CategoryFactory.subcategoryReadableString(self.subcategory()!)) with "
+            title = "\(CategoryFactory.subcategoryReadableString(self.subcategory()!))"
         }
         else if self.category() != nil {
-            title = "\(CategoryFactory.categoryReadableString(self.category()!)) with "
+            title = "\(CategoryFactory.categoryReadableString(self.category()!))"
         }
         
-        if name != nil && self.locationString() != nil {
-            title = "\(title)\(name!) in \(self.locationString()!)"
-        }
-        else if name != nil {
-            title = "\(title)\(name!)"
+        if name != nil {
+            title = "\(title) with \(name!)"
         }
         else if self.locationString() != nil {
             title = "\(title) in \(self.locationString()!)"
