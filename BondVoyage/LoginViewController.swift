@@ -13,7 +13,6 @@ class LoginViewController: PFLogInViewController {
 
     var bgImage: UIImageView!
     var logoView: UIImageView!
-    var didLayout: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +40,10 @@ class LoginViewController: PFLogInViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        self.customizeLayout()
+    }
+    
+    func customizeLayout() {
         // stretch background image to fill screen
         //bgImage.frame = CGRectMake( 0,  0,  self.logInView!.frame.width,  self.logInView!.frame.height)
         var height = self.view.frame.size.height / 6
@@ -58,7 +61,7 @@ class LoginViewController: PFLogInViewController {
         frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width * ratio)
         frame.origin.y = logInView!.logo!.frame.origin.y + logInView!.logo!.frame.size.height
         bgImage.frame = frame
-
+        
         // facebook
         frame = self.logInView!.facebookButton!.frame
         frame.origin.x = -5
@@ -80,7 +83,7 @@ class LoginViewController: PFLogInViewController {
         frame = self.logInView!.passwordField!.frame
         frame.origin.y = self.logInView!.usernameField!.frame.origin.y + self.logInView!.usernameField!.frame.size.height
         self.logInView!.passwordField!.frame = frame
-
+        
         // password
         frame = self.logInView!.passwordForgottenButton!.frame
         frame.origin.y = self.logInView!.passwordField!.frame.origin.y + self.logInView!.passwordField!.frame.size.height + 8
