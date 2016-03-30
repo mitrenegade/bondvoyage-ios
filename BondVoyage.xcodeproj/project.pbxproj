@@ -209,8 +209,8 @@
 		8E099EC11C850140006A0320 /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */,
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
+				8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */,
 			);
 			name = Details;
 			sourceTree = "<group>";

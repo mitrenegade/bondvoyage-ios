@@ -52,32 +52,19 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.labelTitle.text = ""
         
         let geopoint: PFGeoPoint = self.activity.objectForKey("geopoint") as! PFGeoPoint
-        self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
+        // TODO: enable this when we use actual phone locations again
+        //self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
         
-        self.mapView.userInteractionEnabled = true
+        // hide map. TODO: Enable map if user locations are used
+        self.mapView.userInteractionEnabled = false
         self.mapView.delegate = self
+        self.constraintMapHeight.constant = 0
         
         if !self.isRequestingJoin {
             self.constraintButtonHeight.constant = 0
             self.buttonInvite.hidden = true
         }
-        self.reloadSuggestedPlaces()
-        
-        // activity's user
-        if let user: PFUser = self.activity.user() {
-            user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
-                if result != nil {
-                    self.labelTitle.text = self.activity.shortTitle()
-
-                    if let photoURL: String = result!.valueForKey("photoUrl") as? String {
-                        self.profileView.imageURL = NSURL(string: photoURL)
-                    }
-                    else {
-                        self.profileView.image = UIImage(named: "profile-icon")
-                    }
-                }
-            })
-        }
+        self.refreshTitle()
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,15 +95,63 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             self.marker!.map = self.mapView
         }
         
-        self.activity.user().fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            if self.street != nil {
-                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.street!)"
+        self.refreshTitle()
+    }
+    
+    func refreshTitle() {
+        // activity's user
+        if self.activity.isOwnActivity() {
+            if let userIds: [String] = self.activity!.objectForKey("joining") as? [String] {
+                let userId = userIds[0]
+                let query: PFQuery = PFUser.query()!
+                query.whereKey("objectId", equalTo: userId)
+                query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                    if results != nil && results!.count > 0 {
+                        let user: PFUser = results![0] as! PFUser
+                        
+                        if let name: String = user.objectForKey("firstName") as? String {
+                            let categoryString = CategoryFactory.categoryReadableString(self.activity!.category()!)
+                            if self.activity!.isAcceptedActivity() {
+                                if self.activity!.category() != nil {
+                                    self.labelTitle.text = "\(categoryString) with \(name)"
+                                }
+                                else {
+                                    self.labelTitle.text = "Matched with \(name)"
+                                }
+                            }
+                            else {
+                                var categoryTitle: String = ""
+                                if self.activity!.category() != nil {
+                                    categoryTitle = " over \(categoryString)"
+                                }
+                                self.labelTitle.text = "\(name) matched with you\(categoryTitle)"
+                            }
+                        }
+                        
+                        if let photoURL: String = user.valueForKey("photoUrl") as? String {
+                            self.profileView.imageURL = NSURL(string: photoURL)
+                        }
+                        else {
+                            self.profileView.image = UIImage(named: "profile-icon")
+                        }
+                    }
+                }
             }
-            else if self.city != nil {
-                self.labelTitle.text = "\(self.activity.shortTitle())\nnear \(self.city!)"
-            }
-            else {
-                self.labelTitle.text = self.activity.shortTitle()
+        }
+        else {
+            if let user: PFUser = self.activity.user() {
+                user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
+                    if result != nil {
+                        self.labelTitle.text = self.activity.shortTitle()
+                        
+                        if let photoURL: String = result!.valueForKey("photoUrl") as? String {
+                            self.profileView.imageURL = NSURL(string: photoURL)
+                        }
+                        else {
+                            self.profileView.image = UIImage(named: "profile-icon")
+                        }
+                    }
+                })
             }
         }
     }
