@@ -60,6 +60,7 @@ extension UIViewController {
         
         let frame = CGRectMake(0, 0, 32, 32)
         let imageView: AsyncImageView = AsyncImageView(frame: frame)
+        imageView.contentMode = .ScaleAspectFill
         user!.fetchInBackgroundWithBlock({ (result, error) -> Void in
             if result != nil {
                 if let photoURL: String = result!.valueForKey("photoUrl") as? String {

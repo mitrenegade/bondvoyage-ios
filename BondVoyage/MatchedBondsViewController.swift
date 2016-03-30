@@ -10,7 +10,10 @@ import UIKit
 import Parse
 
 class MatchedBondsViewController: RequestedBondsViewController {
-
+    var myActivitiesLoaded: Bool = false
+    var otherActivitiesLoaded: Bool = false
+    var loadingError: NSError?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,8 +21,11 @@ class MatchedBondsViewController: RequestedBondsViewController {
     }
     
     override func setup() {
-        
+        self.navigationItem.rightBarButtonItem?.enabled = false
         activities.removeAll()
+        self.myActivitiesLoaded = false
+        self.otherActivitiesLoaded = false
+        self.loadingError = nil
         ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             // returns activities where the owner of the activity is the user
             if results != nil {
@@ -29,16 +35,10 @@ class MatchedBondsViewController: RequestedBondsViewController {
                             self.activities.append(activity)
                         }
                     }
-                    self.tableView.reloadData()
                 }
             }
-            if error != nil && error!.code == 209 {
-                self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                    PFUser.logOut()
-                    NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
-                })
-                return
-            }
+            self.myActivitiesLoaded = true
+            self.reloadTableIfReady(error)
         }
         ActivityRequest.queryActivities(PFUser.currentUser(), joining: true, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             // returns activities where the owner is not the user but is in the joining list
@@ -49,15 +49,35 @@ class MatchedBondsViewController: RequestedBondsViewController {
                             self.activities.append(activity)
                         }
                     }
-                    self.tableView.reloadData()
                 }
             }
-            if error != nil && error!.code == 209 {
-                self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                    PFUser.logOut()
-                    NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
-                })
-                return
+            self.otherActivitiesLoaded = true
+            self.reloadTableIfReady(error)
+            
+        }
+    }
+    
+    func reloadTableIfReady(error: NSError?) {
+        if error != nil {
+            self.loadingError = error
+        }
+        
+        if self.myActivitiesLoaded && self.otherActivitiesLoaded {
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            if self.loadingError != nil {
+                if self.loadingError!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
+                else {
+                    self.simpleAlert("Could not load matches", defaultMessage: "Please click refresh to try again.", error: self.loadingError)
+                }
+            }
+            else {
+                self.tableView.reloadData()
             }
         }
     }

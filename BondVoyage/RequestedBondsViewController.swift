@@ -33,6 +33,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:updated", object: nil)
         
         self.setLeftProfileButton()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,10 +42,10 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func setup() {
-
         activities.removeAll()
-        
+        self.navigationItem.rightBarButtonItem?.enabled = false
         ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
+            self.navigationItem.rightBarButtonItem?.enabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             if results != nil {
                 if results!.count > 0 {
@@ -59,15 +60,23 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
                             }
                         }
                     }
-                    self.tableView.reloadData()
                 }
+                else {
+                    self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
+                }
+                self.tableView.reloadData()
             }
-            if error != nil && error!.code == 209 {
-                self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                    PFUser.logOut()
-                    NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
-                })
-                return
+            if error != nil {
+                if error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
+                else {
+                    self.simpleAlert("Could not load bonds", defaultMessage: "Please click refresh to try again.", error: error)
+                }
             }
         }
     }
