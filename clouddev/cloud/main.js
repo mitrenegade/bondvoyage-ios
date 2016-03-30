@@ -613,10 +613,6 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     var userId = request.params.userId
     var joining = request.params.joining
 
-    // search preferences
-    var ageMin = request.params.ageMin
-    var ageMax = request.params.ageMax
-
     // not used
     var distanceMax = request.params.distanceMax
 
@@ -641,13 +637,20 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         console.log("calling query.find. declined must not include " + request.user.id)
 
         if (aboutSelf != undefined) {
-            query.containedIn("aboutOthers", aboutSelf)
+            query.equalTo("aboutOthers", aboutSelf)
         }
         if (aboutOthers != undefined) {
-            query.containedIn("aboutMe", aboutOthers)
+            query.containedIn("aboutSelf", aboutOthers)
         }
 
-        // todo: age filter
+        // age filter: the queryer has to fall between age limits
+        var birthYear = request.user.get("birthYear")
+        if (birthYear != undefined) {
+            var age = 2016 - birthYear
+            console.log("user " + request.user + " birthYear " + birthYear + " age " + age)
+            query.greaterThanOrEqualTo("ageMax", age)
+            query.lessThanOrEqualTo("ageMin", age)
+        }
 
         // distance filter
         if (request.params.lat != undefined && request.params.lon != undefined && distanceMax != undefined) {
