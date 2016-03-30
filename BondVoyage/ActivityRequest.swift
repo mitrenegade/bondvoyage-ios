@@ -13,10 +13,17 @@ import Parse
 class ActivityRequest: NSObject {
 
     // User creates a new activity that is available for others to join
-    class func createActivity(categories: [String], location: CLLocation, locationString: String?, completion: ((result: PFObject?, error: NSError?)->Void)) {
-        var params: [String: AnyObject] = ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude]
+    class func createActivity(categories: [String], location: CLLocation, locationString: String?, aboutSelf: String?, aboutOthers: [String], ageMin: Int?, ageMax: Int?, completion: ((result: PFObject?, error: NSError?)->Void)) {
+        var params: [String: AnyObject] = ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude, "time": NSDate(), "aboutOthers": aboutOthers]
         if locationString != nil {
             params["locationString"] = locationString!
+        }
+        if aboutSelf != nil {
+            params["aboutSelf"] = aboutSelf
+        }
+        if ageMin != nil && ageMax != nil {
+            params["ageMin"] = ageMin!
+            params["ageMax"] = ageMax!
         }
         
         PFCloud.callFunctionInBackground("createActivity", withParameters: params) { (results, error) -> Void in
@@ -26,7 +33,7 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func queryActivities(user: PFUser?, joining: Bool?, categories: [String]?, location: CLLocation?, distance: Double?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, joining: Bool?, categories: [String]?, location: CLLocation?, distance: Double?, aboutSelf: String?, aboutOthers: [String], completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
@@ -42,6 +49,14 @@ class ActivityRequest: NSObject {
         }
         if joining != nil {
             params["joining"] = joining!
+        }
+        if aboutSelf != nil {
+            // if this is a new activity, send in aboutSelf
+            // if this is a query for matched or requested bonds, don't use aboutSelf
+            params["aboutSelf"] = aboutSelf!
+        }
+        if aboutOthers.count > 0 {
+            params["aboutOthers"] = aboutOthers
         }
         
         PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in

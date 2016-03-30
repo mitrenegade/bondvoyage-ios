@@ -44,7 +44,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
 
         activities.removeAll()
         
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil) { (results, error) -> Void in
+        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             if results != nil {
                 if results!.count > 0 {

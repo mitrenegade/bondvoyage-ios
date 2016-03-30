@@ -557,6 +557,7 @@ Parse.Cloud.define("createActivity", function(request, response) {
     activity.set("declined", [])
     activity.set("joining", [])
     activity.set("places", {})
+    activity.set("aboutOthers", []) 
 
     // location
     if (request.params.lat != undefined && request.params.lon != undefined) {
@@ -569,7 +570,30 @@ Parse.Cloud.define("createActivity", function(request, response) {
         activity.set("locationString", request.params.locationString)
     }
 
-    // todo: time
+    // time
+    if (request.params.time != undefined) {
+        activity.set("time", request.params.time)
+    }
+
+    // about self
+    if (request.params.aboutSelf != undefined) {
+        activity.set("aboutSelf", request.params.aboutSelf)
+    }
+
+    // about others
+    if (request.params.aboutOthers != undefined) {
+        activity.set("aboutOthers", request.params.aboutOthers)
+    }
+
+    // age range
+    var ageMin = request.params.ageMin
+    var ageMax = request.params.ageMax
+    if (ageMin != undefined) {
+        activity.set("ageMin", ageMin)
+    }
+    if (ageMax != undefined) {
+        activity.set("ageMax", ageMax)
+    }
 
     activity.save().then(
         function(object) {
@@ -589,12 +613,12 @@ Parse.Cloud.define("queryActivities", function(request, response) {
     var userId = request.params.userId
     var joining = request.params.joining
 
-    // search preferences
-    var ageMin = request.params.ageMin
-    var ageMax = request.params.ageMax
-    var groupMin = request.params.groupMin
-    var groupMax = request.params.groupMax
+    // not used
     var distanceMax = request.params.distanceMax
+
+    // aboutSelf vs aboutOthers
+    var aboutSelf = request.params.aboutSelf
+    var aboutOthers = request.params.aboutOthers
 
     var query = new Parse.Query("Activity")
 
@@ -611,6 +635,22 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         query.equalTo("status", "active")
         query.notContainedIn("declined", [request.user.id])
         console.log("calling query.find. declined must not include " + request.user.id)
+
+        if (aboutSelf != undefined) {
+            query.equalTo("aboutOthers", aboutSelf)
+        }
+        if (aboutOthers != undefined) {
+            query.containedIn("aboutSelf", aboutOthers)
+        }
+
+        // age filter: the queryer has to fall between age limits
+        var birthYear = request.user.get("birthYear")
+        if (birthYear != undefined) {
+            var age = 2016 - birthYear
+            console.log("user " + request.user + " birthYear " + birthYear + " age " + age)
+            query.greaterThanOrEqualTo("ageMax", age)
+            query.lessThanOrEqualTo("ageMin", age)
+        }
 
         // distance filter
         if (request.params.lat != undefined && request.params.lon != undefined && distanceMax != undefined) {
@@ -851,5 +891,24 @@ var sendPushForActivityResponse = function(response, activity, status) {
             console.log("Invitation status push notification failed: " + error)
             response.error(error)
             }
-        });
-    }
+        }
+    );
+}
+
+//******************* V3 Activities
+Parse.Cloud.define("createOrUpdateActivity", function(request, response) {
+    // TODO: implement this if we want to be able to update an activity the user has already created
+    // to prevent duplicate activities for the same location within the same time
+    var categories = request.params.categories
+    var userId = request.params.userId
+    var joining = request.params.joining
+
+    Parse.Cloud.run('queryActivities', {}, {
+        success: function(results) {
+            // TODO: if location, time are close, then update the existing activity instead
+        },
+        error: function(results) {
+            // TODO: if query fails, just create a new one
+        }
+    });
+});

@@ -63,6 +63,8 @@ class UserDetailsViewController: UIViewController {
         self.nameLabel!.layer.shadowOffset = CGSizeMake(1, 1)
         
         self.view!.backgroundColor = UIColor.clearColor()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "configureDetailsForUser", name: "profile:updated", object: nil)
     }
 
     func configureUI() {
@@ -86,6 +88,10 @@ class UserDetailsViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         self.configureUI()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "profile:updated", object: nil)
     }
 
     func configureDetailsForUser() {

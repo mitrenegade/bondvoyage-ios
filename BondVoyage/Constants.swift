@@ -12,6 +12,8 @@ import UIKit
 let TESTING: Bool = false
 let PHILADELPHIA_LAT = 39.949508
 let PHILADELPHIA_LON = -75.171886
+let BOSTON_LAT = 42.3583038
+let BOSTON_LON = -71.0714141
 
 let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
@@ -35,6 +37,13 @@ var RANGE_DISTANCE_MIN = 0
 
 enum Gender: String {
     case Female, Male, Other
+}
+
+enum VoyagerType: String {
+    case NewToCity = "New to the city"
+    case Local = "Local to the city"
+    case Leisure = "Traveling for leisure"
+    case Business = "Traveling for business"
 }
 
 class Constants: NSObject {

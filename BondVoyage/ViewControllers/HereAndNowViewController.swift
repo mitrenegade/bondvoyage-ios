@@ -245,7 +245,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "clearSearch")
         }
         
-        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: distanceMax) { (results, error) -> Void in
+        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: distanceMax, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
                     

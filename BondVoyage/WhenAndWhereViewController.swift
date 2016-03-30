@@ -27,6 +27,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var tableViewWho: UITableView!
     @IBOutlet weak var constraintTableViewHeight: NSLayoutConstraint!
+    var aboutSelf: VoyagerType?
     var selectedTypes: [Bool] = [false, false, false, false]
     
     @IBOutlet weak var ageFilterView: AgeRangeFilterView!
@@ -40,7 +41,10 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     var selectedActivities: [PFObject]?
     
     let ROW_HEIGHT: CGFloat = 44
-    let PERSON_TYPES = ["New to the city", "Local to the city", "On leisure", "Traveling for business"]
+    let PERSON_TYPES: [VoyagerType] = [.NewToCity, .Local, .Leisure, .Business]
+    
+    let defaultCity = "Boston"
+    let defaultTime = "Now"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +60,9 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         inputWhere.inputView = pickerWhere
         inputWhen.inputView = pickerWhen
         inputAboutMe.inputView = pickerMe
+
+        // location is always Boston
+        self.currentLocation = CLLocation(latitude: BOSTON_LAT, longitude: BOSTON_LON)
 
         let keyboardDoneButtonView = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
@@ -77,10 +84,44 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func createActivity() {
-        // TODO: validate
+        // validate
+        var aboutSelf: String? = self.inputAboutMe.text
+        if self.inputAboutMe.text != nil && self.inputAboutMe.text!.isEmpty {
+            aboutSelf = nil
+        }
+        
+        var aboutOthers = [VoyagerType]()
+        for var i = 0; i < self.selectedTypes.count; i++ {
+            if self.selectedTypes[i] {
+                aboutOthers.append(PERSON_TYPES[i])
+            }
+        }
+        let aboutOthersRaw = aboutOthers.map { (v) -> String in
+            return v.rawValue
+        }
+        
+        if aboutSelf == nil {
+            self.simpleAlert("Please describe yourself", message: "Please select an option under I am...")
+            return
+        }
+        if aboutOthers.count == 0 {
+            self.simpleAlert("Please select at least one option", message: "Please make at least one selection describing who you want to meet.")
+            return
+        }
+        
+        if self.inputWhere.text == nil || self.inputWhere.text!.isEmpty {
+            self.inputWhere.text = self.defaultCity
+        }
+
+        if self.inputWhen.text == nil || self.inputWhen.text!.isEmpty {
+            self.inputWhen.text = self.defaultTime
+        }
+
+        let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
+        let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
+        
         self.navigationItem.rightBarButtonItem?.enabled = false
-        self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
-        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Here") { (result, error) -> Void in
+        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: aboutSelf, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
             if error != nil {
                 self.navigationItem.rightBarButtonItem?.enabled = true
                 print("Error: \(error)")
@@ -96,8 +137,18 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     
     func requestActivities() {
         let cat: [String] = [self.category!.rawValue]
-        self.currentLocation = CLLocation(latitude: PHILADELPHIA_LAT, longitude: PHILADELPHIA_LON)
-        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX)) { (results, error) -> Void in
+
+        var aboutOthers = [VoyagerType]()
+        for var i = 0; i < self.selectedTypes.count; i++ {
+            if self.selectedTypes[i] {
+                aboutOthers.append(PERSON_TYPES[i])
+            }
+        }
+        let aboutOthersRaw = aboutOthers.map { (v) -> String in
+            return v.rawValue
+        }
+        
+        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX), aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw) { (results, error) -> Void in
             self.navigationItem.rightBarButtonItem?.enabled = true
             if results != nil {
                 if results!.count > 0 {
@@ -106,14 +157,13 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
                 }
                 else {
                     // no results, no error
-                    var message = "There is no one interested in \(self.category!.rawValue) near you."
+                    var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.category!)) near you."
                     if PFUser.currentUser() != nil {
-                        message = "\(message) Select a different filter or go to New Activity to add your own activity."
+                        message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
                     }
                     
                     self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        
-                        // todo: close?
+                        self.navigationController?.popToRootViewControllerAnimated(true)
                     })
                 }
             }
@@ -143,7 +193,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PersonTypeCell", forIndexPath: indexPath)
         cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        cell.textLabel?.text = PERSON_TYPES[indexPath.row]
+        cell.textLabel?.text = PERSON_TYPES[indexPath.row].rawValue
         
         cell.backgroundColor = UIColor.clearColor()
         
@@ -182,16 +232,16 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == self.pickerWhere {
-            return "Boston"
+            return self.defaultCity
         }
         if pickerView == self.pickerWhen {
-            return "Now"
+            return self.defaultTime
         }
         if pickerView == self.pickerMe {
             if row == 0 {
                 return "Select one"
             }
-            return PERSON_TYPES[row - 1]
+            return PERSON_TYPES[row - 1].rawValue
         }
         return nil
     }
@@ -200,21 +250,28 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("Row selected: \(row)")
         if pickerView == self.pickerMe {
-            self.inputAboutMe.text = self.pickerView(self.pickerMe, titleForRow: row, forComponent: component)
+            if row > 0 && row <= PERSON_TYPES.count {
+                self.inputAboutMe.text = self.pickerView(self.pickerMe, titleForRow: row, forComponent: component)
+                self.aboutSelf = PERSON_TYPES[row - 1]
+            }
+            else {
+                self.aboutSelf = nil
+                self.inputAboutMe.text = nil
+            }
         }
     }
     
     // MARK: - TextFieldDelegate
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         if textField == self.inputWhere && self.inputWhere.text?.isEmpty == true {
-            self.simpleAlert("Other cities coming soon", message: "BondVoyage is currently only available in Boston.", completion: { () -> Void in
+            self.simpleAlert("Other cities coming soon", message: "BondVoyage is currently only available in \(self.defaultCity).", completion: { () -> Void in
                 self.inputWhere.text = "Boston"
             })
             return false
         }
         else if textField == self.inputWhen && self.inputWhen.text?.isEmpty == true {
             self.simpleAlert("Scheduling coming soon", message: "Search for activities to do right now. Scheduling future activities will be available soon", completion: { () -> Void in
-                self.inputWhen.text = "Now"
+                self.inputWhen.text = self.defaultTime
             })
             return false
         }

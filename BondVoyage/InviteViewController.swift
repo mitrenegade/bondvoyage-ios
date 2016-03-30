@@ -76,7 +76,7 @@ class InviteViewController: UIViewController {
                 self.refresh()
                 HUD.show(.Label("Invitation sent."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
-                    self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
+                    self.close()
                 })
             }
         })
@@ -122,16 +122,6 @@ class InviteViewController: UIViewController {
         }
         else {
             self.buttonUp.hidden = false
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "GoToActivityDetail" {
-            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
-            controller.isRequestingJoin = true
-            controller.activity = sender as! PFObject
         }
     }
 }

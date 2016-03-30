@@ -180,7 +180,7 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
         if self.selectedCategories == nil {
             self.selectedCategories = ["Other"]
         }
-        ActivityRequest.createActivity(self.selectedCategories!, location: self.currentLocation!, locationString: self.inputCity.text) { (result, error) -> Void in
+        ActivityRequest.createActivity(self.selectedCategories!, location: self.currentLocation!, locationString: self.inputCity.text, aboutSelf: nil, aboutOthers: [], ageMin: nil, ageMax: nil) { (result, error) -> Void in
             if error != nil {
                 if error != nil && error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to create an activity.", completion: { () -> Void in
