@@ -114,18 +114,29 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     func goToAcceptInvitation(activity: PFObject) {
-        let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
-        let user: PFUser = activity.objectForKey("user") as! PFUser
-        controller.invitingUser = user
-        controller.invitingActivity = activity
-        controller.delegate = self
-        self.navigationController?.pushViewController(controller, animated: true)
+        // join requests exist
+        if let userIds: [String] = activity.objectForKey("joining") as? [String] {
+            let userId = userIds[0]
+            let query: PFQuery = PFUser.query()!
+            query.whereKey("objectId", equalTo: userId)
+            query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                if results != nil && results!.count > 0 {
+                    let user: PFUser = results![0] as! PFUser
+                    let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                    controller.invitingUser = user
+                    controller.invitingActivity = activity
+                    controller.delegate = self
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
+            }
+        }
     }
     
     // MARK: - UserDetailsDelegate
     func didRespondToInvitation() {
         print("declined")
         self.setup()
+        self.navigationController!.popToViewController(self, animated: true)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

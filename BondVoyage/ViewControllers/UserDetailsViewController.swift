@@ -77,7 +77,7 @@ class UserDetailsViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
         if self.invitingUser != nil {
             self.title = "Invitation"
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "respond", style: .Done, target: self, action: "handleInvitation")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Respond", style: .Done, target: self, action: "handleInvitation")
         }
         else {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "goToEditProfile")
@@ -154,11 +154,15 @@ class UserDetailsViewController: UIViewController {
         if self.invitingActivity != nil {
             self.invitingActivity!.fetchInBackgroundWithBlock({ (object, error) -> Void in
                 if let categories: [String] = self.invitingActivity!.objectForKey("categories") as? [String] {
-                    let str = self.stringFromArray(categories)
+                    var str = self.stringFromArray(categories)
                     if self.selectedUser != nil {
                         self.interestsLabel.text = "Interests: \(str)"
                     }
                     else {
+                        let categoryString = categories[0]
+                        if let category = CategoryFactory.categoryForString(categoryString) {
+                            str = CategoryFactory.categoryReadableString(category)
+                        }
                         self.interestsLabel.text = "Wants to bond over: \(str)" // todo: load match and set this to match category
                     }
                 }
