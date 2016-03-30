@@ -859,7 +859,6 @@
                     <navigationItem key="navigationItem" id="VA4-4Y-lAK"/>
                     <connections>
                         <outlet property="tableView" destination="2X0-Yd-p9Z" id="Ga5-rF-wZ8"/>
-                        <segue destination="BDS-Ez-vG3" kind="show" identifier="GoToActivityDetail" id="zua-Tk-rJN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p5L-PG-J6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1415,6 +1414,7 @@
                     <navigationItem key="navigationItem" id="sZf-MZ-VAG"/>
                     <connections>
                         <outlet property="tableView" destination="by0-Ne-ifo" id="Tey-Nw-4FM"/>
+                        <segue destination="BDS-Ez-vG3" kind="show" identifier="GoToActivityDetail" id="ptv-bW-TOo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6x-9z-arr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1432,6 +1432,6 @@
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zua-Tk-rJN"/>
+        <segue reference="ptv-bW-TOo"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -59,11 +59,22 @@ class UserCell: UITableViewCell {
                         if results != nil && results!.count > 0 {
                             let user: PFUser = results![0] as! PFUser
                             if let name: String = user.objectForKey("firstName") as? String {
-                                var categoryTitle: String = ""
-                                if self.activity!.category() != nil {
-                                    categoryTitle = " over \(CategoryFactory.categoryReadableString(self.activity!.category()!))"
+                                let categoryString = CategoryFactory.categoryReadableString(self.activity!.category()!)
+                                if self.activity!.isAcceptedActivity() {
+                                    if self.activity!.category() != nil {
+                                        self.titleLabel.text = "\(categoryString) with \(name)"
+                                    }
+                                    else {
+                                        self.titleLabel.text = "Bond with \(name)"
+                                    }
                                 }
-                                self.titleLabel.text = "\(name) wants to bond\(categoryTitle)"
+                                else {
+                                    var categoryTitle: String = ""
+                                    if self.activity!.category() != nil {
+                                        categoryTitle = " over \(categoryString)"
+                                    }
+                                    self.titleLabel.text = "\(name) wants to bond\(categoryTitle)"
+                                }
                             }
                             
                             if let photoURL: String = user.objectForKey("photoUrl") as? String {

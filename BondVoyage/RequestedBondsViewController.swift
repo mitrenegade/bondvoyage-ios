@@ -115,10 +115,10 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         
         let activity: PFObject = self.activities[indexPath.row]
         self.tableView.userInteractionEnabled = false
-        self.goToAcceptInvitation(activity)
+        self.goToActivity(activity)
     }
 
-    func goToAcceptInvitation(activity: PFObject) {
+    func goToActivity(activity: PFObject) {
         // join requests exist
         if let userIds: [String] = activity.objectForKey("joining") as? [String] {
             let userId = userIds[0]
@@ -137,14 +137,6 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
         else {
             self.tableView.userInteractionEnabled = true
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GoToActivityDetail" {
-            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
-            controller.activity = sender as! PFObject
-            controller.isRequestingJoin = false
         }
     }
 }
