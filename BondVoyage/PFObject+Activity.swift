@@ -88,7 +88,7 @@ extension PFObject {
             title = "\(CategoryFactory.subcategoryReadableString(self.subcategory()!)) with "
         }
         else if self.category() != nil {
-            title = "\(CategoryFactory.categoryReadableString(self.category()!)) with"
+            title = "\(CategoryFactory.categoryReadableString(self.category()!)) with "
         }
         
         if name != nil && self.locationString() != nil {

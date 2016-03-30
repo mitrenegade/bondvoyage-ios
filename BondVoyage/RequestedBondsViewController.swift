@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import PKHUD
 
 class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let kCellIdentifier = "UserCell"
@@ -33,6 +34,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:updated", object: nil)
         
         self.setLeftProfileButton()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,34 +43,45 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func setup() {
-
         activities.removeAll()
-        
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        HUD.show(.SystemActivity)
         ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
+            self.navigationItem.rightBarButtonItem?.enabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
-            if results != nil {
-                if results!.count > 0 {
-                    for activity: PFObject in results! {
-                        if activity.isAcceptedActivity() {
-                            // skip matched activities
-                            continue
-                        }
-                        if let joining: [String] = activity.objectForKey("joining") as? [String] {
-                            if joining.count > 0 {
-                                self.activities.append(activity)
+            HUD.hide(animated: true, completion: { (success) -> Void in
+                if results != nil {
+                    if results!.count > 0 {
+                        for activity: PFObject in results! {
+                            if activity.isAcceptedActivity() {
+                                // skip matched activities
+                                continue
+                            }
+                            if let joining: [String] = activity.objectForKey("joining") as? [String] {
+                                if joining.count > 0 {
+                                    self.activities.append(activity)
+                                }
                             }
                         }
                     }
+                    if self.activities.count == 0 {
+                        self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
+                    }
                     self.tableView.reloadData()
                 }
-            }
-            if error != nil && error!.code == 209 {
-                self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                    PFUser.logOut()
-                    NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
-                })
-                return
-            }
+                if error != nil {
+                    if error!.code == 209 {
+                        self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                            PFUser.logOut()
+                            NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                        })
+                        return
+                    }
+                    else {
+                        self.simpleAlert("Could not load bonds", defaultMessage: "Please click refresh to try again.", error: error)
+                    }
+                }
+            })
         }
     }
     
@@ -101,13 +114,32 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         let activity: PFObject = self.activities[indexPath.row]
-        self.goToActivity(activity)
+        self.tableView.userInteractionEnabled = false
+        self.goToAcceptInvitation(activity)
     }
 
-    func goToActivity(activity: PFObject) {
-        self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
+    func goToAcceptInvitation(activity: PFObject) {
+        // join requests exist
+        if let userIds: [String] = activity.objectForKey("joining") as? [String] {
+            let userId = userIds[0]
+            let query: PFQuery = PFUser.query()!
+            query.whereKey("objectId", equalTo: userId)
+            query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                self.tableView.userInteractionEnabled = true
+                if results != nil && results!.count > 0 {
+                    let user: PFUser = results![0] as! PFUser
+                    let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                    controller.invitingUser = user
+                    controller.invitingActivity = activity
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
+            }
+        }
+        else {
+            self.tableView.userInteractionEnabled = true
+        }
     }
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToActivityDetail" {
             let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController

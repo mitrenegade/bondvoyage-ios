@@ -799,7 +799,7 @@
                                                                 <constraint firstAttribute="width" secondItem="Ob2-Li-igr" secondAttribute="height" multiplier="1:1" id="mfo-Wo-1Eu"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDb-wG-avr">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDb-wG-avr">
                                                             <rect key="frame" x="68" y="8" width="504" height="48"/>
                                                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
@@ -1355,7 +1355,7 @@
                                                                 <constraint firstAttribute="width" secondItem="SOt-BT-mJA" secondAttribute="height" multiplier="1:1" id="x0n-fK-ufE"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kr5-vs-UEM">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kr5-vs-UEM">
                                                             <rect key="frame" x="68" y="8" width="504" height="48"/>
                                                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
@@ -1415,7 +1415,6 @@
                     <navigationItem key="navigationItem" id="sZf-MZ-VAG"/>
                     <connections>
                         <outlet property="tableView" destination="by0-Ne-ifo" id="Tey-Nw-4FM"/>
-                        <segue destination="BDS-Ez-vG3" kind="show" identifier="GoToActivityDetail" id="2IM-4h-57t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6x-9z-arr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1433,6 +1432,6 @@
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2IM-4h-57t"/>
+        <segue reference="zua-Tk-rJN"/>
     </inferredMetricsTieBreakers>
 </document>
