@@ -209,10 +209,8 @@
 		8E099EC11C850140006A0320 /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				8EA047CC1C4FDDE200CCCAC3 /* ActivityBrowserViewController.swift */,
 				8E39C2181C7E6CA800C9B995 /* ActivityDetailViewController.swift */,
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
-				8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */,
 			);
 			name = Details;
 			sourceTree = "<group>";
@@ -220,21 +218,17 @@
 		8E39C21C1C7E7ECC00C9B995 /* Old */ = {
 			isa = PBXGroup;
 			children = (
+				8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */,
+				8EF6764B1C84BC8300D49A33 /* MapViewController.swift */,
+				8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */,
+				8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */,
+				8EC4C36B1C7EA928001B7E05 /* NewActivityViewController.swift */,
+				8EA047CC1C4FDDE200CCCAC3 /* ActivityBrowserViewController.swift */,
 				E56E32901C2AE7E4001A2349 /* HereAndNowViewController.swift */,
 				C5E094351C3651E800CABC51 /* SettingsViewController.swift */,
 				8EA047D21C4FF02C00CCCAC3 /* MatchStatusViewController.swift */,
 			);
 			name = Old;
-			sourceTree = "<group>";
-		};
-		8E507B521C4AB7960019FF19 /* Places */ = {
-			isa = PBXGroup;
-			children = (
-				8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */,
-				8E507B531C4AB7A60019FF19 /* PlacesViewController.swift */,
-				8EF6764B1C84BC8300D49A33 /* MapViewController.swift */,
-			);
-			name = Places;
 			sourceTree = "<group>";
 		};
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
@@ -255,7 +249,6 @@
 				C5E094371C3703CA00CABC51 /* EditProfileViewController.swift */,
 				8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */,
 				C5E094391C37236B00CABC51 /* AboutMeViewController.swift */,
-				8E4D133B1C452E1C00A11E1F /* SearchPreferencesViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -374,7 +367,6 @@
 		E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8E507B521C4AB7960019FF19 /* Places */,
 				C518526B1C341A9E00EA2328 /* Settings */,
 				8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
