@@ -153,7 +153,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    func logout() {
+    @IBAction func logout() {
         PFUser.logOut()
         NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
     }
@@ -312,6 +312,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
                 }
 
                 self.appDelegate().logUser()
+                NSNotificationCenter.defaultCenter().postNotificationName("profile:updated", object: nil)
             }
             else {
                 var message = "There was an error updating your profile."
