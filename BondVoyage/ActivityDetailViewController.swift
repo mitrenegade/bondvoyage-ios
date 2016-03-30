@@ -20,7 +20,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var labelTitle: UILabel!
     var street: String?
     var city: String?
-    
+
+    /*
     @IBOutlet weak var mapView: GMSMapView!
     var marker: GMSMarker?
     @IBOutlet weak var constraintMapHeight: NSLayoutConstraint!
@@ -30,6 +31,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
 
     @IBOutlet weak var buttonInvite: UIButton!
     @IBOutlet weak var constraintButtonHeight: NSLayoutConstraint!
+    */
+    
+    @IBOutlet weak var textView: UITextView!
     
     var activity: PFObject!
     var isRequestingJoin: Bool = false
@@ -44,6 +48,8 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     weak var browser: ActivityBrowserViewController?
     
+    var matchedUser: PFUser?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,6 +62,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         //self.reverseGeocode(CLLocation(latitude: geopoint.latitude, longitude: geopoint.longitude))
         
         // hide map. TODO: Enable map if user locations are used
+        /*
         self.mapView.userInteractionEnabled = false
         self.mapView.delegate = self
         self.constraintMapHeight.constant = 0
@@ -64,7 +71,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             self.constraintButtonHeight.constant = 0
             self.buttonInvite.hidden = true
         }
+        */
         self.refreshTitle()
+        self.refreshPlaces()
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +82,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
+        /*
         self.tableView.reloadData()
         self.constraintTableHeight.constant = CGFloat(80 * self.tableView.numberOfRowsInSection(0))
         
@@ -93,9 +103,10 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             }
             self.marker = GMSMarker(position: coordinate)
             self.marker!.map = self.mapView
-        }
-        
+        }  
+        self.refreshPlaces()
         self.refreshTitle()
+        */
     }
     
     func refreshTitle() {
@@ -108,6 +119,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                 query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
                     if results != nil && results!.count > 0 {
                         let user: PFUser = results![0] as! PFUser
+                        self.matchedUser = user
                         
                         if let name: String = user.objectForKey("firstName") as? String {
                             let categoryString = CategoryFactory.categoryReadableString(self.activity!.category()!)
@@ -135,12 +147,15 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                             self.profileView.image = UIImage(named: "profile-icon")
                         }
                     }
+                    
+                    self.refreshPlaces()
                 }
             }
         }
         else {
             if let user: PFUser = self.activity.user() {
                 user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
+                    self.matchedUser = user
                     if result != nil {
                         self.labelTitle.text = self.activity.shortTitle()
                         
@@ -151,9 +166,38 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                             self.profileView.image = UIImage(named: "profile-icon")
                         }
                     }
+                    
+                    self.refreshPlaces()
                 })
             }
         }
+    }
+    
+    func refreshPlaces() {
+        var string: String = "Congratulations on your successful bond"
+        if self.matchedUser != nil && self.matchedUser!.objectForKey("firstName") != nil {
+            let name = self.matchedUser!.objectForKey("firstName")!
+            string = "\(string) with \(name)"
+        }
+        
+        if self.activity.category() != nil {
+            let category = CategoryFactory.categoryReadableString(self.activity.category()!)
+            string = "\(string) for \(category)."
+        }
+        else {
+            string = "\(string)."
+        }
+        
+        string = "\(string)\n\nWe recommend the following venues: \n\n"
+        
+        let names = ["Cactus Club", "Meadhall", "The Elephant and Bell"]
+        let street = ["939 Boylston St", "4 Cambridge Center", "45 Union St"]
+        let citystate = ["Boston, MA 02215", "Cambridge, MA 02142", "Boston, MA 02108"]
+        for var i=0; i<names.count; i++ {
+            string = "\(string)\(names[i])\n\(street[i])\n\(citystate[i])\n\n"
+        }
+        self.textView.text = string
+        self.textView.contentOffset = CGPointMake(0, 0)
     }
     
     func reloadSuggestedPlaces() {
@@ -297,10 +341,13 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }
+            /*
             // invite
         else if sender == self.buttonInvite {
             self.goToSelectPlace()
         }
+        */
+            /*
         else {
             // user button
             let cell: UITableViewCell = sender.superview!.superview! as! UITableViewCell
@@ -313,10 +360,12 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }
+        */
     }
     
     // MARK: - InvitationDelegate
     func didSendInvitationForPlace() {
+        /*
         self.constraintButtonHeight.constant = 0 // why does this not hide the button?
         self.buttonInvite.hidden = true
 
@@ -333,6 +382,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         // also send a notification for other views not in this chain
         NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
+        */
     }
     
     func didAcceptInvitationForPlace() {
