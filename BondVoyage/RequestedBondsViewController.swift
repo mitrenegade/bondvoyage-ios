@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UserDetailsDelegate {
+class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let kCellIdentifier = "UserCell"
     
     @IBOutlet weak var tableView: UITableView!
@@ -110,6 +110,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         let activity: PFObject = self.activities[indexPath.row]
+        self.tableView.userInteractionEnabled = false
         self.goToAcceptInvitation(activity)
     }
 
@@ -120,25 +121,21 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
             let query: PFQuery = PFUser.query()!
             query.whereKey("objectId", equalTo: userId)
             query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                self.tableView.userInteractionEnabled = true
                 if results != nil && results!.count > 0 {
                     let user: PFUser = results![0] as! PFUser
                     let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                     controller.invitingUser = user
                     controller.invitingActivity = activity
-                    controller.delegate = self
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
             }
         }
+        else {
+            self.tableView.userInteractionEnabled = true
+        }
     }
     
-    // MARK: - UserDetailsDelegate
-    func didRespondToInvitation() {
-        print("declined")
-        self.setup()
-        self.navigationController!.popToViewController(self, animated: true)
-    }
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToActivityDetail" {
             let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController

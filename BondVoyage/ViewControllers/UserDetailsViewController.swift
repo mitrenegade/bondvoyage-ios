@@ -12,6 +12,7 @@ import AsyncImageView
 import PKHUD
 
 protocol UserDetailsDelegate: class {
+    // NOT USED
     func didRespondToInvitation()
 }
 
@@ -231,14 +232,10 @@ class UserDetailsViewController: UIViewController {
                 HUD.flash(.Label("Could not accept invitation. Please try again."), withDelay: 2)
             }
             else {
+                NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
                 HUD.show(.Label("Invitation accepted."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
-                    if self.delegate != nil {
-                        self.delegate!.didRespondToInvitation()
-                    }
-                    else {
-                        self.navigationController?.popToRootViewControllerAnimated(true)
-                    }
+                    self.navigationController?.popToRootViewControllerAnimated(true)
                 })
             }
         }
@@ -258,14 +255,10 @@ class UserDetailsViewController: UIViewController {
                 HUD.flash(.Label("Could not decline invitation. Please try again."), withDelay: 2)
             }
             else {
+                NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
                 HUD.show(.Label("Invitation declined."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
-                    if self.delegate != nil {
-                        self.delegate!.didRespondToInvitation()
-                    }
-                    else {
-                        self.navigationController?.popToRootViewControllerAnimated(true)
-                    }
+                    self.navigationController?.popToRootViewControllerAnimated(true)
                 })
             }
         }
