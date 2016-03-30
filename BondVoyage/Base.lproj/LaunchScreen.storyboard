@@ -25,12 +25,24 @@
                                     <constraint firstAttribute="height" constant="175" id="tMO-Fn-wz3"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting people around the world" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gu-qR-ogo">
+                                <rect key="frame" x="20" y="395" width="560" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="kfi-yf-eeC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="21"/>
+                                <color key="textColor" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.7843137255" green="0.90196078430000004" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="KhK-fK-PTJ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="1rb-NE-1k8"/>
+                            <constraint firstItem="5Gu-qR-ogo" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="98L-zG-XVa"/>
+                            <constraint firstItem="5Gu-qR-ogo" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="gSR-UM-B5E"/>
                             <constraint firstItem="KhK-fK-PTJ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qeF-00-XLZ"/>
                             <constraint firstItem="KhK-fK-PTJ" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="tEw-IQ-8iG"/>
+                            <constraint firstItem="5Gu-qR-ogo" firstAttribute="top" secondItem="KhK-fK-PTJ" secondAttribute="bottom" constant="8" id="wae-Lv-b1r"/>
                             <constraint firstItem="KhK-fK-PTJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="yEz-8x-cu7"/>
                         </constraints>
                     </view>
