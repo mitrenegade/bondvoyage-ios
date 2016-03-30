@@ -113,6 +113,9 @@ class AboutMeViewController: UIViewController, UITextViewDelegate {
         return true
     }
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     /*
     // MARK: - Navigation
 

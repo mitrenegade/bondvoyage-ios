@@ -351,7 +351,7 @@
         <scene sceneID="4eW-yU-7io">
             <objects>
                 <navigationController id="xPb-CS-Ee1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="icon-plus" id="IPc-wf-V01">
+                    <tabBarItem key="tabBarItem" title="Search" image="icon-search" id="IPc-wf-V01">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -374,7 +374,7 @@
         <scene sceneID="Jcm-tv-1Bb">
             <objects>
                 <navigationController id="Xvr-Id-WNH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Bond Requests" image="icon-star" id="XR6-rP-9hO">
+                    <tabBarItem key="tabBarItem" title="Bond Requests" image="icon-profile" id="XR6-rP-9hO">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -698,7 +698,7 @@
         <scene sceneID="RGX-Mb-jiF">
             <objects>
                 <navigationController id="SLi-Ju-8E8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Matches" image="icon-settings" id="Y2d-j6-VUZ">
+                    <tabBarItem key="tabBarItem" title="Matches" image="icon-star" id="Y2d-j6-VUZ">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1375,9 +1375,8 @@
     <resources>
         <image name="bg6" width="2000" height="1333"/>
         <image name="icon-location" width="512" height="512"/>
-        <image name="icon-plus" width="40" height="40"/>
+        <image name="icon-profile" width="40" height="40"/>
         <image name="icon-search" width="40" height="40"/>
-        <image name="icon-settings" width="40" height="40"/>
         <image name="icon-star" width="40" height="40"/>
         <image name="logo-airplane" width="825" height="300"/>
     </resources>
