@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UserDetailsDelegate {
     let kCellIdentifier = "UserCell"
     
     @IBOutlet weak var tableView: UITableView!
@@ -110,11 +110,22 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         let activity: PFObject = self.activities[indexPath.row]
-        self.goToActivity(activity)
+        self.goToAcceptInvitation(activity)
     }
 
-    func goToActivity(activity: PFObject) {
-        self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
+    func goToAcceptInvitation(activity: PFObject) {
+        let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+        let user: PFUser = activity.objectForKey("user") as! PFUser
+        controller.invitingUser = user
+        controller.invitingActivity = activity
+        controller.delegate = self
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    // MARK: - UserDetailsDelegate
+    func didRespondToInvitation() {
+        print("declined")
+        self.setup()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -9,9 +9,10 @@
 import UIKit
 import Parse
 import AsyncImageView
+import PKHUD
 
 protocol UserDetailsDelegate: class {
-    func didDeclineInvitation()
+    func didRespondToInvitation()
 }
 
 class UserDetailsViewController: UIViewController {
@@ -31,7 +32,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var relevantInterests: [String]?
-    var invitingMatch: PFObject?
+    var invitingActivity: PFObject?
 
     weak var delegate: UserDetailsDelegate?
     
@@ -73,13 +74,12 @@ class UserDetailsViewController: UIViewController {
         self.constraintNameViewTopOffset.constant = self.view.frame.size.height - self.nameView.frame.size.height - self.interestsView.frame.size.height
         self.scrollViewContainer.contentMode = .ScaleAspectFill
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
         if self.invitingUser != nil {
             self.title = "Invitation"
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Decline", style: .Done, target: self, action: "declineInvitation")
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Accept", style: .Done, target: self, action: "acceptInvitation")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "respond", style: .Done, target: self, action: "handleInvitation")
         }
         else {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "goToEditProfile")
         }
     }
@@ -151,9 +151,9 @@ class UserDetailsViewController: UIViewController {
             return
         }
 
-        if self.invitingMatch != nil {
-            self.invitingMatch!.fetchInBackgroundWithBlock({ (object, error) -> Void in
-                if let categories: [String] = self.invitingMatch!.objectForKey("categories") as? [String] {
+        if self.invitingActivity != nil {
+            self.invitingActivity!.fetchInBackgroundWithBlock({ (object, error) -> Void in
+                if let categories: [String] = self.invitingActivity!.objectForKey("categories") as? [String] {
                     let str = self.stringFromArray(categories)
                     if self.selectedUser != nil {
                         self.interestsLabel.text = "Interests: \(str)"
@@ -189,7 +189,7 @@ class UserDetailsViewController: UIViewController {
     func close() {
         // close modally
         if self.delegate != nil {
-            self.delegate!.didDeclineInvitation()
+            self.delegate!.didRespondToInvitation()
         }
         else {
             self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -200,6 +200,73 @@ class UserDetailsViewController: UIViewController {
         self.performSegueWithIdentifier("GoToEditProfile", sender: nil)
     }
     
+    // MARK: - Invitation actions
+    func handleInvitation() {
+        let alert: UIAlertController = UIAlertController(title: "Respond to invitation", message: "Would you like to accept this invitation to bond?", preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Accept invitation", style: .Default, handler: { (action) -> Void in
+            self.goToAcceptInvitation()
+        }))
+        alert.addAction(UIAlertAction(title: "Decline invitation", style: .Default, handler: { (action) -> Void in
+            self.goToRejectInvitation()
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func goToAcceptInvitation() {
+        HUD.show(.SystemActivity)
+        ActivityRequest.respondToJoin(self.invitingActivity!, joiningUserId: self.invitingUser!.objectId, responseType: "accepted") { (results, error) -> Void in
+            if error != nil {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to accept invitations.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
+                HUD.flash(.Label("Could not accept invitation. Please try again."), withDelay: 2)
+            }
+            else {
+                HUD.show(.Label("Invitation accepted."))
+                HUD.hide(animated: true, completion: { (complete) -> Void in
+                    if self.delegate != nil {
+                        self.delegate!.didRespondToInvitation()
+                    }
+                    else {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                })
+            }
+        }
+    }
+    
+    func goToRejectInvitation() {
+        HUD.show(.SystemActivity)
+        ActivityRequest.respondToJoin(self.invitingActivity!, joiningUserId: self.invitingUser!.objectId, responseType: "declined") { (results, error) -> Void in
+            if error != nil {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to decline invitations.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
+                HUD.flash(.Label("Could not decline invitation. Please try again."), withDelay: 2)
+            }
+            else {
+                HUD.show(.Label("Invitation declined."))
+                HUD.hide(animated: true, completion: { (complete) -> Void in
+                    if self.delegate != nil {
+                        self.delegate!.didRespondToInvitation()
+                    }
+                    else {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                })
+            }
+        }
+    }
+
     /*
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToEditProfile" {

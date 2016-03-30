@@ -225,14 +225,14 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
     func goToAcceptInvite(user: PFUser) {
         let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
         controller.invitingUser = user
-        controller.invitingMatch = self.currentActivity
+        controller.invitingActivity = self.currentActivity
         controller.delegate = self
         controller.title = "Invite"
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
     // MARK: - UserDetailsDelegate
-    func didDeclineInvitation() {
+    func didRespondToInvitation() {
         /* TODO
         self.fromMatch = nil
         // fetch from web because it was already updated
