@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import PKHUD
 
 class MatchedBondsViewController: RequestedBondsViewController {
     var myActivitiesLoaded: Bool = false
@@ -26,6 +27,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
         self.myActivitiesLoaded = false
         self.otherActivitiesLoaded = false
         self.loadingError = nil
+        HUD.show(.SystemActivity)
         ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             // returns activities where the owner of the activity is the user
             if results != nil {
@@ -64,21 +66,26 @@ class MatchedBondsViewController: RequestedBondsViewController {
         
         if self.myActivitiesLoaded && self.otherActivitiesLoaded {
             self.navigationItem.rightBarButtonItem?.enabled = true
-            if self.loadingError != nil {
-                if self.loadingError!.code == 209 {
-                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                        PFUser.logOut()
-                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
-                    })
-                    return
+            HUD.hide(animated: true, completion: { (success) -> Void in
+                if self.loadingError != nil {
+                    if self.loadingError!.code == 209 {
+                        self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                            PFUser.logOut()
+                            NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                        })
+                        return
+                    }
+                    else {
+                        self.simpleAlert("Could not load matches", defaultMessage: "Please click refresh to try again.", error: self.loadingError)
+                    }
                 }
                 else {
-                    self.simpleAlert("Could not load matches", defaultMessage: "Please click refresh to try again.", error: self.loadingError)
+                    if self.activities.count == 0 {
+                        self.simpleAlert("No matches yet", message: "There are currently no matched bonds for you.")
+                    }
+                    self.tableView.reloadData()
                 }
-            }
-            else {
-                self.tableView.reloadData()
-            }
+            })
         }
     }
 }
