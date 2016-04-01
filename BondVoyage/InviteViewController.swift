@@ -10,6 +10,10 @@ import UIKit
 import Parse
 import PKHUD
 
+protocol InviteDelegate: class {
+    func didCloseInvites(invited: Bool)
+}
+
 class InviteViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
@@ -23,6 +27,7 @@ class InviteViewController: UIViewController {
     
     var category: CATEGORY?
     var activities: [PFObject]?
+    var delegate: InviteDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +51,12 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController!.popToRootViewControllerAnimated(true)
+        if self.delegate != nil {
+            self.delegate!.didCloseInvites(false)
+        }
+        else {
+            self.navigationController!.popToRootViewControllerAnimated(true)
+        }
     }
     
     @IBAction func didClickButton(button: UIButton) {
@@ -76,7 +86,12 @@ class InviteViewController: UIViewController {
                 self.refresh()
                 HUD.show(.Label("Invitation sent."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
-                    self.close()
+                    if self.delegate != nil {
+                        self.delegate!.didCloseInvites(true)
+                    }
+                    else {
+                        self.navigationController!.popToRootViewControllerAnimated(true)
+                    }
                 })
             }
         })

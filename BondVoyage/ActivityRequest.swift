@@ -26,7 +26,7 @@ class ActivityRequest: NSObject {
             params["ageMax"] = ageMax!
         }
         
-        PFCloud.callFunctionInBackground("createActivity", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("createOrUpdateActivity", withParameters: params) { (results, error) -> Void in
             print("results: \(results)")
             let activity: PFObject? = results as? PFObject
             completion(result: activity, error: error)
@@ -96,6 +96,20 @@ class ActivityRequest: NSObject {
         PFCloud.callFunctionInBackground("respondToJoin", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             completion(results: results, error: error)
+        }
+    }
+    
+    class func queryMatchedActivities(user: PFUser?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+        
+        var params: [String: AnyObject] = [String: AnyObject]()
+        if user != nil {
+            params["userId"] = user!.objectId!
+        }
+        
+        PFCloud.callFunctionInBackground("queryMatchedActivities", withParameters: params) { (results, error) -> Void in
+            print("results: \(results) error: \(error)")
+            let activities: [PFObject]? = results as? [PFObject]
+            completion(results: activities, error: error)
         }
     }
     

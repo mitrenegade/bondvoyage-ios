@@ -12,7 +12,6 @@ import AsyncImageView
 import PKHUD
 
 protocol UserDetailsDelegate: class {
-    // NOT USED
     func didRespondToInvitation()
 }
 

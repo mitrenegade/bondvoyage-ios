@@ -62,7 +62,6 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             HUD.hide(animated: true, completion: { (success) -> Void in
                 if results != nil {
-                    self.requestTimestamp = NSDate()
                     self.activities.appendContentsOf(results!)
                     if self.activities.count == 0 {
                         self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
