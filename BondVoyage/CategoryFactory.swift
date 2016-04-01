@@ -67,16 +67,17 @@ var SUBCATEGORIES: [CATEGORY: [SUBCATEGORY]] = [
 
 var BG_CATEGORIES: [CATEGORY: String] = [
     .Food: "category_food",
+    .Nightlife: "category-nightlife",
+    .CultureSightseeing: "category-culture",
+    .Fitness: "category-fitness2",
+
     .Drink: "event_starbucks",
     .Entertainment: "category_entertainment",
-    .Fitness: "category_health",
     .HealthRelaxation: "category_community",
     .SportsRecreation: "category_sports",
     .MusicArts: "category_music",
-    .CultureSightseeing: "event_ducktours",
     .RetailShopping: "category_technology",
     .Beaches: "category_outdoors",
-    .Nightlife: "event_salsa",
     .OutdoorExtremeSports: "category_outdoors",
     .Other: "event_karaoke"
 ]
