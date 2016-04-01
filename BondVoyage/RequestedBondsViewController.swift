@@ -29,15 +29,15 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController!.navigationBar.addSubview(imageView)
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
         
-        self.setup()
+        self.refresh()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setup", name: "activity:updated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: "activity:updated", object: nil)
         
         self.setLeftProfileButton()
         let button: UIButton = UIButton(frame: CGRectMake(0, 0, 30, 30))
         let image = UIImage(named: "icon-refresh")!.imageWithRenderingMode(.AlwaysTemplate)
         button.setImage(image, forState: .Normal)
-        button.addTarget(self, action: "setup", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: "refresh", forControlEvents: .TouchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
     }
@@ -47,34 +47,32 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         // Dispose of any resources that can be recreated.
     }
     
-    func setup() {
+    func refresh() {
+        self.setupWithCompletion { 
+            self.refreshBadgeCount()
+        }
+    }
+    
+    func setupWithCompletion( completion: (()->Void)? ) {
         activities.removeAll()
         self.navigationItem.rightBarButtonItem?.enabled = false
         HUD.show(.SystemActivity)
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
+        ActivityRequest.getRequestedBonds { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             HUD.hide(animated: true, completion: { (success) -> Void in
                 if results != nil {
-                    if results!.count > 0 {
-                        for activity: PFObject in results! {
-                            if activity.isAcceptedActivity() {
-                                // skip matched activities
-                                continue
-                            }
-                            if let joining: [String] = activity.objectForKey("joining") as? [String] {
-                                if joining.count > 0 {
-                                    self.activities.append(activity)
-                                }
-                            }
-                        }
-                    }
+                    self.requestTimestamp = NSDate()
+                    self.activities.appendContentsOf(results!)
                     if self.activities.count == 0 {
                         self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
                     }
                     self.tableView.reloadData()
+                    if completion != nil {
+                        completion!()
+                    }
                 }
-                if error != nil {
+                else if error != nil {
                     if error!.code == 209 {
                         self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
                             PFUser.logOut()
@@ -84,6 +82,9 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     else {
                         self.simpleAlert("Could not load bonds", defaultMessage: "Please click refresh to try again.", error: error)
+                    }
+                    if completion != nil {
+                        completion!()
                     }
                 }
             })
@@ -142,6 +143,36 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
         else {
             self.tableView.userInteractionEnabled = true
+        }
+    }
+    
+    // MARK: - Badges
+    func setBadgeCount() {
+        // badges are all matches within the last hour that have not been stored into defaults as "seen"
+        self.setupWithCompletion({
+            self.refreshBadgeCount()
+        })
+    }
+    
+    func refreshBadgeCount() {
+        var ct = 0
+        for activity: PFObject in self.activities {
+            let id = activity.objectId!
+            let key = "requestedBond:seen:\(id)"
+            if NSUserDefaults.standardUserDefaults().objectForKey(key) != nil && NSUserDefaults.standardUserDefaults().objectForKey(key) as! Bool == true {
+                continue
+            }
+            let created = activity.objectForKey("time") as! NSDate
+            if created.timeIntervalSinceNow <= -6000*60 {
+                continue
+            }
+            ct = ct + 1
+        }
+        if ct > 0 {
+            self.navigationController?.tabBarItem.badgeValue = "\(ct)"
+        }
+        else {
+            self.navigationController?.tabBarItem.badgeValue = nil
         }
     }
 }

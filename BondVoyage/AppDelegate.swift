@@ -65,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if PFUser.currentUser() != nil {
             self.logUser()
         }
+        
         return true
     }
 
