@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
@@ -787,27 +788,31 @@
                                     <outlet property="delegate" destination="Iaw-Ys-emX" id="JlS-Hs-GdS"/>
                                 </connections>
                             </tableView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccS-F3-6Px" userLabel="Container View - categories">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w4x-5R-jk4">
+                                <rect key="frame" x="120" y="32" width="360" height="471"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="n93-2N-A3C"/>
+                                    <constraint firstAttribute="height" constant="471" id="Igd-6R-fmG"/>
                                 </constraints>
-                            </containerView>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="19"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="2X0-Yd-p9Z" secondAttribute="trailing" id="1Pp-Nj-pfW"/>
-                            <constraint firstAttribute="trailing" secondItem="ccS-F3-6Px" secondAttribute="trailing" id="70D-Vf-M4Y"/>
+                            <constraint firstItem="w4x-5R-jk4" firstAttribute="centerY" secondItem="DF7-H3-eZp" secondAttribute="centerY" id="E8Q-GJ-UEp"/>
+                            <constraint firstItem="w4x-5R-jk4" firstAttribute="centerX" secondItem="DF7-H3-eZp" secondAttribute="centerX" id="EDb-2R-R3n"/>
                             <constraint firstItem="pCV-qG-Drt" firstAttribute="top" secondItem="2X0-Yd-p9Z" secondAttribute="bottom" id="EcK-AM-5lR"/>
                             <constraint firstItem="2X0-Yd-p9Z" firstAttribute="leading" secondItem="DF7-H3-eZp" secondAttribute="leading" id="Iaf-xh-kgd"/>
                             <constraint firstItem="2X0-Yd-p9Z" firstAttribute="top" secondItem="pNi-tr-jxE" secondAttribute="bottom" id="Ivb-qQ-ell"/>
-                            <constraint firstItem="ccS-F3-6Px" firstAttribute="leading" secondItem="DF7-H3-eZp" secondAttribute="leading" id="TPD-Sj-X6Z"/>
-                            <constraint firstItem="ccS-F3-6Px" firstAttribute="top" secondItem="pNi-tr-jxE" secondAttribute="bottom" id="xqq-EL-fK3"/>
+                            <constraint firstItem="w4x-5R-jk4" firstAttribute="width" secondItem="DF7-H3-eZp" secondAttribute="width" multiplier="3:5" id="kcb-6T-71T"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="VA4-4Y-lAK"/>
                     <connections>
+                        <outlet property="labelNoBonds" destination="w4x-5R-jk4" id="nCs-YP-7ay"/>
                         <outlet property="tableView" destination="2X0-Yd-p9Z" id="Ga5-rF-wZ8"/>
                     </connections>
                 </viewController>
@@ -1342,27 +1347,32 @@
                                     <outlet property="delegate" destination="icD-0f-BF0" id="eCE-qL-W8N"/>
                                 </connections>
                             </tableView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMu-zZ-lSQ" userLabel="Container View - categories">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yK9-bE-Wk5">
+                                <rect key="frame" x="120" y="33" width="360" height="471"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="BnW-rI-Th3"/>
+                                    <constraint firstAttribute="height" constant="471" id="55Z-O7-Ow5"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="471" id="sTI-nI-Ujg"/>
                                 </constraints>
-                            </containerView>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="19"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="by0-Ne-ifo" firstAttribute="leading" secondItem="tuK-ld-DHD" secondAttribute="leading" id="0BU-Kk-hYo"/>
-                            <constraint firstAttribute="trailing" secondItem="TMu-zZ-lSQ" secondAttribute="trailing" id="0y7-kS-7fq"/>
+                            <constraint firstItem="yK9-bE-Wk5" firstAttribute="centerX" secondItem="tuK-ld-DHD" secondAttribute="centerX" id="8XP-IC-6z9"/>
                             <constraint firstItem="by0-Ne-ifo" firstAttribute="top" secondItem="edi-tV-aTT" secondAttribute="bottom" id="Eu5-2y-CfE"/>
                             <constraint firstAttribute="trailing" secondItem="by0-Ne-ifo" secondAttribute="trailing" id="Ps9-Wg-07B"/>
-                            <constraint firstItem="TMu-zZ-lSQ" firstAttribute="top" secondItem="edi-tV-aTT" secondAttribute="bottom" id="WEg-nO-xSy"/>
-                            <constraint firstItem="TMu-zZ-lSQ" firstAttribute="leading" secondItem="tuK-ld-DHD" secondAttribute="leading" id="p9g-p7-a0N"/>
+                            <constraint firstItem="yK9-bE-Wk5" firstAttribute="centerY" secondItem="tuK-ld-DHD" secondAttribute="centerY" id="aDH-Km-54U"/>
+                            <constraint firstItem="yK9-bE-Wk5" firstAttribute="width" secondItem="tuK-ld-DHD" secondAttribute="width" multiplier="3:5" id="axx-hr-6Jk"/>
                             <constraint firstItem="5Pv-eC-uec" firstAttribute="top" secondItem="by0-Ne-ifo" secondAttribute="bottom" id="qx9-HD-Tdb"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="sZf-MZ-VAG"/>
                     <connections>
+                        <outlet property="labelNoBonds" destination="yK9-bE-Wk5" id="jcB-We-IW3"/>
                         <outlet property="tableView" destination="by0-Ne-ifo" id="Tey-Nw-4FM"/>
                         <segue destination="BDS-Ez-vG3" kind="show" identifier="GoToActivityDetail" id="ptv-bW-TOo"/>
                     </connections>

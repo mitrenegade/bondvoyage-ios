@@ -14,6 +14,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     let kCellIdentifier = "UserCell"
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var labelNoBonds: UILabel!
 
     var activities: [PFObject] = []
     var tabIndex: BVTabIndex!
@@ -65,13 +66,15 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     func setupWithCompletion( completion: (()->Void)? ) {
         activities.removeAll()
         self.navigationItem.rightBarButtonItem?.enabled = false
+        self.labelNoBonds.hidden = true
         ActivityRequest.getRequestedBonds { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             if results != nil {
                 self.activities.appendContentsOf(results!)
                 if self.activities.count == 0 {
-                    self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
+                    self.labelNoBonds.text = "There are currently no bond requests for you."
+                    self.labelNoBonds.hidden = false
                 }
                 self.tableView.reloadData()
                 if completion != nil {
