@@ -20,6 +20,7 @@ class BVTabBarController: UITabBarController {
     
     var bondReceivedTimestamp: NSDate? // timestamp for last time requestedBonds were received
     var matchReceivedTimestamp: NSDate? // timestamp for last time matchedBonds were received
+    var promptedForPush: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,22 @@ class BVTabBarController: UITabBarController {
         // Do any additional setup after loading the view.
         self.refreshNotifications()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshNotifications", name: "activity:updated", object: nil)
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if PFUser.currentUser() != nil && !self.promptedForPush {
+            if !self.appDelegate().hasPushEnabled() {
+                // prompt for it
+                self.appDelegate().registerForRemoteNotifications()
+            }
+            else {
+                // reregister
+                self.appDelegate().initializeNotificationServices()
+            }
+            self.promptedForPush = true
+        }
     }
 
     override func didReceiveMemoryWarning() {
