@@ -32,24 +32,31 @@ class BVTabBarController: UITabBarController {
     }
     
     func refreshNotifications() {
-    }
-
-    // MARK: RequestedBonds
-    let REQUEST_TIMESTAMP_INTERVAL = NSTimeInterval(-10*60) // 10 minutes
-    let NOTIFICATION_TIMESTAMP_INTERVAL = NSTimeInterval(-2*60*60) // 2 hours
-    
-    func needsUpdateRequestedBonds() -> Bool {
-        if self.bondReceivedTimestamp == nil || self.bondReceivedTimestamp!.timeIntervalSinceNow < REQUEST_TIMESTAMP_INTERVAL {
-            // no timestamp, or 10 minutes old
-            return true
+        ActivityRequest.queryMatchedActivities(PFUser.currentUser()) { (results, error) in
+            if error != nil {
+                return
+            }
+            self.refreshBadgeCount(.TAB_MATCHED_BONDS, activities: results)
         }
-        return false
+        
+        ActivityRequest.getRequestedBonds { (results, error) in
+            if error != nil {
+                return
+            }
+            self.refreshBadgeCount(.TAB_REQUESTED_BONDS, activities: results)
+        }
     }
 
-    func refreshBadgeCount(tabIndex: TabIndex, activities: [PFObject]) {
+    func refreshBadgeCount(tabIndex: TabIndex, activities: [PFObject]?) {
         if tabIndex != .TAB_REQUESTED_BONDS && tabIndex != .TAB_MATCHED_BONDS {
             return
         }
+        let tabBarItem = self.tabBar.items![tabIndex.rawValue]
+        if activities == nil {
+            tabBarItem.badgeValue = nil
+            return
+        }
+
         var key: String
         if tabIndex == .TAB_REQUESTED_BONDS {
             key = "requestedBond:seen:"
@@ -58,7 +65,7 @@ class BVTabBarController: UITabBarController {
             key = "matchedBond:seen:"
         }
         var ct = 0
-        for activity: PFObject in activities {
+        for activity: PFObject in activities! {
             let id = activity.objectId!
             key = "\(key)\(id)"
             if NSUserDefaults.standardUserDefaults().objectForKey(key) != nil && NSUserDefaults.standardUserDefaults().objectForKey(key) as! Bool == true {
@@ -71,7 +78,6 @@ class BVTabBarController: UITabBarController {
             ct = ct + 1
         }
         
-        let tabBarItem = self.tabBar.items![tabIndex.rawValue]
         if ct > 0 {
             tabBarItem.badgeValue = "\(ct)"
         }
@@ -79,14 +85,4 @@ class BVTabBarController: UITabBarController {
             tabBarItem.badgeValue = nil
         }
     }
-    
-    func needsUpdateMatchedBonds() -> Bool {
-        if self.bondReceivedTimestamp == nil || self.matchReceivedTimestamp!.timeIntervalSinceNow < REQUEST_TIMESTAMP_INTERVAL {
-            // no timestamp, or 10 minutes old
-            return true
-        }
-        return false
-    }
-    
-    
 }
