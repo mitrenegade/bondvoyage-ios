@@ -232,6 +232,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         let escapedString = address.stringByReplacingOccurrencesOfString(" ", withString: "+")
         print("original \(address) escaped \(escapedString)")
         let url: NSURL? = NSURL(string: "comgooglemaps://?q=\(escapedString)")
+        let canOpenMaps = UIApplication.sharedApplication().canOpenURL(
+            NSURL(string: "comgooglemaps://")!)
+        
         if url != nil && UIApplication.sharedApplication().canOpenURL(url!) {
             UIApplication.sharedApplication().openURL(url!)
         }
