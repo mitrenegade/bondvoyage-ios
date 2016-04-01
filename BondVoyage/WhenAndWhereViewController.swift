@@ -80,10 +80,10 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         
         self.constraintTableViewHeight.constant = ROW_HEIGHT * CGFloat(PERSON_TYPES.count)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Go", style: .Plain, target: self, action: "createActivity")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Go", style: .Plain, target: self, action: "searchForMatch")
     }
     
-    func createActivity() {
+    func searchForMatch() {
         // validate
         var aboutSelf: String? = self.inputAboutMe.text
         if self.inputAboutMe.text != nil && self.inputAboutMe.text!.isEmpty {
@@ -91,13 +91,10 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         var aboutOthers = [VoyagerType]()
-        for var i = 0; i < self.selectedTypes.count; i++ {
+        for i in 0 ..< self.selectedTypes.count {
             if self.selectedTypes[i] {
                 aboutOthers.append(PERSON_TYPES[i])
             }
-        }
-        let aboutOthersRaw = aboutOthers.map { (v) -> String in
-            return v.rawValue
         }
         
         if aboutSelf == nil {
@@ -117,29 +114,15 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
             self.inputWhen.text = self.defaultTime
         }
 
-        let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
-        let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
-        
         self.navigationItem.rightBarButtonItem?.enabled = false
-        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: aboutSelf, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
-            if error != nil {
-                self.navigationItem.rightBarButtonItem?.enabled = true
-                print("Error: \(error)")
-                
-                print("We could not create an activity for you but you can still browse existing ones.")
-            }
-            else {
-                print("result: \(result)")
-                self.requestActivities()
-            }
-        }
+        self.requestActivities()
     }
     
     func requestActivities() {
         let cat: [String] = [self.category!.rawValue]
-
+        
         var aboutOthers = [VoyagerType]()
-        for var i = 0; i < self.selectedTypes.count; i++ {
+        for i in 0 ..< self.selectedTypes.count {
             if self.selectedTypes[i] {
                 aboutOthers.append(PERSON_TYPES[i])
             }
@@ -157,13 +140,20 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
                 }
                 else {
                     // no results, no error
-                    var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.category!)) near you."
-                    if PFUser.currentUser() != nil {
-                        message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
-                    }
-                    
-                    self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    self.createActivityWithCompletion({ (success) in
+                        var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.category!)) near you."
+                        if PFUser.currentUser() != nil {
+                            if success {
+                                message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
+                            }
+                            else {
+                                message = "\(message) Please try again later."
+                            }
+                        }
+                        
+                        self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        })
                     })
                 }
             }
@@ -177,6 +167,30 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
                 }
                 let message = "There was a problem loading matches. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+            }
+        }
+    }
+    
+    func createActivityWithCompletion(completion: ((Bool)->Void)) {
+        let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
+        let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
+        
+        var aboutOthers = [VoyagerType]()
+        for i in 0 ..< self.selectedTypes.count {
+            if self.selectedTypes[i] {
+                aboutOthers.append(PERSON_TYPES[i])
+            }
+        }
+        let aboutOthersRaw = aboutOthers.map { (v) -> String in
+            return v.rawValue
+        }
+        
+        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
+            if error != nil {
+                completion(false)
+            }
+            else {
+                completion(true)
             }
         }
     }
