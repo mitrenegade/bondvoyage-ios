@@ -189,21 +189,27 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     func refreshPlaces() {
         // name
-        var string: String = "Congratulations on your successful bond"
+        var string: String = "Congratulations!"
+        var name: String? = nil
         if self.matchedUser != nil && self.matchedUser!.objectForKey("firstName") != nil {
-            let name = self.matchedUser!.objectForKey("firstName")!
-            string = "\(string) with \(name)"
+            name = self.matchedUser!.objectForKey("firstName") as? String
         }
-        
+        var category: String? = nil
         if self.activity.category() != nil {
-            let category = CategoryFactory.categoryReadableString(self.activity.category()!)
-            string = "\(string) for \(category)."
-        }
-        else {
-            string = "\(string)."
+            category = CategoryFactory.categoryReadableString(self.activity.category()!)
         }
         
-        string = "\(string) We recommend the following venues: \n\n"
+        if name != nil && category != nil {
+            string = "\(string) You have bonded with \(name!) over \(category!)!"
+        }
+        else if name != nil {
+            string = "\(string) You have bonded with \(name!)."
+        }
+        else if category != nil {
+            string = "\(string) You have bonded over \(category!)."
+        }
+        
+        string = "\(string) We recommend the following three places based on your mutual interests: \n\n"
         self.labelCongrats.text = string
     
         // places tableview
