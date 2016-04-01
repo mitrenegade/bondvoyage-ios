@@ -67,7 +67,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 180
+        return 140
     }
     
     // MARK: - UITableViewDelegate
