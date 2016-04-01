@@ -191,12 +191,12 @@ class UserDetailsViewController: UIViewController {
     }
     
     func close() {
-        // close modally
         if self.delegate != nil {
             self.delegate!.didRespondToInvitation()
         }
         else {
-            self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            // close modally
+            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     

@@ -10,15 +10,17 @@ import UIKit
 import Parse
 import PKHUD
 
-class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UserDetailsDelegate {
     let kCellIdentifier = "UserCell"
     
     @IBOutlet weak var tableView: UITableView!
 
     var activities: [PFObject] = []
-
+    var tabIndex: BVTabIndex!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tabIndex = .TAB_REQUESTED_BONDS
 
         // configure title bar
         let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
@@ -48,45 +50,45 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
-        self.setupWithCompletion { 
-            self.refreshBadgeCount()
+        HUD.show(.SystemActivity)
+        self.setupWithCompletion {
+            // used to be: update badge counts
+            HUD.hide(animated: true, completion: { (success) -> Void in
+            })
         }
     }
     
     func setupWithCompletion( completion: (()->Void)? ) {
         activities.removeAll()
         self.navigationItem.rightBarButtonItem?.enabled = false
-        HUD.show(.SystemActivity)
         ActivityRequest.getRequestedBonds { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
-            HUD.hide(animated: true, completion: { (success) -> Void in
-                if results != nil {
-                    self.activities.appendContentsOf(results!)
-                    if self.activities.count == 0 {
-                        self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
-                    }
-                    self.tableView.reloadData()
-                    if completion != nil {
-                        completion!()
-                    }
+            if results != nil {
+                self.activities.appendContentsOf(results!)
+                if self.activities.count == 0 {
+                    self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
                 }
-                else if error != nil {
-                    if error!.code == 209 {
-                        self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                            PFUser.logOut()
-                            NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
-                        })
-                        return
-                    }
-                    else {
-                        self.simpleAlert("Could not load bonds", defaultMessage: "Please click refresh to try again.", error: error)
-                    }
-                    if completion != nil {
-                        completion!()
-                    }
+                self.tableView.reloadData()
+                if completion != nil {
+                    completion!()
                 }
-            })
+            }
+            else if error != nil {
+                if error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
+                else {
+                    self.simpleAlert("Could not load bonds", defaultMessage: "Please click refresh to try again.", error: error)
+                }
+                if completion != nil {
+                    completion!()
+                }
+            }
         }
     }
     
@@ -121,6 +123,21 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         let activity: PFObject = self.activities[indexPath.row]
         self.tableView.userInteractionEnabled = false
         self.goToActivity(activity)
+        
+        // mark activity as seen
+        var key: String
+        if self.tabIndex == .TAB_REQUESTED_BONDS {
+            key = "requestedBond:seen:"
+        }
+        else {
+            key = "matchedBond:seen:"
+        }
+        let id = activity.objectId!
+        key = "\(key)\(id)"
+        NSUserDefaults.standardUserDefaults().setObject(true, forKey: key)
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
     }
 
     func goToActivity(activity: PFObject) {
@@ -136,6 +153,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
                     let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                     controller.invitingUser = user
                     controller.invitingActivity = activity
+                    controller.delegate = self
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
             }
@@ -145,33 +163,8 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    // MARK: - Badges
-    func setBadgeCount() {
-        // badges are all matches within the last hour that have not been stored into defaults as "seen"
-        self.setupWithCompletion({
-            self.refreshBadgeCount()
-        })
-    }
-    
-    func refreshBadgeCount() {
-        var ct = 0
-        for activity: PFObject in self.activities {
-            let id = activity.objectId!
-            let key = "requestedBond:seen:\(id)"
-            if NSUserDefaults.standardUserDefaults().objectForKey(key) != nil && NSUserDefaults.standardUserDefaults().objectForKey(key) as! Bool == true {
-                continue
-            }
-            let created = activity.objectForKey("time") as! NSDate
-            if created.timeIntervalSinceNow <= -6000*60 {
-                continue
-            }
-            ct = ct + 1
-        }
-        if ct > 0 {
-            self.navigationController?.tabBarItem.badgeValue = "\(ct)"
-        }
-        else {
-            self.navigationController?.tabBarItem.badgeValue = nil
-        }
+    // MARK: - UserDetailsDelegate
+    func didRespondToInvitation() {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 }

@@ -138,44 +138,4 @@ class ActivityRequest: NSObject {
             }
         }
     }
-    
-    class func getMyMatchedBonds(completion: ( ([PFObject]?, NSError?) -> Void)) {
-        var activities: [PFObject] = [PFObject]()
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
-            // returns activities where the owner of the activity is the user
-            if error != nil {
-                completion(nil, error)
-            }
-            else if results != nil {
-                if results!.count > 0 {
-                    for activity: PFObject in results! {
-                        if activity.isAcceptedActivity() {
-                            activities.append(activity)
-                        }
-                    }
-                }
-            }
-            completion(activities, nil)
-        }
-    }
-    
-    class func getBondsMatchedWithMe(completion: ( ([PFObject]?, NSError?) -> Void)) {
-        var activities: [PFObject] = [PFObject]()
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: true, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
-            // returns activities where the owner is not the user but is in the joining list
-            if error != nil {
-                completion(nil, error)
-            }
-            else if results != nil {
-                if results!.count > 0 {
-                    for activity: PFObject in results! {
-                        if activity.isAcceptedActivity() {
-                            activities.append(activity)
-                        }
-                    }
-                }
-            }
-            completion(activities, nil)
-        }
-    }
 }
