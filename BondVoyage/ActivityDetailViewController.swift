@@ -355,7 +355,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         // owner's profile
         if sender == self.profileButton {
             print("profile")
-            if let user: PFUser = self.activity.user() {
+            if let user: PFUser = self.matchedUser {
                 let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                 controller.selectedUser = user
                 controller.delegate = self
