@@ -39,7 +39,7 @@ class GoogleDataProvider {
         let client: GMSPlacesClient = GMSPlacesClient.sharedClient()
         client.lookUpPlaceID(placeId, callback: { (place, error) -> Void in
             print("place: \(place), error: \(error)")
-            if place != nil && place!.placeID == nil {
+            if place != nil {
                 let fvError: NSError = NSError(domain: "com.fwdvu.app.error", code: 0, userInfo: ["error": "Google Places returned invalid place"]);
                 callback(nil, fvError);
             }

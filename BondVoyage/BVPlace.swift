@@ -62,9 +62,7 @@ class BVPlace : NSObject {
 
     // init from GMS API: created using a GMSPlace
     init( gPlace: GMSPlace) {
-        if gPlace.name != nil {
-            self.name = gPlace.name
-        }
+        self.name = gPlace.name
         
         self.placeId = gPlace.placeID
         self.coordinate = gPlace.coordinate
@@ -86,7 +84,7 @@ class BVPlace : NSObject {
         }
         
         if gPlace.website != nil {
-            self.website = gPlace.website.absoluteString
+            self.website = gPlace.website!.absoluteString
         }
         
         super.init()

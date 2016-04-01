@@ -37,7 +37,7 @@ class SuggestedPlacesViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
                 else {
-                    HUD.flash(.Label("No locations found"), withDelay: 2)
+                    HUD.flash(.Label("No locations found"), delay: 2)
                 }
             }
         }
