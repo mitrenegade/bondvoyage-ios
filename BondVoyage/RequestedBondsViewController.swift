@@ -147,25 +147,19 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     func goToActivity(activity: PFObject) {
         // join requests exist
         HUD.show(.SystemActivity)
-        if let userIds: [String] = activity.objectForKey("joining") as? [String] {
-            let userId = userIds[0]
-            let query: PFQuery = PFUser.query()!
-            query.whereKey("objectId", equalTo: userId)
-            query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-                self.tableView.userInteractionEnabled = true
-                HUD.hide(animated: false)
-                if results != nil && results!.count > 0 {
-                    let user: PFUser = results![0] as! PFUser
-                    let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
-                    controller.invitingUser = user
-                    controller.invitingActivity = activity
-                    controller.delegate = self
-                    self.navigationController?.pushViewController(controller, animated: true)
-                }
-            }
-        }
-        else {
+        activity.getMatchedUser { (user) in
             self.tableView.userInteractionEnabled = true
+            HUD.hide(animated: false)
+            if user != nil {
+                let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                controller.invitingUser = user
+                controller.invitingActivity = activity
+                controller.delegate = self
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+            else {
+                self.tableView.userInteractionEnabled = true
+            }
         }
     }
     

@@ -137,65 +137,37 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     func refreshTitle() {
         // activity's user
-        if self.activity.isOwnActivity() {
-            if let userIds: [String] = self.activity!.objectForKey("joining") as? [String] {
-                let userId = userIds[0]
-                let query: PFQuery = PFUser.query()!
-                query.whereKey("objectId", equalTo: userId)
-                query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-                    if results != nil && results!.count > 0 {
-                        let user: PFUser = results![0] as! PFUser
-                        self.matchedUser = user
-                        
-                        if let name: String = user.objectForKey("firstName") as? String {
-                            let categoryString = CategoryFactory.categoryReadableString(self.activity!.category()!)
-                            if self.activity!.isAcceptedActivity() {
-                                if self.activity!.category() != nil {
-                                    self.labelTitle.text = "\(categoryString) with \(name)"
-                                }
-                                else {
-                                    self.labelTitle.text = "Matched with \(name)"
-                                }
-                            }
-                            else {
-                                var categoryTitle: String = ""
-                                if self.activity!.category() != nil {
-                                    categoryTitle = " over \(categoryString)"
-                                }
-                                self.labelTitle.text = "\(name) matched with you\(categoryTitle)"
-                            }
-                        }
-                        
-                        if let photoURL: String = user.valueForKey("photoUrl") as? String {
-                            self.profileView.imageURL = NSURL(string: photoURL)
+        self.activity.getMatchedUser { (user) in
+            if user != nil {
+                self.matchedUser = user
+                
+                if let name: String = user!.objectForKey("firstName") as? String {
+                    let categoryString = CategoryFactory.categoryReadableString(self.activity!.category()!)
+                    if self.activity!.isAcceptedActivity() {
+                        if self.activity!.category() != nil {
+                            self.labelTitle.text = "\(categoryString) with \(name)"
                         }
                         else {
-                            self.profileView.image = UIImage(named: "profile-icon")
+                            self.labelTitle.text = "Matched with \(name)"
                         }
                     }
-                    
-                    self.refreshPlaces()
+                    else {
+                        var categoryTitle: String = ""
+                        if self.activity!.category() != nil {
+                            categoryTitle = " over \(categoryString)"
+                        }
+                        self.labelTitle.text = "\(name) matched with you\(categoryTitle)"
+                    }
+                }
+                
+                if let photoURL: String = user!.valueForKey("photoUrl") as? String {
+                    self.profileView.imageURL = NSURL(string: photoURL)
+                }
+                else {
+                    self.profileView.image = UIImage(named: "profile-icon")
                 }
             }
-        }
-        else {
-            if let user: PFUser = self.activity.user() {
-                user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
-                    self.matchedUser = user
-                    if result != nil {
-                        self.labelTitle.text = self.activity.shortTitle()
-                        
-                        if let photoURL: String = result!.valueForKey("photoUrl") as? String {
-                            self.profileView.imageURL = NSURL(string: photoURL)
-                        }
-                        else {
-                            self.profileView.image = UIImage(named: "profile-icon")
-                        }
-                    }
-                    
-                    self.refreshPlaces()
-                })
-            }
+            self.refreshPlaces()
         }
     }
     

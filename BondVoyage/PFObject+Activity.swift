@@ -73,6 +73,40 @@ extension PFObject {
         return self.objectForKey("user") as! PFUser
     }
     
+    func getJoiningUser(completion: ( (PFUser?)->Void )) {
+        // returns first PFUser on the joining list
+        if let userIds: [String] = self.objectForKey("joining") as? [String] {
+            let userId = userIds[0]
+            let query: PFQuery = PFUser.query()!
+            query.whereKey("objectId", equalTo: userId)
+            query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                if results != nil && results!.count > 0 {
+                    let user: PFUser = results![0] as! PFUser
+                    completion(user)
+                }
+                else {
+                    completion(nil)
+                }
+            }
+        }
+        else {
+            completion(nil)
+        }
+    }
+    
+    func getMatchedUser(completion: ( (PFUser?)->Void )) {
+        // returns the other user whether it's the owner of the activity or the first joiner
+        if self.isOwnActivity() {
+            self.getJoiningUser(completion)
+        }
+        else {
+            self.user().fetchInBackgroundWithBlock({ (object, error) in
+                let user = object as? PFUser
+                completion(user)
+            })
+        }
+    }
+    
     func shortTitle() -> String {
         // warning: may need to fetchInBackground
         var name: String? = self.user().valueForKey("firstName") as? String
