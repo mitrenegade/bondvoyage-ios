@@ -16,9 +16,11 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var tableView: UITableView!
 
     var activities: [PFObject] = []
-
+    var tabIndex: BVTabIndex!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tabIndex = .TAB_REQUESTED_BONDS
 
         // configure title bar
         let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
@@ -121,6 +123,21 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         let activity: PFObject = self.activities[indexPath.row]
         self.tableView.userInteractionEnabled = false
         self.goToActivity(activity)
+        
+        // mark activity as seen
+        var key: String
+        if self.tabIndex == .TAB_REQUESTED_BONDS {
+            key = "requestedBond:seen:"
+        }
+        else {
+            key = "matchedBond:seen:"
+        }
+        let id = activity.objectId!
+        key = "\(key)\(id)"
+        NSUserDefaults.standardUserDefaults().setObject(true, forKey: key)
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
     }
 
     func goToActivity(activity: PFObject) {

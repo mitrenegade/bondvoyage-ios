@@ -9,12 +9,14 @@
 import UIKit
 import Parse
 
+enum BVTabIndex: Int {
+    case TAB_CATEGORIES = 0
+    case  TAB_REQUESTED_BONDS = 1
+    case TAB_MATCHED_BONDS = 2
+}
+
+let TAB_NOTIFICATION_AGE = NSTimeInterval(-24*60*60)
 class BVTabBarController: UITabBarController {
-    enum TabIndex: Int {
-        case TAB_CATEGORIES = 0
-        case  TAB_REQUESTED_BONDS = 1
-        case TAB_MATCHED_BONDS = 2
-    }
     
     var bondReceivedTimestamp: NSDate? // timestamp for last time requestedBonds were received
     var matchReceivedTimestamp: NSDate? // timestamp for last time matchedBonds were received
@@ -48,7 +50,7 @@ class BVTabBarController: UITabBarController {
         }
     }
 
-    func refreshBadgeCount(tabIndex: TabIndex, activities: [PFObject]?) {
+    func refreshBadgeCount(tabIndex: BVTabIndex, activities: [PFObject]?) {
         if tabIndex != .TAB_REQUESTED_BONDS && tabIndex != .TAB_MATCHED_BONDS {
             return
         }
@@ -68,12 +70,14 @@ class BVTabBarController: UITabBarController {
         var ct = 0
         for activity: PFObject in activities! {
             let id = activity.objectId!
-            key = "\(key)\(id)"
-            if NSUserDefaults.standardUserDefaults().objectForKey(key) != nil && NSUserDefaults.standardUserDefaults().objectForKey(key) as! Bool == true {
+            let newkey = "\(key)\(id)"
+            if NSUserDefaults.standardUserDefaults().objectForKey(newkey) != nil && NSUserDefaults.standardUserDefaults().objectForKey(newkey) as! Bool == true {
                 continue
             }
+            
+            // don't show notifications if they are more than a day old
             let created = activity.objectForKey("time") as! NSDate
-            if created.timeIntervalSinceNow <= -6000*60 {
+            if created.timeIntervalSinceNow <= TAB_NOTIFICATION_AGE {
                 continue
             }
             ct = ct + 1

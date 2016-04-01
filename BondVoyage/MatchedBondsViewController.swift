@@ -19,6 +19,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.tabIndex = .TAB_MATCHED_BONDS
     }
     
     override func setupWithCompletion( completion: (()->Void)? ) {
