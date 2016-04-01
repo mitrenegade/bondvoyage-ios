@@ -11,9 +11,6 @@ import Parse
 import PKHUD
 
 class MatchedBondsViewController: RequestedBondsViewController {
-    var myActivitiesLoaded: Bool = false
-    var otherActivitiesLoaded: Bool = false
-    var loadingError: NSError?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +22,9 @@ class MatchedBondsViewController: RequestedBondsViewController {
     override func setupWithCompletion( completion: (()->Void)? ) {
         self.navigationItem.rightBarButtonItem?.enabled = false
         activities.removeAll()
-        self.myActivitiesLoaded = false
-        self.otherActivitiesLoaded = false
-        self.loadingError = nil
-        HUD.show(.SystemActivity)
         ActivityRequest.queryMatchedActivities(PFUser.currentUser()) { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             if error != nil {
-                HUD.hide(animated: false)
                 if error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
                         PFUser.logOut()

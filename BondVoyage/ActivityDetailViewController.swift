@@ -11,7 +11,7 @@ import AsyncImageView
 import Parse
 import GoogleMaps
 
-class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate, UITextViewDelegate {
+class ActivityDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, InvitationDelegate, GMSMapViewDelegate, UITextViewDelegate, UserDetailsDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewContent: UIView!
     
@@ -386,6 +386,7 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
             if let user: PFUser = self.activity.user() {
                 let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                 controller.selectedUser = user
+                controller.delegate = self
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }
@@ -484,5 +485,11 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         }
         controller.currentActivity = self.activity
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    // MARK: UserDetailsDelegate
+    func didRespondToInvitation() {
+        // here, it's just a dismiss
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }
