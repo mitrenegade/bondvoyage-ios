@@ -539,7 +539,33 @@ Parse.Cloud.define("inviteMatch", function(request, response) {
 });
 
 //******************* V2 Activities
+var existingActivity = function(user, categories, response) {
+     
+    var time = new Date()
+    time.setHours(time.getHours() - 0)
+    var now = new Date()
+    console.log("now " + now + " cutoff " + time)
+    var query = new Parse.Query("Activity")
+    query.containedIn("categories", categories)
+    query.descending("updatedAt")
+    query.equalTo("user", user)
+    query.greaterThanOrEqualTo("time", time)
+
+    query.find({
+        success: function(results) {
+            console.log("query results: " + results + " count " + results.count)
+            response.success(results)
+        },
+        error: function(error) {
+            console.log("query failed: error " + error)
+            response.error(error)
+        }         
+    })
+}
+
 Parse.Cloud.define("createActivity", function(request, response) {
+    // query for existing activity based on user, category, and time frame
+
     var Activity = Parse.Object.extend("Activity")
     var activity = new Activity()
     if (request.user == undefined) {
@@ -595,16 +621,40 @@ Parse.Cloud.define("createActivity", function(request, response) {
         activity.set("ageMax", ageMax)
     }
 
-    activity.save().then(
-        function(object) {
-            console.log("createActivity completed with activity: " + object)
-            response.success(object)
+    existingActivity(request.user, categories, {
+        success: function(results) {
+            console.log("Query for existing activities returned " + results)
+            if (results == undefined || results.count == undefined || results.count == 0) {
+                activity.save().then(
+                    function(object) {
+                        console.log("createActivity completed with activity: " + object)
+                        response.success(object)
+                    },
+                    function(error) {
+                        console.log("error in createActivity: " + error)
+                        response.error(error)
+                    }
+                )
+            }
+            else {
+                response.success(results[0])
+            }
         },
-        function(error) {
-            console.log("error in createActivity: " + error)
-            response.error(error)
+        error: function(error) {
+            // still save activity
+            activity.save().then(
+                function(object) {
+                    console.log("createActivity completed with activity: " + object)
+                    response.success(object)
+                },
+                function(error) {
+                    console.log("error in createActivity: " + error)
+                    response.error(error)
+                }
+            )
         }
-    )
+    })
+
 });
 
 Parse.Cloud.define("queryActivities", function(request, response) {
