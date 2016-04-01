@@ -21,7 +21,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func setup() {
+    override func setupWithCompletion( completion: (()->Void)? ) {
         self.navigationItem.rightBarButtonItem?.enabled = false
         activities.removeAll()
         self.myActivitiesLoaded = false
@@ -40,7 +40,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
                 }
             }
             self.myActivitiesLoaded = true
-            self.reloadTableIfReady(error)
+            self.reloadTableIfReady(error, completion: completion)
         }
         ActivityRequest.queryActivities(PFUser.currentUser(), joining: true, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             // returns activities where the owner is not the user but is in the joining list
@@ -54,12 +54,12 @@ class MatchedBondsViewController: RequestedBondsViewController {
                 }
             }
             self.otherActivitiesLoaded = true
-            self.reloadTableIfReady(error)
+            self.reloadTableIfReady(error, completion: completion)
             
         }
     }
     
-    func reloadTableIfReady(error: NSError?) {
+    func reloadTableIfReady(error: NSError?, completion: ( ()->Void)? ) {
         if error != nil {
             self.loadingError = error
         }
@@ -73,10 +73,16 @@ class MatchedBondsViewController: RequestedBondsViewController {
                             PFUser.logOut()
                             NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
                         })
+                        if completion != nil {
+                            completion!()
+                        }
                         return
                     }
                     else {
                         self.simpleAlert("Could not load matches", defaultMessage: "Please click refresh to try again.", error: self.loadingError)
+                        if completion != nil {
+                            completion!()
+                        }
                     }
                 }
                 else {
@@ -84,6 +90,9 @@ class MatchedBondsViewController: RequestedBondsViewController {
                         self.simpleAlert("No matches yet", message: "There are currently no matched bonds for you.")
                     }
                     self.tableView.reloadData()
+                    if completion != nil {
+                        completion!()
+                    }
                 }
             })
         }
@@ -102,4 +111,25 @@ class MatchedBondsViewController: RequestedBondsViewController {
         }
     }
 
+    override func refreshBadgeCount() {
+        var ct = 0
+        for activity: PFObject in self.activities {
+            let id = activity.objectId!
+            let key = "matchedBond:seen:\(id)"
+            if NSUserDefaults.standardUserDefaults().objectForKey(key) != nil && NSUserDefaults.standardUserDefaults().objectForKey(key) as! Bool == true {
+                continue
+            }
+            let created = activity.objectForKey("time") as! NSDate
+            if created.timeIntervalSinceNow <= -6000*60 {
+                continue
+            }
+            ct = ct + 1
+        }
+        if ct > 0 {
+            self.navigationController?.tabBarItem.badgeValue = "\(ct)"
+        }
+        else {
+            self.navigationController?.tabBarItem.badgeValue = nil
+        }
+    }
 }
