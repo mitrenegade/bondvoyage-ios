@@ -187,7 +187,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
                     })
                     return
                 }
-                HUD.flash(.Label("There was an error joining the activity."), withDelay: 2)
+                HUD.flash(.Label("There was an error joining the activity."), delay: 2)
             }
             else {
                 self.refresh()
@@ -215,7 +215,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
                     })
                     return
                 }
-                HUD.flash(.Label("Could not accept invitation. Please try again."), withDelay: 2)
+                HUD.flash(.Label("Could not accept invitation. Please try again."), delay: 2)
             }
             else {
                 self.refresh()
@@ -244,7 +244,7 @@ class PlacesViewController: UIViewController, GMSMapViewDelegate {
                     })
                     return
                 }
-                HUD.flash(.Label("Could not decline invitation. Please try again."), withDelay: 2)
+                HUD.flash(.Label("Could not decline invitation. Please try again."), delay: 2)
             }
             else {
                 self.refresh()

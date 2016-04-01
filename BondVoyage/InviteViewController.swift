@@ -70,7 +70,7 @@ class InviteViewController: UIViewController {
                     })
                     return
                 }
-                HUD.flash(.Label("There was an error joining the activity."), withDelay: 2)
+                HUD.flash(.Label("There was an error joining the activity."), delay: 2)
             }
             else {
                 self.refresh()

@@ -229,7 +229,7 @@ class UserDetailsViewController: UIViewController {
                     })
                     return
                 }
-                HUD.flash(.Label("Could not accept invitation. Please try again."), withDelay: 2)
+                HUD.flash(.Label("Could not accept invitation. Please try again."), delay: 2)
             }
             else {
                 NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
@@ -252,7 +252,7 @@ class UserDetailsViewController: UIViewController {
                     })
                     return
                 }
-                HUD.flash(.Label("Could not decline invitation. Please try again."), withDelay: 2)
+                HUD.flash(.Label("Could not decline invitation. Please try again."), delay: 2)
             }
             else {
                 NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)

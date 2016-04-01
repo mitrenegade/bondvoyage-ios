@@ -62,22 +62,24 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
         request.startWithCompletionHandler { (connection, result, error) -> Void in
             print("\(result) \nerror: \(error)")
             if result != nil {
-                if let name = result["name"] as? String {
-                    print("name: \(name)")
-                    if PFUser.currentUser()?.objectForKey("firstName") == nil {
-                        PFUser.currentUser()?.setValue(name, forKey: "firstName")
+                if let dict = result as? [String: String] {
+                    if let name = dict["name"] {
+                        print("name: \(name)")
+                        if PFUser.currentUser()?.objectForKey("firstName") == nil {
+                            PFUser.currentUser()?.setValue(name, forKey: "firstName")
+                        }
                     }
-                }
-                if let fbid = result["id"] as? String {
-                    print("facebook id: \(fbid)")
-                    PFUser.currentUser()?.setValue(fbid, forKey: "facebook_id")
-                    
-                    if PFUser.currentUser()?.objectForKey("photoUrl") == nil {
-                        let url = "https://graph.facebook.com/v2.5/\(fbid)/picture?type=large&return_ssl_resources=1&width=1125"
-                        PFUser.currentUser()?.setObject(url, forKey: "photoUrl")
+                    if let fbid = dict["id"] {
+                        print("facebook id: \(fbid)")
+                        PFUser.currentUser()?.setValue(fbid, forKey: "facebook_id")
+                        
+                        if PFUser.currentUser()?.objectForKey("photoUrl") == nil {
+                            let url = "https://graph.facebook.com/v2.5/\(fbid)/picture?type=large&return_ssl_resources=1&width=1125"
+                            PFUser.currentUser()?.setObject(url, forKey: "photoUrl")
+                        }
                     }
+                    PFUser.currentUser()?.saveInBackground()
                 }
-                PFUser.currentUser()?.saveInBackground()
             }
         }
     }
