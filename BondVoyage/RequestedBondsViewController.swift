@@ -16,7 +16,6 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var tableView: UITableView!
 
     var activities: [PFObject] = []
-    var requestTimestamp: NSDate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,24 +147,11 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - Badges
-    func needsUpdateRequest() -> Bool {
-        if self.requestTimestamp == nil || self.requestTimestamp!.timeIntervalSinceNow < -10*60 {
-            // no timestamp, or 10 minutes old
-            return true
-        }
-        return false
-    }
-    
     func setBadgeCount() {
         // badges are all matches within the last hour that have not been stored into defaults as "seen"
-        if self.needsUpdateRequest() {
-            self.setupWithCompletion({ 
-                self.refreshBadgeCount()
-            })
-        }
-        else {
+        self.setupWithCompletion({
             self.refreshBadgeCount()
-        }
+        })
     }
     
     func refreshBadgeCount() {
