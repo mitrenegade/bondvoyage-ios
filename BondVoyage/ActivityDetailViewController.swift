@@ -25,9 +25,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var labelCongrats: UILabel!
     @IBOutlet weak var tableViewVenues: UITableView!
     @IBOutlet weak var constraintTableViewVenueHeight: NSLayoutConstraint!
-    var recommendedVenueNames: [String]!
-    var recommendedVenueStreets: [String]!
-    var recommendedVenueCityState: [String]!
+    var recommendedVenueNames: [CATEGORY: [String]]! = [CATEGORY: [String]]()
+    var recommendedVenueStreets: [CATEGORY: [String]]! = [CATEGORY: [String]]()
+    var recommendedVenueCityState: [CATEGORY: [String]]! = [CATEGORY: [String]]()
     /*
     @IBOutlet weak var mapView: GMSMapView!
     var marker: GMSMarker?
@@ -81,9 +81,21 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         */
         
         // static recommendations
-        self.recommendedVenueNames = ["Cactus Club", "Meadhall", "The Elephant and Bell"]
-        self.recommendedVenueStreets = ["939 Boylston St", "4 Cambridge Center", "45 Union St"]
-        self.recommendedVenueCityState = ["Boston, MA 02215", "Cambridge, MA 02142", "Boston, MA 02108"]
+        self.recommendedVenueNames = [.Food:["Committee", "Osushi", "Lolita Cocina & Tequila Bar"],
+                                      .Nightlife:["Royale", "Alibi", "Society on High"],
+                                      .CultureSightseeing:["Museum of Fine Arts", "Walk the Freedom Trail", "Museum of Science"],
+                                      .Fitness:["BTone Fitness", "Boston Sports Club", "Planet Fitness"]
+        ]
+        self.recommendedVenueStreets = [.Food:["50 Northern Ave", "1 Eliot St", "271 Dartmouth St"],
+                                      .Nightlife:["279 Tremont St", "215 Charles St", "99 High St"],
+                                      .CultureSightseeing:["465 Huntington Ave", "Historic Downtown", "1 Science Park"],
+                                      .Fitness:["30 Newbury St", "695 Atlantic Ave", "17 Winter St"]
+        ]
+        self.recommendedVenueCityState = [.Food:["Boston, MA 02210", "Cambridge, MA 02138", "Boston, MA 02116"],
+                                      .Nightlife:["Boston, MA 02116", "Boston, MA 02114", "Boston, MA 02110"],
+                                      .CultureSightseeing:["Boston, MA 02115", "Boston, MA", "Boston, MA 02114"],
+                                      .Fitness:["Boston, MA 02116", "Boston, MA 02111", "Boston, MA 02108"]
+        ]
         self.constraintTableViewVenueHeight.constant = 3 * 80
 
         self.refreshTitle()
@@ -284,6 +296,9 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableViewVenues {
+            if self.activity.category() == nil {
+                return 0
+            }
             return 3
         }
         else {
@@ -299,8 +314,21 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
         let cell = tableView.dequeueReusableCellWithIdentifier("VenueCell", forIndexPath: indexPath)
         if tableView == self.tableViewVenues {
             let label: UILabel = cell.viewWithTag(1) as! UILabel
-            let address = "\(self.recommendedVenueNames[indexPath.row])\n\(self.recommendedVenueStreets[indexPath.row])\n\(self.recommendedVenueCityState[indexPath.row])"
-            label.text = address
+            if let category: CATEGORY = self.activity.category() {
+                let names = self.recommendedVenueNames[category]
+                let streets = self.recommendedVenueStreets[category]
+                let city = self.recommendedVenueCityState[category]
+                if names != nil && streets != nil && city != nil && indexPath.row < names!.count {
+                    let address = "\(names![indexPath.row])\n\(streets![indexPath.row])\n\(city![indexPath.row])"
+                    label.text = address
+                }
+                else {
+                    label.text = "No recommendations found for \(CategoryFactory.categoryReadableString(self.activity.category()!))"
+                }
+            }
+            else {
+                label.text = "No category selected for Boston, MA"
+            }
         }
         else {
             /*
@@ -321,8 +349,15 @@ class ActivityDetailViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if tableView == self.tableViewVenues {
-            let address = "\(self.recommendedVenueNames[indexPath.row]) \(self.recommendedVenueStreets[indexPath.row]) \(self.recommendedVenueCityState[indexPath.row])"
-            self.openInMaps(address)
+            if let category: CATEGORY = self.activity.category() {
+                let names = self.recommendedVenueNames[category]
+                let streets = self.recommendedVenueStreets[category]
+                let city = self.recommendedVenueCityState[category]
+                if names != nil && streets != nil && city != nil && indexPath.row < names!.count {
+                    let address = "\(names![indexPath.row]) \(streets![indexPath.row]) \(city![indexPath.row])"
+                    self.openInMaps(address)
+                }
+            }
         }
         else {
             // place
