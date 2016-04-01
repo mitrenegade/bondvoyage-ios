@@ -58,25 +58,13 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         activities.removeAll()
         self.navigationItem.rightBarButtonItem?.enabled = false
         HUD.show(.SystemActivity)
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
+        ActivityRequest.getRequestedBonds { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             HUD.hide(animated: true, completion: { (success) -> Void in
                 if results != nil {
                     self.requestTimestamp = NSDate()
-                    if results!.count > 0 {
-                        for activity: PFObject in results! {
-                            if activity.isAcceptedActivity() {
-                                // skip matched activities
-                                continue
-                            }
-                            if let joining: [String] = activity.objectForKey("joining") as? [String] {
-                                if joining.count > 0 {
-                                    self.activities.append(activity)
-                                }
-                            }
-                        }
-                    }
+                    self.activities.appendContentsOf(results!)
                     if self.activities.count == 0 {
                         self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
                     }
@@ -85,7 +73,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
                         completion!()
                     }
                 }
-                if error != nil {
+                else if error != nil {
                     if error!.code == 209 {
                         self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
                             PFUser.logOut()
@@ -188,8 +176,8 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
             if NSUserDefaults.standardUserDefaults().objectForKey(key) != nil && NSUserDefaults.standardUserDefaults().objectForKey(key) as! Bool == true {
                 continue
             }
-            let created = activity.createdAt!
-            if created.timeIntervalSinceNow <= 600*60 {
+            let created = activity.objectForKey("time") as! NSDate
+            if created.timeIntervalSinceNow <= -6000*60 {
                 continue
             }
             ct = ct + 1

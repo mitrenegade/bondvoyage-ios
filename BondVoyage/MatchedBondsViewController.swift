@@ -28,34 +28,19 @@ class MatchedBondsViewController: RequestedBondsViewController {
         self.otherActivitiesLoaded = false
         self.loadingError = nil
         HUD.show(.SystemActivity)
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
-            // returns activities where the owner of the activity is the user
+        ActivityRequest.getMyMatchedBonds { (results, error) in
             if results != nil {
-                if results!.count > 0 {
-                    for activity: PFObject in results! {
-                        if activity.isAcceptedActivity() {
-                            self.activities.append(activity)
-                        }
-                    }
-                }
+                self.activities.appendContentsOf(results!)
             }
             self.myActivitiesLoaded = true
             self.reloadTableIfReady(error, completion: completion)
         }
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: true, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
-            // returns activities where the owner is not the user but is in the joining list
+        ActivityRequest.getBondsMatchedWithMe { (results, error) in
             if results != nil {
-                if results!.count > 0 {
-                    for activity: PFObject in results! {
-                        if activity.isAcceptedActivity() {
-                            self.activities.append(activity)
-                        }
-                    }
-                }
+                self.activities.appendContentsOf(results!)
             }
             self.otherActivitiesLoaded = true
             self.reloadTableIfReady(error, completion: completion)
-            
         }
     }
     
