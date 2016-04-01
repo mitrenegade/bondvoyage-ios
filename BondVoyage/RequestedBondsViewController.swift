@@ -48,8 +48,8 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
-        self.setupWithCompletion { 
-            self.refreshBadgeCount()
+        self.setupWithCompletion {
+            // used to be: update badge counts
         }
     }
     
@@ -142,36 +142,6 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
         else {
             self.tableView.userInteractionEnabled = true
-        }
-    }
-    
-    // MARK: - Badges
-    func setBadgeCount() {
-        // badges are all matches within the last hour that have not been stored into defaults as "seen"
-        self.setupWithCompletion({
-            self.refreshBadgeCount()
-        })
-    }
-    
-    func refreshBadgeCount() {
-        var ct = 0
-        for activity: PFObject in self.activities {
-            let id = activity.objectId!
-            let key = "requestedBond:seen:\(id)"
-            if NSUserDefaults.standardUserDefaults().objectForKey(key) != nil && NSUserDefaults.standardUserDefaults().objectForKey(key) as! Bool == true {
-                continue
-            }
-            let created = activity.objectForKey("time") as! NSDate
-            if created.timeIntervalSinceNow <= -6000*60 {
-                continue
-            }
-            ct = ct + 1
-        }
-        if ct > 0 {
-            self.navigationController?.tabBarItem.badgeValue = "\(ct)"
-        }
-        else {
-            self.navigationController?.tabBarItem.badgeValue = nil
         }
     }
 }

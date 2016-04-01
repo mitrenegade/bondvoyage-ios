@@ -24,6 +24,7 @@ class BVTabBarController: UITabBarController {
 
         // Do any additional setup after loading the view.
         self.refreshNotifications()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshNotifications", name: "activity:updated", object: nil)
     }
 
     override func didReceiveMemoryWarning() {
