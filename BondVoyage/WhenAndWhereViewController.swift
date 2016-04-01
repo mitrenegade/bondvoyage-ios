@@ -154,7 +154,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
                         }
                         
                         self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                            //self.navigationController?.popToRootViewControllerAnimated(true)
+                            self.navigationController?.popToRootViewControllerAnimated(true)
                         })
                     })
                 }
@@ -190,7 +190,6 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         HUD.show(.SystemActivity)
         ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
             HUD.hide(animated: false, completion: nil)
-            print("result: \(result)")
             if error != nil {
                 completion(false)
             }
@@ -209,7 +208,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         else {
             // user did not invite anyone - create a searchable activity
             self.createActivityWithCompletion({ (success) in
-//                self.navigationController?.popToRootViewControllerAnimated(true)
+                self.navigationController?.popToRootViewControllerAnimated(true)
             })
         }
     }

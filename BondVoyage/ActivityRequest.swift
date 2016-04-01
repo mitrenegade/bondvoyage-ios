@@ -26,7 +26,7 @@ class ActivityRequest: NSObject {
             params["ageMax"] = ageMax!
         }
         
-        PFCloud.callFunctionInBackground("createActivity", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("createOrUpdateActivity", withParameters: params) { (results, error) -> Void in
             print("results: \(results)")
             let activity: PFObject? = results as? PFObject
             completion(result: activity, error: error)

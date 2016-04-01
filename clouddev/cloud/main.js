@@ -539,30 +539,6 @@ Parse.Cloud.define("inviteMatch", function(request, response) {
 });
 
 //******************* V2 Activities
-var existingActivity = function(user, categories, response) {
-     
-    var time = new Date()
-    time.setHours(time.getHours() - 0)
-    var now = new Date()
-    console.log("now " + now + " cutoff " + time)
-    var query = new Parse.Query("Activity")
-    query.containedIn("categories", categories)
-    query.descending("updatedAt")
-    query.equalTo("user", user)
-    query.greaterThanOrEqualTo("time", time)
-
-    query.find({
-        success: function(results) {
-            console.log("query results: " + results + " count " + results.count)
-            response.success(results)
-        },
-        error: function(error) {
-            console.log("query failed: error " + error)
-            response.error(error)
-        }         
-    })
-}
-
 Parse.Cloud.define("createActivity", function(request, response) {
     // query for existing activity based on user, category, and time frame
 
@@ -621,40 +597,16 @@ Parse.Cloud.define("createActivity", function(request, response) {
         activity.set("ageMax", ageMax)
     }
 
-    existingActivity(request.user, categories, {
-        success: function(results) {
-            console.log("Query for existing activities returned " + results)
-            if (results == undefined || results.count == undefined || results.count == 0) {
-                activity.save().then(
-                    function(object) {
-                        console.log("createActivity completed with activity: " + object)
-                        response.success(object)
-                    },
-                    function(error) {
-                        console.log("error in createActivity: " + error)
-                        response.error(error)
-                    }
-                )
-            }
-            else {
-                response.success(results[0])
-            }
+    activity.save().then(
+        function(object) {
+            console.log("createActivity completed with activity: " + object)
+            response.success(object)
         },
-        error: function(error) {
-            // still save activity
-            activity.save().then(
-                function(object) {
-                    console.log("createActivity completed with activity: " + object)
-                    response.success(object)
-                },
-                function(error) {
-                    console.log("error in createActivity: " + error)
-                    response.error(error)
-                }
-            )
+        function(error) {
+            console.log("error in createActivity: " + error)
+            response.error(error)
         }
-    })
-
+    )
 });
 
 Parse.Cloud.define("queryActivities", function(request, response) {
@@ -946,19 +898,120 @@ var sendPushForActivityResponse = function(response, activity, status) {
 }
 
 //******************* V3 Activities
+var existingActivity = function(user, categories, response) {
+    var time = new Date()
+    time.setHours(time.getHours() - 1)
+    var now = new Date()
+    console.log("now " + now + " cutoff " + time)
+    var query = new Parse.Query("Activity")
+    query.containedIn("categories", categories)
+    query.descending("updatedAt")
+    query.equalTo("user", user)
+    query.greaterThanOrEqualTo("time", time)
+
+    query.find({
+        success: function(results) {
+            console.log("query results: " + results + " count " + results.length)
+            response.success(results)
+        },
+        error: function(error) {
+            console.log("query failed: error " + error)
+            response.error(error)
+        }         
+    })
+}
+
+var createActivity = function(activity, request, response) {
+   activity.set("user", request.user)
+    var categories = request.params.categories
+    categories = categories.map(toLowerCase)
+    activity.set("categories", categories)
+    activity.set("status", "active")
+    activity.set("declined", [])
+    activity.set("joining", [])
+    activity.set("places", {})
+    activity.set("aboutOthers", []) 
+
+    // location
+    if (request.params.lat != undefined && request.params.lon != undefined) {
+        var geopoint = new Parse.GeoPoint(request.params.lat, request.params.lon)
+        console.log("Creating geopoint for new activity at lat " + request.params.lat + " lon " + request.params.lon + " geopoint " + geopoint)
+        activity.set("geopoint", geopoint)
+    }
+
+    if (request.params.locationString != undefined) {
+        activity.set("locationString", request.params.locationString)
+    }
+
+    // time
+    if (request.params.time != undefined) {
+        activity.set("time", request.params.time)
+    }
+
+    // about self
+    if (request.params.aboutSelf != undefined) {
+        activity.set("aboutSelf", request.params.aboutSelf)
+    }
+
+    // about others
+    if (request.params.aboutOthers != undefined) {
+        activity.set("aboutOthers", request.params.aboutOthers)
+    }
+
+    // age range
+    var ageMin = request.params.ageMin
+    var ageMax = request.params.ageMax
+    if (ageMin != undefined) {
+        activity.set("ageMin", ageMin)
+    }
+    if (ageMax != undefined) {
+        activity.set("ageMax", ageMax)
+    }
+
+    activity.save().then(
+        function(object) {
+            console.log("createActivity completed with activity: " + object.id)
+            response.success(object)
+        },
+        function(error) {
+            console.log("error in createActivity: " + error)
+            response.error(error)
+        }
+    )
+}
+
 Parse.Cloud.define("createOrUpdateActivity", function(request, response) {
+    // query for existing activity based on user, category, and time frame
+
     // TODO: implement this if we want to be able to update an activity the user has already created
     // to prevent duplicate activities for the same location within the same time
+    if (request.user == undefined) {
+        response.error("User is not logged in")
+        return
+    }
     var categories = request.params.categories
-    var userId = request.params.userId
-    var joining = request.params.joining
-
-    Parse.Cloud.run('queryActivities', {}, {
+    categories = categories.map(toLowerCase)
+    existingActivity(request.user, categories, {
         success: function(results) {
-            // TODO: if location, time are close, then update the existing activity instead
+            console.log("existingActivity: Query for existing activities returned " + results + " count " + results.length)
+            if (results == undefined || results.length == undefined || results.length == 0) {
+                console.log("Creating new activity")
+                var Activity = Parse.Object.extend("Activity")
+                var activity = new Activity()
+                createActivity(activity, request, response)
+            }
+            else {
+                var activity = results[0]
+                console.log("Updating existing activity with id " + activity.id)
+                createActivity(activity, request, response)
+            }
         },
-        error: function(results) {
-            // TODO: if query fails, just create a new one
+        error: function(error) {
+            // still save activity as a new activity
+            console.log("existingActivity failed with error " + error)
+            var Activity = Parse.Object.extend("Activity")
+            var activity = new Activity()
+            createActivity(activity, request, response)
         }
-    });
+    })
 });
