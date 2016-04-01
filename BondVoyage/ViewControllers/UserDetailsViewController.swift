@@ -80,7 +80,9 @@ class UserDetailsViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Respond", style: .Done, target: self, action: "handleInvitation")
         }
         else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "goToEditProfile")
+            if selectedUser == PFUser.currentUser() {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "goToEditProfile")
+            }
         }
     }
     

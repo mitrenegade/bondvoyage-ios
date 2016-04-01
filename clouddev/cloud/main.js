@@ -809,7 +809,7 @@ Parse.Cloud.define("respondToJoin", function(request, response) {
             activity.save().then(
                 function(object) {
                     console.log("RespondToInvite Sending push message for " + responseType + " to activity id " + activity.id)
-                    sendPushForActivityResponse(response, activity, responseType)
+                    sendPushForActivityResponse(response, activity, joiningUserId, responseType)
                 },
                 function(error) {
                     console.log("error in RespondToInvite: " + error)
@@ -863,11 +863,11 @@ var sendPushForActivities = function(response, activity, fromUser) {
         });
     }
 
-var sendPushForActivityResponse = function(response, activity, status) {
+var sendPushForActivityResponse = function(response, activity, joinerId, status) {
     console.log("inside send push")
     // In this case, the push goes from user to joiner
     var user = activity.get("user")
-    var joinerId = activity.get("joining")[0]
+
     console.log("from user id " + user.id + " to user id " + joinerId)
     var name = user.get("firstName")
     if (name == undefined) {

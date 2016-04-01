@@ -14,6 +14,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     let kCellIdentifier = "UserCell"
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var labelNoBonds: UILabel!
 
     var activities: [PFObject] = []
     var tabIndex: BVTabIndex!
@@ -33,13 +34,13 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         
         self.refresh()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: "activity:updated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RequestedBondsViewController.refreshNotifications), name: "activity:updated", object: nil)
         
         self.setLeftProfileButton()
         let button: UIButton = UIButton(frame: CGRectMake(0, 0, 30, 30))
         let image = UIImage(named: "icon-refresh")!.imageWithRenderingMode(.AlwaysTemplate)
         button.setImage(image, forState: .Normal)
-        button.addTarget(self, action: "refresh", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(RequestedBondsViewController.refresh), forControlEvents: .TouchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
     }
@@ -58,16 +59,22 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func refreshNotifications() {
+        self.setupWithCompletion(nil)
+    }
+    
     func setupWithCompletion( completion: (()->Void)? ) {
         activities.removeAll()
         self.navigationItem.rightBarButtonItem?.enabled = false
+        self.labelNoBonds.hidden = true
         ActivityRequest.getRequestedBonds { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             if results != nil {
                 self.activities.appendContentsOf(results!)
                 if self.activities.count == 0 {
-                    self.simpleAlert("No requested bonds", message: "There are currently no bond requests for you.")
+                    self.labelNoBonds.text = "There are currently no bond requests for you."
+                    self.labelNoBonds.hidden = false
                 }
                 self.tableView.reloadData()
                 if completion != nil {
@@ -142,24 +149,20 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
 
     func goToActivity(activity: PFObject) {
         // join requests exist
-        if let userIds: [String] = activity.objectForKey("joining") as? [String] {
-            let userId = userIds[0]
-            let query: PFQuery = PFUser.query()!
-            query.whereKey("objectId", equalTo: userId)
-            query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-                self.tableView.userInteractionEnabled = true
-                if results != nil && results!.count > 0 {
-                    let user: PFUser = results![0] as! PFUser
-                    let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
-                    controller.invitingUser = user
-                    controller.invitingActivity = activity
-                    controller.delegate = self
-                    self.navigationController?.pushViewController(controller, animated: true)
-                }
-            }
-        }
-        else {
+        HUD.show(.SystemActivity)
+        activity.getMatchedUser { (user) in
             self.tableView.userInteractionEnabled = true
+            HUD.hide(animated: false)
+            if user != nil {
+                let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                controller.invitingUser = user
+                controller.invitingActivity = activity
+                controller.delegate = self
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+            else {
+                self.tableView.userInteractionEnabled = true
+            }
         }
     }
     

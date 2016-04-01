@@ -22,6 +22,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
     override func setupWithCompletion( completion: (()->Void)? ) {
         self.navigationItem.rightBarButtonItem?.enabled = false
         activities.removeAll()
+        self.labelNoBonds.hidden = true
         ActivityRequest.queryMatchedActivities(PFUser.currentUser()) { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             if error != nil {
@@ -45,15 +46,14 @@ class MatchedBondsViewController: RequestedBondsViewController {
             else if results != nil {
                 self.activities.appendContentsOf(results!)
                 self.navigationItem.rightBarButtonItem?.enabled = true
-                HUD.hide(animated: true, completion: { (success) -> Void in
-                    if self.activities.count == 0 {
-                        self.simpleAlert("No matches yet", message: "There are currently no matched bonds for you.")
-                    }
-                    self.tableView.reloadData()
-                    if completion != nil {
-                        completion!()
-                    }
-                })
+                if self.activities.count == 0 {
+                    self.labelNoBonds.text = "There are currently no matched bonds for you."
+                    self.labelNoBonds.hidden = false
+                }
+                self.tableView.reloadData()
+                if completion != nil {
+                    completion!()
+                }
             }
         }
     }
