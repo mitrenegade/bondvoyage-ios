@@ -33,13 +33,13 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         
         self.refresh()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: "activity:updated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RequestedBondsViewController.refreshNotifications), name: "activity:updated", object: nil)
         
         self.setLeftProfileButton()
         let button: UIButton = UIButton(frame: CGRectMake(0, 0, 30, 30))
         let image = UIImage(named: "icon-refresh")!.imageWithRenderingMode(.AlwaysTemplate)
         button.setImage(image, forState: .Normal)
-        button.addTarget(self, action: "refresh", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(RequestedBondsViewController.refresh), forControlEvents: .TouchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
     }
@@ -56,6 +56,10 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
             HUD.hide(animated: true, completion: { (success) -> Void in
             })
         }
+    }
+    
+    func refreshNotifications() {
+        self.setupWithCompletion(nil)
     }
     
     func setupWithCompletion( completion: (()->Void)? ) {
@@ -142,12 +146,14 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
 
     func goToActivity(activity: PFObject) {
         // join requests exist
+        HUD.show(.SystemActivity)
         if let userIds: [String] = activity.objectForKey("joining") as? [String] {
             let userId = userIds[0]
             let query: PFQuery = PFUser.query()!
             query.whereKey("objectId", equalTo: userId)
             query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
                 self.tableView.userInteractionEnabled = true
+                HUD.hide(animated: false)
                 if results != nil && results!.count > 0 {
                     let user: PFUser = results![0] as! PFUser
                     let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController

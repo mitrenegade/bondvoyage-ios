@@ -45,15 +45,13 @@ class MatchedBondsViewController: RequestedBondsViewController {
             else if results != nil {
                 self.activities.appendContentsOf(results!)
                 self.navigationItem.rightBarButtonItem?.enabled = true
-                HUD.hide(animated: true, completion: { (success) -> Void in
-                    if self.activities.count == 0 {
-                        self.simpleAlert("No matches yet", message: "There are currently no matched bonds for you.")
-                    }
-                    self.tableView.reloadData()
-                    if completion != nil {
-                        completion!()
-                    }
-                })
+                if self.activities.count == 0 {
+                    self.simpleAlert("No matches yet", message: "There are currently no matched bonds for you.")
+                }
+                self.tableView.reloadData()
+                if completion != nil {
+                    completion!()
+                }
             }
         }
     }
