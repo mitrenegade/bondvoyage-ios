@@ -661,6 +661,13 @@ Parse.Cloud.define("queryActivities", function(request, response) {
             query.withinMiles("geopoint", point, distanceMax)
         }
 
+        // time filter - do not show queries more than 1 hour old
+        var time = new Date()
+        time.setHours(time.getHours() - 1)
+        var now = new Date()
+        console.log("now " + now + " cutoff " + time)
+        query.greaterThanOrEqualTo("time", time)
+
         query.find({
             success: function(results) {
                 console.log("Result count " + results.length)
@@ -898,6 +905,8 @@ var sendPushForActivityResponse = function(response, activity, status) {
 }
 
 //******************* V3 Activities
+var TIME_INTERVAL_FOR_SAME_ACTIVITY = 1 // hours before the user is considered to be setting a new activity
+// todo: this won't work correctly if the user sets several different events in <1 hr intervals but at different cities/categories
 var existingActivity = function(user, categories, response) {
     var time = new Date()
     time.setHours(time.getHours() - 1)
@@ -982,9 +991,7 @@ var createActivity = function(activity, request, response) {
 
 Parse.Cloud.define("createOrUpdateActivity", function(request, response) {
     // query for existing activity based on user, category, and time frame
-
-    // TODO: implement this if we want to be able to update an activity the user has already created
-    // to prevent duplicate activities for the same location within the same time
+    // update an activity the user has already created to prevent duplicate activities for the same location within the same time
     if (request.user == undefined) {
         response.error("User is not logged in")
         return
