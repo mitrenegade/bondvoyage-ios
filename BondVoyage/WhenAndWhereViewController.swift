@@ -9,8 +9,9 @@
 import UIKit
 import CoreLocation
 import Parse
+import PKHUD
 
-class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, InviteDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -115,6 +116,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         }
 
         self.navigationItem.rightBarButtonItem?.enabled = false
+        self.endEditing()
         self.requestActivities()
     }
     
@@ -185,13 +187,29 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
             return v.rawValue
         }
         
+        HUD.show(.SystemActivity)
         ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
+            HUD.hide(animated: false, completion: nil)
             if error != nil {
                 completion(false)
             }
             else {
                 completion(true)
             }
+        }
+    }
+    
+    // MARK: - InviteDelegate
+    func didCloseInvites(invited: Bool) {
+        if invited {
+            // user sent an invite to someone.
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+        else {
+            // user did not invite anyone - create a searchable activity
+            self.createActivityWithCompletion({ (success) in
+                self.navigationController?.popToRootViewControllerAnimated(true)
+            })
         }
     }
     
@@ -354,6 +372,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
             let controller = segue.destinationViewController as! InviteViewController
             controller.category = self.category
             controller.activities = self.selectedActivities
+            controller.delegate = self
         }
     }
 
