@@ -150,13 +150,13 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
                     if let placemark: CLPlacemark = placemarks!.first as CLPlacemark! {
                         print("name \(placemark.name) address \(placemark.addressDictionary)")
                         if let dict: [String: AnyObject] = placemark.addressDictionary as? [String: AnyObject] {
-                            if let lines = dict["FormattedAddressLines"] {
+                            if let lines = dict["FormattedAddressLines"] as? [String] {
                                 print("lines: \(lines)")
                                 if lines.count > 0 {
-                                    self.inputStreet.text = lines[0] as? String
+                                    self.inputStreet.text = lines[0]
                                 }
                                 if lines.count > 1 {
-                                    self.inputCity.text = lines[1] as? String
+                                    self.inputCity.text = lines[1]
                                 }
                                 else {
                                     self.inputCity.text = nil

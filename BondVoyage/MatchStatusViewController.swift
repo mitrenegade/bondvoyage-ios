@@ -153,10 +153,10 @@ class MatchStatusViewController: UIViewController, UserDetailsDelegate {
                     if let placemark: CLPlacemark = placemarks!.first as CLPlacemark! {
                         print("name \(placemark.name) address \(placemark.addressDictionary)")
                         if let dict: [String: AnyObject] = placemark.addressDictionary as? [String: AnyObject] {
-                            if let lines = dict["FormattedAddressLines"] {
+                            if let lines = dict["FormattedAddressLines"] as? [String] {
                                 print("lines: \(lines)")
                                 if lines.count > 0 {
-                                    self.locationString = lines[0] as? String
+                                    self.locationString = lines[0]
                                 }
                                 self.refresh()
                             }
