@@ -804,6 +804,7 @@ Parse.Cloud.define("respondToJoin", function(request, response) {
             }
             else {
                 activity.set("status", "matched")
+                activity.set("matched", [joiningUserId, request.user.id])
             }
             activity.save().then(
                 function(object) {
@@ -1020,5 +1021,26 @@ Parse.Cloud.define("createOrUpdateActivity", function(request, response) {
             var activity = new Activity()
             createActivity(activity, request, response)
         }
+    })
+});
+
+Parse.Cloud.define("queryMatchedActivities", function(request, response) {
+    //var location = request.params.location // not used
+    var query = new Parse.Query("Activity")
+    query.descending("updatedAt")
+    query.equalTo("status", "matched")
+    var userId = request.params.userId
+    query.equalTo("matched", userId)
+
+    // find all matched activities that contain the user in matched field
+    query.find({
+        success: function(results) {
+            console.log("Result count " + results.length)
+            response.success(results)
+        },
+        error: function(error) {
+            console.log("query failed: error " + error)
+            response.error(error)
+        }         
     })
 });

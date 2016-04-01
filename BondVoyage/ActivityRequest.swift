@@ -99,6 +99,20 @@ class ActivityRequest: NSObject {
         }
     }
     
+    class func queryMatchedActivities(user: PFUser?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+        
+        var params: [String: AnyObject] = [String: AnyObject]()
+        if user != nil {
+            params["userId"] = user!.objectId!
+        }
+        
+        PFCloud.callFunctionInBackground("queryMatchedActivities", withParameters: params) { (results, error) -> Void in
+            print("results: \(results) error: \(error)")
+            let activities: [PFObject]? = results as? [PFObject]
+            completion(results: activities, error: error)
+        }
+    }
+    
     // MARK: - convenience calls - uses another ActivityRequest call but does some filtering
     class func getRequestedBonds(completion: ( ([PFObject]?, NSError?) -> Void)) {
         var activities: [PFObject] = [PFObject]()

@@ -28,6 +28,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
         self.otherActivitiesLoaded = false
         self.loadingError = nil
         HUD.show(.SystemActivity)
+        /*
         ActivityRequest.getMyMatchedBonds { (results, error) in
             if results != nil {
                 self.activities.appendContentsOf(results!)
@@ -41,6 +42,42 @@ class MatchedBondsViewController: RequestedBondsViewController {
             }
             self.otherActivitiesLoaded = true
             self.reloadTableIfReady(error, completion: completion)
+        }
+        */
+        ActivityRequest.queryMatchedActivities(PFUser.currentUser()) { (results, error) in
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            if error != nil {
+                HUD.hide(animated: false)
+                if error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    if completion != nil {
+                        completion!()
+                    }
+                    return
+                }
+                else {
+                    self.simpleAlert("Could not load matches", defaultMessage: "Please click refresh to try again.", error: error)
+                    if completion != nil {
+                        completion!()
+                    }
+                }
+            }
+            else if results != nil {
+                self.activities.appendContentsOf(results!)
+                self.navigationItem.rightBarButtonItem?.enabled = true
+                HUD.hide(animated: true, completion: { (success) -> Void in
+                    if self.activities.count == 0 {
+                        self.simpleAlert("No matches yet", message: "There are currently no matched bonds for you.")
+                    }
+                    self.tableView.reloadData()
+                    if completion != nil {
+                        completion!()
+                    }
+                })
+            }
         }
     }
     
