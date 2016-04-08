@@ -11,7 +11,18 @@ Parse.Cloud.define("seedTestUsers", function(request, response) {
             {"email": "henry@bondvoyage.com", "firstName": "Henry", "interests":  randomInterests(), password: "test", birthYear: 2016 - 14, gender: "male"},
             {"email": "irene@bondvoyage.com", "firstName": "Irene", "interests":  randomInterests(), password: "test", birthYear: 2016 - 22, gender: "female"},
             {"email": "jake@bondvoyage.com", "firstName": "Jake", "interests": randomInterests(), password: "test", birthYear: 2016 - 42, gender: "male"},
-            {"email": "kyle@bondvoyage.com", "firstName": "Kyle", "interests": randomInterests(), password: "test", birthYear: 2016 - 18, gender: "male"}
+            {"email": "kyle@bondvoyage.com", "firstName": "Kyle", "interests": randomInterests(), password: "test", birthYear: 2016 - 18, gender: "male"},
+            {"username": "helen", "firstName": "Helen", "interests": randomInterests(), password: "test", birthYear: 2016 - 28, gender: "female"},
+            {"username": "stacey", "firstName": "Stacey", "interests": randomInterests(), password: "test", birthYear: 2016 - 19, gender: "female"},
+            {"username": "maya", "firstName": "Maya", "interests": randomInterests(), password: "test", birthYear: 2016 - 36, gender: "female"},
+            {"username": "simon", "firstName": "Simon", "interests": randomInterests(), password: "test", birthYear: 2016 - 45, gender: "male"},
+            {"username": "robert", "firstName": "Robert", "interests": randomInterests(), password: "test", birthYear: 2016 - 25, gender: "male"},
+            {"username": "faye", "firstName": "Faye", "interests": randomInterests(), password: "test", birthYear: 2016 - 30, gender: "female"},
+            {"username": "dan", "firstName": "Dan", "interests": randomInterests(), password: "test", birthYear: 2016 - 35, gender: "male"},
+            {"username": "talia", "firstName": "Talia", "interests": randomInterests(), password: "test", birthYear: 2016 - 40, gender: "female"},
+            {"username": "marissa", "firstName": "Marissa", "interests": randomInterests(), password: "test", birthYear: 2016 - 45, gender: "female"},
+            {"username": "andrew", "firstName": "Andrew", "interests": randomInterests(), password: "test", birthYear: 2016 - 50, gender: "male"},
+            {"username": "bob", "firstName": "Bob", "interests": randomInterests(), password: "test", birthYear: 2016 - 20, gender: "male"}
             ]
     var total = 0
 
@@ -20,8 +31,9 @@ Parse.Cloud.define("seedTestUsers", function(request, response) {
     for(var i=0; i < userDicts.length; i++) {
         var dict = userDicts[i]
         var user = new Parse.User(dict)
-        user.set("username", user.get("email"))
- 
+        if (dict["username"] == undefined) {
+            user.set("username", user.get("email"))
+        }
         // try to create demo user.
         console.log("creating user for " + dict["email"] + " email " + user.get("username") + " " + user.get("email") + " " + user.get("password"))
         user.signUp(null, {
@@ -32,6 +44,7 @@ Parse.Cloud.define("seedTestUsers", function(request, response) {
                 }
             },
             error: function(user, error) {
+                console.log("Error creating user: " + error.message)
                 total = total + 1
                 if (total == userDicts.length) {
                     response.success("seedTestUsers completed with " + total + " new users created")
@@ -609,6 +622,7 @@ Parse.Cloud.define("createActivity", function(request, response) {
     )
 });
 
+var TESTING = true
 Parse.Cloud.define("queryActivities", function(request, response) {
     //var location = request.params.location // not used
     var categories = request.params.categories
@@ -662,11 +676,13 @@ Parse.Cloud.define("queryActivities", function(request, response) {
         }
 
         // time filter - do not show queries more than 1 hour old
-        var time = new Date()
-        time.setHours(time.getHours() - 1)
-        var now = new Date()
-        console.log("now " + now + " cutoff " + time)
-        query.greaterThanOrEqualTo("time", time)
+        if (TESTING == false) {
+            var time = new Date()
+            time.setHours(time.getHours() - 1)
+            var now = new Date()
+            console.log("now " + now + " cutoff " + time)
+            query.greaterThanOrEqualTo("time", time)
+        }
 
         query.find({
             success: function(results) {
