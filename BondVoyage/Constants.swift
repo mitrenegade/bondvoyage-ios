@@ -18,6 +18,9 @@ let BOSTON_LON = -71.0714141
 let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
 
+let PARSE_LOCAL: Bool = true
+let PARSE_APP_ID_LOCAL: String = "BONDVOYAGE_LOCAL_APP_ID"
+
 let GOOGLE_API_IOS_KEY: String = "AIzaSyACcyQL3r_ryyj6qlOSplxf3ucsguEIWg4"
 let GOOGLE_API_SERVER_KEY: String = "AIzaSyAVhw7NunYCQpo9D1-eTa73xGGBj4ZeHpI" // used to make data requests through website
 

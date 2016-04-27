@@ -37,13 +37,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Parse.
         //Parse.setApplicationId(PARSE_APP_ID, clientKey: PARSE_CLIENT_KEY)
         
-        let configuration = ParseClientConfiguration {
-            $0.applicationId = PARSE_APP_ID
-            $0.clientKey = PARSE_CLIENT_KEY
-            //$0.server = "https://bondvoyage-server.herokuapp.com/parse"
-            $0.server = "http://localhost:1337/parse" // test locally
+        if !PARSE_LOCAL {
+            let configuration = ParseClientConfiguration {
+                $0.applicationId = PARSE_APP_ID
+                $0.clientKey = PARSE_CLIENT_KEY
+                $0.server = "https://bondvoyage-server.herokuapp.com/parse"
+            }
+            Parse.initializeWithConfiguration(configuration)
         }
-        Parse.initializeWithConfiguration(configuration)
+        else {
+            let configuration = ParseClientConfiguration {
+                $0.applicationId = PARSE_APP_ID_LOCAL
+                $0.clientKey = PARSE_CLIENT_KEY
+                $0.server = "http://localhost:1337/parse" // test locally
+            }
+            Parse.initializeWithConfiguration(configuration)
+        }
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
