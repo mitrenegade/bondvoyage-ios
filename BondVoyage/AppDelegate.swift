@@ -35,8 +35,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         
         // Initialize Parse.
-        Parse.setApplicationId(PARSE_APP_ID,
-            clientKey: PARSE_CLIENT_KEY)
+        //Parse.setApplicationId(PARSE_APP_ID, clientKey: PARSE_CLIENT_KEY)
+        
+        let config = ParseClientConfiguration(block: {
+            (ParseMutableClientConfiguration) -> Void in
+            
+            ParseMutableClientConfiguration.applicationId = PARSE_APP_ID;
+            ParseMutableClientConfiguration.clientKey = PARSE_CLIENT_KEY;
+            ParseMutableClientConfiguration.server = "https://bondvoyage-server.herokuapp.com/parse";
+        });
+        
+        Parse.initializeWithConfiguration(config);
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
