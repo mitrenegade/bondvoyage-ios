@@ -84,8 +84,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
             else if error != nil {
                 if error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                        PFUser.logOut()
-                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                        UserService.logout()
                     })
                     return
                 }

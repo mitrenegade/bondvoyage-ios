@@ -154,8 +154,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     }
 
     @IBAction func logout() {
-        PFUser.logOut()
-        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+        UserService.logout()
     }
     
     // MARK: UIPickerViewDataSource

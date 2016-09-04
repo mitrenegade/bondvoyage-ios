@@ -11,15 +11,18 @@ import Parse
 import AsyncImageView
 
 extension UIViewController {
-    
     func simpleAlert(title: String, defaultMessage: String?, error: NSError?) {
+        self.simpleAlert(title, defaultMessage: defaultMessage, error: error, completion: nil)
+    }
+    
+    func simpleAlert(title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)?) {
         if error != nil {
             if let msg = error!.userInfo["error"] as? String {
                 self.simpleAlert(title, message: msg)
                 return
             }
         }
-        self.simpleAlert(title, message: defaultMessage)
+        self.simpleAlert(title, message: defaultMessage, completion: completion)
     }
     
     func simpleAlert(title: String, message: String?) {

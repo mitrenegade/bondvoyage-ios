@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0B353A1D7C63AB008872FD /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B35391D7C63AB008872FD /* QBUserService.swift */; };
+		8E0B353C1D7C6898008872FD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B353B1D7C6898008872FD /* UserService.swift */; };
 		8E0F8DCB1CA98ED800C7BA68 /* WhenAndWhereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */; };
 		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
 		8E24D9D51CAEB5B8008B4520 /* BVTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */; };
@@ -93,6 +95,8 @@
 /* Begin PBXFileReference section */
 		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A3437A1B0698CFDD087FA3 /* Pods-BondVoyage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.release.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.release.xcconfig"; sourceTree = "<group>"; };
+		8E0B35391D7C63AB008872FD /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
+		8E0B353B1D7C6898008872FD /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhenAndWhereViewController.swift; sourceTree = "<group>"; };
 		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVTabBarController.swift; sourceTree = "<group>"; };
@@ -218,6 +222,15 @@
 			name = Details;
 			sourceTree = "<group>";
 		};
+		8E0B35361D7C6371008872FD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8E0B35391D7C63AB008872FD /* QBUserService.swift */,
+				8E0B353B1D7C6898008872FD /* UserService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		8E39C21C1C7E7ECC00C9B995 /* Old */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +325,7 @@
 		E5508A061C1539CF00D23C26 /* BondVoyage */ = {
 			isa = PBXGroup;
 			children = (
+				8E0B35361D7C6371008872FD /* Services */,
 				8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */,
 				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
 				E5508A0E1C1539CF00D23C26 /* Assets.xcassets */,
@@ -651,6 +665,8 @@
 				8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */,
 				8EC310AD1C7BAE4800992E7A /* BVPlace.swift in Sources */,
 				C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */,
+				8E0B353A1D7C63AB008872FD /* QBUserService.swift in Sources */,
+				8E0B353C1D7C6898008872FD /* UserService.swift in Sources */,
 				8E39C2191C7E6CA800C9B995 /* ActivityDetailViewController.swift in Sources */,
 				8E4D133C1C452E1C00A11E1F /* SearchPreferencesViewController.swift in Sources */,
 				8E6CD7771CAC720C00A556F9 /* JoinCell.swift in Sources */,
