@@ -77,6 +77,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         
         let category = CATEGORIES[indexPath.row]
         self.selectCategory(category)
+        
+        // TEST: device push
+        /*
+        let params = ["channel": "channelGlobal", "message": "test message"]
+        PFCloud.callFunctionInBackground("sendPushFromDevice", withParameters: params) { (results, error) in
+            print("results \(results) error \(error)")
+        }
+        */
     }
     
     func selectCategory(category: CATEGORY) {

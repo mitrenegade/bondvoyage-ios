@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		837B42693349A0A35D09666F /* Pods_BondVoyage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34C18BBE4D53277DFFEA3E /* Pods_BondVoyage.framework */; };
 		8E0F8DCB1CA98ED800C7BA68 /* WhenAndWhereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */; };
 		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
 		8E24D9D51CAEB5B8008B4520 /* BVTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */; };
@@ -59,6 +58,7 @@
 		C5E094361C3651E900CABC51 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094351C3651E800CABC51 /* SettingsViewController.swift */; };
 		C5E094381C3703CA00CABC51 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094371C3703CA00CABC51 /* EditProfileViewController.swift */; };
 		C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E094391C37236B00CABC51 /* AboutMeViewController.swift */; };
+		DEE6B0F100B33129BCF2F2CF /* Pods_BondVoyage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA789B3E5EB5F46DBDFB9D7F /* Pods_BondVoyage.framework */; };
 		E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5508A071C1539CF00D23C26 /* AppDelegate.swift */; };
 		E5508A0D1C1539CF00D23C26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0B1C1539CF00D23C26 /* Main.storyboard */; };
 		E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5508A0E1C1539CF00D23C26 /* Assets.xcassets */; };
@@ -92,6 +92,7 @@
 
 /* Begin PBXFileReference section */
 		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		67A3437A1B0698CFDD087FA3 /* Pods-BondVoyage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.release.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.release.xcconfig"; sourceTree = "<group>"; };
 		8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhenAndWhereViewController.swift; sourceTree = "<group>"; };
 		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVTabBarController.swift; sourceTree = "<group>"; };
@@ -105,6 +106,7 @@
 		8E6CD7761CAC720C00A556F9 /* JoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinCell.swift; sourceTree = "<group>"; };
 		8E73665A1CA9F46500F3642E /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		8E7867421C7BAA4F0017841E /* SuggestedPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestedPlacesViewController.swift; sourceTree = "<group>"; };
+		8E8C82561D7C608800FC8E40 /* BondVoyage-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BondVoyage-Bridging-Header.h"; sourceTree = "<group>"; };
 		8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesCell.swift; sourceTree = "<group>"; };
 		8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		8EDE33661DC55E4E000D95E7 /* Credits */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Credits; path = ../Credits; sourceTree = "<group>"; };
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
 		8EF6764B1C84BC8300D49A33 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A34CB0B4B62FC10C0AE18F1E /* Pods-BondVoyage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.debug.xcconfig"; sourceTree = "<group>"; };
 		AC1698451C1C7AB200E3DAAE /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C518526D1C341ACA00EA2328 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -162,8 +165,7 @@
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
-		F1B8A11F90A6F852B3907F70 /* Pods-BondVoyage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.release.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.release.xcconfig"; sourceTree = "<group>"; };
-		F4DA5B8A3853F0217663343B /* Pods-BondVoyage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.debug.xcconfig"; sourceTree = "<group>"; };
+		EA789B3E5EB5F46DBDFB9D7F /* Pods_BondVoyage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BondVoyage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +176,7 @@
 				8E9515171C605F83007F8BCB /* FBSDKShareKit.framework in Frameworks */,
 				8E9515151C605F82007F8BCB /* FBSDKCoreKit.framework in Frameworks */,
 				8E9515161C605F83007F8BCB /* FBSDKLoginKit.framework in Frameworks */,
-				837B42693349A0A35D09666F /* Pods_BondVoyage.framework in Frameworks */,
+				DEE6B0F100B33129BCF2F2CF /* Pods_BondVoyage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,18 +204,9 @@
 				8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */,
 				8E9515141C605F82007F8BCB /* FBSDKShareKit.framework */,
 				62223C5E02C10845D64B6A0B /* Pods.framework */,
-				CC34C18BBE4D53277DFFEA3E /* Pods_BondVoyage.framework */,
+				EA789B3E5EB5F46DBDFB9D7F /* Pods_BondVoyage.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		618AB03CCEDF65E0AE712E4A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F4DA5B8A3853F0217663343B /* Pods-BondVoyage.debug.xcconfig */,
-				F1B8A11F90A6F852B3907F70 /* Pods-BondVoyage.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		8E099EC11C850140006A0320 /* Details */ = {
@@ -284,6 +277,15 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		D4FE70839CE525BACE6DECEF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A34CB0B4B62FC10C0AE18F1E /* Pods-BondVoyage.debug.xcconfig */,
+				67A3437A1B0698CFDD087FA3 /* Pods-BondVoyage.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E55089FB1C1539CF00D23C26 = {
 			isa = PBXGroup;
 			children = (
@@ -293,7 +295,7 @@
 				E5508A261C1539CF00D23C26 /* BondVoyageUITests */,
 				E5508A051C1539CF00D23C26 /* Products */,
 				29A4A41598D70F96FD1D17F0 /* Frameworks */,
-				618AB03CCEDF65E0AE712E4A /* Pods */,
+				D4FE70839CE525BACE6DECEF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -322,6 +324,7 @@
 				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */,
 				E5C836651C38BEC1003BD54F /* Views */,
+				8E8C82561D7C608800FC8E40 /* BondVoyage-Bridging-Header.h */,
 			);
 			path = BondVoyage;
 			sourceTree = "<group>";
@@ -401,13 +404,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5508A2C1C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyage" */;
 			buildPhases = (
-				36791367CE56DAEB226F22E0 /* [CP] Check Pods Manifest.lock */,
+				FC6DA1C294238CDF7B6300F0 /* [CP] Check Pods Manifest.lock */,
 				E5508A001C1539CF00D23C26 /* Sources */,
 				E5508A011C1539CF00D23C26 /* Frameworks */,
 				E5508A021C1539CF00D23C26 /* Resources */,
 				8E41F8BA1C4B10D000C8392B /* ShellScript */,
-				6158906C6FAA62EE9958E790 /* [CP] Embed Pods Frameworks */,
-				A066392F59930634529F9D38 /* [CP] Copy Pods Resources */,
+				E8F33091752649A02372229A /* [CP] Embed Pods Frameworks */,
+				48BCBCB997A5FBDA7B143EDD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -460,7 +463,7 @@
 		E55089FC1C1539CF00D23C26 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = RenderApps;
 				TargetAttributes = {
@@ -539,34 +542,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		36791367CE56DAEB226F22E0 /* [CP] Check Pods Manifest.lock */ = {
+		48BCBCB997A5FBDA7B143EDD /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6158906C6FAA62EE9958E790 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8E41F8BA1C4B10D000C8392B /* ShellScript */ = {
@@ -582,19 +570,34 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" b721eacab2230f0d8a20ca887d75b31784b433c4 5d2754ef6dbcdc967b222d434090ab04723a33fb94bfcf518a802dc0e4345c8a";
 		};
-		A066392F59930634529F9D38 /* [CP] Copy Pods Resources */ = {
+		E8F33091752649A02372229A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC6DA1C294238CDF7B6300F0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -790,12 +793,12 @@
 		};
 		E5508A2D1C1539CF00D23C26 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F4DA5B8A3853F0217663343B /* Pods-BondVoyage.debug.xcconfig */;
+			baseConfigurationReference = A34CB0B4B62FC10C0AE18F1E /* Pods-BondVoyage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bobby Ren (UQA7D88UV9)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -806,8 +809,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bondvoyage.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				PROVISIONING_PROFILE = "abe685ca-5783-43d4-a776-f32cf10c5983";
+				SWIFT_OBJC_BRIDGING_HEADER = "BondVoyage/BondVoyage-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -815,7 +818,7 @@
 		};
 		E5508A2E1C1539CF00D23C26 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1B8A11F90A6F852B3907F70 /* Pods-BondVoyage.release.xcconfig */;
+			baseConfigurationReference = 67A3437A1B0698CFDD087FA3 /* Pods-BondVoyage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
@@ -831,7 +834,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bondvoyage.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "bc005c0d-24e4-4b87-8671-0018faf77206";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "BondVoyage/BondVoyage-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
