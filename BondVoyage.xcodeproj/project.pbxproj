@@ -42,6 +42,7 @@
 		8EC4E2431CAB0C5600FC071A /* MatchedBondsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4E2421CAB0C5600FC071A /* MatchedBondsViewController.swift */; };
 		8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4E2441CAB11E400FC071A /* UserCell.swift */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
+		8EDE33671DC55E4E000D95E7 /* Credits in Resources */ = {isa = PBXBuildFile; fileRef = 8EDE33661DC55E4E000D95E7 /* Credits */; };
 		8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */; };
 		8EF6764C1C84BC8300D49A33 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF6764B1C84BC8300D49A33 /* MapViewController.swift */; };
 		AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1698451C1C7AB200E3DAAE /* UserRequest.swift */; };
@@ -124,6 +125,7 @@
 		8EC4E2421CAB0C5600FC071A /* MatchedBondsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchedBondsViewController.swift; sourceTree = "<group>"; };
 		8EC4E2441CAB11E400FC071A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
+		8EDE33661DC55E4E000D95E7 /* Credits */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Credits; path = ../Credits; sourceTree = "<group>"; };
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
 		8EF6764B1C84BC8300D49A33 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		AC1698451C1C7AB200E3DAAE /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				AC1698441C1C7A9C00E3DAAE /* DataSource */,
 				E5508A131C1539CF00D23C26 /* Info.plist */,
 				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
+				8EDE33661DC55E4E000D95E7 /* Credits */,
 				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */,
 				E5C836651C38BEC1003BD54F /* Views */,
@@ -511,6 +514,7 @@
 				C55D92571C34412900970123 /* Lato-Italic.ttf in Resources */,
 				E5508A0D1C1539CF00D23C26 /* Main.storyboard in Resources */,
 				C55D92581C34412900970123 /* Lato-Light.ttf in Resources */,
+				8EDE33671DC55E4E000D95E7 /* Credits in Resources */,
 				8EC310AF1C7BAFCA00992E7A /* LocationPhiladelphia.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
