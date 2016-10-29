@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62223C5E02C10845D64B6A0B /* Pods.framework */; };
+		837B42693349A0A35D09666F /* Pods_BondVoyage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34C18BBE4D53277DFFEA3E /* Pods_BondVoyage.framework */; };
 		8E0F8DCB1CA98ED800C7BA68 /* WhenAndWhereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */; };
 		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
 		8E24D9D51CAEB5B8008B4520 /* BVTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */; };
@@ -89,8 +89,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		2852CA77D6571005D3434276 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		62223C5E02C10845D64B6A0B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0F8DCA1CA98ED800C7BA68 /* WhenAndWhereViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhenAndWhereViewController.swift; sourceTree = "<group>"; };
 		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +139,7 @@
 		C5E094351C3651E800CABC51 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C5E094371C3703CA00CABC51 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileViewController.swift; path = ViewControllers/EditProfileViewController.swift; sourceTree = "<group>"; };
 		C5E094391C37236B00CABC51 /* AboutMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutMeViewController.swift; sourceTree = "<group>"; };
+		CC34C18BBE4D53277DFFEA3E /* Pods_BondVoyage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BondVoyage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A041C1539CF00D23C26 /* BondVoyage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondVoyage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5508A071C1539CF00D23C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5508A0C1C1539CF00D23C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -159,6 +158,8 @@
 		E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFilterView.swift; path = Views/BaseFilterView.swift; sourceTree = "<group>"; };
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
+		F1B8A11F90A6F852B3907F70 /* Pods-BondVoyage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.release.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.release.xcconfig"; sourceTree = "<group>"; };
+		F4DA5B8A3853F0217663343B /* Pods-BondVoyage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,9 +168,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E9515171C605F83007F8BCB /* FBSDKShareKit.framework in Frameworks */,
-				38097D3AAB47368AA29DBBBB /* Pods.framework in Frameworks */,
 				8E9515151C605F82007F8BCB /* FBSDKCoreKit.framework in Frameworks */,
 				8E9515161C605F83007F8BCB /* FBSDKLoginKit.framework in Frameworks */,
+				837B42693349A0A35D09666F /* Pods_BondVoyage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,15 +198,16 @@
 				8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */,
 				8E9515141C605F82007F8BCB /* FBSDKShareKit.framework */,
 				62223C5E02C10845D64B6A0B /* Pods.framework */,
+				CC34C18BBE4D53277DFFEA3E /* Pods_BondVoyage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5D16A3486127141311118C52 /* Pods */ = {
+		618AB03CCEDF65E0AE712E4A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2852CA77D6571005D3434276 /* Pods.debug.xcconfig */,
-				1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */,
+				F4DA5B8A3853F0217663343B /* Pods-BondVoyage.debug.xcconfig */,
+				F1B8A11F90A6F852B3907F70 /* Pods-BondVoyage.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -286,8 +288,8 @@
 				E5508A1B1C1539CF00D23C26 /* BondVoyageTests */,
 				E5508A261C1539CF00D23C26 /* BondVoyageUITests */,
 				E5508A051C1539CF00D23C26 /* Products */,
-				5D16A3486127141311118C52 /* Pods */,
 				29A4A41598D70F96FD1D17F0 /* Frameworks */,
+				618AB03CCEDF65E0AE712E4A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -393,13 +395,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5508A2C1C1539CF00D23C26 /* Build configuration list for PBXNativeTarget "BondVoyage" */;
 			buildPhases = (
-				578615F32298A917364F83DA /* Check Pods Manifest.lock */,
+				36791367CE56DAEB226F22E0 /* [CP] Check Pods Manifest.lock */,
 				E5508A001C1539CF00D23C26 /* Sources */,
 				E5508A011C1539CF00D23C26 /* Frameworks */,
 				E5508A021C1539CF00D23C26 /* Resources */,
-				FC4C72E67EA62AF01E533F6B /* Embed Pods Frameworks */,
-				0CB379730C72B13FF1AD1190 /* Copy Pods Resources */,
 				8E41F8BA1C4B10D000C8392B /* ShellScript */,
+				6158906C6FAA62EE9958E790 /* [CP] Embed Pods Frameworks */,
+				A066392F59930634529F9D38 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -530,34 +532,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0CB379730C72B13FF1AD1190 /* Copy Pods Resources */ = {
+		36791367CE56DAEB226F22E0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		578615F32298A917364F83DA /* Check Pods Manifest.lock */ = {
+		6158906C6FAA62EE9958E790 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8E41F8BA1C4B10D000C8392B /* ShellScript */ = {
@@ -573,19 +575,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" b721eacab2230f0d8a20ca887d75b31784b433c4 5d2754ef6dbcdc967b222d434090ab04723a33fb94bfcf518a802dc0e4345c8a";
 		};
-		FC4C72E67EA62AF01E533F6B /* Embed Pods Frameworks */ = {
+		A066392F59930634529F9D38 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -780,7 +782,7 @@
 		};
 		E5508A2D1C1539CF00D23C26 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2852CA77D6571005D3434276 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = F4DA5B8A3853F0217663343B /* Pods-BondVoyage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
@@ -805,7 +807,7 @@
 		};
 		E5508A2E1C1539CF00D23C26 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1BFCCAE55D82588C0C9DD288 /* Pods.release.xcconfig */;
+			baseConfigurationReference = F1B8A11F90A6F852B3907F70 /* Pods-BondVoyage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
