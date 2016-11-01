@@ -49,6 +49,13 @@ enum VoyagerType: String {
     case Business = "Traveling for business"
 }
 
+enum Group: String {
+    case Solo
+    case SignificantOther
+    case Family
+    case Friends
+}
+
 class Constants: NSObject {
     class func sliderTrackColor() -> UIColor{
         return UIColor(red: 167.0/256.0, green: 168.0/256.0, blue: 171.0/256.0, alpha: 1.0)
