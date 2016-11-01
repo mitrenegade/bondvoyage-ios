@@ -71,6 +71,10 @@
 		E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C8366C1C3B4F92003BD54F /* BaseFilterView.swift */; };
 		E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */; };
 		E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */; };
+		F26F02391DC958D0003EADFA /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26F02381DC958D0003EADFA /* CityViewController.swift */; };
+		F26F023B1DC95EB0003EADFA /* SuggestCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */; };
+		F2B0EDC61DC8C0B8005C72EC /* City.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2B0EDC51DC8C0B8005C72EC /* City.storyboard */; };
+		F2B0EDC81DC8C2CD005C72EC /* ActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B0EDC71DC8C2CD005C72EC /* ActivitiesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +167,10 @@
 		E5FF8BE31C3CCEF00080C195 /* BVRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVRangeSlider.swift; sourceTree = "<group>"; };
 		E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDetailsViewController.swift; path = ViewControllers/UserDetailsViewController.swift; sourceTree = "<group>"; };
 		F1B8A11F90A6F852B3907F70 /* Pods-BondVoyage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.release.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.release.xcconfig"; sourceTree = "<group>"; };
+		F26F02381DC958D0003EADFA /* CityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
+		F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCityViewController.swift; sourceTree = "<group>"; };
+		F2B0EDC51DC8C0B8005C72EC /* City.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = City.storyboard; sourceTree = "<group>"; };
+		F2B0EDC71DC8C2CD005C72EC /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
 		F4DA5B8A3853F0217663343B /* Pods-BondVoyage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -267,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				E5508A0B1C1539CF00D23C26 /* Main.storyboard */,
+				F2B0EDC51DC8C0B8005C72EC /* City.storyboard */,
 				C518526D1C341ACA00EA2328 /* Settings.storyboard */,
 				8E507B501C4AB5330019FF19 /* Places.storyboard */,
 			);
@@ -310,6 +319,7 @@
 		E5508A061C1539CF00D23C26 /* BondVoyage */ = {
 			isa = PBXGroup;
 			children = (
+				F2B0EDC71DC8C2CD005C72EC /* ActivitiesTableViewController.swift */,
 				8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */,
 				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
 				E5508A0E1C1539CF00D23C26 /* Assets.xcassets */,
@@ -318,6 +328,8 @@
 				AC1698441C1C7A9C00E3DAAE /* DataSource */,
 				E5508A131C1539CF00D23C26 /* Info.plist */,
 				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
+				F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */,
+				F26F02381DC958D0003EADFA /* CityViewController.swift */,
 				8EDE33661DC55E4E000D95E7 /* Credits */,
 				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */,
@@ -511,6 +523,7 @@
 				C518526E1C341ACA00EA2328 /* Settings.storyboard in Resources */,
 				8E507B511C4AB5330019FF19 /* Places.storyboard in Resources */,
 				C55D92561C34412900970123 /* Lato-Bold.ttf in Resources */,
+				F2B0EDC61DC8C0B8005C72EC /* City.storyboard in Resources */,
 				E5508A121C1539CF00D23C26 /* LaunchScreen.storyboard in Resources */,
 				C55D92591C34412900970123 /* Lato-Regular.ttf in Resources */,
 				E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */,
@@ -605,12 +618,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E7867431C7BAA4F0017841E /* SuggestedPlacesViewController.swift in Sources */,
+				F26F02391DC958D0003EADFA /* CityViewController.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
 				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
 				C5566EE61C3E1040007C22F3 /* UIViewController+Utils.swift in Sources */,
 				8E99B94F1DC5A448007C4AC0 /* String+Utils.swift in Sources */,
+				F26F023B1DC95EB0003EADFA /* SuggestCityViewController.swift in Sources */,
 				8E0F8DCB1CA98ED800C7BA68 /* WhenAndWhereViewController.swift in Sources */,
 				8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */,
+				F2B0EDC81DC8C2CD005C72EC /* ActivitiesTableViewController.swift in Sources */,
 				8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */,
 				E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */,
 				8E9C88391C8F3346005B09F2 /* DistanceFilterView.swift in Sources */,

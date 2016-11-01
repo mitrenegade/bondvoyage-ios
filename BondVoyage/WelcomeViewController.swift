@@ -13,6 +13,8 @@ import FBSDKCoreKit
 
 class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
 
+    let doNormalLogin = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,12 +25,17 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if (PFUser.currentUser() == nil) {
-            self.goToLogin()
+        if TESTING {
+            if (PFUser.currentUser() == nil) {
+                self.goToLogin()
+            }
+            else {
+                self.didLogin()
+            }
+        } else {
+            self.performSegueWithIdentifier("GoToMain", sender: nil)
         }
-        else {
-            self.didLogin()
-        }
+        
     }
 
     override func didReceiveMemoryWarning() {
