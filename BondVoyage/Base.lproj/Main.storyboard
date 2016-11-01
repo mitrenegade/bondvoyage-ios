@@ -192,7 +192,23 @@
             </objects>
             <point key="canvasLocation" x="1253" y="-3111"/>
         </scene>
-        <!--Suggest City View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="GHU-UI-DD9">
+            <objects>
+                <navigationController id="LIq-vE-jjc" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="arY-B2-HmU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="dfI-SU-kO9" kind="relationship" relationship="rootViewController" id="ckb-gR-tSv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m5W-Y2-WIv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="692" y="-2331"/>
+        </scene>
+        <!--Request City-->
         <scene sceneID="Tqa-Jk-iND">
             <objects>
                 <viewController id="dfI-SU-kO9" customClass="SuggestCityViewController" sceneMemberID="viewController">
@@ -275,7 +291,7 @@
                                     <constraint firstItem="TOM-zj-vYl" firstAttribute="height" secondItem="VuM-P3-f6F" secondAttribute="height" id="zBU-yo-mfg"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ti5-WI-Cb7">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ti5-WI-Cb7">
                                 <rect key="frame" x="232" y="501" width="136" height="30"/>
                                 <state key="normal" title="Don't see your city?">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -292,10 +308,11 @@
                             <constraint firstItem="IK1-qb-ogP" firstAttribute="width" secondItem="FvO-sh-dOY" secondAttribute="width" multiplier="0.5" id="tXt-NP-RCX"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Request City" id="7vT-X2-ouz"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xqE-tY-WSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1222" y="-2349"/>
+            <point key="canvasLocation" x="1463" y="-2324"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hPb-Oy-a3a">
@@ -927,14 +944,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ab2-Qf-Yz0">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1z-Ji-Dwg">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="162.5"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Boston"/>
-                                        <connections>
-                                            <action selector="didTapButton:" destination="7Ca-2V-UoT" eventType="touchUpInside" id="rvV-Cp-mIq"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR0-0Y-0N2">
                                         <rect key="frame" x="0.0" y="162" width="600" height="162.5"/>
                                         <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -949,6 +958,14 @@
                                         <state key="normal" title="Where else should Bond Voyage go?"/>
                                         <connections>
                                             <action selector="didTapButton:" destination="7Ca-2V-UoT" eventType="touchUpInside" id="Rxi-Pv-mpW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1z-Ji-Dwg">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="162.5"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Boston"/>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="7Ca-2V-UoT" eventType="touchUpInside" id="rvV-Cp-mIq"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -983,7 +1000,7 @@
                         <outlet property="btnBoston" destination="z1z-Ji-Dwg" id="aK7-V6-LDx"/>
                         <outlet property="btnSuggest" destination="6xU-eA-Ocs" id="P7R-3N-0U6"/>
                         <segue destination="ytJ-aG-ZN6" kind="showDetail" identifier="toActivities" id="PzW-Pt-Ab3"/>
-                        <segue destination="dfI-SU-kO9" kind="show" identifier="toSuggestCity" action="showDetailViewController:sender:" id="nEh-yw-ExN"/>
+                        <segue destination="LIq-vE-jjc" kind="showDetail" identifier="toSuggestCity" id="Bfm-KX-fc7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUK-SA-42I" userLabel="First Responder" sceneMemberID="firstResponder"/>
