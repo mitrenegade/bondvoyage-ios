@@ -26,6 +26,9 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
     @IBOutlet weak var aboutMeLabel: UILabel!
+    @IBOutlet weak var countriesLabel: UILabel!
+    @IBOutlet weak var languagesLabel: UILabel!
+    @IBOutlet weak var groupsLabel: UILabel!
     @IBOutlet weak var nameView: UIView!
     @IBOutlet weak var interestsView: UIView!
     @IBOutlet weak var constraintNameViewTopOffset: NSLayoutConstraint!
@@ -158,14 +161,14 @@ class UserDetailsViewController: UIViewController {
                 if let categories: [String] = self.invitingActivity!.objectForKey("categories") as? [String] {
                     var str = self.stringFromArray(categories)
                     if self.selectedUser != nil {
-                        self.interestsLabel.text = "Interests: \(str)"
+                        self.interestsLabel.attributedText = "Interests: \(str)".attributedString(str, size: 17)
                     }
                     else {
                         let categoryString = categories[0]
                         if let category = CategoryFactory.categoryForString(categoryString) {
                             str = CategoryFactory.categoryReadableString(category)
                         }
-                        self.interestsLabel.text = "Wants to bond over: \(str)" // todo: load match and set this to match category
+                        self.interestsLabel.attributedText = "Wants to bond over: \(str)".attributedString(str, size: 17) // todo: load match and set this to match category
                     }
                 }
             })
@@ -175,10 +178,44 @@ class UserDetailsViewController: UIViewController {
         }
 
         if let about = user!.valueForKey("about") as? String {
-            self.aboutMeLabel.text = "About me: \(about)"
+            self.aboutMeLabel.attributedText = "About me: \(about)".attributedString(about, size: 17)
         }
         else {
             self.aboutMeLabel.text = nil
+        }
+        
+        if let countries = user!.valueForKey("countries") as? String {
+            self.countriesLabel.attributedText = "I have traveled to: \(countries)".attributedString(countries, size: 17)
+        }
+        else {
+            self.countriesLabel.text = nil
+        }
+
+        if let languages = user!.valueForKey("languages") as? String {
+            self.languagesLabel.attributedText = "Languages: \(languages)".attributedString(languages, size: 17)
+        }
+        else {
+            self.languagesLabel.text = nil
+        }
+    
+        if let group = user!.valueForKey("group") as? String, let g = Group(rawValue:group) {
+            switch g {
+            case .Solo:
+                self.groupsLabel.text = "I am solo"
+                break
+            case .SignificantOther:
+                self.groupsLabel.text = "I am with my significant other"
+                break
+            case .Family:
+                self.groupsLabel.text = "I am with family"
+                break
+            case .Friends:
+                self.groupsLabel.text = "I am with friends"
+                break
+            }
+        }
+        else {
+            self.groupsLabel.text = nil
         }
     }
 

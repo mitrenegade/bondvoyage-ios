@@ -25,6 +25,7 @@
 		8E9515151C605F82007F8BCB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */; };
 		8E9515161C605F83007F8BCB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */; };
 		8E9515171C605F83007F8BCB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9515141C605F82007F8BCB /* FBSDKShareKit.framework */; };
+		8E99B94F1DC5A448007C4AC0 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99B94E1DC5A448007C4AC0 /* String+Utils.swift */; };
 		8E9B14021CA95F0D005701EE /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B14011CA95F0D005701EE /* CategoryCell.swift */; };
 		8E9C88391C8F3346005B09F2 /* DistanceFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9C88381C8F3346005B09F2 /* DistanceFilterView.swift */; };
 		8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */; };
@@ -108,6 +109,7 @@
 		8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		8E9515141C605F82007F8BCB /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		8E99B94E1DC5A448007C4AC0 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E9B14011CA95F0D005701EE /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		8E9C88381C8F3346005B09F2 /* DistanceFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceFilterView.swift; sourceTree = "<group>"; };
 		8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCategoriesViewController.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				C5566EE51C3E1040007C22F3 /* UIViewController+Utils.swift */,
 				C5467E321C3C94C7001A0B82 /* UIAlertController+SimpleAlert.swift */,
 				8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */,
+				8E99B94E1DC5A448007C4AC0 /* String+Utils.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
 				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
 				C5566EE61C3E1040007C22F3 /* UIViewController+Utils.swift in Sources */,
+				8E99B94F1DC5A448007C4AC0 /* String+Utils.swift in Sources */,
 				8E0F8DCB1CA98ED800C7BA68 /* WhenAndWhereViewController.swift in Sources */,
 				8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */,
 				8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */,

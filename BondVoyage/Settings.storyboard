@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -262,45 +262,12 @@
                                                     <constraint firstAttribute="height" constant="297" id="z9M-Gg-OQ8"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Zh-UT-WoY" userLabel="Interests View">
-                                                <rect key="frame" x="0.0" y="369" width="600" height="65"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="about me" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co2-v9-ld4">
-                                                        <rect key="frame" x="20" y="34" width="560" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="interests" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaE-nM-uZ8">
-                                                        <rect key="frame" x="20" y="5" width="560" height="21.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="xaE-nM-uZ8" secondAttribute="bottom" constant="8" id="46n-Hp-hfg"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Co2-v9-ld4" secondAttribute="bottom" constant="10" id="90w-qF-iTi"/>
-                                                    <constraint firstItem="xaE-nM-uZ8" firstAttribute="leading" secondItem="4Zh-UT-WoY" secondAttribute="leading" constant="20" id="K8d-nL-e0m"/>
-                                                    <constraint firstItem="Co2-v9-ld4" firstAttribute="top" secondItem="xaE-nM-uZ8" secondAttribute="bottom" constant="8" id="Tmw-kj-svV"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Co2-v9-ld4" secondAttribute="trailing" constant="20" id="YqS-RT-agK"/>
-                                                    <constraint firstItem="Co2-v9-ld4" firstAttribute="leading" secondItem="4Zh-UT-WoY" secondAttribute="leading" constant="20" id="i11-mm-hf0"/>
-                                                    <constraint firstItem="xaE-nM-uZ8" firstAttribute="top" secondItem="4Zh-UT-WoY" secondAttribute="top" constant="5" id="nAB-kM-5fd"/>
-                                                    <constraint firstAttribute="trailing" secondItem="xaE-nM-uZ8" secondAttribute="trailing" constant="20" id="r63-oT-s7s"/>
-                                                </constraints>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="46n-Hp-hfg"/>
-                                                    </mask>
-                                                </variation>
-                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQ3-Pc-Jkm" userLabel="Name View">
-                                                <rect key="frame" x="0.0" y="297" width="600" height="72"/>
+                                                <rect key="frame" x="0.0" y="297" width="600" height="71.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gender, age" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aj8-EZ-Kmh">
-                                                        <rect key="frame" x="20" y="45" width="560" height="21.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <rect key="frame" x="20" y="45" width="560" height="21"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -322,6 +289,96 @@
                                                     <constraint firstAttribute="bottom" secondItem="aj8-EZ-Kmh" secondAttribute="bottom" constant="5" id="s0N-Fl-tEq"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Zh-UT-WoY" userLabel="Interests View">
+                                                <rect key="frame" x="0.0" y="369" width="600" height="159"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co2-v9-ld4">
+                                                        <rect key="frame" x="20" y="32.5" width="560" height="20"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="about me">
+                                                                <attributes>
+                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ox-BM-sij">
+                                                        <rect key="frame" x="20" y="60" width="560" height="20"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="languages">
+                                                                <attributes>
+                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOY-P5-h9d">
+                                                        <rect key="frame" x="20" y="87" width="560" height="20"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="countries">
+                                                                <attributes>
+                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaE-nM-uZ8">
+                                                        <rect key="frame" x="20" y="5" width="560" height="20"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="interests">
+                                                                <attributes>
+                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2Y-v3-Pfj">
+                                                        <rect key="frame" x="20" y="114" width="560" height="20"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="i am with">
+                                                                <attributes>
+                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="xaE-nM-uZ8" secondAttribute="bottom" constant="8" id="46n-Hp-hfg"/>
+                                                    <constraint firstAttribute="bottom" secondItem="j2Y-v3-Pfj" secondAttribute="bottom" constant="25" id="FZn-ci-bPo"/>
+                                                    <constraint firstItem="xaE-nM-uZ8" firstAttribute="leading" secondItem="4Zh-UT-WoY" secondAttribute="leading" constant="20" id="K8d-nL-e0m"/>
+                                                    <constraint firstItem="0Ox-BM-sij" firstAttribute="leading" secondItem="4Zh-UT-WoY" secondAttribute="leading" constant="20" id="MKd-Qd-tgm"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0Ox-BM-sij" secondAttribute="trailing" constant="20" id="NbW-hb-Wp3"/>
+                                                    <constraint firstItem="jOY-P5-h9d" firstAttribute="leading" secondItem="4Zh-UT-WoY" secondAttribute="leading" constant="20" id="SqW-sC-RW6"/>
+                                                    <constraint firstItem="0Ox-BM-sij" firstAttribute="top" secondItem="Co2-v9-ld4" secondAttribute="bottom" constant="7.5" id="Svx-60-Y7g"/>
+                                                    <constraint firstItem="Co2-v9-ld4" firstAttribute="top" secondItem="xaE-nM-uZ8" secondAttribute="bottom" constant="8" id="Tmw-kj-svV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Co2-v9-ld4" secondAttribute="trailing" constant="20" id="YqS-RT-agK"/>
+                                                    <constraint firstItem="j2Y-v3-Pfj" firstAttribute="top" secondItem="jOY-P5-h9d" secondAttribute="bottom" constant="7" id="ZjC-hU-fwK"/>
+                                                    <constraint firstAttribute="trailing" secondItem="j2Y-v3-Pfj" secondAttribute="trailing" constant="20" id="dV7-UY-bfA"/>
+                                                    <constraint firstAttribute="trailing" secondItem="jOY-P5-h9d" secondAttribute="trailing" constant="20" id="dcK-YW-Kor"/>
+                                                    <constraint firstItem="Co2-v9-ld4" firstAttribute="leading" secondItem="4Zh-UT-WoY" secondAttribute="leading" constant="20" id="i11-mm-hf0"/>
+                                                    <constraint firstItem="xaE-nM-uZ8" firstAttribute="top" secondItem="4Zh-UT-WoY" secondAttribute="top" constant="5" id="nAB-kM-5fd"/>
+                                                    <constraint firstItem="j2Y-v3-Pfj" firstAttribute="leading" secondItem="4Zh-UT-WoY" secondAttribute="leading" constant="20" id="qr2-6H-UCu"/>
+                                                    <constraint firstAttribute="trailing" secondItem="xaE-nM-uZ8" secondAttribute="trailing" constant="20" id="r63-oT-s7s"/>
+                                                    <constraint firstItem="jOY-P5-h9d" firstAttribute="top" secondItem="0Ox-BM-sij" secondAttribute="bottom" constant="7" id="sm2-kr-xs3"/>
+                                                </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="46n-Hp-hfg"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="TQ3-Pc-Jkm" firstAttribute="top" secondItem="VJP-CK-hoj" secondAttribute="bottom" priority="999" id="56f-Ug-JWA"/>
@@ -330,7 +387,7 @@
                                             <constraint firstAttribute="trailing" secondItem="TQ3-Pc-Jkm" secondAttribute="trailing" id="GWu-Ol-G9x"/>
                                             <constraint firstItem="TQ3-Pc-Jkm" firstAttribute="leading" secondItem="6At-MH-SCo" secondAttribute="leading" id="OeB-Mg-j2F"/>
                                             <constraint firstItem="VJP-CK-hoj" firstAttribute="leading" secondItem="6At-MH-SCo" secondAttribute="leading" id="W2e-aI-Cen"/>
-                                            <constraint firstAttribute="bottom" secondItem="4Zh-UT-WoY" secondAttribute="bottom" constant="102" id="YP0-zZ-sxu"/>
+                                            <constraint firstAttribute="bottom" secondItem="4Zh-UT-WoY" secondAttribute="bottom" constant="8" id="YP0-zZ-sxu"/>
                                             <constraint firstItem="4Zh-UT-WoY" firstAttribute="leading" secondItem="6At-MH-SCo" secondAttribute="leading" id="eRZ-x5-wxY"/>
                                             <constraint firstItem="4Zh-UT-WoY" firstAttribute="top" secondItem="TQ3-Pc-Jkm" secondAttribute="bottom" id="hcK-ej-3FE"/>
                                             <constraint firstAttribute="trailing" secondItem="VJP-CK-hoj" secondAttribute="trailing" id="vFR-tC-gRY"/>
@@ -375,9 +432,12 @@
                         <outlet property="aboutMeLabel" destination="Co2-v9-ld4" id="gQH-ca-bN4"/>
                         <outlet property="activityIndicator" destination="yLC-Na-nl6" id="yW6-fw-72o"/>
                         <outlet property="constraintNameViewTopOffset" destination="z9M-Gg-OQ8" id="fPQ-5h-B0P"/>
+                        <outlet property="countriesLabel" destination="jOY-P5-h9d" id="RuH-Yb-eOQ"/>
                         <outlet property="genderAndAgeLabel" destination="aj8-EZ-Kmh" id="7Sc-dO-wxI"/>
+                        <outlet property="groupsLabel" destination="j2Y-v3-Pfj" id="QYG-ML-YpH"/>
                         <outlet property="interestsLabel" destination="xaE-nM-uZ8" id="SRm-eS-TA5"/>
                         <outlet property="interestsView" destination="4Zh-UT-WoY" id="XUy-xk-tkz"/>
+                        <outlet property="languagesLabel" destination="0Ox-BM-sij" id="wRL-eA-fgG"/>
                         <outlet property="nameLabel" destination="3I8-yK-pnY" id="V4i-FG-Hm6"/>
                         <outlet property="nameView" destination="TQ3-Pc-Jkm" id="0jf-1V-2iF"/>
                         <outlet property="scrollView" destination="6At-MH-SCo" id="7kx-1w-2G8"/>
