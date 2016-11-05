@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sTt-RH-1Ke">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sTt-RH-1Ke">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -997,43 +997,73 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ab2-Qf-Yz0">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="city-boston" translatesAutoresizingMaskIntoConstraints="NO" id="MLh-Ga-jJx" userLabel="Image View - boston">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="162.5"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="city-athens" translatesAutoresizingMaskIntoConstraints="NO" id="o6e-r5-Fuq" userLabel="Image View - athens">
+                                        <rect key="frame" x="0.0" y="162" width="600" height="162.5"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="city-manhattanblur" translatesAutoresizingMaskIntoConstraints="NO" id="vzV-lt-xmf" userLabel="Image View - new york">
+                                        <rect key="frame" x="0.0" y="324" width="600" height="162.5"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1z-Ji-Dwg">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="162.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Boston">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="7Ca-2V-UoT" eventType="touchUpInside" id="rvV-Cp-mIq"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR0-0Y-0N2">
                                         <rect key="frame" x="0.0" y="162" width="600" height="162.5"/>
-                                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Athens"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Athens">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="didTapButton:" destination="7Ca-2V-UoT" eventType="touchUpInside" id="q6I-YH-YQj"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xU-eA-Ocs">
                                         <rect key="frame" x="0.0" y="324" width="600" height="162.5"/>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.67450980390000004" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Where else should Bond Voyage go?"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Where else should Bond Voyage go?">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="didTapButton:" destination="7Ca-2V-UoT" eventType="touchUpInside" id="Rxi-Pv-mpW"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1z-Ji-Dwg">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="162.5"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Boston"/>
-                                        <connections>
-                                            <action selector="didTapButton:" destination="7Ca-2V-UoT" eventType="touchUpInside" id="rvV-Cp-mIq"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="6xU-eA-Ocs" firstAttribute="top" secondItem="vzV-lt-xmf" secondAttribute="top" id="5br-ht-GOq"/>
+                                    <constraint firstItem="o6e-r5-Fuq" firstAttribute="trailing" secondItem="HR0-0Y-0N2" secondAttribute="trailing" id="GdR-e7-iE5"/>
                                     <constraint firstItem="6xU-eA-Ocs" firstAttribute="height" secondItem="HR0-0Y-0N2" secondAttribute="height" id="I5o-Tk-gJ0"/>
                                     <constraint firstItem="z1z-Ji-Dwg" firstAttribute="top" secondItem="Ab2-Qf-Yz0" secondAttribute="top" id="IMO-c7-bqW"/>
+                                    <constraint firstItem="MLh-Ga-jJx" firstAttribute="trailing" secondItem="z1z-Ji-Dwg" secondAttribute="trailing" id="KhL-E6-2Ig"/>
                                     <constraint firstAttribute="trailing" secondItem="6xU-eA-Ocs" secondAttribute="trailing" id="LG3-ep-WSN"/>
+                                    <constraint firstItem="6xU-eA-Ocs" firstAttribute="leading" secondItem="vzV-lt-xmf" secondAttribute="leading" id="Nhd-rG-tKu"/>
+                                    <constraint firstItem="o6e-r5-Fuq" firstAttribute="bottom" secondItem="HR0-0Y-0N2" secondAttribute="bottom" id="PeZ-Ez-k1d"/>
+                                    <constraint firstItem="MLh-Ga-jJx" firstAttribute="leading" secondItem="z1z-Ji-Dwg" secondAttribute="leading" id="Pld-dR-5I6"/>
                                     <constraint firstItem="HR0-0Y-0N2" firstAttribute="leading" secondItem="Ab2-Qf-Yz0" secondAttribute="leading" id="QZ4-NK-Q3l"/>
+                                    <constraint firstItem="o6e-r5-Fuq" firstAttribute="top" secondItem="HR0-0Y-0N2" secondAttribute="top" id="ReU-nO-eAH"/>
                                     <constraint firstItem="HR0-0Y-0N2" firstAttribute="height" secondItem="z1z-Ji-Dwg" secondAttribute="height" id="Uqw-ad-XNI"/>
                                     <constraint firstItem="z1z-Ji-Dwg" firstAttribute="height" secondItem="Ab2-Qf-Yz0" secondAttribute="height" multiplier="0.33333" id="ZrT-Yo-bTi"/>
+                                    <constraint firstItem="MLh-Ga-jJx" firstAttribute="top" secondItem="z1z-Ji-Dwg" secondAttribute="top" id="ckA-uA-TjE"/>
+                                    <constraint firstItem="6xU-eA-Ocs" firstAttribute="trailing" secondItem="vzV-lt-xmf" secondAttribute="trailing" id="dfB-Pt-ZWw"/>
                                     <constraint firstAttribute="trailing" secondItem="z1z-Ji-Dwg" secondAttribute="trailing" id="fGL-PD-Js6"/>
                                     <constraint firstItem="z1z-Ji-Dwg" firstAttribute="leading" secondItem="Ab2-Qf-Yz0" secondAttribute="leading" id="g2s-G6-ES8"/>
+                                    <constraint firstItem="MLh-Ga-jJx" firstAttribute="bottom" secondItem="z1z-Ji-Dwg" secondAttribute="bottom" id="iwz-5j-h2J"/>
                                     <constraint firstItem="6xU-eA-Ocs" firstAttribute="leading" secondItem="Ab2-Qf-Yz0" secondAttribute="leading" id="nhk-xD-IN6"/>
                                     <constraint firstItem="6xU-eA-Ocs" firstAttribute="top" secondItem="HR0-0Y-0N2" secondAttribute="bottom" id="ogk-Ji-ziZ"/>
+                                    <constraint firstItem="6xU-eA-Ocs" firstAttribute="bottom" secondItem="vzV-lt-xmf" secondAttribute="bottom" id="qIE-Mp-sik"/>
+                                    <constraint firstItem="o6e-r5-Fuq" firstAttribute="leading" secondItem="HR0-0Y-0N2" secondAttribute="leading" id="ruX-vg-j3q"/>
                                     <constraint firstAttribute="trailing" secondItem="HR0-0Y-0N2" secondAttribute="trailing" id="yV8-Ow-JmM"/>
                                     <constraint firstItem="HR0-0Y-0N2" firstAttribute="top" secondItem="z1z-Ji-Dwg" secondAttribute="bottom" id="ymq-3E-Pd8"/>
                                 </constraints>
@@ -1041,9 +1071,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ab2-Qf-Yz0" secondAttribute="trailing" constant="-20" id="NSh-0H-jwe"/>
+                            <constraint firstItem="Ab2-Qf-Yz0" firstAttribute="leading" secondItem="wlG-lg-Gd9" secondAttribute="leading" id="CwH-hz-R0P"/>
                             <constraint firstItem="1zd-tN-LbT" firstAttribute="top" secondItem="Ab2-Qf-Yz0" secondAttribute="bottom" id="OLN-Wo-ktw"/>
-                            <constraint firstItem="Ab2-Qf-Yz0" firstAttribute="leading" secondItem="wlG-lg-Gd9" secondAttribute="leadingMargin" constant="-20" id="WPl-tV-A6J"/>
+                            <constraint firstAttribute="trailing" secondItem="Ab2-Qf-Yz0" secondAttribute="trailing" id="a1e-OK-Irh"/>
                             <constraint firstItem="Ab2-Qf-Yz0" firstAttribute="top" secondItem="2rH-aA-5Cv" secondAttribute="bottom" id="z0r-Vd-En6"/>
                         </constraints>
                     </view>
@@ -1539,6 +1569,9 @@
     </scenes>
     <resources>
         <image name="bg6" width="2000" height="1333"/>
+        <image name="city-athens" width="800" height="269"/>
+        <image name="city-boston" width="849" height="499"/>
+        <image name="city-manhattanblur" width="725" height="268"/>
         <image name="icon-location" width="512" height="512"/>
         <image name="icon-profile" width="40" height="40"/>
         <image name="icon-search" width="40" height="40"/>
