@@ -11,6 +11,17 @@ import UIKit
 class SuggestCityViewController: UIViewController {
 
     
+    @IBOutlet var btnOther: UIButton!
+    @IBOutlet var btnTampa: UIButton!
+    @IBOutlet var btnPortland: UIButton!
+    @IBOutlet var btnCharlotte: UIButton!
+    @IBOutlet var btnVegas: UIButton!
+    @IBOutlet var btnPhoenix: UIButton!
+    @IBOutlet var btnLondon: UIButton!
+    @IBOutlet var btnDenver: UIButton!
+    
+    var selectedCity : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,15 +33,22 @@ class SuggestCityViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func didTapButton(sender: UIButton) {
+        if sender != btnOther {
+            selectedCity = (sender.titleLabel?.text)!
+        }
+    }
+    
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let newCityCtlr = segue.destinationViewController as! SubmitCityViewController
+        newCityCtlr.selectedCity = self.selectedCity
     }
-    */
+    
 
 }

@@ -226,44 +226,65 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fim-G3-xHQ">
                                         <rect key="frame" x="126" y="4" width="49" height="56.5"/>
                                         <state key="normal" title="Denver">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="z3J-6n-gUU"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBM-jE-vrs">
                                         <rect key="frame" x="124" y="68" width="52" height="56.5"/>
                                         <state key="normal" title="London">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="8uQ-TW-bvK"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYY-fD-VnE">
                                         <rect key="frame" x="115" y="197" width="70" height="56.5"/>
                                         <state key="normal" title="Las Vegas">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="PO3-UR-Nc3"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vag-je-Pxt">
                                         <rect key="frame" x="123" y="133" width="55" height="56.5"/>
                                         <state key="normal" title="Phoenix">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="pRS-Or-lXT"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TOM-zj-vYl">
                                         <rect key="frame" x="121" y="326" width="58" height="56.5"/>
                                         <state key="normal" title="Portland">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="oI0-b2-NVo"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VuM-P3-f6F">
                                         <rect key="frame" x="118" y="262" width="64" height="56.5"/>
                                         <state key="normal" title="Charlotte">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="oJQ-zt-I9s"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jFq-yM-HC3">
-                                        <rect key="frame" x="127" y="391" width="46" height="56.5"/>
+                                        <rect key="frame" x="127" y="390" width="46" height="56.5"/>
                                         <state key="normal" title="Tampa">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="qdq-sj-9fc"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -291,11 +312,14 @@
                                     <constraint firstItem="TOM-zj-vYl" firstAttribute="height" secondItem="VuM-P3-f6F" secondAttribute="height" id="zBU-yo-mfg"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ti5-WI-Cb7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ti5-WI-Cb7">
                                 <rect key="frame" x="232" y="501" width="136" height="30"/>
                                 <state key="normal" title="Don't see your city?">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapButton:" destination="dfI-SU-kO9" eventType="touchUpInside" id="QpY-pw-G5a"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -309,10 +333,39 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Request City" id="7vT-X2-ouz"/>
+                    <connections>
+                        <outlet property="btnCharlotte" destination="VuM-P3-f6F" id="MIn-Q6-bie"/>
+                        <outlet property="btnDenver" destination="fim-G3-xHQ" id="I79-1G-xEZ"/>
+                        <outlet property="btnLondon" destination="cBM-jE-vrs" id="h7B-es-kb8"/>
+                        <outlet property="btnOther" destination="ti5-WI-Cb7" id="aiR-od-ZR8"/>
+                        <outlet property="btnPhoenix" destination="Vag-je-Pxt" id="qd1-UY-x3w"/>
+                        <outlet property="btnPortland" destination="TOM-zj-vYl" id="L3I-ag-rgX"/>
+                        <outlet property="btnTampa" destination="jFq-yM-HC3" id="ceA-Ua-qaX"/>
+                        <outlet property="btnVegas" destination="rYY-fD-VnE" id="hSg-hi-1x1"/>
+                        <segue destination="a4w-Lo-3bN" kind="show" identifier="toSubmitCity" action="showDetailViewController:sender:" id="5hc-J5-69Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xqE-tY-WSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1463" y="-2324"/>
+        </scene>
+        <!--Submit City View Controller-->
+        <scene sceneID="vwf-qz-Dwq">
+            <objects>
+                <viewController id="a4w-Lo-3bN" customClass="SubmitCityViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nOn-yL-fGf"/>
+                        <viewControllerLayoutGuide type="bottom" id="mdC-a1-NTz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eYT-Bw-Pv1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZtF-jB-wvF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2166" y="-2324"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hPb-Oy-a3a">
@@ -1000,17 +1053,17 @@
                         <outlet property="btnBoston" destination="z1z-Ji-Dwg" id="aK7-V6-LDx"/>
                         <outlet property="btnSuggest" destination="6xU-eA-Ocs" id="P7R-3N-0U6"/>
                         <segue destination="ytJ-aG-ZN6" kind="showDetail" identifier="toActivities" id="PzW-Pt-Ab3"/>
-                        <segue destination="LIq-vE-jjc" kind="showDetail" identifier="toSuggestCity" id="Bfm-KX-fc7"/>
+                        <segue destination="LIq-vE-jjc" kind="show" identifier="toSuggestCity" action="showDetailViewController:sender:" id="Bfm-KX-fc7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUK-SA-42I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="508" y="-1618"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Activities Table View Controller-->
         <scene sceneID="uGf-wl-bKm">
             <objects>
-                <tableViewController id="ytJ-aG-ZN6" sceneMemberID="viewController">
+                <tableViewController id="ytJ-aG-ZN6" customClass="ActivitiesTableViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="px5-6I-Wtt">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
