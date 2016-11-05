@@ -15,6 +15,7 @@ import FBSDKCoreKit
 import ParseUI
 import ParseFacebookUtilsV4
 import GoogleMaps
+import Quickblox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -82,6 +83,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.logUser()
         }
         
+        // Quickblox
+        QBSettings.setApplicationID(QB_APP_ID)
+        QBSettings.setAuthKey(QB_AUTH_KEY)
+        QBSettings.setAccountKey(QB_ACCOUNT_KEY)
+        QBSettings.setAuthSecret(QB_AUTH_SECRET)
+        
         return true
     }
 
@@ -146,6 +153,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let userId: String = PFUser.currentUser()!.objectId!
             let channel: String = "channel\(userId)"
             installation.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
+            
+            // TEST: global channel
+            let global: String = "channelGlobal"
+            installation.addUniqueObject(global, forKey: "channels")
         }
         installation.saveInBackground()
 

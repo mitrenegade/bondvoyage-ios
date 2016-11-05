@@ -184,8 +184,7 @@ class NewActivityViewController: UIViewController, CLLocationManagerDelegate, GM
             if error != nil {
                 if error != nil && error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to create an activity.", completion: { () -> Void in
-                        PFUser.logOut()
-                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                        UserService.logout()
                     })
                     return
                 }

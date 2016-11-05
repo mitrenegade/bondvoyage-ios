@@ -262,8 +262,7 @@ class UserDetailsViewController: UIViewController {
             if error != nil {
                 if error != nil && error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to accept invitations.", completion: { () -> Void in
-                        PFUser.logOut()
-                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                        UserService.logout()
                     })
                     return
                 }
@@ -285,8 +284,7 @@ class UserDetailsViewController: UIViewController {
             if error != nil {
                 if error != nil && error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to decline invitations.", completion: { () -> Void in
-                        PFUser.logOut()
-                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                        UserService.logout()
                     })
                     return
                 }

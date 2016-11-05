@@ -3,6 +3,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'BondVoyage' do
+
 pod 'Parse'
 pod 'ParseUI'
 pod 'AsyncImageView'
@@ -11,4 +12,6 @@ pod 'Fabric'
 pod 'ParseFacebookUtilsV4'
 pod 'GoogleMaps'
 pod 'PKHUD'
+pod 'QuickBlox'
+
 end

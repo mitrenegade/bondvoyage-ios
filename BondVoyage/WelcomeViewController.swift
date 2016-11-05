@@ -12,6 +12,8 @@ import FBSDKCoreKit
 
 
 class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+    
+    var inTransitionToLogin: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,9 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
             self.goToLogin()
         }
         else {
-            self.didLogin()
+            if !inTransitionToLogin {
+                self.didLogin()
+            }
         }
     }
 
@@ -57,7 +61,9 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
     }
     
     func didLogin() {
-        self.performSegueWithIdentifier("GoToMain", sender: nil)
+        inTransitionToLogin = true
+        
+        // Facebook info
         let request: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
         request.startWithCompletionHandler { (connection, result, error) -> Void in
             print("\(result) \nerror: \(error)")
@@ -82,10 +88,29 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
                 }
             }
         }
+        
+        // Quickblox user
+        guard let user = PFUser.currentUser(), userId = user.objectId else {
+            self.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil, completion: nil)
+            return
+        }
+        QBUserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
+            if success {
+                self.inTransitionToLogin = false
+                self.performSegueWithIdentifier("GoToMain", sender: nil)
+            }
+            else {
+                self.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error, completion: {
+                    self.inTransitionToLogin = false
+                    UserService.logout()
+                })
+            }
+        })
     }
     
     // MARK: SettingsDelegate
     func didLogout() {
+        self.inTransitionToLogin = false
         self.dismissViewControllerAnimated(false) { () -> Void in
             self.goToLogin()
         }
