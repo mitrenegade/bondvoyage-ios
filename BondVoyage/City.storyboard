@@ -1,7 +1,334 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="4Ok-E7-0ac">
+            <objects>
+                <navigationController id="NwI-0T-TfQ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4N1-OQ-SDR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="f67-QF-LUL" kind="relationship" relationship="rootViewController" id="I5b-O1-mOj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hGq-2f-vMY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="692" y="-2331"/>
+        </scene>
+        <!--Request City-->
+        <scene sceneID="oGv-tu-e4m">
+            <objects>
+                <viewController id="f67-QF-LUL" customClass="SuggestCityViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="F2p-xU-ux2"/>
+                        <viewControllerLayoutGuide type="bottom" id="gGz-KY-Ccd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KhT-88-nHZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBs-sj-rhw">
+                                <rect key="frame" x="150" y="64" width="300" height="450"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMj-Qy-Ad9">
+                                        <rect key="frame" x="126" y="4" width="49" height="56.5"/>
+                                        <state key="normal" title="Denver">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="nQU-wh-kcp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btD-jC-May">
+                                        <rect key="frame" x="124" y="68" width="52" height="56.5"/>
+                                        <state key="normal" title="London">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="YQD-sS-aDq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RRh-ob-OjB">
+                                        <rect key="frame" x="115" y="197" width="70" height="56.5"/>
+                                        <state key="normal" title="Las Vegas">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="pfu-pQ-gHl"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYK-vz-wb0">
+                                        <rect key="frame" x="123" y="133" width="55" height="56.5"/>
+                                        <state key="normal" title="Phoenix">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="JKs-qR-Qjr"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UR7-lA-cR2">
+                                        <rect key="frame" x="121" y="326" width="58" height="56.5"/>
+                                        <state key="normal" title="Portland">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="RHf-Va-SRC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HjE-2m-lzq">
+                                        <rect key="frame" x="118" y="262" width="64" height="56.5"/>
+                                        <state key="normal" title="Charlotte">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="YQb-I7-Iiv"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QgT-Bh-RC4">
+                                        <rect key="frame" x="127" y="390" width="46" height="56.5"/>
+                                        <state key="normal" title="Tampa">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="qsc-8q-AS1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="RRh-ob-OjB" firstAttribute="top" secondItem="VYK-vz-wb0" secondAttribute="bottom" constant="8" id="2KO-jc-ZdV"/>
+                                    <constraint firstItem="VYK-vz-wb0" firstAttribute="height" secondItem="btD-jC-May" secondAttribute="height" id="6zV-lI-xCb"/>
+                                    <constraint firstItem="HjE-2m-lzq" firstAttribute="centerX" secondItem="gBs-sj-rhw" secondAttribute="centerX" id="Cxa-OR-tLV"/>
+                                    <constraint firstItem="QgT-Bh-RC4" firstAttribute="top" secondItem="UR7-lA-cR2" secondAttribute="bottom" constant="8" id="Cye-Dt-Z96"/>
+                                    <constraint firstItem="aMj-Qy-Ad9" firstAttribute="height" secondItem="gBs-sj-rhw" secondAttribute="height" multiplier="0.125" id="JOX-c0-ox0"/>
+                                    <constraint firstItem="RRh-ob-OjB" firstAttribute="centerX" secondItem="gBs-sj-rhw" secondAttribute="centerX" id="UbX-Bg-O3z"/>
+                                    <constraint firstItem="HjE-2m-lzq" firstAttribute="height" secondItem="RRh-ob-OjB" secondAttribute="height" id="V9K-z5-y3V"/>
+                                    <constraint firstItem="btD-jC-May" firstAttribute="centerX" secondItem="gBs-sj-rhw" secondAttribute="centerX" id="VSb-df-OQC"/>
+                                    <constraint firstItem="UR7-lA-cR2" firstAttribute="centerX" secondItem="gBs-sj-rhw" secondAttribute="centerX" id="XiH-Y2-Z0F"/>
+                                    <constraint firstItem="RRh-ob-OjB" firstAttribute="height" secondItem="VYK-vz-wb0" secondAttribute="height" id="YEG-OP-e8p"/>
+                                    <constraint firstItem="UR7-lA-cR2" firstAttribute="top" secondItem="HjE-2m-lzq" secondAttribute="bottom" constant="8" id="YV0-0E-Qj8"/>
+                                    <constraint firstItem="UR7-lA-cR2" firstAttribute="height" secondItem="HjE-2m-lzq" secondAttribute="height" id="ZLm-z7-L90"/>
+                                    <constraint firstItem="QgT-Bh-RC4" firstAttribute="centerX" secondItem="gBs-sj-rhw" secondAttribute="centerX" id="efX-eY-gIX"/>
+                                    <constraint firstItem="aMj-Qy-Ad9" firstAttribute="centerX" secondItem="gBs-sj-rhw" secondAttribute="centerX" id="gnP-Kd-osR"/>
+                                    <constraint firstItem="QgT-Bh-RC4" firstAttribute="height" secondItem="UR7-lA-cR2" secondAttribute="height" id="hD1-Wa-06P"/>
+                                    <constraint firstItem="VYK-vz-wb0" firstAttribute="centerX" secondItem="gBs-sj-rhw" secondAttribute="centerX" id="mQ9-A3-c9g"/>
+                                    <constraint firstItem="HjE-2m-lzq" firstAttribute="top" secondItem="RRh-ob-OjB" secondAttribute="bottom" constant="8" id="rFZ-gn-Cel"/>
+                                    <constraint firstItem="VYK-vz-wb0" firstAttribute="top" secondItem="btD-jC-May" secondAttribute="bottom" constant="8" id="w1j-Dl-CdZ"/>
+                                    <constraint firstItem="btD-jC-May" firstAttribute="top" secondItem="aMj-Qy-Ad9" secondAttribute="bottom" constant="8" id="w76-1F-QaB"/>
+                                    <constraint firstItem="btD-jC-May" firstAttribute="height" secondItem="aMj-Qy-Ad9" secondAttribute="height" id="wpl-Qe-dmX"/>
+                                    <constraint firstItem="aMj-Qy-Ad9" firstAttribute="top" secondItem="gBs-sj-rhw" secondAttribute="top" constant="4" id="yuC-8z-XAx"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cS7-7j-QkR">
+                                <rect key="frame" x="232" y="501" width="136" height="30"/>
+                                <state key="normal" title="Don't see your city?">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapButton:" destination="f67-QF-LUL" eventType="touchUpInside" id="cy8-CW-1Sp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gBs-sj-rhw" firstAttribute="width" secondItem="KhT-88-nHZ" secondAttribute="width" multiplier="0.5" id="JS2-wL-Pv7"/>
+                            <constraint firstItem="gBs-sj-rhw" firstAttribute="topMargin" secondItem="F2p-xU-ux2" secondAttribute="bottom" constant="8" id="MU6-Pc-qmC"/>
+                            <constraint firstItem="gGz-KY-Ccd" firstAttribute="top" secondItem="cS7-7j-QkR" secondAttribute="bottom" constant="20" id="TQz-uc-Hut"/>
+                            <constraint firstItem="cS7-7j-QkR" firstAttribute="centerX" secondItem="KhT-88-nHZ" secondAttribute="centerX" id="VaE-py-5pi"/>
+                            <constraint firstItem="gBs-sj-rhw" firstAttribute="centerX" secondItem="KhT-88-nHZ" secondAttribute="centerX" id="WYq-qE-fAB"/>
+                            <constraint firstItem="gBs-sj-rhw" firstAttribute="height" secondItem="KhT-88-nHZ" secondAttribute="height" multiplier="0.75" id="az8-4g-sFI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Request City" id="f5y-7U-zaA"/>
+                    <connections>
+                        <outlet property="btnCharlotte" destination="HjE-2m-lzq" id="cjw-Cd-kVZ"/>
+                        <outlet property="btnDenver" destination="aMj-Qy-Ad9" id="4Vo-BX-J8H"/>
+                        <outlet property="btnLondon" destination="btD-jC-May" id="5FN-qQ-lVb"/>
+                        <outlet property="btnOther" destination="cS7-7j-QkR" id="8XY-8Y-Gcd"/>
+                        <outlet property="btnPhoenix" destination="VYK-vz-wb0" id="NVg-BD-pA1"/>
+                        <outlet property="btnPortland" destination="UR7-lA-cR2" id="yH9-Tw-bIw"/>
+                        <outlet property="btnTampa" destination="QgT-Bh-RC4" id="jA0-z9-I9v"/>
+                        <outlet property="btnVegas" destination="RRh-ob-OjB" id="E2U-rf-mMF"/>
+                        <segue destination="XuS-EY-So2" kind="show" identifier="toSubmitCity" id="bxe-pT-dmA">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5WU-7k-KTM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1463" y="-2324"/>
+        </scene>
+        <!--Submit City View Controller-->
+        <scene sceneID="kFG-JI-don">
+            <objects>
+                <viewController id="XuS-EY-So2" customClass="SubmitCityViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FCC-R5-eQU"/>
+                        <viewControllerLayoutGuide type="bottom" id="ijz-kg-LHH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kDi-vG-fA0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HL7-v3-9kJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2166" y="-2324"/>
+        </scene>
+        <!--City View Controller-->
+        <scene sceneID="WZ0-nt-oNG">
+            <objects>
+                <viewController id="PFS-8B-qak" customClass="CityViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XWW-MB-8Si"/>
+                        <viewControllerLayoutGuide type="bottom" id="4h1-G6-tTI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vF1-WW-azn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oax-Pj-PfO">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="city-boston" translatesAutoresizingMaskIntoConstraints="NO" id="nNk-EL-EAw" userLabel="Image View - boston">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="162.5"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="city-athens" translatesAutoresizingMaskIntoConstraints="NO" id="ZGQ-rt-N2E" userLabel="Image View - athens">
+                                        <rect key="frame" x="0.0" y="162" width="600" height="162.5"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="city-manhattanblur" translatesAutoresizingMaskIntoConstraints="NO" id="IZC-Qi-hTb" userLabel="Image View - new york">
+                                        <rect key="frame" x="0.0" y="324" width="600" height="162.5"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BHc-Qi-FBn">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="162.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Boston">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="PFS-8B-qak" eventType="touchUpInside" id="BDC-3b-D2u"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ND-Ne-0PR">
+                                        <rect key="frame" x="0.0" y="162" width="600" height="162.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Athens">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="PFS-8B-qak" eventType="touchUpInside" id="4hB-4L-xXK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hZ-4l-h4q">
+                                        <rect key="frame" x="0.0" y="324" width="600" height="162.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Where else should Bond Voyage go?">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapButton:" destination="PFS-8B-qak" eventType="touchUpInside" id="c9O-JQ-2fg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="5hZ-4l-h4q" firstAttribute="leading" secondItem="oax-Pj-PfO" secondAttribute="leading" id="00d-iO-l2F"/>
+                                    <constraint firstItem="5hZ-4l-h4q" firstAttribute="height" secondItem="0ND-Ne-0PR" secondAttribute="height" id="2Jp-kt-blq"/>
+                                    <constraint firstItem="5hZ-4l-h4q" firstAttribute="leading" secondItem="IZC-Qi-hTb" secondAttribute="leading" id="2m0-Bk-8ur"/>
+                                    <constraint firstItem="5hZ-4l-h4q" firstAttribute="top" secondItem="IZC-Qi-hTb" secondAttribute="top" id="3d5-W5-2or"/>
+                                    <constraint firstItem="nNk-EL-EAw" firstAttribute="trailing" secondItem="BHc-Qi-FBn" secondAttribute="trailing" id="4M0-zr-EeS"/>
+                                    <constraint firstItem="BHc-Qi-FBn" firstAttribute="leading" secondItem="oax-Pj-PfO" secondAttribute="leading" id="CJ3-TL-PNz"/>
+                                    <constraint firstItem="5hZ-4l-h4q" firstAttribute="top" secondItem="0ND-Ne-0PR" secondAttribute="bottom" id="ChQ-km-b16"/>
+                                    <constraint firstItem="0ND-Ne-0PR" firstAttribute="height" secondItem="BHc-Qi-FBn" secondAttribute="height" id="FXN-1k-ucY"/>
+                                    <constraint firstItem="ZGQ-rt-N2E" firstAttribute="leading" secondItem="0ND-Ne-0PR" secondAttribute="leading" id="FwU-Xf-F5O"/>
+                                    <constraint firstItem="0ND-Ne-0PR" firstAttribute="leading" secondItem="oax-Pj-PfO" secondAttribute="leading" id="PQB-4P-ErJ"/>
+                                    <constraint firstItem="BHc-Qi-FBn" firstAttribute="top" secondItem="oax-Pj-PfO" secondAttribute="top" id="Z17-Wi-oTH"/>
+                                    <constraint firstItem="BHc-Qi-FBn" firstAttribute="height" secondItem="oax-Pj-PfO" secondAttribute="height" multiplier="0.33333" id="Zcm-Fa-inV"/>
+                                    <constraint firstItem="ZGQ-rt-N2E" firstAttribute="bottom" secondItem="0ND-Ne-0PR" secondAttribute="bottom" id="Zh9-N6-gj6"/>
+                                    <constraint firstItem="nNk-EL-EAw" firstAttribute="leading" secondItem="BHc-Qi-FBn" secondAttribute="leading" id="bCz-26-jbb"/>
+                                    <constraint firstItem="0ND-Ne-0PR" firstAttribute="top" secondItem="BHc-Qi-FBn" secondAttribute="bottom" id="fNo-Dj-cmu"/>
+                                    <constraint firstAttribute="trailing" secondItem="0ND-Ne-0PR" secondAttribute="trailing" id="fwp-F4-l4T"/>
+                                    <constraint firstItem="ZGQ-rt-N2E" firstAttribute="top" secondItem="0ND-Ne-0PR" secondAttribute="top" id="gkJ-kI-CAh"/>
+                                    <constraint firstItem="nNk-EL-EAw" firstAttribute="top" secondItem="BHc-Qi-FBn" secondAttribute="top" id="ht5-1d-v9N"/>
+                                    <constraint firstAttribute="trailing" secondItem="5hZ-4l-h4q" secondAttribute="trailing" id="lPr-AC-kr9"/>
+                                    <constraint firstItem="5hZ-4l-h4q" firstAttribute="trailing" secondItem="IZC-Qi-hTb" secondAttribute="trailing" id="nPJ-8Z-Ui9"/>
+                                    <constraint firstItem="nNk-EL-EAw" firstAttribute="bottom" secondItem="BHc-Qi-FBn" secondAttribute="bottom" id="nTM-OG-5mM"/>
+                                    <constraint firstItem="5hZ-4l-h4q" firstAttribute="bottom" secondItem="IZC-Qi-hTb" secondAttribute="bottom" id="raA-9T-ncJ"/>
+                                    <constraint firstItem="ZGQ-rt-N2E" firstAttribute="trailing" secondItem="0ND-Ne-0PR" secondAttribute="trailing" id="yq5-L6-get"/>
+                                    <constraint firstAttribute="trailing" secondItem="BHc-Qi-FBn" secondAttribute="trailing" id="zeN-wD-7ez"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="oax-Pj-PfO" secondAttribute="trailing" id="C2J-ke-1Hd"/>
+                            <constraint firstItem="oax-Pj-PfO" firstAttribute="top" secondItem="XWW-MB-8Si" secondAttribute="bottom" id="FVJ-q2-v2Q"/>
+                            <constraint firstItem="4h1-G6-tTI" firstAttribute="top" secondItem="oax-Pj-PfO" secondAttribute="bottom" id="h8e-P8-nhX"/>
+                            <constraint firstItem="oax-Pj-PfO" firstAttribute="leading" secondItem="vF1-WW-azn" secondAttribute="leading" id="zXC-5e-3n7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="cjW-gf-xlM"/>
+                    <connections>
+                        <outlet property="btnAthens" destination="0ND-Ne-0PR" id="uOz-UL-EFk"/>
+                        <outlet property="btnBoston" destination="BHc-Qi-FBn" id="h8a-Ix-kUE"/>
+                        <outlet property="btnSuggest" destination="5hZ-4l-h4q" id="WcC-U4-Cb1"/>
+                        <segue destination="2tf-tT-2Wo" kind="showDetail" identifier="toActivities" id="jtD-fI-PQu">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="NwI-0T-TfQ" kind="show" identifier="toSuggestCity" id="RuH-p6-xgH">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D7p-CY-7kG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="508" y="-1618"/>
+        </scene>
+        <!--Activities Table View Controller-->
+        <scene sceneID="vRp-BO-kYu">
+            <objects>
+                <tableViewController id="2tf-tT-2Wo" customClass="ActivitiesTableViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="G7r-c6-kGc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1EG-Rv-niT">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1EG-Rv-niT" id="GIB-JD-jzt">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2tf-tT-2Wo" id="s76-LB-3A7"/>
+                            <outlet property="delegate" destination="2tf-tT-2Wo" id="VyD-hf-1lP"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sLy-mc-r7A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1222" y="-1618"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="city-athens" width="800" height="269"/>
+        <image name="city-boston" width="849" height="499"/>
+        <image name="city-manhattanblur" width="725" height="268"/>
+    </resources>
 </document>
