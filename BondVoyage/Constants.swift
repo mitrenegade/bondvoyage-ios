@@ -26,6 +26,11 @@ let PARSE_APP_ID_LOCAL: String = "BONDVOYAGE_LOCAL_APP_ID"
 let GOOGLE_API_IOS_KEY: String = "AIzaSyACcyQL3r_ryyj6qlOSplxf3ucsguEIWg4"
 let GOOGLE_API_SERVER_KEY: String = "AIzaSyAVhw7NunYCQpo9D1-eTa73xGGBj4ZeHpI" // used to make data requests through website
 
+let QB_APP_ID: UInt = 46441
+let QB_AUTH_KEY = "Mw99rUvp7ApXAjS"
+let QB_ACCOUNT_KEY = "qezMRGfSugu3WHCiT1wg"
+let QB_AUTH_SECRET = "HCXw5O6bqy4kXAJ"
+
 // default slider range min/max
 var RANGE_SELECTOR_MAX = 100
 var RANGE_SELECTOR_MIN = 1
@@ -39,6 +44,7 @@ var RANGE_GROUP_MAX = 20
 var RANGE_GROUP_MIN = 1
 var RANGE_DISTANCE_MAX = 54
 var RANGE_DISTANCE_MIN = 0
+
 
 enum Gender: String {
     case Female, Male, Other

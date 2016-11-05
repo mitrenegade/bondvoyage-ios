@@ -77,19 +77,18 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         
         let category = CATEGORIES[indexPath.row]
         self.selectCategory(category)
+        
+        // TEST: device push
+        /*
+        let params = ["channel": "channelGlobal", "message": "test message"]
+        PFCloud.callFunctionInBackground("sendPushFromDevice", withParameters: params) { (results, error) in
+            print("results \(results) error \(error)")
+        }
+        */
     }
     
     func selectCategory(category: CATEGORY) {
         self.newCategory = category
-        self.performSegueWithIdentifier("GoToWhenWhere", sender: nil)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GoToWhenWhere" {
-            let controller: WhenAndWhereViewController = segue.destinationViewController as! WhenAndWhereViewController
-            if self.newCategory != nil {
-                controller.category = self.newCategory!
-            }
-        }
-    }
+        // TODO
+    }    
 }

@@ -71,8 +71,7 @@ class SettingsViewController: UITableViewController {
             self.goToSearchPreferences()
         }
         else if row == 2 {
-            PFUser.logOut()
-            NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+            UserService.logout()
         }
     }
     

@@ -26,6 +26,7 @@ PODS:
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
   - PKHUD (3.1.0)
+  - QuickBlox (2.7.6)
 
 DEPENDENCIES:
   - AsyncImageView
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - ParseFacebookUtilsV4
   - ParseUI
   - PKHUD
+  - QuickBlox
 
 SPEC CHECKSUMS:
   AsyncImageView: db9433939160710b34a5c249479e03af2a2121b0
@@ -49,7 +51,8 @@ SPEC CHECKSUMS:
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
+  QuickBlox: 348157145386d7fe568f5dab13ef7c4e4c1b5e05
 
-PODFILE CHECKSUM: 4589a7d96232fa02ff31ac033b809e40380fe698
+PODFILE CHECKSUM: 5a6c133c51e7f4c738018d0009f15ffdf35afe42
 
 COCOAPODS: 1.1.1

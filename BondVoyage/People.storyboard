@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--Invite View Controller-->
+        <scene sceneID="JUP-jN-x42">
+            <objects>
+                <viewController id="knu-oG-SDx" customClass="InviteViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="z1G-Cx-rwh"/>
+                        <viewControllerLayoutGuide type="bottom" id="qXy-Tf-7Y8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tTJ-R8-n70">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="550-Vq-RKL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E72-t7-yoD">
+                                <rect key="frame" x="0.0" y="540" width="600" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgE-Ed-wTj">
+                                        <rect key="frame" x="8" y="5" width="584" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="09j-qJ-rFk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                        <state key="normal" title="INVITE TO BOND"/>
+                                        <connections>
+                                            <action selector="didClickButton:" destination="knu-oG-SDx" eventType="touchUpInside" id="9Wk-d5-67B"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="dgE-Ed-wTj" firstAttribute="centerY" secondItem="E72-t7-yoD" secondAttribute="centerY" id="3tW-L1-Crq"/>
+                                    <constraint firstAttribute="height" constant="60" id="G5s-mL-PWw"/>
+                                    <constraint firstAttribute="trailing" secondItem="dgE-Ed-wTj" secondAttribute="trailing" constant="8" id="seC-8D-jfV"/>
+                                    <constraint firstItem="dgE-Ed-wTj" firstAttribute="leading" secondItem="E72-t7-yoD" secondAttribute="leading" constant="8" id="xzB-bY-fHH"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAK-fU-sCm">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="540"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </scrollView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4AA-lW-CT1">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4AA-lW-CT1" firstAttribute="centerY" secondItem="tTJ-R8-n70" secondAttribute="centerY" id="31a-cK-VQF"/>
+                            <constraint firstItem="E72-t7-yoD" firstAttribute="top" secondItem="MAK-fU-sCm" secondAttribute="bottom" id="4EO-Qg-lXc"/>
+                            <constraint firstItem="MAK-fU-sCm" firstAttribute="top" secondItem="tTJ-R8-n70" secondAttribute="topMargin" id="4RF-si-JN0"/>
+                            <constraint firstItem="E72-t7-yoD" firstAttribute="leading" secondItem="tTJ-R8-n70" secondAttribute="leading" id="5yI-zC-jqU"/>
+                            <constraint firstAttribute="trailing" secondItem="E72-t7-yoD" secondAttribute="trailing" id="Aec-3m-GdR"/>
+                            <constraint firstItem="qXy-Tf-7Y8" firstAttribute="top" secondItem="E72-t7-yoD" secondAttribute="bottom" id="Ei2-XH-gMQ"/>
+                            <constraint firstItem="550-Vq-RKL" firstAttribute="leading" secondItem="tTJ-R8-n70" secondAttribute="leading" id="Mc7-mv-BAG"/>
+                            <constraint firstAttribute="trailing" secondItem="550-Vq-RKL" secondAttribute="trailing" id="Okn-tU-7IB"/>
+                            <constraint firstItem="MAK-fU-sCm" firstAttribute="leading" secondItem="tTJ-R8-n70" secondAttribute="leading" id="gMi-oc-2np"/>
+                            <constraint firstItem="4AA-lW-CT1" firstAttribute="centerX" secondItem="tTJ-R8-n70" secondAttribute="centerX" id="gxN-EO-Rrd"/>
+                            <constraint firstItem="550-Vq-RKL" firstAttribute="top" secondItem="tTJ-R8-n70" secondAttribute="topMargin" id="kZc-dP-vy6"/>
+                            <constraint firstAttribute="trailing" secondItem="MAK-fU-sCm" secondAttribute="trailing" id="ogI-ea-3VJ"/>
+                            <constraint firstItem="qXy-Tf-7Y8" firstAttribute="top" secondItem="550-Vq-RKL" secondAttribute="bottom" id="vxs-vm-EYP"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="4AA-lW-CT1" id="QPL-Eb-j4E"/>
+                        <outlet property="bgView" destination="550-Vq-RKL" id="goH-XO-Nd5"/>
+                        <outlet property="buttonUp" destination="dgE-Ed-wTj" id="0TS-92-lMN"/>
+                        <outlet property="scrollView" destination="MAK-fU-sCm" id="Fou-p8-KRp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pxN-uv-o6c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1950" y="-901"/>
+        </scene>
+    </scenes>
+</document>

@@ -12,9 +12,9 @@ import FBSDKCoreKit
 
 
 class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
-
-    let doNormalLogin = false
     
+    var inTransitionToLogin: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,17 +25,14 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if TESTING {
-            if (PFUser.currentUser() == nil) {
-                self.goToLogin()
-            }
-            else {
+        if (PFUser.currentUser() == nil) {
+            self.goToLogin()
+        }
+        else {
+            if !inTransitionToLogin {
                 self.didLogin()
             }
-        } else {
-            self.performSegueWithIdentifier("GoToMain", sender: nil)
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,7 +61,9 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
     }
     
     func didLogin() {
-        self.performSegueWithIdentifier("GoToMain", sender: nil)
+        inTransitionToLogin = true
+        
+        // Facebook info
         let request: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
         request.startWithCompletionHandler { (connection, result, error) -> Void in
             print("\(result) \nerror: \(error)")
@@ -89,10 +88,29 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
                 }
             }
         }
+        
+        // Quickblox user
+        guard let user = PFUser.currentUser(), userId = user.objectId else {
+            self.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil, completion: nil)
+            return
+        }
+        QBUserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
+            if success {
+                self.inTransitionToLogin = false
+                self.performSegueWithIdentifier("GoToMain", sender: nil)
+            }
+            else {
+                self.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error, completion: {
+                    self.inTransitionToLogin = false
+                    UserService.logout()
+                })
+            }
+        })
     }
     
     // MARK: SettingsDelegate
     func didLogout() {
+        self.inTransitionToLogin = false
         self.dismissViewControllerAnimated(false) { () -> Void in
             self.goToLogin()
         }
