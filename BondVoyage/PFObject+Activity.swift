@@ -27,18 +27,6 @@ extension PFObject {
         }
     }
     
-    func subcategory() -> SUBCATEGORY? {
-        // converts a string format of the category to the enum
-        // if multiple exists, returns the first one
-        if let categories: [String] = self.objectForKey("categories") as? [String] {
-            let subcategory: String = categories[0].capitalizeFirst
-            if let sub = CategoryFactory.subcategoryForString(subcategory) {
-                return sub
-            }
-        }
-        return nil
-    }
-
     func category() -> CATEGORY? {
         // converts a string format of the category to the enum
         // if multiple exists, returns the first one
@@ -59,13 +47,8 @@ extension PFObject {
     }
 
     func defaultImage() -> UIImage {
-        if self.subcategory() != nil {
-            return CategoryFactory.subcategoryBgImage(self.subcategory()!.rawValue)
-        }
-        if self.category() != nil {
-            return CategoryFactory.categoryBgImage(self.category()!.rawValue)
-        }
-        return CategoryFactory.subcategoryBgImage("Other")
+        guard let category = self.category() else { return UIImage() }
+        return CategoryFactory.categoryBgImage(category.rawValue)
     }
     
     func user() -> PFUser {
@@ -118,11 +101,8 @@ extension PFObject {
         }
         
         var title = ""
-        if self.subcategory() != nil {
-            title = "\(CategoryFactory.subcategoryReadableString(self.subcategory()!))"
-        }
-        else if self.category() != nil {
-            title = "\(CategoryFactory.categoryReadableString(self.category()!))"
+        if let category = self.category() {
+            title = "\(CategoryFactory.categoryReadableString(category))"
         }
         
         if name != nil {
