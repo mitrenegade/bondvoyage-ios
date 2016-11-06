@@ -244,7 +244,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
             self.buttonSearch.setTitle("I'm in the mood for...", forState: .Normal)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "clearSearch")
         }
-        
+        /*
         ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: distanceMax, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
             if results != nil {
                 if results!.count > 0 {
@@ -298,6 +298,7 @@ class HereAndNowViewController: UIViewController, UITableViewDataSource, UITable
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
         }
+ */
     }
     
     func goToActivity(activity: PFObject) {

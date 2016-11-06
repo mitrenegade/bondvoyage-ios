@@ -26,14 +26,16 @@ class InviteViewController: UIViewController {
     var didSetupScroll: Bool = false
     
     var category: CATEGORY?
-    var activities: [PFObject]?
+//    var activities: [PFObject]?
+    var people: [PFUser]?
     var delegate: InviteDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: #selector(close))
+        self.configureRightNavigationButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -43,6 +45,14 @@ class InviteViewController: UIViewController {
             didSetupScroll = true
             self.setupScroll()
         }
+    }
+    
+    func configureRightNavigationButton() {
+        let button = UIButton(frame: CGRectMake(0, 0, 40, 40))
+        button.addTarget(self, action: #selector(didClickInviteOrChat), forControlEvents: .TouchUpInside)
+        button.setImage(UIImage(named: "icon150"), forState: .Normal)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,11 +69,8 @@ class InviteViewController: UIViewController {
         }
     }
     
-    @IBAction func didClickButton(button: UIButton) {
-        if button == self.buttonUp {
-            let activity = self.activities![self.currentPage()]
-            self.goToJoinActivity(activity)
-        }
+    func didClickInviteOrChat() {
+        print("here")
     }
     
     func goToJoinActivity(activity: PFObject) {
@@ -102,7 +109,7 @@ class InviteViewController: UIViewController {
     }
     
     func setupScroll() {
-        if self.activities == nil {
+        guard let users = self.people else {
             return
         }
 
@@ -110,9 +117,9 @@ class InviteViewController: UIViewController {
         let height: CGFloat = self.scrollView.frame.size.height
         self.scrollView.pagingEnabled = true
 
-        for var i=0; i<self.activities!.count; i++ {
-            let activity = self.activities![i]
-            let user = activity.objectForKey("user") as! PFUser
+        for i in 0 ..< users.count {
+            //let activity = self.activities![i]
+            let user = users[i]
             let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user
             
@@ -124,14 +131,16 @@ class InviteViewController: UIViewController {
             controller.didMoveToParentViewController(self)
             controller.configureUI() // force resize
         }
-        self.scrollView.contentSize = CGSizeMake(CGFloat(self.activities!.count) * width, height)
+        self.scrollView.contentSize = CGSizeMake(CGFloat(users.count) * width, height)
     }
     
     func refresh() {
-        if self.activities == nil {
+        guard let users = self.people else {
             self.buttonUp.hidden = true
+            return
         }
-        else if self.activities!.count == 0 {
+        
+        if users.count == 0 {
             self.buttonUp.hidden = true
         }
         else {

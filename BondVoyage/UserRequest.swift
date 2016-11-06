@@ -29,23 +29,7 @@ class UserRequest: NSObject {
     // query for all users on Parse with given interests
     class func userQuery(interests: [String], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
         // TODO: call queryUsers; handle nil or unspecified default search criteria
-        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interests]) { (results, error) -> Void in
-            print("results: \(results)")
-            let users: [PFUser]? = results as? [PFUser]
-            completion(results: users, error: error)
-        }
-    }
-
-    // query for all users with interests, age range default
-    class func userQuery(interests: [String], ageRange: [Int], numRange: [Int], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
-        // query for all users on Parse with given interests plus default search criteria
-
-        // converts to lowercase
-        let interestsString: [String] = interests.map { (i) -> String in
-            return i.lowercaseString
-        }
-
-        PFCloud.callFunctionInBackground("queryUsers", withParameters: ["interests": interestsString, "age": ageRange, "number": numRange]) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("v3queryUsers", withParameters: ["interests": interests]) { (results, error) -> Void in
             print("results: \(results)")
             let users: [PFUser]? = results as? [PFUser]
             completion(results: users, error: error)

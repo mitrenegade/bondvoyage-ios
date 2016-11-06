@@ -33,33 +33,16 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func queryActivities(user: PFUser?, joining: Bool?, categories: [String]?, location: CLLocation?, distance: Double?, aboutSelf: String?, aboutOthers: [String], completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
             params["categories"] = categories
         }
-        if location != nil && distance != nil {
-            params["lat"] = location!.coordinate.latitude
-            params["lon"] = location!.coordinate.longitude
-            params["distanceMax"] = distance!
-        }
         if user != nil {
             params["userId"] = user!.objectId!
         }
-        if joining != nil {
-            params["joining"] = joining!
-        }
-        if aboutSelf != nil {
-            // if this is a new activity, send in aboutSelf
-            // if this is a query for matched or requested bonds, don't use aboutSelf
-            params["aboutSelf"] = aboutSelf!
-        }
-        if aboutOthers.count > 0 {
-            params["aboutOthers"] = aboutOthers
-        }
-        
-        PFCloud.callFunctionInBackground("queryActivities", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunctionInBackground("v2queryActivities", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             let activities: [PFObject]? = results as? [PFObject]
             completion(results: activities, error: error)
@@ -116,7 +99,7 @@ class ActivityRequest: NSObject {
     // MARK: - convenience calls - uses another ActivityRequest call but does some filtering
     class func getRequestedBonds(completion: ( ([PFObject]?, NSError?) -> Void)) {
         var activities: [PFObject] = [PFObject]()
-        ActivityRequest.queryActivities(PFUser.currentUser(), joining: false, categories: nil, location: nil, distance: nil, aboutSelf: nil, aboutOthers: []) { (results, error) -> Void in
+        ActivityRequest.queryActivities(PFUser.currentUser(), categories: nil) { (results, error) -> Void in
             if error != nil {
                 completion(nil, error)
             }

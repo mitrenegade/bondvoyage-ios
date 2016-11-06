@@ -132,7 +132,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         let aboutOthersRaw = aboutOthers.map { (v) -> String in
             return v.rawValue
         }
-        
+        /*
         ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX), aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw) { (results, error) -> Void in
             self.navigationItem.rightBarButtonItem?.enabled = true
             if results != nil {
@@ -170,6 +170,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
         }
+ */
     }
     
     func createActivityWithCompletion(completion: ((Bool)->Void)) {
@@ -370,7 +371,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         if segue.identifier == "GoToInvite" {
             let controller = segue.destinationViewController as! InviteViewController
             controller.category = self.category
-            controller.activities = self.selectedActivities
+            //controller.activities = self.selectedActivities
             controller.delegate = self
         }
     }
