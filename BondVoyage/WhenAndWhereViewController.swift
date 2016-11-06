@@ -371,7 +371,7 @@ class WhenAndWhereViewController: UIViewController, UITableViewDataSource, UITab
         if segue.identifier == "GoToInvite" {
             let controller = segue.destinationViewController as! InviteViewController
             controller.category = self.category
-            controller.activities = self.selectedActivities
+            //controller.activities = self.selectedActivities
             controller.delegate = self
         }
     }

@@ -35,6 +35,7 @@ class InviteViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: #selector(close))
+        self.configureRightNavigationButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -44,6 +45,14 @@ class InviteViewController: UIViewController {
             didSetupScroll = true
             self.setupScroll()
         }
+    }
+    
+    func configureRightNavigationButton() {
+        let button = UIButton(frame: CGRectMake(0, 0, 40, 40))
+        button.addTarget(self, action: #selector(didClickInviteOrChat), forControlEvents: .TouchUpInside)
+        button.setImage(UIImage(named: "icon150"), forState: .Normal)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,12 +69,8 @@ class InviteViewController: UIViewController {
         }
     }
     
-    @IBAction func didClickButton(button: UIButton) {
-        if button == self.buttonUp {
-            // TODO
-            //let activity = self.activities![self.currentPage()]
-            //self.goToJoinActivity(activity)
-        }
+    func didClickInviteOrChat() {
+        print("here")
     }
     
     func goToJoinActivity(activity: PFObject) {
