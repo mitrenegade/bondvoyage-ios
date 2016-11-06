@@ -63,38 +63,6 @@ class QBUserService: NSObject {
         }
     }
     
-    // MARK: Refresh user session
-    func refreshSession(completion: ((success: Bool) -> Void)?) {
-        // if not connected to QBChat. For example at startup
-        // TODO: make this part of the Session service
-        guard !isRefreshingSession else { return }
-        isRefreshingSession = true
-        
-        guard let qbUser = QBSession.currentSession().currentUser else {
-            print("No qbUser, handle this error!")
-            completion?(success: false)
-            return
-        }
-        
-        guard let pfUser = PFUser.currentUser() else {
-            completion?(success: false)
-            return
-        }
-        
-        qbUser.password = pfUser.objectId!
-        QBChat.instance().connectWithUser(qbUser) { (error) in
-            self.isRefreshingSession = false
-            if error != nil {
-                print("error: \(error)")
-                completion?(success: false)
-            }
-            else {
-                print("login to chat succeeded")
-                completion?(success: true)
-            }
-        }
-    }
-
     func logoutQBUser() {
         if QBChat.instance().isConnected {
             QBChat.instance().disconnectWithCompletionBlock({ (error) in
@@ -103,32 +71,49 @@ class QBUserService: NSObject {
         }
     }
 
-    // load a QBUUser based on a PFUser
+    // load a QBUUser from cache by QBUserId
+    class func qbUUserWithId(userId: UInt, loadFromWeb: Bool = false, completion: ((result: QBUUser?) -> Void)){
+        if let user = self.cachedUserWithId(userId) {
+            completion(result: user)
+            return
+        }
+        if loadFromWeb {
+            QBRequest.userWithID(userId, successBlock: { (response, user) in
+                completion(result: user)
+            }) { (response) in
+                completion(result: nil)
+            }
+        }
+        else {
+            completion(result: nil)
+        }
+    }
+    
+    class func cachedUserWithId(userId: UInt) -> QBUUser? {
+        return SessionService.sharedInstance.usersService.usersMemoryStorage.userWithID(userId)
+    }
+    
+    // load a QBUUser from web based on a PFUser
     class func getQBUUserFor(user: PFUser, completion: ((result: QBUUser?)->Void)) {
         guard let objectId = user.objectId else {
             completion(result: nil)
             return
         }
-
-        QBRequest.userWithLogin(objectId, successBlock: { (response, user) in
-                completion(result: user)
-            }) { (response) in
-                completion(result: nil)
-        }
-
-        /*
-        self.loadUsersWithCompletion { (results) in
-            guard let users = results, objectId = user.objectId else {
-                completion(result: nil)
-                return
-            }
-
-            let matches = users.filter { $0.login == objectId };
-            completion(result: matches.first)
-        }
-        */
+        self.getQBUUserForPFUserId(objectId, completion: completion)
     }
     
+    class func getQBUUserForPFUserId(userId: String, completion: ((result: QBUUser?) -> Void)) {
+        // TODO: can optimize to prevent extra web calls by storing qbUserId in PFUser object
+        QBRequest.userWithLogin(userId, successBlock: { (response, user) in
+            if let user = user {
+                SessionService.sharedInstance.usersService.usersMemoryStorage.addUser(user)
+            }
+            completion(result: user)
+        }) { (response) in
+            completion(result: nil)
+        }
+    }
+
     // Loads all users from quickblox (paged)
     private class func loadUsersWithCompletion(completion: ((results: [QBUUser]?)->Void)) {
         let responsePage: QBGeneralResponsePage = QBGeneralResponsePage(currentPage: 0, perPage: 100)

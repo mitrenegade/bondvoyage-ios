@@ -32,6 +32,9 @@ let QB_AUTH_KEY = "Mw99rUvp7ApXAjS"
 let QB_ACCOUNT_KEY = "qezMRGfSugu3WHCiT1wg"
 let QB_AUTH_SECRET = "HCXw5O6bqy4kXAJ"
 
+// MARK: Call
+let SESSION_TIMEOUT_INTERVAL: NSTimeInterval = 30
+
 // default slider range min/max
 var RANGE_SELECTOR_MAX = 100
 var RANGE_SELECTOR_MIN = 1

@@ -5,6 +5,13 @@
 #ifndef Bridging_Header_h
 #define Bridging_Header_h
 
+@import UIKit;
+@import Foundation;
+@import SystemConfiguration;
+@import MobileCoreServices;
+
 #import <Quickblox/Quickblox.h>
+#import <QuickbloxWebRTC/QuickbloxWebRTC.h>
+#import <QuickBlox/QBPushNotificationsEnums.h>
 
 #endif /* Bridging_Header_h */
