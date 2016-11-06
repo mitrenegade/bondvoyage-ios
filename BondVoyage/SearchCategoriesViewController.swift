@@ -89,6 +89,43 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     func selectCategory(category: CATEGORY) {
         self.newCategory = category
-        // TODO
-    }    
+        
+        self.requestActivities()
+    }
+    
+    func requestActivities() {
+        let cat: [String] = [self.newCategory!.rawValue]
+        
+        ActivityRequest.queryActivities(nil, categories: cat) { (results, error) -> Void in
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            if results != nil {
+                if results!.count > 0 {
+                    print("results \(results)")
+                }
+                else {
+                    // no results, no error
+                    var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.newCategory!)) near you."
+                    if PFUser.currentUser() != nil {
+                        message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
+                    }
+                    
+                    self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    })
+                }
+            }
+            else {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        UserService.logout()
+                    })
+                    return
+                }
+                let message = "There was a problem loading matches. Please try again"
+                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+            }
+        }
+    }
+    
+
 }

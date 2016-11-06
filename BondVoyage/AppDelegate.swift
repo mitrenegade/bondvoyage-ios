@@ -36,24 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         
         // Initialize Parse.
-        //Parse.setApplicationId(PARSE_APP_ID, clientKey: PARSE_CLIENT_KEY)
+        let server = PARSE_LOCAL ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = PARSE_APP_ID
+            $0.clientKey = PARSE_CLIENT_KEY
+            $0.server = server
+        }
         
-        if !PARSE_LOCAL {
-            let configuration = ParseClientConfiguration {
-                $0.applicationId = PARSE_APP_ID
-                $0.clientKey = PARSE_CLIENT_KEY
-                $0.server = "https://bondvoyage-server.herokuapp.com/parse"
-            }
-            Parse.initializeWithConfiguration(configuration)
-        }
-        else {
-            let configuration = ParseClientConfiguration {
-                $0.applicationId = PARSE_APP_ID_LOCAL
-                $0.clientKey = PARSE_CLIENT_KEY
-                $0.server = "http://localhost:1337/parse" // test locally
-            }
-            Parse.initializeWithConfiguration(configuration)
-        }
+        Parse.initializeWithConfiguration(configuration)
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
@@ -88,6 +78,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QBSettings.setAuthKey(QB_AUTH_KEY)
         QBSettings.setAccountKey(QB_ACCOUNT_KEY)
         QBSettings.setAuthSecret(QB_AUTH_SECRET)
+        
+        ActivityRequest.queryActivities(PFUser.currentUser(), categories: nil) { (results, error) in
+            print("\(results) \(error)")
+        }
         
         return true
     }

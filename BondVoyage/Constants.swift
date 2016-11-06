@@ -15,11 +15,12 @@ let PHILADELPHIA_LON = -75.171886
 let BOSTON_LAT = 42.3583038
 let BOSTON_LON = -71.0714141
 
-let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
-let PARSE_CLIENT_KEY: String = "C3rX83IXHsXnwFjAlPS4ci7HhsgHYlN06IvYfJRa"
-
+let PARSE_APP_ID: String = "CgME1GrgMhiBQsInE72auuNajzaCnhFRtqoyFbGIg"
+let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
+let PARSE_SERVER_URL = "https://bondvoyage-server.herokuapp.com/parse"
+let PARSE_CLIENT_KEY = "unused"
 let PARSE_LOCAL: Bool = false
-let PARSE_APP_ID_LOCAL: String = "BONDVOYAGE_LOCAL_APP_ID"
+
 
 let GOOGLE_API_IOS_KEY: String = "AIzaSyACcyQL3r_ryyj6qlOSplxf3ucsguEIWg4"
 let GOOGLE_API_SERVER_KEY: String = "AIzaSyAVhw7NunYCQpo9D1-eTa73xGGBj4ZeHpI" // used to make data requests through website
