@@ -130,5 +130,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     func goToUserBrowser(users: [PFUser]) {
         // TODO
+        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewControllerWithIdentifier("InviteViewController") as? InviteViewController else { return }
+//        let nav = UINavigationController(rootViewController: controller)
+        controller.people = users
+        //self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }

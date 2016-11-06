@@ -14,7 +14,7 @@
         <!--Invite View Controller-->
         <scene sceneID="JUP-jN-x42">
             <objects>
-                <viewController id="knu-oG-SDx" customClass="InviteViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InviteViewController" id="knu-oG-SDx" customClass="InviteViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z1G-Cx-rwh"/>
                         <viewControllerLayoutGuide type="bottom" id="qXy-Tf-7Y8"/>
