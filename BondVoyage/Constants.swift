@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+let CITIES = ["Boston", "Athens", "Other"]
+
 let TESTING: Bool = false
 let PHILADELPHIA_LAT = 39.949508
 let PHILADELPHIA_LON = -75.171886
