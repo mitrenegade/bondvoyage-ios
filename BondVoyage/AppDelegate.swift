@@ -36,13 +36,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         
         // Initialize Parse.
-        let server = PARSE_LOCAL ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
         let configuration = ParseClientConfiguration {
             $0.applicationId = PARSE_APP_ID
             $0.clientKey = PARSE_CLIENT_KEY
-            $0.server = server
+            $0.server = PARSE_LOCAL ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
         }
-        
         Parse.initializeWithConfiguration(configuration)
         
         // [Optional] Track statistics around application opens.
@@ -78,10 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QBSettings.setAuthKey(QB_AUTH_KEY)
         QBSettings.setAccountKey(QB_ACCOUNT_KEY)
         QBSettings.setAuthSecret(QB_AUTH_SECRET)
-        
-        ActivityRequest.queryActivities(PFUser.currentUser(), categories: nil) { (results, error) in
-            print("\(results) \(error)")
-        }
         
         return true
     }
