@@ -237,4 +237,19 @@ class CategoryFactory: NSObject {
         }
         return nil
     }
+    
+    class func interestsForCategory(category: CATEGORY) -> String {
+        switch category {
+        case .Food:
+            return "food"
+        case .Fitness:
+            return "fitness"
+        case .Nightlife:
+            return "nightlife"
+        case .CultureSightseeing:
+            return "sightseeing"
+        default:
+            return ""
+        }
+    }
 }

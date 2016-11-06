@@ -94,13 +94,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func requestActivities() {
-        let cat: [String] = [self.newCategory!.rawValue]
-        
-        ActivityRequest.queryActivities(nil, categories: cat) { (results, error) -> Void in
+        guard let category = self.newCategory else { return }
+        let interests = [CategoryFactory.interestsForCategory(category)]
+        UserRequest.userQuery(interests) { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
-            if results != nil {
-                if results!.count > 0 {
-                    print("results \(results)")
+            if let users = results {
+                if users.count > 0 {
+                    print("results \(users)")
+                    self.goToUserBrowser(users)
                 }
                 else {
                     // no results, no error
@@ -127,5 +128,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
     }
     
-
+    func goToUserBrowser(users: [PFUser]) {
+        // TODO
+    }
 }
