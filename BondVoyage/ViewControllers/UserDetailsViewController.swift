@@ -11,10 +11,6 @@ import Parse
 import AsyncImageView
 import PKHUD
 
-protocol UserDetailsDelegate: class {
-    func didRespondToInvitation()
-}
-
 class UserDetailsViewController: UIViewController {
 
     var selectedUser: PFUser?
@@ -37,8 +33,6 @@ class UserDetailsViewController: UIViewController {
     var relevantInterests: [String]?
     var invitingActivity: PFObject?
 
-    weak var delegate: UserDetailsDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -230,13 +224,8 @@ class UserDetailsViewController: UIViewController {
     }
     
     func close() {
-        if self.delegate != nil {
-            self.delegate!.didRespondToInvitation()
-        }
-        else {
-            // close modally
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-        }
+        // close modally
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func goToEditProfile() {

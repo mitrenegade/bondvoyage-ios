@@ -67,7 +67,6 @@
 		F26F023B1DC95EB0003EADFA /* SuggestCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */; };
 		F289222C1DCB5D1D000D2E83 /* SubmitCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F289222B1DCB5D1D000D2E83 /* SubmitCityViewController.swift */; };
 		F2B0EDC61DC8C0B8005C72EC /* City.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2B0EDC51DC8C0B8005C72EC /* City.storyboard */; };
-		F2B0EDC81DC8C2CD005C72EC /* ActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B0EDC71DC8C2CD005C72EC /* ActivitiesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,7 +156,6 @@
 		F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCityViewController.swift; sourceTree = "<group>"; };
 		F289222B1DCB5D1D000D2E83 /* SubmitCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitCityViewController.swift; sourceTree = "<group>"; };
 		F2B0EDC51DC8C0B8005C72EC /* City.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = City.storyboard; sourceTree = "<group>"; };
-		F2B0EDC71DC8C2CD005C72EC /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,14 +198,6 @@
 				1E6F8931E7DE0B2E693FAF76 /* Pods_BondVoyage.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8E099EC11C850140006A0320 /* Details */ = {
-			isa = PBXGroup;
-			children = (
-				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
-			);
-			name = Details;
 			sourceTree = "<group>";
 		};
 		8E0B35361D7C6371008872FD /* Services */ = {
@@ -307,7 +297,6 @@
 				AC1698441C1C7A9C00E3DAAE /* DataSource */,
 				E5508A131C1539CF00D23C26 /* Info.plist */,
 				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
-				F2B0EDC71DC8C2CD005C72EC /* ActivitiesTableViewController.swift */,
 				F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */,
 				F289222B1DCB5D1D000D2E83 /* SubmitCityViewController.swift */,
 				F26F02381DC958D0003EADFA /* CityViewController.swift */,
@@ -381,7 +370,7 @@
 				8E73665A1CA9F46500F3642E /* InviteViewController.swift */,
 				8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */,
 				8EF20F261DD2107F00BFA659 /* MatchedBondsViewController.swift */,
-				8E099EC11C850140006A0320 /* Details */,
+				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -606,7 +595,6 @@
 				8E99B94F1DC5A448007C4AC0 /* String+Utils.swift in Sources */,
 				F26F023B1DC95EB0003EADFA /* SuggestCityViewController.swift in Sources */,
 				8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */,
-				F2B0EDC81DC8C2CD005C72EC /* ActivitiesTableViewController.swift in Sources */,
 				8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */,
 				8EF20F291DD210A300BFA659 /* RequestedBondsViewController.swift in Sources */,
 				E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */,
