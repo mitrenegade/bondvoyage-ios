@@ -30,8 +30,6 @@
 		8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */; };
 		8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */; };
 		8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDAE01C4423FC002DDA70 /* GroupSizeFilterView.swift */; };
-		8EC310AB1C7BAE0700992E7A /* GoogleDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC310AA1C7BAE0700992E7A /* GoogleDataProvider.swift */; };
-		8EC310AD1C7BAE4800992E7A /* BVPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC310AC1C7BAE4800992E7A /* BVPlace.swift */; };
 		8EC310AF1C7BAFCA00992E7A /* LocationPhiladelphia.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */; };
 		8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4E2441CAB11E400FC071A /* UserCell.swift */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
@@ -116,8 +114,6 @@
 		8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderFilterView.swift; sourceTree = "<group>"; };
 		8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeRangeFilterView.swift; sourceTree = "<group>"; };
 		8EBEDAE01C4423FC002DDA70 /* GroupSizeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSizeFilterView.swift; sourceTree = "<group>"; };
-		8EC310AA1C7BAE0700992E7A /* GoogleDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDataProvider.swift; sourceTree = "<group>"; };
-		8EC310AC1C7BAE4800992E7A /* BVPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVPlace.swift; sourceTree = "<group>"; };
 		8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LocationPhiladelphia.gpx; sourceTree = "<group>"; };
 		8EC4E2441CAB11E400FC071A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
@@ -227,8 +223,6 @@
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				8EC310AA1C7BAE0700992E7A /* GoogleDataProvider.swift */,
-				8EC310AC1C7BAE4800992E7A /* BVPlace.swift */,
 				AC1698451C1C7AB200E3DAAE /* UserRequest.swift */,
 				8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */,
 				8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */,
@@ -640,9 +634,7 @@
 				8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */,
 				8E24D9D51CAEB5B8008B4520 /* BVTabBarController.swift in Sources */,
 				8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */,
-				8EC310AB1C7BAE0700992E7A /* GoogleDataProvider.swift in Sources */,
 				8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */,
-				8EC310AD1C7BAE4800992E7A /* BVPlace.swift in Sources */,
 				C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */,
 				8E0B353A1D7C63AB008872FD /* QBUserService.swift in Sources */,
 				8E0B353C1D7C6898008872FD /* UserService.swift in Sources */,

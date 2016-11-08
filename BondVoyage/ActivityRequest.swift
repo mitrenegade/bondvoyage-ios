@@ -49,11 +49,8 @@ class ActivityRequest: NSObject {
         }
     }
     
-    class func joinActivity(activity: PFObject, suggestedPlace: BVPlace?, completion: ((results: AnyObject?, error: NSError?) -> Void)) {
+    class func joinActivity(activity: PFObject, suggestedPlace: AnyObject?, completion: ((results: AnyObject?, error: NSError?) -> Void)) {
         var params = ["activity": activity.objectId!]
-        if suggestedPlace != nil {
-            params["place"] = suggestedPlace!.placeId! as String
-        }
         PFCloud.callFunctionInBackground("joinActivity", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             completion(results: results, error: error)

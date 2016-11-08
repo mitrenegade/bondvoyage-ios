@@ -23,7 +23,7 @@ class JoinCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureWithActivity(activity: PFObject, user: PFUser?, place: BVPlace?) {
+    func configureWithActivity(activity: PFObject, user: PFUser?, place: String?) {
         let imageView: AsyncImageView = self.viewWithTag(1) as! AsyncImageView
         let labelName: UILabel = self.viewWithTag(2) as! UILabel
         let labelPlace: UILabel = self.viewWithTag(3) as! UILabel
@@ -65,8 +65,8 @@ class JoinCell: UITableViewCell {
             imageView.contentMode = .ScaleAspectFill
         }
         
-        if place?.name != nil {
-            labelPlace.text = "at \(place!.name!)"
+        if place != nil {
+            labelPlace.text = "at \(place!)"
         }
     }
 

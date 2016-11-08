@@ -15,7 +15,7 @@ import Parse
 import Quickblox
 import QMServices
 
-class SessionService: QMServicesManager, QBRTCClientDelegate {
+class SessionService: QMServicesManager {
     static var _instance: SessionService?
     static var sharedInstance: SessionService {
         get {
@@ -23,18 +23,12 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
                 return _instance!
             }
             _instance = SessionService()
-            QBRTCClient.initializeRTC()
-            QBRTCClient.instance().addDelegate(_instance)
-            QBRTCConfig.setAnswerTimeInterval(SESSION_TIMEOUT_INTERVAL)
             return _instance!
         }
     }
-    var session: QBRTCSession?
-    var incomingSession: QBRTCSession?
     var isRefreshingSession: Bool = false
 
     var currentDialogID = ""
-    var remoteVideoTrack: QBRTCVideoTrack?
     
     // MARK: Chat session
     func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
@@ -94,78 +88,4 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
 
     }
 
-    
-    // MARK: Session lifecycle
-    
-    // delegate (client)
-    func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
-        self.incomingSession = session
-        if (self.session != nil) {
-            // automatically reject call if a session exists
-            return
-        }
-        
-        let userId = self.incomingSession!.initiatorID as UInt
-        QBUserService.qbUUserWithId(userId) { (result) in
-            if let user = result {
-                print("Incoming call from a known user with id \(user.ID)")
-                if let pfObjectId = userInfo["callId"] as? String {
-//                    CallService.sharedInstance.currentCallId = pfObjectId
-                }
-
-                self.session = self.incomingSession
-//                self.state = .Connected
-            }
-            else {
-                self.incomingSession = nil
-                print("UserID could not be loaded")
-            }
-        }
-    }
-    
-    // user action (client)
-    func acceptCall(userInfo: [String: AnyObject]?) {
-        // happens automatically when client receives an incoming call and goes to video view
-        self.session?.acceptCall(userInfo)
-    }
-    
-    func rejectCall(userInfo: [String: AnyObject]?) {
-        // might happen if client is already in a call and goes to video view...shouldn't happen
-        self.session?.rejectCall(userInfo)
-    }
-    
-    // delegate (provider)
-    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call accepted")
-    }
-    
-    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call rejected")
-    }
-    
-    // delegate (both - video received)
-    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
-    }
-    
-    func session(session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
-        self.remoteVideoTrack = videoTrack // store it
-    }
-    
-    func endCall() {
-        self.session?.hangUp(nil)
-        self.currentDialogID = ""
-    }
-
-    // MARK: All connections
-    func session(session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("session hung up")
-        self.session = nil
-    }
-    
-    func sessionDidClose(session: QBRTCSession!) {
-        print("Session closed")
-        // notified when all remotes are inactive
-        self.session = nil
-    }
-    
 }

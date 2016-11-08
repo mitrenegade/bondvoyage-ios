@@ -14,7 +14,6 @@ import Crashlytics
 import FBSDKCoreKit
 import ParseUI
 import ParseFacebookUtilsV4
-import GoogleMaps
 import Quickblox
 
 @UIApplicationMain
@@ -56,9 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if PFUser.currentUser() != nil && self.hasPushEnabled() {
             self.initializeNotificationServices()
         }
-        
-        // Google Maps
-        GMSServices.provideAPIKey(GOOGLE_API_SERVER_KEY)
         
         // Fabric
         Fabric.with([Crashlytics.self])
