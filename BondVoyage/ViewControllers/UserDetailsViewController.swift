@@ -133,6 +133,8 @@ class UserDetailsViewController: UIViewController {
             genderAgeString = gender.capitalizedString
         }
         if let year = user!.valueForKey("birthYear") as? Int {
+            let calendar = NSCalendar.currentCalendar()
+            let components = calendar.components([.Year], fromDate: NSDate())
             let currentYear = components.year
             let age = currentYear - year
             if genderAgeString != nil {
@@ -224,9 +226,7 @@ class UserDetailsViewController: UIViewController {
     }
     
     func goToPlaces() {
-        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
-        controller.relevantInterests = self.relevantInterests
-        self.navigationController?.pushViewController(controller, animated: true)
+        // TODO: delete
     }
     
     func close() {

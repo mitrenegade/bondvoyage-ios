@@ -1,5 +1,5 @@
 PODS:
-  - AsyncImageView (1.5.1)
+  - AsyncImageView (1.6)
   - Bolts (1.7.0):
     - Bolts/AppLinks (= 1.7.0)
     - Bolts/Tasks (= 1.7.0)
@@ -88,7 +88,7 @@ DEPENDENCIES:
   - Quickblox-WebRTC
 
 SPEC CHECKSUMS:
-  AsyncImageView: db9433939160710b34a5c249479e03af2a2121b0
+  AsyncImageView: 416e99402e5b1f20571de70ad619ced90f56a7d9
   Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
