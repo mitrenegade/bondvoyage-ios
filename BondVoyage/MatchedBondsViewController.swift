@@ -58,15 +58,9 @@ class MatchedBondsViewController: RequestedBondsViewController {
     }
     
     override func goToActivity(activity: PFObject) {
-        self.performSegueWithIdentifier("GoToActivityDetail", sender: activity)
-        self.tableView.userInteractionEnabled = true
+        // TODO: delete
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GoToActivityDetail" {
-            let controller: ActivityDetailViewController = segue.destinationViewController as! ActivityDetailViewController
-            controller.activity = sender as! PFObject
-            controller.isRequestingJoin = false
-        }
     }
 }

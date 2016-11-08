@@ -12,7 +12,7 @@ import Parse
 import GoogleMaps
 import PKHUD
 
-protocol InvitationDelegate {
+protocol InvitationDelegate: class {
     func didSendInvitationForPlace()
     func didAcceptInvitationForPlace()
 }

@@ -52,13 +52,15 @@ class UserCell: UITableViewCell {
                     }
                     
                     if let photoURL: String = user!.objectForKey("photoUrl") as? String {
-                        self.imagePhoto.imageURL = NSURL(string: photoURL)
+                        self.imagePhoto.setValue(NSURL(string:photoURL), forKey: "imageURL")
+                        //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                 }
                 else {
                     self.titleLabel.text = self.activity!.shortTitle()
                     if let photoURL: String = user!.valueForKey("photoUrl") as? String {
-                        self.imagePhoto.imageURL = NSURL(string: photoURL)
+                        self.imagePhoto.setValue(NSURL(string:photoURL), forKey: "imageURL")
+                        //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                     else {
                         self.imagePhoto.image = UIImage(named: "profile-icon")

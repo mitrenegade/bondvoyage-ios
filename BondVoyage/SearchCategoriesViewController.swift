@@ -10,14 +10,9 @@ import UIKit
 import AsyncImageView
 import Parse
 
-protocol SearchCategoriesDelegate: class {
-    func didSelectCategory(category: CATEGORY?)
-}
 class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    
-    weak var delegate: SearchCategoriesDelegate?
     
     var newCategory: CATEGORY?
     

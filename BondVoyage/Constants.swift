@@ -21,16 +21,15 @@ let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
 let PARSE_SERVER_URL = "https://bondvoyage-server.herokuapp.com/parse"
 let PARSE_CLIENT_KEY = "unused"
-let PARSE_LOCAL: Bool = true
-
-
-let GOOGLE_API_IOS_KEY: String = "AIzaSyACcyQL3r_ryyj6qlOSplxf3ucsguEIWg4"
-let GOOGLE_API_SERVER_KEY: String = "AIzaSyAVhw7NunYCQpo9D1-eTa73xGGBj4ZeHpI" // used to make data requests through website
+let PARSE_LOCAL: Bool = false
 
 let QB_APP_ID: UInt = 46441
 let QB_AUTH_KEY = "Mw99rUvp7ApXAjS"
 let QB_ACCOUNT_KEY = "qezMRGfSugu3WHCiT1wg"
 let QB_AUTH_SECRET = "HCXw5O6bqy4kXAJ"
+
+// MARK: Call
+let SESSION_TIMEOUT_INTERVAL: NSTimeInterval = 30
 
 // default slider range min/max
 var RANGE_SELECTOR_MAX = 100

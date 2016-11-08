@@ -9,10 +9,7 @@
 import UIKit
 import Parse
 import PKHUD
-
-protocol InviteDelegate: class {
-    func didCloseInvites(invited: Bool)
-}
+import QMChatViewController
 
 class InviteViewController: UIViewController {
     
@@ -28,7 +25,6 @@ class InviteViewController: UIViewController {
     var category: CATEGORY?
 //    var activities: [PFObject]?
     var people: [PFUser]?
-    var delegate: InviteDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,17 +57,35 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
-        if self.delegate != nil {
-            self.delegate!.didCloseInvites(false)
-        }
-        else {
-            self.navigationController!.popToRootViewControllerAnimated(true)
-        }
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     func didClickInviteOrChat() {
         print("here")
-    }
+        guard let users = self.people where self.currentPage() < users.count else { return }
+        let selectedUser: PFUser = users[self.currentPage()]
+        
+        QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
+            guard let user = user else {
+                print("no user")
+                return
+            }
+            SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+                guard success else {
+                    print("Could not start chat")
+                    self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this person", error: nil, completion: nil)
+                    return
+                }
+                
+                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatNavigationViewController") as? UINavigationController,
+                    let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
+                    chatVC.dialog = dialog
+                    self?.presentViewController(chatNavigationVC, animated: true, completion: {
+                        //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
+                    })
+                }
+            })
+        }    }
     
     func goToJoinActivity(activity: PFObject) {
         self.activityIndicator.startAnimating()
@@ -92,12 +106,7 @@ class InviteViewController: UIViewController {
                 self.refresh()
                 HUD.show(.Label("Invitation sent."))
                 HUD.hide(animated: true, completion: { (complete) -> Void in
-                    if self.delegate != nil {
-                        self.delegate!.didCloseInvites(true)
-                    }
-                    else {
-                        self.navigationController!.popToRootViewControllerAnimated(true)
-                    }
+                    self.navigationController!.popToRootViewControllerAnimated(true)
                 })
             }
         })

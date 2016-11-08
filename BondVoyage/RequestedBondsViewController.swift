@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import PKHUD
 
-class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UserDetailsDelegate {
+class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let kCellIdentifier = "UserCell"
     
     @IBOutlet weak var tableView: UITableView!
@@ -156,17 +156,11 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
                 let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
                 controller.invitingUser = user
                 controller.invitingActivity = activity
-                controller.delegate = self
                 self.navigationController?.pushViewController(controller, animated: true)
             }
             else {
                 self.tableView.userInteractionEnabled = true
             }
         }
-    }
-    
-    // MARK: - UserDetailsDelegate
-    func didRespondToInvitation() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 }

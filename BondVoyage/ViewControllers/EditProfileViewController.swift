@@ -91,7 +91,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             user.fetchInBackgroundWithBlock({ (result, error) -> Void in
                 if result != nil {
                     if let photoURL: String = result!.valueForKey("photoUrl") as? String {
-                        self.imagePhoto.imageURL = NSURL(string: photoURL)
+                        self.imagePhoto.setValue(NSURL(string:photoURL), forKey: "imageURL")
+                        //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                     else {
                         self.imagePhoto.image = UIImage(named: "profile-icon")
@@ -359,7 +360,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             alert.addAction(UIAlertAction(title: "Facebook", style: .Default, handler: { (action) -> Void in
                 let url = "https://graph.facebook.com/v2.5/\(fbid)/picture?type=large&return_ssl_resources=1&width=1125"
                 PFUser.currentUser()?.setObject(url, forKey: "photoUrl")
-                self.imagePhoto.imageURL = NSURL(string: url)
+                self.imagePhoto.setValue(NSURL(string:url), forKey: "imageURL")
+                //self.imagePhoto.imageURL = NSURL(string: url)
             }))
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
@@ -399,7 +401,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         file.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
                 PFUser.currentUser()!.setObject(file.url!, forKey: "photoUrl")
-                self.imagePhoto.imageURL = NSURL(string:file.url!)
+                self.imagePhoto.setValue(NSURL(string:file.url!), forKey: "imageURL")
+                //self.imagePhoto.imageURL = NSURL(string:file.url!)
                 PFUser.currentUser()!.saveInBackground()
             }
             picker.dismissViewControllerAnimated(true, completion: nil)

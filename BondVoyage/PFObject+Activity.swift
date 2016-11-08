@@ -10,23 +10,7 @@ import Foundation
 import Parse
 
 extension PFObject {
-    
-    // TODO: not used
-    func fetchPlace(completion: ((BVPlace?) -> Void)) -> ()
-    {
-        if let placeId: String = self.objectForKey("placeId") as? String {
-            GoogleDataProvider.fetchDetailsFromPlaceId(placeId, completion: { (dictionary) -> Void in
-                if dictionary != nil {
-//                    self.place = BVPlace(dictionary: dictionary!, allowedTypes: nil)
-                }
-                completion(nil)
-            })
-        }
-        else {
-            completion(nil)
-        }
-    }
-    
+        
     func category() -> CATEGORY? {
         // converts a string format of the category to the enum
         // if multiple exists, returns the first one

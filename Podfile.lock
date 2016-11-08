@@ -1,5 +1,5 @@
 PODS:
-  - AsyncImageView (1.5.1)
+  - AsyncImageView (1.6)
   - Bolts (1.7.0):
     - Bolts/AppLinks (= 1.7.0)
     - Bolts/Tasks (= 1.7.0)
@@ -13,7 +13,6 @@ PODS:
     - Bolts (~> 1.5)
   - FBSDKLoginKit (4.10.1):
     - FBSDKCoreKit
-  - GoogleMaps (1.13.0)
   - Parse (1.13.0):
     - Bolts/Tasks (~> 1.6)
   - ParseFacebookUtilsV4 (1.11.1):
@@ -26,33 +25,81 @@ PODS:
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
   - PKHUD (3.1.0)
-  - QuickBlox (2.7.6)
+  - QMChatViewController (0.3.10):
+    - QMChatViewController/Categories (= 0.3.10)
+    - QMChatViewController/KeyboardViewController (= 0.3.10)
+    - QMChatViewController/Protocols (= 0.3.10)
+    - QMChatViewController/Sections (= 0.3.10)
+    - QMChatViewController/Utils (= 0.3.10)
+    - QMChatViewController/Views (= 0.3.10)
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Categories (0.3.10):
+    - QMChatViewController/Utils
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/KeyboardViewController (0.3.10):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Protocols (0.3.10):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Sections (0.3.10):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Utils (0.3.10):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Views (0.3.10):
+    - QMChatViewController/Categories
+    - QMChatViewController/Protocols
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMServices (0.4.4):
+    - Bolts (>= 1.5.0)
+    - QuickBlox (>= 2.6.5)
+  - QuickBlox (2.8.0.1)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
   - AsyncImageView
   - Crashlytics
   - Fabric
-  - GoogleMaps
   - Parse
   - ParseFacebookUtilsV4
   - ParseUI
   - PKHUD
+  - QMChatViewController
+  - QMServices
   - QuickBlox
 
 SPEC CHECKSUMS:
-  AsyncImageView: db9433939160710b34a5c249479e03af2a2121b0
+  AsyncImageView: 416e99402e5b1f20571de70ad619ced90f56a7d9
   Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
   FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
-  GoogleMaps: 7a6caeb8336d7cb42982e969fc9b1b20a889fe79
   Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
-  QuickBlox: 348157145386d7fe568f5dab13ef7c4e4c1b5e05
+  QMChatViewController: cb1f6172f794c85be20637c137c5a0b0c5abdb14
+  QMServices: 4e62c3dc9986db0cc3b9e06ae02a06a93429c1b8
+  QuickBlox: 51505b8deed7268c1bfd3139d4e4e9a1e9441d44
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 5a6c133c51e7f4c738018d0009f15ffdf35afe42
+PODFILE CHECKSUM: 83e33576c3b85b0c55adeb45da611bf7fa6ea358
 
 COCOAPODS: 1.1.1

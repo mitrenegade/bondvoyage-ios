@@ -11,10 +11,6 @@ import Parse
 import AsyncImageView
 import PKHUD
 
-protocol UserDetailsDelegate: class {
-    func didRespondToInvitation()
-}
-
 class UserDetailsViewController: UIViewController {
 
     var selectedUser: PFUser?
@@ -37,8 +33,6 @@ class UserDetailsViewController: UIViewController {
     var relevantInterests: [String]?
     var invitingActivity: PFObject?
 
-    weak var delegate: UserDetailsDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -112,10 +106,12 @@ class UserDetailsViewController: UIViewController {
         self.interestsView.hidden = false
 
         if let photoURL: String = user!.valueForKey("photoUrl") as? String {
-            self.scrollViewContainer.imageURL = NSURL(string: photoURL)
+            self.scrollViewContainer.setValue(NSURL(string: photoURL), forKey: "imageURL")
+            //self.scrollViewContainer.imageURL = NSURL(string: photoURL)
         }
         else if let photo: PFFile = user!.valueForKey("photo") as? PFFile {
-            self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
+            self.scrollViewContainer.setValue(NSURL(string: photo.url!), forKey: "imageURL")
+            //self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
         }
         else {
             self.scrollViewContainer.image = UIImage(named: "profile-icon")
@@ -133,6 +129,8 @@ class UserDetailsViewController: UIViewController {
             genderAgeString = gender.capitalizedString
         }
         if let year = user!.valueForKey("birthYear") as? Int {
+            let calendar = NSCalendar.currentCalendar()
+            let components = calendar.components([.Year], fromDate: NSDate())
             let currentYear = components.year
             let age = currentYear - year
             if genderAgeString != nil {
@@ -224,19 +222,12 @@ class UserDetailsViewController: UIViewController {
     }
     
     func goToPlaces() {
-        let controller: PlacesViewController = UIStoryboard(name: "Places", bundle: nil).instantiateViewControllerWithIdentifier("PlacesViewController") as! PlacesViewController
-        controller.relevantInterests = self.relevantInterests
-        self.navigationController?.pushViewController(controller, animated: true)
+        // TODO: delete
     }
     
     func close() {
-        if self.delegate != nil {
-            self.delegate!.didRespondToInvitation()
-        }
-        else {
-            // close modally
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-        }
+        // close modally
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func goToEditProfile() {
