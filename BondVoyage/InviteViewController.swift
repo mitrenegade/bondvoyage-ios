@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import PKHUD
+import QMChatViewController
 
 class InviteViewController: UIViewController {
     
@@ -72,21 +73,17 @@ class InviteViewController: UIViewController {
             SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
                 guard success else {
                     print("Could not start chat")
-                    self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
+                    self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this person", error: nil, completion: nil)
                     return
                 }
                 
-                /*
-                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ClientChatNavigationController") as? UINavigationController,
-                    let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
+                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatNavigationViewController") as? UINavigationController,
+                    let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
                     chatVC.dialog = dialog
-                    chatVC.providerId = self?.provider?.objectId
                     self?.presentViewController(chatNavigationVC, animated: true, completion: {
-                        self?.callButton.busy = false
-                        QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
+                        //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
                     })
                 }
-                */
             })
         }    }
     

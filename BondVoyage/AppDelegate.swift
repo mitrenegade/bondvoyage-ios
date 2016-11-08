@@ -15,7 +15,6 @@ import FBSDKCoreKit
 import ParseUI
 import ParseFacebookUtilsV4
 import Quickblox
-import QMChatViewController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
