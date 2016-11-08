@@ -58,7 +58,8 @@ class JoinCell: UITableViewCell {
             }
             
             if let url: String = user?.objectForKey("photoUrl") as? String {
-                imageView.imageURL = NSURL(string: url)
+                //imageView.imageURL = NSURL(string: url)
+                imageView.setValue(NSURL(string:url), forKey: "imageURL")
             }
             
             imageView.layer.cornerRadius = imageView.frame.size.width / 2

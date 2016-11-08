@@ -106,10 +106,12 @@ class UserDetailsViewController: UIViewController {
         self.interestsView.hidden = false
 
         if let photoURL: String = user!.valueForKey("photoUrl") as? String {
-            self.scrollViewContainer.imageURL = NSURL(string: photoURL)
+            self.scrollViewContainer.setValue(NSURL(string: photoURL), forKey: "imageURL")
+            //self.scrollViewContainer.imageURL = NSURL(string: photoURL)
         }
         else if let photo: PFFile = user!.valueForKey("photo") as? PFFile {
-            self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
+            self.scrollViewContainer.setValue(NSURL(string: photo.url!), forKey: "imageURL")
+            //self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
         }
         else {
             self.scrollViewContainer.image = UIImage(named: "profile-icon")

@@ -67,7 +67,8 @@ extension UIViewController {
         user!.fetchInBackgroundWithBlock({ (result, error) -> Void in
             if result != nil {
                 if let photoURL: String = result!.valueForKey("photoUrl") as? String {
-                    imageView.imageURL = NSURL(string: photoURL)
+//                    imageView.imageURL = NSURL(string: photoURL)
+                    imageView.setValue(NSURL(string: photoURL), forKey: "imageURL")
                 }
                 else {
                     imageView.image = UIImage(named: "profile-icon")
