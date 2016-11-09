@@ -10,7 +10,7 @@ import UIKit
 import AsyncImageView
 import Parse
 
-class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DatesViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var datesController: DatesViewController?
@@ -87,9 +87,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.newCategory = category
         
         self.showDateSelector()
-        //self.requestActivities()
     }
     
+    // MARK: - Date selector
     func showDateSelector() {
         guard let controller = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("DatesViewController") as? DatesViewController else {
             return
@@ -111,8 +111,15 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
         
         self.datesController = controller
+        self.datesController?.delegate = self
     }
     
+    func didSelectDates(startDate: NSDate?, endDate: NSDate?) {
+        print("dates selected: \(startDate) to \(endDate)")
+        self.requestActivities()
+    }
+    
+    // MARK: - Activities
     func requestActivities() {
         guard let category = self.newCategory else { return }
         let interests = [CategoryFactory.interestsForCategory(category)]
