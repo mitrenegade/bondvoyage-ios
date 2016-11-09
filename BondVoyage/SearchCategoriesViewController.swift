@@ -13,6 +13,7 @@ import Parse
 class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    var datesController: DatesViewController?
     
     var newCategory: CATEGORY?
     
@@ -85,7 +86,31 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     func selectCategory(category: CATEGORY) {
         self.newCategory = category
         
-        self.requestActivities()
+        self.showDateSelector()
+        //self.requestActivities()
+    }
+    
+    func showDateSelector() {
+        guard let controller = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("DatesViewController") as? DatesViewController else {
+            return
+        }
+        
+        let topOffset: CGFloat = 40 // keep the "I'm in the mood for" exposed
+        var frame = self.view.frame
+        frame.origin.y = self.view.frame.size.height
+        frame.size.height -= topOffset
+        controller.view.frame = frame
+        controller.willMoveToParentViewController(self)
+        self.addChildViewController(controller)
+        self.view.addSubview(controller.view)
+        UIView.animateWithDuration(0.25, animations: {
+            frame.origin.y = topOffset
+            controller.view.frame = frame
+            }) { (success) in
+                controller.didMoveToParentViewController(self)
+        }
+        
+        self.datesController = controller
     }
     
     func requestActivities() {
