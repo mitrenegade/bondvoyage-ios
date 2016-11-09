@@ -38,18 +38,26 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
             picker.datePickerMode = UIDatePickerMode.DateAndTime
             picker.addTarget(self, action: #selector(datePickerValueChanged), forControlEvents: UIControlEvents.ValueChanged)
             
+            let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
             let keyboardDoneButtonView = UIToolbar()
             keyboardDoneButtonView.sizeToFit()
             keyboardDoneButtonView.barStyle = UIBarStyle.Default
             keyboardDoneButtonView.tintColor = UIColor.whiteColor()
             let save: UIBarButtonItem = UIBarButtonItem(title: picker == fromDatePicker ? "Next" : "Done", style: UIBarButtonItemStyle.Done, target: self, action: #selector(doneWithDate))
-            save.tintColor = self.view.tintColor
-            keyboardDoneButtonView.setItems([save], animated: true)
+            save.tintColor = Constants.BV_defaultBlueColor()
+            keyboardDoneButtonView.setItems([flex, save], animated: true)
+            
+            if picker == fromDatePicker {
+                inputFrom.inputAccessoryView = keyboardDoneButtonView
+            }
+            else {
+                inputTo.inputAccessoryView = keyboardDoneButtonView
+            }
         }
         fromDatePicker.minimumDate = NSDate()
         
-        inputFrom.inputAccessoryView = fromDatePicker
-        inputTo.inputAccessoryView = toDatePicker
+        inputFrom.inputView = fromDatePicker
+        inputTo.inputView = toDatePicker
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +67,7 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
     
     func done() {
         // save dates
+        self.delegate?.didSelectDates(fromDate, endDate: toDate)
     }
     
     func datePickerValueChanged(sender:UIDatePicker) {
@@ -81,10 +90,13 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
     func doneWithDate() {
         if currentInput == inputFrom {
             inputFrom.resignFirstResponder()
+            self.datePickerValueChanged(fromDatePicker)
             toDatePicker.minimumDate = fromDatePicker.date
             inputTo.becomeFirstResponder()
         }
         else {
+            self.datePickerValueChanged(toDatePicker)
+            inputTo.resignFirstResponder()
             self.done()
         }
     }
