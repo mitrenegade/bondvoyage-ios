@@ -138,6 +138,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="W1a-ot-mcK"/>
                     <connections>
+                        <outlet property="headerView" destination="wjT-Tk-YTx" id="dge-87-MVv"/>
                         <outlet property="tableView" destination="rkZ-Ko-YNH" id="h77-GQ-6VD"/>
                     </connections>
                 </viewController>
