@@ -36,6 +36,8 @@
 		8ECA14E41DD24DCB003DF990 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ECA14E31DD24DCB003DF990 /* Chat.storyboard */; };
 		8ECA14E61DD24E18003DF990 /* QBChatMessage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14E51DD24E18003DF990 /* QBChatMessage+LunrExtensions.swift */; };
 		8ECA14E81DD24E43003DF990 /* UIImage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */; };
+		8ECA14EC1DD29BC6003DF990 /* DatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */; };
+		8ECA14EE1DD29C36003DF990 /* Activity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ECA14ED1DD29C36003DF990 /* Activity.storyboard */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
 		8EDE33671DC55E4E000D95E7 /* Credits in Resources */ = {isa = PBXBuildFile; fileRef = 8EDE33661DC55E4E000D95E7 /* Credits */; };
 		8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */; };
@@ -123,6 +125,8 @@
 		8ECA14E31DD24DCB003DF990 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		8ECA14E51DD24E18003DF990 /* QBChatMessage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QBChatMessage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LunrExtensions.swift"; sourceTree = "<group>"; };
+		8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewController.swift; sourceTree = "<group>"; };
+		8ECA14ED1DD29C36003DF990 /* Activity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Activity.storyboard; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
 		8EDE33661DC55E4E000D95E7 /* Credits */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Credits; path = ../Credits; sourceTree = "<group>"; };
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
@@ -218,6 +222,25 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		8ECA14E91DD29763003DF990 /* Cities */ = {
+			isa = PBXGroup;
+			children = (
+				F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */,
+				F289222B1DCB5D1D000D2E83 /* SubmitCityViewController.swift */,
+				F26F02381DC958D0003EADFA /* CityViewController.swift */,
+			);
+			name = Cities;
+			sourceTree = "<group>";
+		};
+		8ECA14EA1DD29782003DF990 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
+				8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */,
+			);
+			name = Activities;
+			sourceTree = "<group>";
+		};
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +270,7 @@
 				8EEF98B11DCE55C900D5BF31 /* Old.storyboard */,
 				8EEF98B31DCE55F800D5BF31 /* People.storyboard */,
 				8ECA14E31DD24DCB003DF990 /* Chat.storyboard */,
+				8ECA14ED1DD29C36003DF990 /* Activity.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -306,9 +330,6 @@
 				AC1698441C1C7A9C00E3DAAE /* DataSource */,
 				E5508A131C1539CF00D23C26 /* Info.plist */,
 				E5508A101C1539CF00D23C26 /* LaunchScreen.storyboard */,
-				F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */,
-				F289222B1DCB5D1D000D2E83 /* SubmitCityViewController.swift */,
-				F26F02381DC958D0003EADFA /* CityViewController.swift */,
 				8EDE33661DC55E4E000D95E7 /* Credits */,
 				C518526C1C341AB000EA2328 /* Storyboards */,
 				E5E4E51A1C1BCF1B003C4A90 /* ViewControllers */,
@@ -375,9 +396,10 @@
 			isa = PBXGroup;
 			children = (
 				8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */,
-				C518526B1C341A9E00EA2328 /* Settings */,
 				8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */,
-				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
+				C518526B1C341A9E00EA2328 /* Settings */,
+				8ECA14E91DD29763003DF990 /* Cities */,
+				8ECA14EA1DD29782003DF990 /* Activities */,
 				8E73665A1CA9F46500F3642E /* InviteViewController.swift */,
 				8ECA14E11DD24D85003DF990 /* ChatViewController.swift */,
 				8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */,
@@ -506,6 +528,7 @@
 				C55D92561C34412900970123 /* Lato-Bold.ttf in Resources */,
 				F2B0EDC61DC8C0B8005C72EC /* City.storyboard in Resources */,
 				E5508A121C1539CF00D23C26 /* LaunchScreen.storyboard in Resources */,
+				8ECA14EE1DD29C36003DF990 /* Activity.storyboard in Resources */,
 				8EEF98B21DCE55C900D5BF31 /* Old.storyboard in Resources */,
 				C55D92591C34412900970123 /* Lato-Regular.ttf in Resources */,
 				E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */,
@@ -640,6 +663,7 @@
 				8EA047CF1C4FDEA900CCCAC3 /* ProgressView.swift in Sources */,
 				C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */,
 				8ECA14E21DD24D85003DF990 /* ChatViewController.swift in Sources */,
+				8ECA14EC1DD29BC6003DF990 /* DatesViewController.swift in Sources */,
 				8E0B353A1D7C63AB008872FD /* QBUserService.swift in Sources */,
 				8E0B353C1D7C6898008872FD /* UserService.swift in Sources */,
 				8E6CD7771CAC720C00A556F9 /* JoinCell.swift in Sources */,

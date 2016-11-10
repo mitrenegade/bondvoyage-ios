@@ -10,11 +10,15 @@ import UIKit
 import AsyncImageView
 import Parse
 
-class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SearchCategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DatesViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerView: UIView!
+    
+    var datesController: DatesViewController?
     
     var newCategory: CATEGORY?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +89,65 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     func selectCategory(category: CATEGORY) {
         self.newCategory = category
         
+        self.showDateSelector()
+    }
+    
+    // MARK: - Date selector
+    func showDateSelector() {
+        guard let controller = UIStoryboard(name: "Activity", bundle: nil).instantiateViewControllerWithIdentifier("DatesViewController") as? DatesViewController else {
+            return
+        }
+        
+        self.datesController = controller
+        self.datesController?.delegate = self
+        
+        let topOffset: CGFloat = 40 // keep the "I'm in the mood for" exposed
+        var frame = self.view.frame
+        frame.origin.y = self.view.frame.size.height
+        frame.size.height -= topOffset
+        controller.view.frame = frame
+        controller.willMoveToParentViewController(self)
+        self.addChildViewController(controller)
+        self.view.addSubview(controller.view)
+        frame.origin.y = topOffset
+        UIView.animateWithDuration(0.25, animations: {
+            controller.view.frame = frame
+        }) { (success) in
+            controller.didMoveToParentViewController(self)
+        }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideDateSelector))
+        self.headerView.addGestureRecognizer(tap)
+    }
+    
+    func didSelectDates(startDate: NSDate?, endDate: NSDate?) {
+        self.hideDateSelector()
+        
+        print("dates selected: \(startDate) to \(endDate)")
         self.requestActivities()
     }
     
+    func hideDateSelector() {
+        guard let controller = self.datesController else { return }
+        
+        var frame = controller.view.frame
+        frame.origin.y = frame.size.height
+        controller.willMoveToParentViewController(nil)
+        UIView.animateWithDuration(0.25, animations: {
+            controller.view.frame = frame
+        }) { (success) in
+            controller.view.removeFromSuperview()
+            controller.removeFromParentViewController()
+            self.datesController = nil
+        }
+        if let recognizers = self.headerView.gestureRecognizers {
+            for recognizer in recognizers {
+                self.headerView.removeGestureRecognizer(recognizer)
+            }
+        }
+    }
+    
+    // MARK: - Activities
     func requestActivities() {
         guard let category = self.newCategory else { return }
         let interests = [CategoryFactory.interestsForCategory(category)]
