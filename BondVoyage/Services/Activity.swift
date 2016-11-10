@@ -26,7 +26,7 @@ extension Activity: PFSubclassing {
 // MARK: ActivityService
 extension Activity {
     // User creates a new activity that is available for others to join
-    class func createActivity(category: CATEGORY, city: String, fromTime: NSDate?, toTime: NSDate?, completion: ((result: PFObject?, error: NSError?)->Void)) {
+    class func createActivity(category: CATEGORY, city: String, fromTime: NSDate?, toTime: NSDate?, completion: ((result: Activity?, error: NSError?)->Void)) {
         var params: [String: AnyObject] = ["category": category.rawValue.lowercaseString, "city": city]
         if let from = fromTime {
             params["fromTime"] = from
@@ -37,12 +37,12 @@ extension Activity {
         
         PFCloud.callFunctionInBackground("v3createActivity", withParameters: params) { (results, error) -> Void in
             print("results: \(results)")
-            let activity: PFObject? = results as? PFObject
+            let activity: Activity? = results as? Activity
             completion(result: activity, error: error)
         }
     }
     
-    class func queryActivities(user: PFUser?, category: String?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, category: String?, completion: ((results: [Activity]?, error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if category != nil {
@@ -53,7 +53,7 @@ extension Activity {
         }
         PFCloud.callFunctionInBackground("v3queryActivities", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
-            let activities: [PFObject]? = results as? [PFObject]
+            let activities: [Activity]? = results as? [Activity]
             completion(results: activities, error: error)
         }
     }

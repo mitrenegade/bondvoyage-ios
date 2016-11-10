@@ -19,6 +19,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     var newCategory: CATEGORY?
     
+    var fromTime: NSDate?
+    var toTime: NSDate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,69 +150,24 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     // MARK: - Activities
-    func requestUsers() {
-        guard let category = self.newCategory else { return }
-        let interests = [CategoryFactory.interestsForCategory(category)]
-        UserRequest.userQuery(interests) { (results, error) in
-            self.navigationItem.rightBarButtonItem?.isEnabled = true
-            if let users = results {
-                if users.count > 0 {
-                    print("results \(users)")
-                    self.goToUserBrowser(users)
-                }
-                else {
-                    // no results, no error
-                    var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.newCategory!)) near you."
-                    if PFUser.current() != nil {
-                        message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
-                    }
-                    
-                    self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        self.navigationController?.popToRootViewController(animated: true)
-                    })
-                }
-            }
-            else {
-                if error != nil && error!.code == 209 {
-                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                        UserService.logout()
-                    })
-                    return
-                }
-                let message = "There was a problem loading matches. Please try again"
-                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
-            }
-        }
-    }
-    
     func requestActivities() {
         guard let category = self.newCategory else { return }
         
-        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX), aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw) { (results, error) -> Void in
+        // create an activity
+        Activity.createActivity(category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
+            if let error = error {
+                print("error creating activity: \(error)")
+            }
+            else {
+                print("result: \(result)")
+            }
+        }
+        
+        // search for other activities
+        Activity.queryActivities(nil, category: category.rawValue) { (results, error) in
             self.navigationItem.rightBarButtonItem?.enabled = true
             if results != nil {
-                if results!.count > 0 {
-                    self.selectedActivities = results
-                    self.performSegueWithIdentifier("GoToInvite", sender: nil)
-                }
-                else {
-                    // no results, no error
-                    self.createActivityWithCompletion({ (success) in
-                        var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.category!)) near you."
-                        if PFUser.currentUser() != nil {
-                            if success {
-                                message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
-                            }
-                            else {
-                                message = "\(message) Please try again later."
-                            }
-                        }
-                        
-                        self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                            self.navigationController?.popToRootViewControllerAnimated(true)
-                        })
-                    })
-                }
+                self.goToActivities(results)
             }
             else {
                 if error != nil && error!.code == 209 {
@@ -220,45 +177,16 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
                     })
                     return
                 }
-                let message = "There was a problem loading matches. Please try again"
+                let message = "There was a problem loading activities. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
         }
     }
     
-    func createActivityWithCompletion(completion: ((Bool)->Void)) {
-        let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
-        let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
-        
-        var aboutOthers = [VoyagerType]()
-        for i in 0 ..< self.selectedTypes.count {
-            if self.selectedTypes[i] {
-                aboutOthers.append(PERSON_TYPES[i])
-            }
-        }
-        let aboutOthersRaw = aboutOthers.map { (v) -> String in
-            return v.rawValue
-        }
-        
-        HUD.show(.SystemActivity)
-        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
-            HUD.hide(animated: false, completion: nil)
-            if error != nil {
-                completion(false)
-            }
-            else {
-                completion(true)
-            }
-        }
-    }
-
-    
-    func goToUserBrowser(_ users: [PFUser]) {
+    func goToActivities(activities: [Activity]?) {
         // TODO
-        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController else { return }
-//        let nav = UINavigationController(rootViewController: controller)
-        controller.people = users
-        //self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewControllerWithIdentifier("InviteViewController") as? InviteViewController else { return }
+        controller.activities = activities
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
