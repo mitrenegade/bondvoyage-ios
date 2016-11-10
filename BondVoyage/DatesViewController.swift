@@ -24,6 +24,7 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
     var toDate: NSDate?
     
     weak var currentInput: UITextField?
+    @IBOutlet weak var constraintCenterOffset: NSLayoutConstraint!
     
     weak var delegate: DatesViewDelegate?
     
@@ -100,10 +101,24 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
             self.done()
         }
     }
+    
+    @IBAction func findActivityNow() {
+        fromDate = NSDate()
+        toDate = nil
+        self.done()
+    }
 
     // MARK: - UITextFieldDelegate
     func textFieldDidBeginEditing(textField: UITextField) {
         currentInput = textField
+        
+        if textField == inputTo {
+            self.constraintCenterOffset.constant = -40
+            self.view.setNeedsUpdateConstraints()
+            UIView.animateWithDuration(0.25, animations: {
+                self.view.layoutIfNeeded()
+            })
+        }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
@@ -111,7 +126,11 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
 //            self.city = textField.text
         }
         else if textField == self.inputTo {
-//            self.location = textField.text
+            self.constraintCenterOffset.constant = 0
+            self.view.setNeedsUpdateConstraints()
+            UIView.animateWithDuration(0.25, animations: {
+                self.view.layoutIfNeeded()
+            })
         }
     }
     

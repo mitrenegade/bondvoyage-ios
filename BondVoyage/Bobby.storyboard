@@ -24,7 +24,7 @@
                                         <rect key="frame" x="50" y="50" width="500" height="500"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGl-V2-b2c">
-                                                <rect key="frame" x="0.0" y="168.5" width="500" height="163"/>
+                                                <rect key="frame" x="0.0" y="168" width="500" height="163"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My adventure begins at:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pay-Af-2Bx">
                                                         <rect key="frame" x="146" y="8" width="209" height="21"/>
@@ -85,12 +85,75 @@
                                                     <constraint firstItem="p8i-lp-kw3" firstAttribute="top" secondItem="Pay-Af-2Bx" secondAttribute="bottom" constant="8" id="jPS-lg-7Yn"/>
                                                 </constraints>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C6q-GO-NRk">
+                                                <rect key="frame" x="32" y="43" width="436" height="30"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="Fbp-S9-uCu"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                                <state key="normal" title="Find Activity Now">
+                                                    <color key="titleColor" red="0.64705882349999999" green="0.1137254902" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="findActivityNow" destination="fJ8-Ar-2aJ" eventType="touchUpInside" id="iWr-Bl-F8x"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- OR -" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="859-t2-SLk">
+                                                <rect key="frame" x="233" y="111" width="34" height="18"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="18" id="uM6-Wd-KXf"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
+                                                <color key="textColor" red="0.30980393290000002" green="0.50588238240000005" blue="0.66666668650000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T1D-mb-IVN">
+                                                <rect key="frame" x="130" y="74" width="240" height="37"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="kec-46-b5o"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rKy-ch-Vsm">
+                                                <rect key="frame" x="130" y="130" width="240" height="37"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="SEk-mH-zOp"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WIw-rn-8pN">
+                                                <rect key="frame" x="130" y="5" width="240" height="37"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="ixZ-hX-8x7"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="YGl-V2-b2c" secondAttribute="trailing" id="0xy-cT-SzL"/>
+                                            <constraint firstItem="C6q-GO-NRk" firstAttribute="top" secondItem="WIw-rn-8pN" secondAttribute="bottom" constant="1" id="5AW-Us-17K"/>
+                                            <constraint firstItem="rKy-ch-Vsm" firstAttribute="centerX" secondItem="fGU-1M-BCU" secondAttribute="centerX" id="80Y-7e-UsM"/>
+                                            <constraint firstItem="859-t2-SLk" firstAttribute="centerX" secondItem="fGU-1M-BCU" secondAttribute="centerX" id="9nk-Tf-lWv"/>
+                                            <constraint firstItem="YGl-V2-b2c" firstAttribute="top" secondItem="rKy-ch-Vsm" secondAttribute="bottom" constant="1" id="Fe2-kR-9p3"/>
+                                            <constraint firstItem="WIw-rn-8pN" firstAttribute="top" secondItem="fGU-1M-BCU" secondAttribute="top" constant="5" id="ITp-4O-UIO"/>
+                                            <constraint firstItem="WIw-rn-8pN" firstAttribute="centerX" secondItem="fGU-1M-BCU" secondAttribute="centerX" id="Ka8-sd-Isj"/>
+                                            <constraint firstItem="T1D-mb-IVN" firstAttribute="top" secondItem="C6q-GO-NRk" secondAttribute="bottom" constant="1" id="MZj-XB-gRe"/>
+                                            <constraint firstItem="T1D-mb-IVN" firstAttribute="centerX" secondItem="fGU-1M-BCU" secondAttribute="centerX" id="Oru-Ro-Np9"/>
                                             <constraint firstItem="YGl-V2-b2c" firstAttribute="centerY" secondItem="fGU-1M-BCU" secondAttribute="centerY" id="Rvl-pT-led"/>
+                                            <constraint firstItem="rKy-ch-Vsm" firstAttribute="top" secondItem="859-t2-SLk" secondAttribute="bottom" constant="1" id="UWS-h4-Xzw"/>
+                                            <constraint firstItem="T1D-mb-IVN" firstAttribute="height" secondItem="WIw-rn-8pN" secondAttribute="height" id="ca0-zg-SU2"/>
+                                            <constraint firstAttribute="trailing" secondItem="C6q-GO-NRk" secondAttribute="trailing" constant="32" id="few-vf-ddq"/>
+                                            <constraint firstItem="rKy-ch-Vsm" firstAttribute="height" secondItem="T1D-mb-IVN" secondAttribute="height" id="fxO-tz-CBW"/>
                                             <constraint firstItem="YGl-V2-b2c" firstAttribute="leading" secondItem="fGU-1M-BCU" secondAttribute="leading" id="swa-ha-7aH"/>
+                                            <constraint firstItem="C6q-GO-NRk" firstAttribute="leading" secondItem="fGU-1M-BCU" secondAttribute="leading" constant="32" id="wbT-1M-KxM"/>
+                                            <constraint firstItem="859-t2-SLk" firstAttribute="top" secondItem="T1D-mb-IVN" secondAttribute="bottom" id="xPF-EW-u2d"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -117,6 +180,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="constraintCenterOffset" destination="Rvl-pT-led" id="aRY-uq-AGW"/>
                         <outlet property="inputFrom" destination="p8i-lp-kw3" id="GkO-Du-G2h"/>
                         <outlet property="inputTo" destination="9Iu-wR-kdU" id="Q3N-2c-auX"/>
                     </connections>
