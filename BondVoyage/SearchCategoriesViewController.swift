@@ -103,6 +103,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.datesController = controller
         self.datesController?.delegate = self
         
+        self.fromTime = nil
+        self.toTime = nil
+        
         let topOffset: CGFloat = 40 // keep the "I'm in the mood for" exposed
         var frame = self.view.frame
         frame.origin.y = self.view.frame.size.height
@@ -126,6 +129,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.hideDateSelector()
         
         print("dates selected: \(startDate) to \(endDate)")
+        self.fromTime = startDate
+        self.toTime = endDate
         self.requestActivities()
     }
     
