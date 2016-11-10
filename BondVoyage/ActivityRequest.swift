@@ -6,6 +6,7 @@
 //  Copyright © 2016 RenderApps. All rights reserved.
 //
 // Activity is the refactored Match.
+// deprecated
 
 import UIKit
 import Parse

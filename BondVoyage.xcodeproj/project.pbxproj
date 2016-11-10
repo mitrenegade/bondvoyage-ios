@@ -37,6 +37,7 @@
 		8ECA14E81DD24E43003DF990 /* UIImage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */; };
 		8ECA14EC1DD29BC6003DF990 /* DatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */; };
 		8ECA14EE1DD29C36003DF990 /* Activity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ECA14ED1DD29C36003DF990 /* Activity.storyboard */; };
+		8ECA14F01DD41732003DF990 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EF1DD41732003DF990 /* Activity.swift */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
 		8EDE33671DC55E4E000D95E7 /* Credits in Resources */ = {isa = PBXBuildFile; fileRef = 8EDE33661DC55E4E000D95E7 /* Credits */; };
 		8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */; };
@@ -126,6 +127,7 @@
 		8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewController.swift; sourceTree = "<group>"; };
 		8ECA14ED1DD29C36003DF990 /* Activity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Activity.storyboard; sourceTree = "<group>"; };
+		8ECA14EF1DD41732003DF990 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = Services/Activity.swift; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
 		8EDE33661DC55E4E000D95E7 /* Credits */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Credits; path = ../Credits; sourceTree = "<group>"; };
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
@@ -239,6 +241,14 @@
 			name = Activities;
 			sourceTree = "<group>";
 		};
+		8ECA14F11DD41749003DF990 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8ECA14EF1DD41732003DF990 /* Activity.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +329,7 @@
 		E5508A061C1539CF00D23C26 /* BondVoyage */ = {
 			isa = PBXGroup;
 			children = (
+				8ECA14F11DD41749003DF990 /* Models */,
 				8E0B35361D7C6371008872FD /* Services */,
 				8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */,
 				E5508A071C1539CF00D23C26 /* AppDelegate.swift */,
@@ -639,6 +650,7 @@
 				E5FF8BE41C3CCEF00080C195 /* BVRangeSlider.swift in Sources */,
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
+				8ECA14F01DD41732003DF990 /* Activity.swift in Sources */,
 				8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,

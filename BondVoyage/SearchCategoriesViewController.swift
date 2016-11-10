@@ -148,7 +148,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     // MARK: - Activities
-    func requestActivities() {
+    func requestUsers() {
         guard let category = self.newCategory else { return }
         let interests = [CategoryFactory.interestsForCategory(category)]
         UserRequest.userQuery(interests) { (results, error) in
@@ -182,6 +182,76 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             }
         }
     }
+    
+    func requestActivities() {
+        guard let category = self.newCategory else { return }
+        
+        ActivityRequest.queryActivities(nil, joining: false, categories: cat, location: self.currentLocation, distance: Double(RANGE_DISTANCE_MAX), aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw) { (results, error) -> Void in
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            if results != nil {
+                if results!.count > 0 {
+                    self.selectedActivities = results
+                    self.performSegueWithIdentifier("GoToInvite", sender: nil)
+                }
+                else {
+                    // no results, no error
+                    self.createActivityWithCompletion({ (success) in
+                        var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.category!)) near you."
+                        if PFUser.currentUser() != nil {
+                            if success {
+                                message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
+                            }
+                            else {
+                                message = "\(message) Please try again later."
+                            }
+                        }
+                        
+                        self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        })
+                    })
+                }
+            }
+            else {
+                if error != nil && error!.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                    })
+                    return
+                }
+                let message = "There was a problem loading matches. Please try again"
+                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+            }
+        }
+    }
+    
+    func createActivityWithCompletion(completion: ((Bool)->Void)) {
+        let ageMin = Int(self.ageFilterView.rangeSlider!.lowerValue)
+        let ageMax = Int(self.ageFilterView.rangeSlider!.upperValue)
+        
+        var aboutOthers = [VoyagerType]()
+        for i in 0 ..< self.selectedTypes.count {
+            if self.selectedTypes[i] {
+                aboutOthers.append(PERSON_TYPES[i])
+            }
+        }
+        let aboutOthersRaw = aboutOthers.map { (v) -> String in
+            return v.rawValue
+        }
+        
+        HUD.show(.SystemActivity)
+        ActivityRequest.createActivity([self.category!.rawValue], location: self.currentLocation!, locationString: "Boston", aboutSelf: self.aboutSelf?.rawValue, aboutOthers: aboutOthersRaw, ageMin: ageMin, ageMax: ageMax ) { (result, error) -> Void in
+            HUD.hide(animated: false, completion: nil)
+            if error != nil {
+                completion(false)
+            }
+            else {
+                completion(true)
+            }
+        }
+    }
+
     
     func goToUserBrowser(_ users: [PFUser]) {
         // TODO
