@@ -38,6 +38,18 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             
             self.setLeftProfileButton()
         }
+
+        // check if user currently has an activity
+        if let user = PFUser.currentUser() {
+            if let activity = user.valueForKey("activity") as? Activity {
+                activity.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+                    if let category: String = activity.category {
+                        self.newCategory = CategoryFactory.categoryForString(category)
+                        self.requestActivities()
+                    }
+                })
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

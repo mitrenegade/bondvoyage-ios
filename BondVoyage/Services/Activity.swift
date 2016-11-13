@@ -10,11 +10,14 @@ import UIKit
 import Parse
 
 class Activity: PFObject {
+    @NSManaged var category: String?
+    @NSManaged var city: String?
     @NSManaged var status: String?
     @NSManaged var fromTime: NSDate?
     @NSManaged var toTime: NSDate?
     @NSManaged var expiration: NSDate?
-    @NSManaged var city: String?
+    
+    @NSManaged var owner: PFUser?
 }
 
 extension Activity: PFSubclassing {
@@ -23,7 +26,6 @@ extension Activity: PFSubclassing {
     }
 }
 
-// MARK: ActivityService
 extension Activity {
     // User creates a new activity that is available for others to join
     class func createActivity(category: CATEGORY, city: String, fromTime: NSDate?, toTime: NSDate?, completion: ((result: Activity?, error: NSError?)->Void)) {
@@ -36,9 +38,21 @@ extension Activity {
         }
         
         PFCloud.callFunctionInBackground("v3createActivity", withParameters: params) { (results, error) -> Void in
-            print("results: \(results)")
-            let activity: Activity? = results as? Activity
-            completion(result: activity, error: error)
+            if let results = results as? [NSObject: AnyObject] {
+                print("results: \(results)")
+                if let activity: Activity = results["activity"] as? Activity,  let success = results["success"] as? Bool, let message = results["message"] as? String {
+                    print("createActivity resulted in activity \(activity.objectId!), message: \(message)")
+                    PFUser.currentUser()!.setObject(activity, forKey: "activity")
+                    completion(result: activity, error: nil)
+                }
+                else {
+                    completion(result: nil, error: nil)
+                }
+            }
+            else {
+                print("error \(error)")
+                completion(result: nil, error: error)
+            }
         }
     }
     
@@ -53,8 +67,7 @@ extension Activity {
         }
         PFCloud.callFunctionInBackground("v3queryActivities", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
-            let activities: [Activity]? = results as? [Activity]
-            completion(results: activities, error: error)
+            completion(results: results as? [Activity], error: error)
         }
     }
     
