@@ -19,17 +19,17 @@ class LoginViewController: PFLogInViewController {
 
         // Do any additional setup after loading the view.
         bgImage = UIImageView(image: UIImage(named: "bondVoyageBackground"))
-        bgImage.contentMode = .ScaleAspectFill
-        bgImage.backgroundColor = UIColor.clearColor()
-        self.logInView!.insertSubview(bgImage, atIndex: 0)
+        bgImage.contentMode = .scaleAspectFill
+        bgImage.backgroundColor = UIColor.clear
+        self.logInView!.insertSubview(bgImage, at: 0)
         
         logoView = UIImageView(image: UIImage(named: "logo-plain"))
-        logoView.contentMode = .ScaleAspectFit
+        logoView.contentMode = .scaleAspectFit
         
-        logInView?.logInButton?.setBackgroundImage(nil, forState: .Normal)
+        logInView?.logInButton?.setBackgroundImage(nil, for: UIControlState())
         logInView?.logInButton?.backgroundColor = Constants.blueColor()
-        logInView?.passwordForgottenButton?.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        logInView?.signUpButton?.setBackgroundImage(nil, forState: .Normal)
+        logInView?.passwordForgottenButton?.setTitleColor(UIColor.black, for: UIControlState())
+        logInView?.signUpButton?.setBackgroundImage(nil, for: UIControlState())
         logInView?.signUpButton?.backgroundColor = Constants.blueColor()
     }
 
@@ -52,13 +52,13 @@ class LoginViewController: PFLogInViewController {
             y = 20
             height = logInView!.usernameField!.frame.origin.y - 8
         }
-        var frame = CGRectMake(0, y, logInView!.frame.width,  height)
+        var frame = CGRect(x: 0, y: y, width: logInView!.frame.width,  height: height)
         logInView!.logo = logoView
         logInView!.logo?.frame = frame
         
         // background image
         let ratio = CGFloat(847.0 / 1437.0)
-        frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width * ratio)
+        frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width * ratio)
         frame.origin.y = logInView!.logo!.frame.origin.y + logInView!.logo!.frame.size.height
         bgImage.frame = frame
         
@@ -114,12 +114,12 @@ class LoginViewController: PFLogInViewController {
         //}
     }
     
-    func customizeButton(button: UIButton!) {
-        button.setBackgroundImage(nil, forState: .Normal)
-        button.backgroundColor = UIColor.clearColor()
+    func customizeButton(_ button: UIButton!) {
+        button.setBackgroundImage(nil, for: UIControlState())
+        button.backgroundColor = UIColor.clear
         button.layer.cornerRadius = 5
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.whiteColor().CGColor
+        button.layer.borderColor = UIColor.white.cgColor
     }
     
     /*

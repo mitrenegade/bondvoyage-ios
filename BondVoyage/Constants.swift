@@ -29,7 +29,7 @@ let QB_ACCOUNT_KEY = "qezMRGfSugu3WHCiT1wg"
 let QB_AUTH_SECRET = "HCXw5O6bqy4kXAJ"
 
 // MARK: Call
-let SESSION_TIMEOUT_INTERVAL: NSTimeInterval = 30
+let SESSION_TIMEOUT_INTERVAL: TimeInterval = 30
 
 // default slider range min/max
 var RANGE_SELECTOR_MAX = 100
@@ -101,16 +101,16 @@ class Constants: NSObject {
         return colorFromRGBWithAlpha(red: 219, green: 219, blue: 219, alpha: 0.88)
     }
     
-    private class func colorFromRGB(red red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
+    fileprivate class func colorFromRGB(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor.init(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1.0)
     }
     
-    private class func colorFromRGBWithAlpha(red red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
+    fileprivate class func colorFromRGBWithAlpha(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
         return UIColor.init(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: alpha)
     }
     
     class func randomColor() -> UIColor {
-        let colors = [UIColor.redColor(), UIColor.blueColor(), UIColor.greenColor(), UIColor.yellowColor(), UIColor.purpleColor(), UIColor.brownColor()]
+        let colors = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow, UIColor.purple, UIColor.brown]
         let index = Int(arc4random_uniform(UInt32(colors.count)))
         return colors[index]
     }
@@ -121,7 +121,7 @@ extension String {
     var capitalizeFirst: String {
         if isEmpty { return "" }
         var result = self
-        result.replaceRange(startIndex...startIndex, with: String(self[startIndex]).uppercaseString)
+        result.replaceSubrange(startIndex...startIndex, with: String(self[startIndex]).uppercased())
         return result
     }
     

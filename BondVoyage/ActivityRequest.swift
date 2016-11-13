@@ -13,59 +13,59 @@ import Parse
 class ActivityRequest: NSObject {
 
     // User creates a new activity that is available for others to join
-    class func createActivity(categories: [String], location: CLLocation, locationString: String?, aboutSelf: String?, aboutOthers: [String], ageMin: Int?, ageMax: Int?, completion: ((result: PFObject?, error: NSError?)->Void)) {
-        var params: [String: AnyObject] = ["categories": categories, "lat": location.coordinate.latitude, "lon": location.coordinate.longitude, "time": NSDate(), "aboutOthers": aboutOthers]
+    class func createActivity(_ categories: [String], location: CLLocation, locationString: String?, aboutSelf: String?, aboutOthers: [String], ageMin: Int?, ageMax: Int?, completion: @escaping ((_ result: PFObject?, _ error: NSError?)->Void)) {
+        var params: [String: AnyObject] = ["categories": categories as AnyObject, "lat": location.coordinate.latitude as AnyObject, "lon": location.coordinate.longitude as AnyObject, "time": Date() as AnyObject, "aboutOthers": aboutOthers as AnyObject]
         if locationString != nil {
-            params["locationString"] = locationString!
+            params["locationString"] = locationString! as AnyObject?
         }
         if aboutSelf != nil {
-            params["aboutSelf"] = aboutSelf
+            params["aboutSelf"] = aboutSelf as AnyObject?
         }
         if ageMin != nil && ageMax != nil {
-            params["ageMin"] = ageMin!
-            params["ageMax"] = ageMax!
+            params["ageMin"] = ageMin! as AnyObject?
+            params["ageMax"] = ageMax! as AnyObject?
         }
         
-        PFCloud.callFunctionInBackground("createOrUpdateActivity", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "createOrUpdateActivity", withParameters: params) { (results, error) -> Void in
             print("results: \(results)")
             let activity: PFObject? = results as? PFObject
-            completion(result: activity, error: error)
+            completion(activity, error as NSError?)
         }
     }
     
-    class func queryActivities(user: PFUser?, categories: [String]?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryActivities(_ user: PFUser?, categories: [String]?, completion: @escaping ((_ results: [PFObject]?, _ error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if categories != nil {
-            params["categories"] = categories
+            params["categories"] = categories as AnyObject?
         }
         if user != nil {
-            params["userId"] = user!.objectId!
+            params["userId"] = user!.objectId! as AnyObject?
         }
-        PFCloud.callFunctionInBackground("v2queryActivities", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "v2queryActivities", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             let activities: [PFObject]? = results as? [PFObject]
-            completion(results: activities, error: error)
+            completion(activities, error as NSError?)
         }
     }
     
-    class func joinActivity(activity: PFObject, suggestedPlace: AnyObject?, completion: ((results: AnyObject?, error: NSError?) -> Void)) {
-        var params = ["activity": activity.objectId!]
-        PFCloud.callFunctionInBackground("joinActivity", withParameters: params) { (results, error) -> Void in
+    class func joinActivity(_ activity: PFObject, suggestedPlace: AnyObject?, completion: @escaping ((_ results: AnyObject?, _ error: NSError?) -> Void)) {
+        let params = ["activity": activity.objectId!]
+        PFCloud.callFunction(inBackground: "joinActivity", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
-            completion(results: results, error: error)
+            completion(results as AnyObject?, error as NSError?)
         }
     }
     
-    class func cancelActivity(activity: PFObject, completion: ((results: AnyObject?, error: NSError?)->Void)) {
-        PFCloud.callFunctionInBackground("cancelActivity", withParameters: ["activity": activity.objectId!]) { (results, error) -> Void in
+    class func cancelActivity(_ activity: PFObject, completion: @escaping ((_ results: AnyObject?, _ error: NSError?)->Void)) {
+        PFCloud.callFunction(inBackground: "cancelActivity", withParameters: ["activity": activity.objectId!]) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
-            completion(results: results, error: error)
+            completion(results as AnyObject?, error as NSError?)
         }
     }
     
     // TODO: accept another user to join
-    class func respondToJoin(activity: PFObject, joiningUserId: String?, responseType: String?, completion: ((results: AnyObject?, error: NSError?)->Void)) {
+    class func respondToJoin(_ activity: PFObject, joiningUserId: String?, responseType: String?, completion: @escaping ((_ results: AnyObject?, _ error: NSError?)->Void)) {
         var params =  ["activity": activity.objectId!]
         if joiningUserId != nil {
             params["userId"] = joiningUserId!
@@ -73,30 +73,30 @@ class ActivityRequest: NSObject {
         if responseType != nil {
             params["responseType"] = responseType
         }
-        PFCloud.callFunctionInBackground("respondToJoin", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "respondToJoin", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
-            completion(results: results, error: error)
+            completion(results as AnyObject?, error as NSError?)
         }
     }
     
-    class func queryMatchedActivities(user: PFUser?, completion: ((results: [PFObject]?, error: NSError?)->Void)) {
+    class func queryMatchedActivities(_ user: PFUser?, completion: @escaping ((_ results: [PFObject]?, _ error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if user != nil {
-            params["userId"] = user!.objectId!
+            params["userId"] = user!.objectId! as AnyObject?
         }
         
-        PFCloud.callFunctionInBackground("queryMatchedActivities", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "queryMatchedActivities", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             let activities: [PFObject]? = results as? [PFObject]
-            completion(results: activities, error: error)
+            completion(activities, error as NSError?)
         }
     }
     
     // MARK: - convenience calls - uses another ActivityRequest call but does some filtering
-    class func getRequestedBonds(completion: ( ([PFObject]?, NSError?) -> Void)) {
+    class func getRequestedBonds(_ completion: @escaping ( ([PFObject]?, NSError?) -> Void)) {
         var activities: [PFObject] = [PFObject]()
-        ActivityRequest.queryActivities(PFUser.currentUser(), categories: nil) { (results, error) -> Void in
+        ActivityRequest.queryActivities(PFUser.current(), categories: nil) { (results, error) -> Void in
             if error != nil {
                 completion(nil, error)
             }
@@ -107,7 +107,7 @@ class ActivityRequest: NSObject {
                             // skip matched activities
                             continue
                         }
-                        if let joining: [String] = activity.objectForKey("joining") as? [String] {
+                        if let joining: [String] = activity.object(forKey: "joining") as? [String] {
                             if joining.count > 0 {
                                 activities.append(activity)
                             }

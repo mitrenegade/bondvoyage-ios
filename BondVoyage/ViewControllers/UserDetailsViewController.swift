@@ -9,7 +9,6 @@
 import UIKit
 import Parse
 import AsyncImageView
-import PKHUD
 
 class UserDetailsViewController: UIViewController {
 
@@ -36,16 +35,16 @@ class UserDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.nameView.hidden = true
-        self.interestsView.hidden = true
+        self.nameView.isHidden = true
+        self.interestsView.isHidden = true
         
         if self.selectedUser != nil {
-            self.selectedUser!.fetchInBackgroundWithBlock({ (user, error) -> Void in
+            self.selectedUser!.fetchInBackground(block: { (user, error) -> Void in
                 self.configureDetailsForUser()
             })
         }
         else if self.invitingUser != nil {
-            self.invitingUser!.fetchInBackgroundWithBlock({ (user, error) -> Void in
+            self.invitingUser!.fetchInBackground(block: { (user, error) -> Void in
                 self.configureDetailsForUser()
             })
         }
@@ -57,28 +56,28 @@ class UserDetailsViewController: UIViewController {
         
         self.nameLabel!.layer.shadowOpacity = 1
         self.nameLabel!.layer.shadowRadius = 2
-        self.nameLabel!.layer.shadowColor = UIColor.blackColor().CGColor
-        self.nameLabel!.layer.shadowOffset = CGSizeMake(1, 1)
+        self.nameLabel!.layer.shadowColor = UIColor.black.cgColor
+        self.nameLabel!.layer.shadowOffset = CGSize(width: 1, height: 1)
         
-        self.view!.backgroundColor = UIColor.clearColor()
+        self.view!.backgroundColor = UIColor.clear
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "configureDetailsForUser", name: "profile:updated", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UserDetailsViewController.configureDetailsForUser), name: NSNotification.Name(rawValue: "profile:updated"), object: nil)
     }
 
     func configureUI() {
         self.nameView.backgroundColor = Constants.BV_backgroundGrayColor()
         self.interestsView.backgroundColor = Constants.BV_backgroundGrayColor()
         self.constraintNameViewTopOffset.constant = self.view.frame.size.height - self.nameView.frame.size.height - self.interestsView.frame.size.height
-        self.scrollViewContainer.contentMode = .ScaleAspectFill
+        self.scrollViewContainer.contentMode = .scaleAspectFill
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "close")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(UserDetailsViewController.close))
         if self.invitingUser != nil {
             self.title = "Invitation"
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Respond", style: .Done, target: self, action: "handleInvitation")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Respond", style: .done, target: self, action: #selector(UserDetailsViewController.handleInvitation))
         }
         else {
-            if selectedUser == PFUser.currentUser() {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "goToEditProfile")
+            if selectedUser == PFUser.current() {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(UserDetailsViewController.goToEditProfile))
             }
         }
     }
@@ -90,7 +89,7 @@ class UserDetailsViewController: UIViewController {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "profile:updated", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "profile:updated"), object: nil)
     }
 
     func configureDetailsForUser() {
@@ -102,37 +101,37 @@ class UserDetailsViewController: UIViewController {
             return
         }
         
-        self.nameView.hidden = false
-        self.interestsView.hidden = false
+        self.nameView.isHidden = false
+        self.interestsView.isHidden = false
 
-        if let photoURL: String = user!.valueForKey("photoUrl") as? String {
-            self.scrollViewContainer.setValue(NSURL(string: photoURL), forKey: "imageURL")
+        if let photoURL: String = user!.value(forKey: "photoUrl") as? String {
+            self.scrollViewContainer.setValue(URL(string: photoURL), forKey: "imageURL")
             //self.scrollViewContainer.imageURL = NSURL(string: photoURL)
         }
-        else if let photo: PFFile = user!.valueForKey("photo") as? PFFile {
-            self.scrollViewContainer.setValue(NSURL(string: photo.url!), forKey: "imageURL")
+        else if let photo: PFFile = user!.value(forKey: "photo") as? PFFile {
+            self.scrollViewContainer.setValue(URL(string: photo.url!), forKey: "imageURL")
             //self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
         }
         else {
             self.scrollViewContainer.image = UIImage(named: "profile-icon")
         }
 
-        if let firstName = user!.valueForKey("firstName") as? String {
+        if let firstName = user!.value(forKey: "firstName") as? String {
             self.nameLabel.text = "\(firstName)"
         }
-        else if let username = user!.valueForKey("username") as? String {
+        else if let username = user!.value(forKey: "username") as? String {
             self.nameLabel.text = "\(username)"
         }
         
         var genderAgeString: String?  = nil
-        if let gender = user!.valueForKey("gender") as? String {
-            genderAgeString = gender.capitalizedString
+        if let gender = user!.value(forKey: "gender") as? String {
+            genderAgeString = gender.capitalized
         }
-        if let year = user!.valueForKey("birthYear") as? Int {
-            let calendar = NSCalendar.currentCalendar()
-            let components = calendar.components([.Year], fromDate: NSDate())
+        if let year = user!.value(forKey: "birthYear") as? Int {
+            let calendar = Calendar.current
+            let components = (calendar as NSCalendar).components([.year], from: Date())
             let currentYear = components.year
-            let age = currentYear - year
+            let age = currentYear! - year
             if genderAgeString != nil {
                 genderAgeString = "\(genderAgeString!), age: \(age)"
             }
@@ -155,8 +154,8 @@ class UserDetailsViewController: UIViewController {
         }
 
         if self.invitingActivity != nil {
-            self.invitingActivity!.fetchInBackgroundWithBlock({ (object, error) -> Void in
-                if let categories: [String] = self.invitingActivity!.objectForKey("categories") as? [String] {
+            self.invitingActivity!.fetchInBackground(block: { (object, error) -> Void in
+                if let categories: [String] = self.invitingActivity!.object(forKey: "categories") as? [String] {
                     var str = self.stringFromArray(categories)
                     if self.selectedUser != nil {
                         self.interestsLabel.attributedText = "Interests: \(str)".attributedString(str, size: 17)
@@ -175,28 +174,28 @@ class UserDetailsViewController: UIViewController {
             self.interestsLabel.text = nil
         }
 
-        if let about = user!.valueForKey("about") as? String {
+        if let about = user!.value(forKey: "about") as? String {
             self.aboutMeLabel.attributedText = "About me: \(about)".attributedString(about, size: 17)
         }
         else {
             self.aboutMeLabel.text = nil
         }
         
-        if let countries = user!.valueForKey("countries") as? String {
+        if let countries = user!.value(forKey: "countries") as? String {
             self.countriesLabel.attributedText = "I have traveled to: \(countries)".attributedString(countries, size: 17)
         }
         else {
             self.countriesLabel.text = nil
         }
 
-        if let languages = user!.valueForKey("languages") as? String {
+        if let languages = user!.value(forKey: "languages") as? String {
             self.languagesLabel.attributedText = "Languages: \(languages)".attributedString(languages, size: 17)
         }
         else {
             self.languagesLabel.text = nil
         }
     
-        if let group = user!.valueForKey("group") as? String, let g = Group(rawValue:group) {
+        if let group = user!.value(forKey: "group") as? String, let g = Group(rawValue:group) {
             switch g {
             case .Solo:
                 self.groupsLabel.text = "I am solo"
@@ -218,7 +217,7 @@ class UserDetailsViewController: UIViewController {
     }
 
     func dismiss() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func goToPlaces() {
@@ -227,28 +226,27 @@ class UserDetailsViewController: UIViewController {
     
     func close() {
         // close modally
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     func goToEditProfile() {
-        self.performSegueWithIdentifier("GoToEditProfile", sender: nil)
+        self.performSegue(withIdentifier: "GoToEditProfile", sender: nil)
     }
     
     // MARK: - Invitation actions
     func handleInvitation() {
-        let alert: UIAlertController = UIAlertController(title: "Respond to invitation", message: "Would you like to accept this invitation to bond?", preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Accept invitation", style: .Default, handler: { (action) -> Void in
+        let alert: UIAlertController = UIAlertController(title: "Respond to invitation", message: "Would you like to accept this invitation to bond?", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Accept invitation", style: .default, handler: { (action) -> Void in
             self.goToAcceptInvitation()
         }))
-        alert.addAction(UIAlertAction(title: "Decline invitation", style: .Default, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "Decline invitation", style: .default, handler: { (action) -> Void in
             self.goToRejectInvitation()
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func goToAcceptInvitation() {
-        HUD.show(.SystemActivity)
         ActivityRequest.respondToJoin(self.invitingActivity!, joiningUserId: self.invitingUser!.objectId, responseType: "accepted") { (results, error) -> Void in
             if error != nil {
                 if error != nil && error!.code == 209 {
@@ -257,20 +255,14 @@ class UserDetailsViewController: UIViewController {
                     })
                     return
                 }
-                HUD.flash(.Label("Could not accept invitation. Please try again."), delay: 2)
             }
             else {
-                NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
-                HUD.show(.Label("Invitation accepted."))
-                HUD.hide(animated: true, completion: { (complete) -> Void in
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                })
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
             }
         }
     }
     
     func goToRejectInvitation() {
-        HUD.show(.SystemActivity)
         ActivityRequest.respondToJoin(self.invitingActivity!, joiningUserId: self.invitingUser!.objectId, responseType: "declined") { (results, error) -> Void in
             if error != nil {
                 if error != nil && error!.code == 209 {
@@ -279,14 +271,11 @@ class UserDetailsViewController: UIViewController {
                     })
                     return
                 }
-                HUD.flash(.Label("Could not decline invitation. Please try again."), delay: 2)
             }
             else {
-                NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
-                HUD.show(.Label("Invitation declined."))
-                HUD.hide(animated: true, completion: { (complete) -> Void in
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                })
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
+                self.navigationController?.popToRootViewController(animated: true)
+
             }
         }
     }

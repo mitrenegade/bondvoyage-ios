@@ -31,52 +31,52 @@ class SessionService: QMServicesManager {
     var currentDialogID = ""
     
     // MARK: Chat session
-    func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
-        self.chatService.createPrivateChatDialogWithOpponent(user) { (response, dialog) in
+    func startChatWithUser(_ user: QBUUser, completion: @escaping ((_ success: Bool, _ dialog: QBChatDialog?) -> Void)) {
+        self.chatService.createPrivateChatDialog(withOpponent: user) { (response, dialog) in
             if let dialog = dialog {
-                completion(success: true, dialog: dialog)
+                completion(true, dialog)
             }
             else {
-                completion(success: false, dialog: nil)
+                completion(false, nil)
             }
         }
     }
     
     // MARK: Refresh user session
-    func refreshChatSession(completion: ((success: Bool) -> Void)?) {
+    func refreshChatSession(_ completion: ((_ success: Bool) -> Void)?) {
         // if not connected to QBChat. For example at startup
         // TODO: make this part of the Session service
         guard !isRefreshingSession else { return }
         isRefreshingSession = true
         
-        guard let qbUser = QBSession.currentSession().currentUser else {
+        guard let qbUser = QBSession.current().currentUser else {
             print("No qbUser, handle this error!")
-            completion?(success: false)
+            completion?(false)
             return
         }
         
-        guard let pfUser = PFUser.currentUser() else {
-            completion?(success: false)
+        guard let pfUser = PFUser.current() else {
+            completion?(false)
             return
         }
         
         qbUser.password = pfUser.objectId!
-        QBChat.instance().connectWithUser(qbUser) { (error) in
+        QBChat.instance().connect(with: qbUser) { (error) in
             self.isRefreshingSession = false
             if error != nil {
                 print("error: \(error)")
-                completion?(success: false)
+                completion?(false)
             }
             else {
                 print("login to chat succeeded")
-                completion?(success: true)
+                completion?(true)
             }
         }
     }
 
     // MARK: QMChatServiceDelegate
     
-    override func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
+    override func chatService(_ chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         super.chatService(chatService, didAddMessageToMemoryStorage: message, forDialogID: dialogID)
         
         if authService.isAuthorized {
@@ -84,7 +84,7 @@ class SessionService: QMServicesManager {
         }
     }
     
-    func handleNewMessage(message: QBChatMessage, dialogID: String) {
+    func handleNewMessage(_ message: QBChatMessage, dialogID: String) {
 
     }
 

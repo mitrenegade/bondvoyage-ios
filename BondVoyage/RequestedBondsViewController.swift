@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import PKHUD
 
 class RequestedBondsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let kCellIdentifier = "UserCell"
@@ -21,26 +20,26 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabIndex = .TAB_REQUESTED_BONDS
+        self.tabIndex = .tab_REQUESTED_BONDS
 
         // configure title bar
         let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
-        imageView.frame = CGRectMake(0, 0, 150, 44)
-        imageView.contentMode = .ScaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: 150, height: 44)
+        imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = Constants.lightBlueColor()
-        imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
+        imageView.center = CGPoint(x: UIScreen.main.bounds.size.width / 2, y: 22)
         self.navigationController!.navigationBar.addSubview(imageView)
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
         
         self.refresh()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RequestedBondsViewController.refreshNotifications), name: "activity:updated", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RequestedBondsViewController.refreshNotifications), name: NSNotification.Name(rawValue: "activity:updated"), object: nil)
         
         self.setLeftProfileButton()
-        let button: UIButton = UIButton(frame: CGRectMake(0, 0, 30, 30))
-        let image = UIImage(named: "icon-refresh")!.imageWithRenderingMode(.AlwaysTemplate)
-        button.setImage(image, forState: .Normal)
-        button.addTarget(self, action: #selector(RequestedBondsViewController.refresh), forControlEvents: .TouchUpInside)
+        let button: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let image = UIImage(named: "icon-refresh")!.withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: UIControlState())
+        button.addTarget(self, action: #selector(RequestedBondsViewController.refresh), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "setup")
     }
@@ -51,30 +50,25 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
-        HUD.show(.SystemActivity)
-        self.setupWithCompletion {
-            // used to be: update badge counts
-            HUD.hide(animated: true, completion: { (success) -> Void in
-            })
-        }
+        
     }
     
     func refreshNotifications() {
         self.setupWithCompletion(nil)
     }
     
-    func setupWithCompletion( completion: (()->Void)? ) {
+    func setupWithCompletion( _ completion: (()->Void)? ) {
         activities.removeAll()
-        self.navigationItem.rightBarButtonItem?.enabled = false
-        self.labelNoBonds.hidden = true
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.labelNoBonds.isHidden = true
         ActivityRequest.getRequestedBonds { (results, error) in
-            self.navigationItem.rightBarButtonItem?.enabled = true
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             // returns activities where the owner of the activity is the user, and someone is requesting a join
             if results != nil {
-                self.activities.appendContentsOf(results!)
+                self.activities.append(contentsOf: results!)
                 if self.activities.count == 0 {
                     self.labelNoBonds.text = "There are currently no bond requests for you."
-                    self.labelNoBonds.hidden = false
+                    self.labelNoBonds.isHidden = false
                 }
                 self.tableView.reloadData()
                 if completion != nil {
@@ -99,40 +93,40 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - UITableViewDataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as! UserCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: kCellIdentifier)! as! UserCell
         cell.adjustTableViewCellSeparatorInsets(cell)
         let activity: PFObject = self.activities[indexPath.row]
         cell.configureCellForActivity(activity)
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.activities.count
     }
     
     // MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if PFUser.currentUser() == nil {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if PFUser.current() == nil {
             self.simpleAlert("Please log in", message: "Log in or create an account to view someone's profile")
             return
         }
         
         let activity: PFObject = self.activities[indexPath.row]
-        self.tableView.userInteractionEnabled = false
+        self.tableView.isUserInteractionEnabled = false
         self.goToActivity(activity)
         
         // mark activity as seen
         var key: String
-        if self.tabIndex == .TAB_REQUESTED_BONDS {
+        if self.tabIndex == .tab_REQUESTED_BONDS {
             key = "requestedBond:seen:"
         }
         else {
@@ -140,26 +134,24 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
         }
         let id = activity.objectId!
         key = "\(key)\(id)"
-        NSUserDefaults.standardUserDefaults().setObject(true, forKey: key)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.set(true, forKey: key)
+        UserDefaults.standard.synchronize()
         
-        NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
     }
 
-    func goToActivity(activity: PFObject) {
+    func goToActivity(_ activity: PFObject) {
         // join requests exist
-        HUD.show(.SystemActivity)
         activity.getMatchedUser { (user) in
-            self.tableView.userInteractionEnabled = true
-            HUD.hide(animated: false)
+            self.tableView.isUserInteractionEnabled = true
             if user != nil {
-                let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+                let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
                 controller.invitingUser = user
                 controller.invitingActivity = activity
                 self.navigationController?.pushViewController(controller, animated: true)
             }
             else {
-                self.tableView.userInteractionEnabled = true
+                self.tableView.isUserInteractionEnabled = true
             }
         }
     }

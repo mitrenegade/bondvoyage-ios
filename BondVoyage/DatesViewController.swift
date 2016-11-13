@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DatesViewDelegate: class {
-    func didSelectDates(startDate: NSDate?, endDate: NSDate?)
+    func didSelectDates(_ startDate: Date?, endDate: Date?)
 }
 
 class DatesViewController: UIViewController, UITextFieldDelegate {
@@ -20,8 +20,8 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
     let fromDatePicker = UIDatePicker()
     let toDatePicker = UIDatePicker()
     
-    var fromDate: NSDate?
-    var toDate: NSDate?
+    var fromDate: Date?
+    var toDate: Date?
     
     weak var currentInput: UITextField?
     @IBOutlet weak var constraintCenterOffset: NSLayoutConstraint!
@@ -34,17 +34,17 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         for picker in [fromDatePicker, toDatePicker] {
             picker.sizeToFit()
-            picker.backgroundColor = .whiteColor()
+            picker.backgroundColor = .white
 
-            picker.datePickerMode = UIDatePickerMode.DateAndTime
-            picker.addTarget(self, action: #selector(datePickerValueChanged), forControlEvents: UIControlEvents.ValueChanged)
+            picker.datePickerMode = UIDatePickerMode.dateAndTime
+            picker.addTarget(self, action: #selector(datePickerValueChanged), for: UIControlEvents.valueChanged)
             
-            let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+            let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
             let keyboardDoneButtonView = UIToolbar()
             keyboardDoneButtonView.sizeToFit()
-            keyboardDoneButtonView.barStyle = UIBarStyle.Default
-            keyboardDoneButtonView.tintColor = UIColor.whiteColor()
-            let save: UIBarButtonItem = UIBarButtonItem(title: picker == fromDatePicker ? "Next" : "Done", style: UIBarButtonItemStyle.Done, target: self, action: #selector(doneWithDate))
+            keyboardDoneButtonView.barStyle = UIBarStyle.default
+            keyboardDoneButtonView.tintColor = UIColor.white
+            let save: UIBarButtonItem = UIBarButtonItem(title: picker == fromDatePicker ? "Next" : "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneWithDate))
             save.tintColor = Constants.BV_defaultBlueColor()
             keyboardDoneButtonView.setItems([flex, save], animated: true)
             
@@ -55,7 +55,7 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
                 inputTo.inputAccessoryView = keyboardDoneButtonView
             }
         }
-        fromDatePicker.minimumDate = NSDate()
+        fromDatePicker.minimumDate = Date()
         
         inputFrom.inputView = fromDatePicker
         inputTo.inputView = toDatePicker
@@ -71,13 +71,13 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
         self.delegate?.didSelectDates(fromDate, endDate: toDate)
     }
     
-    func datePickerValueChanged(sender:UIDatePicker) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+    func datePickerValueChanged(_ sender:UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.short
         
         let date = sender.date
-        let dateString = dateFormatter.stringFromDate(sender.date)
+        let dateString = dateFormatter.string(from: sender.date)
         if sender == fromDatePicker {
             inputFrom.text = dateString
             fromDate = date
@@ -103,32 +103,32 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func findActivityNow() {
-        fromDate = NSDate()
+        fromDate = Date()
         toDate = nil
         self.done()
     }
 
     // MARK: - UITextFieldDelegate
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         currentInput = textField
         
         if textField == inputTo {
             self.constraintCenterOffset.constant = -40
             self.view.setNeedsUpdateConstraints()
-            UIView.animateWithDuration(0.25, animations: {
+            UIView.animate(withDuration: 0.25, animations: {
                 self.view.layoutIfNeeded()
             })
         }
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == self.inputFrom {
 //            self.city = textField.text
         }
         else if textField == self.inputTo {
             self.constraintCenterOffset.constant = 0
             self.view.setNeedsUpdateConstraints()
-            UIView.animateWithDuration(0.25, animations: {
+            UIView.animate(withDuration: 0.25, animations: {
                 self.view.layoutIfNeeded()
             })
         }

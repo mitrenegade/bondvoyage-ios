@@ -19,20 +19,20 @@ class UserCell: UITableViewCell {
     var shadowLayer: CALayer?
     var activity: PFObject?
     
-    func configureCellForActivity(activity: PFObject) {
+    func configureCellForActivity(_ activity: PFObject) {
         self.imagePhoto.crossfadeDuration = 0
         
         self.activity = activity
         
         self.viewFrame!.layer.shadowOpacity = 1
         self.viewFrame!.layer.shadowRadius = 5
-        self.viewFrame!.layer.shadowColor = UIColor.blackColor().CGColor
-        self.viewFrame!.layer.shadowOffset = CGSizeMake(3, 3)
+        self.viewFrame!.layer.shadowColor = UIColor.black.cgColor
+        self.viewFrame!.layer.shadowOffset = CGSize(width: 3, height: 3)
         
         if self.activity != nil {
             self.activity?.getMatchedUser({ (user) in
                 if self.activity!.isOwnActivity() {
-                    if let name: String = user!.objectForKey("firstName") as? String {
+                    if let name: String = user!.object(forKey: "firstName") as? String {
                         let categoryString = CategoryFactory.categoryReadableString(self.activity!.category()!)
                         if self.activity!.isAcceptedActivity() {
                             if self.activity!.category() != nil {
@@ -51,15 +51,15 @@ class UserCell: UITableViewCell {
                         }
                     }
                     
-                    if let photoURL: String = user!.objectForKey("photoUrl") as? String {
-                        self.imagePhoto.setValue(NSURL(string:photoURL), forKey: "imageURL")
+                    if let photoURL: String = user!.object(forKey: "photoUrl") as? String {
+                        self.imagePhoto.setValue(URL(string:photoURL), forKey: "imageURL")
                         //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                 }
                 else {
                     self.titleLabel.text = self.activity!.shortTitle()
-                    if let photoURL: String = user!.valueForKey("photoUrl") as? String {
-                        self.imagePhoto.setValue(NSURL(string:photoURL), forKey: "imageURL")
+                    if let photoURL: String = user!.value(forKey: "photoUrl") as? String {
+                        self.imagePhoto.setValue(URL(string:photoURL), forKey: "imageURL")
                         //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                     else {

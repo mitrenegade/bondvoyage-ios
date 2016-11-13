@@ -27,10 +27,10 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         // configure title bar
         if self.navigationController != nil {
             let imageView: UIImageView = UIImageView(image: UIImage(named: "logo-plain")!)
-            imageView.frame = CGRectMake(0, 0, 150, 44)
-            imageView.contentMode = .ScaleAspectFit
+            imageView.frame = CGRect(x: 0, y: 0, width: 150, height: 44)
+            imageView.contentMode = .scaleAspectFit
             imageView.backgroundColor = Constants.lightBlueColor()
-            imageView.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, 22)
+            imageView.center = CGPoint(x: UIScreen.main.bounds.size.width / 2, y: 22)
             self.navigationController!.navigationBar.addSubview(imageView)
             self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
             
@@ -43,36 +43,36 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
     // MARK: - UITableViewDataSource
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath) as! CategoryCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
         let category: CATEGORY = CATEGORIES[indexPath.row]
         cell.titleLabel!.text = CategoryFactory.categoryReadableString(category)
-        cell.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = UIColor.clear
         cell.bgImage.image = CategoryFactory.categoryBgImage(category.rawValue)
         return cell
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return CATEGORIES.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
     
     // MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         
         let category = CATEGORIES[indexPath.row]
         self.selectCategory(category)
@@ -86,7 +86,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         */
     }
     
-    func selectCategory(category: CATEGORY) {
+    func selectCategory(_ category: CATEGORY) {
         self.newCategory = category
         
         self.showDateSelector()
@@ -94,7 +94,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     // MARK: - Date selector
     func showDateSelector() {
-        guard let controller = UIStoryboard(name: "Activity", bundle: nil).instantiateViewControllerWithIdentifier("DatesViewController") as? DatesViewController else {
+        guard let controller = UIStoryboard(name: "Activity", bundle: nil).instantiateViewController(withIdentifier: "DatesViewController") as? DatesViewController else {
             return
         }
         
@@ -106,21 +106,21 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         frame.origin.y = self.view.frame.size.height
         frame.size.height -= topOffset
         controller.view.frame = frame
-        controller.willMoveToParentViewController(self)
+        controller.willMove(toParentViewController: self)
         self.addChildViewController(controller)
         self.view.addSubview(controller.view)
         frame.origin.y = topOffset
-        UIView.animateWithDuration(0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             controller.view.frame = frame
-        }) { (success) in
-            controller.didMoveToParentViewController(self)
-        }
+        }, completion: { (success) in
+            controller.didMove(toParentViewController: self)
+        }) 
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideDateSelector))
         self.headerView.addGestureRecognizer(tap)
     }
     
-    func didSelectDates(startDate: NSDate?, endDate: NSDate?) {
+    func didSelectDates(_ startDate: Date?, endDate: Date?) {
         self.hideDateSelector()
         
         print("dates selected: \(startDate) to \(endDate)")
@@ -132,14 +132,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         
         var frame = controller.view.frame
         frame.origin.y = frame.size.height
-        controller.willMoveToParentViewController(nil)
-        UIView.animateWithDuration(0.25, animations: {
+        controller.willMove(toParentViewController: nil)
+        UIView.animate(withDuration: 0.25, animations: {
             controller.view.frame = frame
-        }) { (success) in
+        }, completion: { (success) in
             controller.view.removeFromSuperview()
             controller.removeFromParentViewController()
             self.datesController = nil
-        }
+        }) 
         if let recognizers = self.headerView.gestureRecognizers {
             for recognizer in recognizers {
                 self.headerView.removeGestureRecognizer(recognizer)
@@ -152,7 +152,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         guard let category = self.newCategory else { return }
         let interests = [CategoryFactory.interestsForCategory(category)]
         UserRequest.userQuery(interests) { (results, error) in
-            self.navigationItem.rightBarButtonItem?.enabled = true
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             if let users = results {
                 if users.count > 0 {
                     print("results \(users)")
@@ -161,12 +161,12 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
                 else {
                     // no results, no error
                     var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.newCategory!)) near you."
-                    if PFUser.currentUser() != nil {
+                    if PFUser.current() != nil {
                         message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
                     }
                     
                     self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        self.navigationController?.popToRootViewControllerAnimated(true)
+                        self.navigationController?.popToRootViewController(animated: true)
                     })
                 }
             }
@@ -183,9 +183,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
     }
     
-    func goToUserBrowser(users: [PFUser]) {
+    func goToUserBrowser(_ users: [PFUser]) {
         // TODO
-        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewControllerWithIdentifier("InviteViewController") as? InviteViewController else { return }
+        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController else { return }
 //        let nav = UINavigationController(rootViewController: controller)
         controller.people = users
         //self.navigationController?.presentViewController(nav, animated: true, completion: nil)

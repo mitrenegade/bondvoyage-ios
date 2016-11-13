@@ -22,14 +22,14 @@ class SingleFilterView: BaseFilterView {
         self.label.text = "Select"
     }
     
-    func sliderValueChanged(sender: UIControl) {
+    func sliderValueChanged(_ sender: UIControl) {
         if let slider: BVSlider = sender as? BVSlider {
             print("Range slider value changed: \(slider.currentValue)")
         }
         self.updateLabel()
     }
     
-    func sliderValueEnded(sender: UIControl) {
+    func sliderValueEnded(_ sender: UIControl) {
         // TODO: make it snap
         self.snap()
     }

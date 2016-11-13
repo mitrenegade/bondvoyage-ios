@@ -29,30 +29,30 @@ class BaseFilterView: UIView {
     func setupSlider() {
         self.addSubview(self.slider!)
         self.label.font = UIFont(name: "Lato-Regular", size: 17.0)
-        self.label.textColor = UIColor.whiteColor()
-        self.label.textAlignment = .Center
+        self.label.textColor = UIColor.white
+        self.label.textAlignment = .center
         self.addSubview(self.label)
 
         self.slider!.trackTintColor = Constants.sliderTrackColor()
         self.slider!.thumbTintColor = Constants.sliderThumbColor()
 
         self.slider!.addTarget(self, action: "sliderValueChanged:",
-            forControlEvents: .ValueChanged)
+            for: .valueChanged)
         self.slider!.addTarget(self, action: "sliderValueEnded:",
-            forControlEvents: .TouchUpInside)
+            for: .touchUpInside)
     }
     
-    func setSliderRange(min min: Int, max: Int) {
+    func setSliderRange(min: Int, max: Int) {
         self.slider!.maximumValue = Double(max) // must setup max value first
         self.slider!.minimumValue = Double(min)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.slider?.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 2 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
-        self.label.frame = CGRectMake(self.frame.size.width * 0.1, self.frame.size.height * 4 / 8.0, self.frame.size.width * 0.8, self.frame.size.height * 2 / 8.0)
+        self.slider?.frame = CGRect(x: self.frame.size.width * 0.1, y: self.frame.size.height * 2 / 8.0, width: self.frame.size.width * 0.8, height: self.frame.size.height * 2 / 8.0)
+        self.label.frame = CGRect(x: self.frame.size.width * 0.1, y: self.frame.size.height * 4 / 8.0, width: self.frame.size.width * 0.8, height: self.frame.size.height * 2 / 8.0)
         if self.slider != nil {
-            self.label.center = CGPointMake(self.slider!.center.x, (self.slider!.center.y + self.frame.size.height) / 2)
+            self.label.center = CGPoint(x: self.slider!.center.x, y: (self.slider!.center.y + self.frame.size.height) / 2)
         }
     }
     

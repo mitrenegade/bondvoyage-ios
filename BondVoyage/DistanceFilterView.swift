@@ -10,7 +10,7 @@ import UIKit
 
 class DistanceFilterView: RangeFilterView {
     // HACK: this is a range filter but only display/read max range
-    func configure(maxDist: Int, upper: Int) {
+    func configure(_ maxDist: Int, upper: Int) {
         self.setSliderRange(min: RANGE_DISTANCE_MIN, max: maxDist)
         self.setSliderValues(lower: -100, upper: upper)
     }
@@ -28,7 +28,7 @@ class DistanceFilterView: RangeFilterView {
         }
     }
 
-    override func setSliderValues(lower lower: Int, upper: Int) {
+    override func setSliderValues(lower: Int, upper: Int) {
         // HACK: always hides lower value
         self.rangeSlider?.lowerValue = -100
         if upper <= 50 {

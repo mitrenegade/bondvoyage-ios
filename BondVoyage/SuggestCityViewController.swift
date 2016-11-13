@@ -34,7 +34,7 @@ class SuggestCityViewController: UIViewController {
     }
     
     
-    @IBAction func didTapButton(sender: UIButton) {
+    @IBAction func didTapButton(_ sender: UIButton) {
         if sender != btnOther {
             selectedCity = (sender.titleLabel?.text)!
         }
@@ -45,8 +45,8 @@ class SuggestCityViewController: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let newCityCtlr = segue.destinationViewController as! SubmitCityViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let newCityCtlr = segue.destination as! SubmitCityViewController
         newCityCtlr.selectedCity = self.selectedCity
     }
     

@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import PKHUD
 
 class MatchedBondsViewController: RequestedBondsViewController {
     
@@ -16,15 +15,15 @@ class MatchedBondsViewController: RequestedBondsViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.tabIndex = .TAB_MATCHED_BONDS
+        self.tabIndex = .tab_MATCHED_BONDS
     }
     
-    override func setupWithCompletion( completion: (()->Void)? ) {
-        self.navigationItem.rightBarButtonItem?.enabled = false
+    override func setupWithCompletion( _ completion: (()->Void)? ) {
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         activities.removeAll()
-        self.labelNoBonds.hidden = true
-        ActivityRequest.queryMatchedActivities(PFUser.currentUser()) { (results, error) in
-            self.navigationItem.rightBarButtonItem?.enabled = true
+        self.labelNoBonds.isHidden = true
+        ActivityRequest.queryMatchedActivities(PFUser.current()) { (results, error) in
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             if error != nil {
                 if error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
@@ -43,11 +42,11 @@ class MatchedBondsViewController: RequestedBondsViewController {
                 }
             }
             else if results != nil {
-                self.activities.appendContentsOf(results!)
-                self.navigationItem.rightBarButtonItem?.enabled = true
+                self.activities.append(contentsOf: results!)
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
                 if self.activities.count == 0 {
                     self.labelNoBonds.text = "There are currently no matched bonds for you."
-                    self.labelNoBonds.hidden = false
+                    self.labelNoBonds.isHidden = false
                 }
                 self.tableView.reloadData()
                 if completion != nil {
@@ -57,10 +56,10 @@ class MatchedBondsViewController: RequestedBondsViewController {
         }
     }
     
-    override func goToActivity(activity: PFObject) {
+    override func goToActivity(_ activity: PFObject) {
         // TODO: delete
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     }
 }

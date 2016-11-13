@@ -9,16 +9,16 @@
 import UIKit
 
 extension String {
-    func attributedString(substring: String, size: CGFloat) -> NSAttributedString? {
+    func attributedString(_ substring: String, size: CGFloat) -> NSAttributedString? {
         var attributes = Dictionary<String, AnyObject>()
-        attributes[NSForegroundColorAttributeName] = UIColor.whiteColor()
-        attributes[NSFontAttributeName] = UIFont.systemFontOfSize(size)
+        attributes[NSForegroundColorAttributeName] = UIColor.white
+        attributes[NSFontAttributeName] = UIFont.systemFont(ofSize: size)
         
         let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: self, attributes: attributes) as NSMutableAttributedString
-        let range = (self as NSString).rangeOfString(substring)
+        let range = (self as NSString).range(of: substring)
         
         var otherAttrs = Dictionary<String, AnyObject>()
-        otherAttrs[NSForegroundColorAttributeName] = UIColor.darkGrayColor()
+        otherAttrs[NSForegroundColorAttributeName] = UIColor.darkGray
         attributedString.addAttributes(otherAttrs, range: range)
         
         return attributedString

@@ -9,10 +9,10 @@
 import UIKit
 
 extension UIAlertController {
-    class func simpleAlert(title: String, message: String?, completion: (() -> Void)?) -> UIAlertController {
-        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.view.tintColor = UIColor.blackColor()
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+    class func simpleAlert(_ title: String, message: String?, completion: (() -> Void)?) -> UIAlertController {
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.view.tintColor = UIColor.black
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             print("cancel")
             if completion != nil {
                 completion!()

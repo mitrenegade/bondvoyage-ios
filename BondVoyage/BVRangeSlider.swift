@@ -6,16 +6,16 @@ import UIKit
 import QuartzCore
 
 class BVRangeSliderTrackLayer: BVSliderTrackLayer {
-    override func drawInContext(ctx: CGContext) {
+    override func draw(in ctx: CGContext) {
         if let rangeSlider = self.slider as? BVRangeSlider {
-            super.drawInContext(ctx)
+            super.draw(in: ctx)
             
             // Fill the highlighted range
-            CGContextSetFillColorWithColor(ctx, rangeSlider.trackHighlightTintColor.CGColor)
+            ctx.setFillColor(rangeSlider.trackHighlightTintColor.cgColor)
             let lowerValuePosition = CGFloat(rangeSlider.positionForValue(rangeSlider.lowerValue))
             let upperValuePosition = CGFloat(rangeSlider.positionForValue(rangeSlider.upperValue))
             let rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition - 1, height: bounds.height)
-            CGContextFillRect(ctx, rect)
+            ctx.fill(rect)
         }
     }
 }
@@ -43,25 +43,25 @@ class BVRangeSlider: BVSlider {
         }
     }
     
-    private var previouslocation = CGPoint()
+    fileprivate var previouslocation = CGPoint()
     
-    private let lowerThumbLayer = BVSliderThumbLayer()
-    private let upperThumbLayer = BVSliderThumbLayer()
+    fileprivate let lowerThumbLayer = BVSliderThumbLayer()
+    fileprivate let upperThumbLayer = BVSliderThumbLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.trackLayer = BVRangeSliderTrackLayer()
 
         trackLayer.slider = self
-        trackLayer.contentsScale = UIScreen.mainScreen().scale
+        trackLayer.contentsScale = UIScreen.main.scale
         layer.addSublayer(trackLayer)
         
         lowerThumbLayer.slider = self
-        lowerThumbLayer.contentsScale = UIScreen.mainScreen().scale
+        lowerThumbLayer.contentsScale = UIScreen.main.scale
         layer.addSublayer(lowerThumbLayer)
         
         upperThumbLayer.slider = self
-        upperThumbLayer.contentsScale = UIScreen.mainScreen().scale
+        upperThumbLayer.contentsScale = UIScreen.main.scale
         layer.addSublayer(upperThumbLayer)
 
         updateLayerFrames()
@@ -90,9 +90,9 @@ class BVRangeSlider: BVSlider {
     }
     
     // MARK: - Touches
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         self.isFinished = false
-        previouslocation = touch.locationInView(self)
+        previouslocation = touch.location(in: self)
         
         // Hit test the thumb layers
         if lowerThumbLayer.frame.contains(previouslocation) {
@@ -104,8 +104,8 @@ class BVRangeSlider: BVSlider {
         return lowerThumbLayer.highlighted || upperThumbLayer.highlighted
     }
     
-    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        let location = touch.locationInView(self)
+    override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let location = touch.location(in: self)
     
         // Determine by how much the user has dragged
         let deltaLocation = Double(location.x - previouslocation.x)
@@ -120,12 +120,12 @@ class BVRangeSlider: BVSlider {
             upperValue = boundValue(upperValue + deltaValue, toLowerValue: lowerValue + gapBetweenThumbs, upperValue: maximumValue)
         }
         
-        sendActionsForControlEvents(.ValueChanged)
+        sendActions(for: .valueChanged)
         
         return true
     }
     
-    override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         lowerThumbLayer.highlighted = false
         upperThumbLayer.highlighted = false
     }

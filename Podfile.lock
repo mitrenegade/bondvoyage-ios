@@ -1,20 +1,20 @@
 PODS:
   - AsyncImageView (1.6)
-  - Bolts (1.7.0):
-    - Bolts/AppLinks (= 1.7.0)
-    - Bolts/Tasks (= 1.7.0)
-  - Bolts/AppLinks (1.7.0):
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
-  - Bolts/Tasks (1.7.0)
-  - Crashlytics (3.7.0):
+  - Bolts/Tasks (1.8.4)
+  - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.7)
-  - FBSDKCoreKit (4.10.1):
-    - Bolts (~> 1.5)
-  - FBSDKLoginKit (4.10.1):
+  - Fabric (1.6.10)
+  - FBSDKCoreKit (4.16.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.16.1):
     - FBSDKCoreKit
-  - Parse (1.13.0):
-    - Bolts/Tasks (~> 1.6)
+  - Parse (1.14.2):
+    - Bolts/Tasks (~> 1.8)
   - ParseFacebookUtilsV4 (1.11.1):
     - Bolts/Tasks (>= 1.6)
     - FBSDKCoreKit (~> 4.10)
@@ -24,7 +24,6 @@ PODS:
   - ParseUI (1.2.0):
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
-  - PKHUD (3.1.0)
   - QMChatViewController (0.3.10):
     - QMChatViewController/Categories (= 0.3.10)
     - QMChatViewController/KeyboardViewController (= 0.3.10)
@@ -78,28 +77,26 @@ DEPENDENCIES:
   - Parse
   - ParseFacebookUtilsV4
   - ParseUI
-  - PKHUD
   - QMChatViewController
   - QMServices
   - QuickBlox
 
 SPEC CHECKSUMS:
   AsyncImageView: 416e99402e5b1f20571de70ad619ced90f56a7d9
-  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
-  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
-  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
-  FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
-  FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
-  Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Fabric: c73f371ee543e3f0b80608f2674750e4910d1669
+  FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
+  FBSDKLoginKit: 469a56cebe2e1ed62b1621d0b155970fd6aac2d8
+  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
-  PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
   QMChatViewController: cb1f6172f794c85be20637c137c5a0b0c5abdb14
   QMServices: 4e62c3dc9986db0cc3b9e06ae02a06a93429c1b8
   QuickBlox: 51505b8deed7268c1bfd3139d4e4e9a1e9441d44
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 83e33576c3b85b0c55adeb45da611bf7fa6ea358
+PODFILE CHECKSUM: a56bc402e8ef9b182584bca6c11b8207792bfffc
 
 COCOAPODS: 1.1.1
