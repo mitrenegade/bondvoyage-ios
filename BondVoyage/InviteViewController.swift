@@ -130,7 +130,7 @@ class InviteViewController: UIViewController {
         var count = 0
         for i in 0 ..< activities.count {
             let activity = activities[i]
-            guard let user = activity.object(forKey: "user") as? PFUser else { continue }
+            guard let user = activity.object(forKey: "owner") as? PFUser else { continue }
             count += 1
             let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user
