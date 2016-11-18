@@ -9,7 +9,7 @@
 import UIKit
 
 class AgeRangeFilterView: RangeFilterView {
-    func configure(minAge: Int, maxAge: Int, lower: Int, upper: Int) {
+    func configure(_ minAge: Int, maxAge: Int, lower: Int, upper: Int) {
         self.setSliderRange(min: minAge, max: maxAge)
         self.setSliderValues(lower: lower, upper: upper)
     }

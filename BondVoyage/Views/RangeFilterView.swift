@@ -22,20 +22,20 @@ class RangeFilterView: BaseFilterView {
         self.label.text = "Range"
     }
     
-    func setSliderValues(lower lower: Int, upper: Int) {
+    func setSliderValues(lower: Int, upper: Int) {
         self.rangeSlider?.lowerValue = max(self.rangeSlider!.minimumValue, Double(lower))
         self.rangeSlider!.upperValue = min(self.rangeSlider!.maximumValue, Double(upper))
         self.updateLabel()
     }
     
-    func sliderValueChanged(sender: UIControl) {
+    func sliderValueChanged(_ sender: UIControl) {
         if let slider: BVRangeSlider = sender as? BVRangeSlider {
             print("Range slider value changed: (\(slider.lowerValue) \(slider.upperValue))")
             self.updateLabel()
         }
     }
     
-    func sliderValueEnded(sender: UIControl) {
+    func sliderValueEnded(_ sender: UIControl) {
         // TODO: make it snap
     }
     

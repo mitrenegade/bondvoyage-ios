@@ -10,16 +10,16 @@ import UIKit
 import Parse
 
 enum BVTabIndex: Int {
-    case TAB_CATEGORIES = 0
-    case  TAB_REQUESTED_BONDS = 1
-    case TAB_MATCHED_BONDS = 2
+    case tab_CATEGORIES = 0
+    case  tab_REQUESTED_BONDS = 1
+    case tab_MATCHED_BONDS = 2
 }
 
-let TAB_NOTIFICATION_AGE = NSTimeInterval(-24*60*60)
+let TAB_NOTIFICATION_AGE = TimeInterval(-24*60*60)
 class BVTabBarController: UITabBarController {
     
-    var bondReceivedTimestamp: NSDate? // timestamp for last time requestedBonds were received
-    var matchReceivedTimestamp: NSDate? // timestamp for last time matchedBonds were received
+    var bondReceivedTimestamp: Date? // timestamp for last time requestedBonds were received
+    var matchReceivedTimestamp: Date? // timestamp for last time matchedBonds were received
     var promptedForPush: Bool = false
 
     override func viewDidLoad() {
@@ -27,13 +27,13 @@ class BVTabBarController: UITabBarController {
 
         // Do any additional setup after loading the view.
         self.refreshNotifications()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshNotifications", name: "activity:updated", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(BVTabBarController.refreshNotifications), name: NSNotification.Name(rawValue: "activity:updated"), object: nil)
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if PFUser.currentUser() != nil && !self.promptedForPush {
+        if PFUser.current() != nil && !self.promptedForPush {
             if !self.appDelegate().hasPushEnabled() {
                 // prompt for it
                 self.appDelegate().registerForRemoteNotifications()
@@ -52,23 +52,23 @@ class BVTabBarController: UITabBarController {
     }
     
     func refreshNotifications() {
-        ActivityRequest.queryMatchedActivities(PFUser.currentUser()) { (results, error) in
+        ActivityRequest.queryMatchedActivities(PFUser.current()) { (results, error) in
             if error != nil {
                 return
             }
-            self.refreshBadgeCount(.TAB_MATCHED_BONDS, activities: results)
+            self.refreshBadgeCount(.tab_MATCHED_BONDS, activities: results)
         }
         
         ActivityRequest.getRequestedBonds { (results, error) in
             if error != nil {
                 return
             }
-            self.refreshBadgeCount(.TAB_REQUESTED_BONDS, activities: results)
+            self.refreshBadgeCount(.tab_REQUESTED_BONDS, activities: results)
         }
     }
 
-    func refreshBadgeCount(tabIndex: BVTabIndex, activities: [PFObject]?) {
-        if tabIndex != .TAB_REQUESTED_BONDS && tabIndex != .TAB_MATCHED_BONDS {
+    func refreshBadgeCount(_ tabIndex: BVTabIndex, activities: [PFObject]?) {
+        if tabIndex != .tab_REQUESTED_BONDS && tabIndex != .tab_MATCHED_BONDS {
             return
         }
         let tabBarItem = self.tabBar.items![tabIndex.rawValue]
@@ -78,7 +78,7 @@ class BVTabBarController: UITabBarController {
         }
 
         var key: String
-        if tabIndex == .TAB_REQUESTED_BONDS {
+        if tabIndex == .tab_REQUESTED_BONDS {
             key = "requestedBond:seen:"
         }
         else {
@@ -88,12 +88,12 @@ class BVTabBarController: UITabBarController {
         for activity: PFObject in activities! {
             let id = activity.objectId!
             let newkey = "\(key)\(id)"
-            if NSUserDefaults.standardUserDefaults().objectForKey(newkey) != nil && NSUserDefaults.standardUserDefaults().objectForKey(newkey) as! Bool == true {
+            if UserDefaults.standard.object(forKey: newkey) != nil && UserDefaults.standard.object(forKey: newkey) as! Bool == true {
                 continue
             }
             
             // don't show notifications if they are more than a day old
-            let created = activity.objectForKey("time") as! NSDate
+            let created = activity.object(forKey: "time") as! Date
             if created.timeIntervalSinceNow <= TAB_NOTIFICATION_AGE {
                 continue
             }

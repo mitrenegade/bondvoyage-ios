@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Parse
-import Bolts
 import Fabric
 import Crashlytics
 import FBSDKCoreKit
@@ -21,14 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Configure Navigation Bar Appearance
         UINavigationBar.appearance().tintColor = Constants.BV_defaultBlueColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Constants.BV_defaultBlueColor()]
         let img = UIImage()
         UINavigationBar.appearance().shadowImage = img
-        UINavigationBar.appearance().setBackgroundImage(img, forBarMetrics: UIBarMetrics.Default)
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().setBackgroundImage(img, for: UIBarMetrics.default)
+        UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barTintColor = Constants.BV_navigationBarGrayColor()
         
         // Override point for customization after application launch.
@@ -40,10 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             $0.clientKey = PARSE_CLIENT_KEY
             $0.server = PARSE_LOCAL ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
         }
-        Parse.initializeWithConfiguration(configuration)
+        Parse.initialize(with: configuration)
         
         // [Optional] Track statistics around application opens.
-        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        PFAnalytics.trackAppOpened(launchOptions: launchOptions)
         
         // Test: seed the database with fake users
         UserRequest.seed()
@@ -52,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //RecommendationRequest.seed()
         
         // reenable push. for ios8, isRegisteredForRemoteNotifications doesn't get reset when the app is deleted.
-        if PFUser.currentUser() != nil && self.hasPushEnabled() {
+        if PFUser.current() != nil && self.hasPushEnabled() {
             self.initializeNotificationServices()
         }
         
@@ -61,9 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
+        PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions);
         
-        if PFUser.currentUser() != nil {
+        if PFUser.current() != nil {
             self.logUser()
         }
         
@@ -76,49 +74,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 
         // Facebook
         FBSDKAppEvents.activateApp()
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
     // MARK: - Controller stack
     func topViewController() -> UIViewController? {
-        if UIApplication.sharedApplication().keyWindow == nil {
+        if UIApplication.shared.keyWindow == nil {
             return nil
         }
-        if UIApplication.sharedApplication().keyWindow!.rootViewController == nil {
+        if UIApplication.shared.keyWindow!.rootViewController == nil {
             return nil
         }
         
-        return self.topViewController(UIApplication.sharedApplication().keyWindow!.rootViewController!)
+        return self.topViewController(UIApplication.shared.keyWindow!.rootViewController!)
     }
     
-    func topViewController(rootViewController: UIViewController) -> UIViewController? {
+    func topViewController(_ rootViewController: UIViewController) -> UIViewController? {
         if rootViewController.presentedViewController == nil {
             return rootViewController
         }
         
-        if rootViewController.presentedViewController!.isKindOfClass(UINavigationController) {
+        if rootViewController.presentedViewController!.isKind(of: UINavigationController.self) {
             let nav: UINavigationController = rootViewController.presentedViewController as! UINavigationController
             let lastViewController: UIViewController? = nav.viewControllers.last
             return self.topViewController(lastViewController!)
@@ -128,38 +126,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Push
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Store the deviceToken in the current Installation and save it to Parse
 
-        let installation = PFInstallation.currentInstallation()
-        installation.setDeviceTokenFromData(deviceToken)
-        if PFUser.currentUser() != nil {
-            let userId: String = PFUser.currentUser()!.objectId!
+        let installation = PFInstallation.current()
+        installation?.setDeviceTokenFrom(deviceToken)
+        if PFUser.current() != nil {
+            let userId: String = PFUser.current()!.objectId!
             let channel: String = "channel\(userId)"
-            installation.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
+            installation?.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
             
             // TEST: global channel
             let global: String = "channelGlobal"
-            installation.addUniqueObject(global, forKey: "channels")
+            installation?.addUniqueObject(global, forKey: "channels")
         }
-        installation.saveInBackground()
+        installation?.saveInBackground()
 
-        let channels = installation.objectForKey("channels")
+        let channels = installation?.object(forKey: "channels")
         print("installation registered for remote notifications: token \(deviceToken) channel \(channels)")
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("failed: error \(error)")
-        NSNotificationCenter.defaultCenter().postNotificationName("push:enable:failed", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "push:enable:failed"), object: nil)
     }
 
     // MARK: Push
     func hasPushEnabled() -> Bool {
-        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
             return false
         }
-        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
-        if (settings?.types.contains(.Alert) == true){
+        let settings = UIApplication.shared.currentUserNotificationSettings
+        if (settings?.types.contains(.alert) == true){
             return true
         }
         else {
@@ -168,46 +166,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func registerForRemoteNotifications() {
-        if let timestamp: NSDate = NSUserDefaults.standardUserDefaults().objectForKey("push:request:defer:timestamp") as? NSDate {
-            if NSDate().timeIntervalSinceDate(timestamp) < 1*24*3600 {
+        if let timestamp: Date = UserDefaults.standard.object(forKey: "push:request:defer:timestamp") as? Date {
+            if Date().timeIntervalSince(timestamp) < 1*24*3600 {
                 return
             }
         }
         
-        let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Not now", style: .Cancel, handler: { (action) -> Void in
-            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "push:request:defer:timestamp")
-            NSUserDefaults.standardUserDefaults().synchronize()
+        let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Not now", style: .cancel, handler: { (action) -> Void in
+            UserDefaults.standard.set(Date(), forKey: "push:request:defer:timestamp")
+            UserDefaults.standard.synchronize()
         }))
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
             self.initializeNotificationServices()
         }))
-        self.topViewController()!.presentViewController(alert, animated: true, completion: nil)
+        self.topViewController()!.present(alert, animated: true, completion: nil)
     }
     
     func initializeNotificationServices() -> Void {
         // http://www.intertech.com/Blog/push-notifications-tutorial-for-ios-9/#ixzz3xXcQVOIC
-        let settings = UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        let settings = UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
         
         // This is an asynchronous method to retrieve a Device Token
         // Callbacks are in AppDelegate.swift
         // Success = didRegisterForRemoteNotificationsWithDeviceToken
         // Fail = didFailToRegisterForRemoteNotificationsWithError
-        UIApplication.sharedApplication().registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     func warnForRemoteNotificationRegistrationFailure() {
-        let alert = UIAlertController(title: "Change notification settings?", message: "Push notifications are disabled, so you can't receive notifications from trainers. Would you like to go to the Settings to update them?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+        let alert = UIAlertController(title: "Change notification settings?", message: "Push notifications are disabled, so you can't receive notifications from trainers. Would you like to go to the Settings to update them?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (action) -> Void in
             print("go to settings")
-            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
         }))
-        self.topViewController()!.presentViewController(alert, animated: true, completion: nil)
+        self.topViewController()!.present(alert, animated: true, completion: nil)
     }
 
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         print("notification received: \(userInfo)")
         /* format:
         [aps: {
@@ -258,7 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         ]
         */
-        if let _ = userInfo["from"] as? [NSObject: AnyObject] {
+        if let _ = userInfo["from"] as? [AnyHashable: Any] {
             self.goToHandleNotification(userInfo)
         }
         else if let _ = userInfo["invitationStatus"] {
@@ -266,18 +264,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // always cause the feed to reload
-        NSNotificationCenter.defaultCenter().postNotificationName("activity:updated", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
     }
     
     // MARK: - Logging/analytics
     func logUser() {
         // TODO: Use the current user's information
         // You can call any combination of these three methods
-        if PFUser.currentUser() == nil {
+        if PFUser.current() == nil {
             return
         }
         
-        let user: PFUser = PFUser.currentUser()!
+        let user: PFUser = PFUser.current()!
         if user.email != nil {
             Crashlytics.sharedInstance().setUserEmail(user.email!)
         }
@@ -289,23 +287,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Crashlytics.sharedInstance().setUserIdentifier(user.objectId!)
         }
         
-        if let name: String = user.valueForKey("firstName") as? String {
+        if let name: String = user.value(forKey: "firstName") as? String {
             Crashlytics.sharedInstance().setUserName(name)
         }
     }
     
     // MARK: - Notification
-    func goToHandleNotification(info: [NSObject: AnyObject]) {
+    func goToHandleNotification(_ info: [AnyHashable: Any]) {
         var userId: String = ""
-        if let userDict: [NSObject: AnyObject] = info["from"] as? [NSObject: AnyObject] {
+        if let userDict: [AnyHashable: Any] = info["from"] as? [AnyHashable: Any] {
             userId = userDict["objectId"] as! String
         }
-        else if let userDict: [NSObject: AnyObject] = info["invitedUser"] as? [NSObject: AnyObject] {
+        else if let userDict: [AnyHashable: Any] = info["invitedUser"] as? [AnyHashable: Any] {
             userId = userDict["objectId"] as! String
         }
         
         var activityId: String = ""
-        if let fromMatchDict: [NSObject: AnyObject] = info["activity"] as? [NSObject: AnyObject] {
+        if let fromMatchDict: [AnyHashable: Any] = info["activity"] as? [AnyHashable: Any] {
             let fromMatchId: String = fromMatchDict["objectId"] as! String
             activityId = fromMatchId
         }
@@ -314,17 +312,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Utils
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(_ testStr:String) -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(testStr)
+        return emailTest.evaluate(with: testStr)
     }
     
     // MARK: Redirect
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 }
 

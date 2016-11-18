@@ -24,11 +24,11 @@ class CityViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func didTapButton(sender: UIButton) {
+    @IBAction func didTapButton(_ sender: UIButton) {
         if sender == btnSuggest {
-            self.performSegueWithIdentifier("toSuggestCity", sender: self)
+            self.performSegue(withIdentifier: "toSuggestCity", sender: self)
         } else {
-            self.performSegueWithIdentifier("toActivities", sender: self)
+            self.performSegue(withIdentifier: "toActivities", sender: self)
         }
     }
 

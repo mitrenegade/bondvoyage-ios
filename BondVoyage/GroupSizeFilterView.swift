@@ -9,7 +9,7 @@
 import UIKit
 
 class GroupSizeFilterView: RangeFilterView {
-    func configure(minSize: Int, maxSize: Int, lower: Int, upper: Int) {
+    func configure(_ minSize: Int, maxSize: Int, lower: Int, upper: Int) {
         self.setSliderRange(min: minSize, max: maxSize)
         self.setSliderValues(lower: lower, upper: upper)
     }

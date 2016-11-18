@@ -11,11 +11,11 @@ import Parse
 import AsyncImageView
 
 extension UIViewController {
-    func simpleAlert(title: String, defaultMessage: String?, error: NSError?) {
+    func simpleAlert(_ title: String, defaultMessage: String?, error: NSError?) {
         self.simpleAlert(title, defaultMessage: defaultMessage, error: error, completion: nil)
     }
     
-    func simpleAlert(title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)?) {
+    func simpleAlert(_ title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)?) {
         if error != nil {
             if let msg = error!.userInfo["error"] as? String {
                 self.simpleAlert(title, message: msg)
@@ -25,50 +25,50 @@ extension UIViewController {
         self.simpleAlert(title, message: defaultMessage, completion: completion)
     }
     
-    func simpleAlert(title: String, message: String?) {
+    func simpleAlert(_ title: String, message: String?) {
         self.simpleAlert(title, message: message, completion: nil)
     }
     
-    func simpleAlert(title: String, message: String?, completion: (() -> Void)?) {
+    func simpleAlert(_ title: String, message: String?, completion: (() -> Void)?) {
         let alert: UIAlertController = UIAlertController.simpleAlert(title, message: message, completion: completion)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func appDelegate() -> AppDelegate {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate
     }
     
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(_ testStr:String) -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(testStr)
+        return emailTest.evaluate(with: testStr)
     }
     
-    func setTitleBarColor(color: UIColor, tintColor: UIColor) {
+    func setTitleBarColor(_ color: UIColor, tintColor: UIColor) {
         self.navigationController?.navigationBar.tintColor = tintColor
         self.navigationController?.navigationBar.backgroundColor = color
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     func setLeftProfileButton() {
-        let user = PFUser.currentUser()
+        let user = PFUser.current()
         if user == nil {
             self.navigationItem.leftBarButtonItem = nil
             return
         }
         
-        let frame = CGRectMake(0, 0, 32, 32)
+        let frame = CGRect(x: 0, y: 0, width: 32, height: 32)
         let imageView: AsyncImageView = AsyncImageView(frame: frame)
-        imageView.contentMode = .ScaleAspectFill
-        user!.fetchInBackgroundWithBlock({ (result, error) -> Void in
+        imageView.contentMode = .scaleAspectFill
+        user!.fetchInBackground(block: { (result, error) -> Void in
             if result != nil {
-                if let photoURL: String = result!.valueForKey("photoUrl") as? String {
+                if let photoURL: String = result!.value(forKey: "photoUrl") as? String {
 //                    imageView.imageURL = NSURL(string: photoURL)
-                    imageView.setValue(NSURL(string: photoURL), forKey: "imageURL")
+                    imageView.setValue(URL(string: photoURL), forKey: "imageURL")
                 }
                 else {
                     imageView.image = UIImage(named: "profile-icon")
@@ -77,15 +77,15 @@ extension UIViewController {
         })
 
         let view: UIView = UIView(frame: frame)
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor.clear
         view.clipsToBounds = true
         view.layer.cornerRadius = frame.size.width / 2
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.whiteColor().CGColor
+        view.layer.borderColor = UIColor.white.cgColor
         
         let button: UIButton = UIButton(frame: frame)
-        button.backgroundColor = UIColor.clearColor()
-        button.addTarget(self, action: "didClickProfile:", forControlEvents: .TouchUpInside)
+        button.backgroundColor = UIColor.clear
+        button.addTarget(self, action: #selector(UIViewController.didClickProfile(_:)), for: .touchUpInside)
         
         view.addSubview(imageView)
         view.addSubview(button)
@@ -94,17 +94,17 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = left
     }
     
-    func didClickProfile(sender: UIButton) {
-        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("ProfileNavigationViewController") as! UINavigationController
+    func didClickProfile(_ sender: UIButton) {
+        let nav: UINavigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "ProfileNavigationViewController") as! UINavigationController
         let controller: UserDetailsViewController = nav.viewControllers[0] as! UserDetailsViewController
         controller.title = "My Profile"
-        controller.selectedUser = PFUser.currentUser()
-        self.presentViewController(nav, animated: true) { () -> Void in
+        controller.selectedUser = PFUser.current()
+        self.present(nav, animated: true) { () -> Void in
             controller.scrollView.layoutSubviews()
         }
     }
     
-    func stringFromArray(arr: Array<String>) -> String {
+    func stringFromArray(_ arr: Array<String>) -> String {
         var interestsString = String()
         for interest in arr {
             if interestsString.characters.count == 0 {

@@ -12,17 +12,17 @@ import QuartzCore
 class BVSliderTrackLayer: CALayer {
     weak var slider: BVSlider?
     
-    override func drawInContext(ctx: CGContext) {
+    override func draw(in ctx: CGContext) {
         if let slider = self.slider {
             // Clip
             let cornerRadius = bounds.height * slider.curvaceousness / 2.0
             let path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-            CGContextAddPath(ctx, path.CGPath)
+            ctx.addPath(path.cgPath)
             
             // Fill the track
-            CGContextSetFillColorWithColor(ctx, slider.trackTintColor.CGColor)
-            CGContextAddPath(ctx, path.CGPath)
-            CGContextFillPath(ctx)
+            ctx.setFillColor(slider.trackTintColor.cgColor)
+            ctx.addPath(path.cgPath)
+            ctx.fillPath()
         }
     }
 }
@@ -36,28 +36,28 @@ class BVSliderThumbLayer: CALayer {
     }
     weak var slider: BVSlider?
     
-    override func drawInContext(ctx: CGContext) {
+    override func draw(in ctx: CGContext) {
         if let slider = slider {
             let thumbFrame = bounds.insetBy(dx: 1, dy: 1)
             let cornerRadius = thumbFrame.height * slider.curvaceousness / 2.0
             let thumbPath = UIBezierPath(roundedRect: thumbFrame, cornerRadius: cornerRadius)
             
             // Fill
-            CGContextSetFillColorWithColor(ctx, slider.thumbTintColor.CGColor)
-            CGContextAddPath(ctx, thumbPath.CGPath)
-            CGContextFillPath(ctx)
+            ctx.setFillColor(slider.thumbTintColor.cgColor)
+            ctx.addPath(thumbPath.cgPath)
+            ctx.fillPath()
             
             // Outline
-            let strokeColor = UIColor.grayColor()
-            CGContextSetStrokeColorWithColor(ctx, strokeColor.CGColor)
-            CGContextSetLineWidth(ctx, 0.25)
-            CGContextAddPath(ctx, thumbPath.CGPath)
-            CGContextStrokePath(ctx)
+            let strokeColor = UIColor.gray
+            ctx.setStrokeColor(strokeColor.cgColor)
+            ctx.setLineWidth(0.25)
+            ctx.addPath(thumbPath.cgPath)
+            ctx.strokePath()
             
             if highlighted {
-                CGContextSetFillColorWithColor(ctx, UIColor(white: 0.0, alpha: 0.1).CGColor)
-                CGContextAddPath(ctx, thumbPath.CGPath)
-                CGContextFillPath(ctx)
+                ctx.setFillColor(UIColor(white: 0.0, alpha: 0.1).cgColor)
+                ctx.addPath(thumbPath.cgPath)
+                ctx.fillPath()
             }
         }
     }
@@ -69,7 +69,7 @@ class BVSlider: UIControl {
     
     var isFinished = false
     
-    private var previouslocation = CGPoint()
+    fileprivate var previouslocation = CGPoint()
 
     var currentValue: Double = 0.0 {
         didSet {
@@ -98,7 +98,7 @@ class BVSlider: UIControl {
         }
     }
     
-    var thumbTintColor: UIColor = UIColor.whiteColor() {
+    var thumbTintColor: UIColor = UIColor.white {
         didSet {
             thumbLayer.setNeedsDisplay()
         }
@@ -126,14 +126,14 @@ class BVSlider: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.trackTintColor = UIColor.blackColor()
+        self.trackTintColor = UIColor.black
 
         trackLayer.slider = self
-        trackLayer.contentsScale = UIScreen.mainScreen().scale
+        trackLayer.contentsScale = UIScreen.main.scale
         layer.addSublayer(trackLayer)
         
         thumbLayer.slider = self
-        thumbLayer.contentsScale = UIScreen.mainScreen().scale
+        thumbLayer.contentsScale = UIScreen.main.scale
         layer.addSublayer(thumbLayer)
         
         updateLayerFrames()
@@ -149,12 +149,12 @@ class BVSlider: UIControl {
         }
     }
 
-    func positionForValue(value: Double) -> Double {
+    func positionForValue(_ value: Double) -> Double {
         return Double(bounds.width - thumbWidth) * (value - minimumValue) /
             (maximumValue - minimumValue) + Double(thumbWidth / 2.0)
     }
     
-    func boundValue(value: Double, toLowerValue lowerValue: Double, upperValue: Double) -> Double {
+    func boundValue(_ value: Double, toLowerValue lowerValue: Double, upperValue: Double) -> Double {
         return min(max(value, lowerValue), upperValue)
     }
     
@@ -173,9 +173,9 @@ class BVSlider: UIControl {
     }
     
     // MARK: - Touches
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         self.isFinished = false
-        previouslocation = touch.locationInView(self)
+        previouslocation = touch.location(in: self)
         
         print("current value \(currentValue) touch \(previouslocation.x)")
         
@@ -187,8 +187,8 @@ class BVSlider: UIControl {
         return thumbLayer.highlighted
     }
     
-    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        let location = touch.locationInView(self)
+    override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let location = touch.location(in: self)
         
         // Determine by how much the user has dragged
         let deltaLocation = Double(location.x - previouslocation.x)
@@ -204,12 +204,12 @@ class BVSlider: UIControl {
         }
         print("updated value \(currentValue) deltaLocation \(deltaLocation)")
 
-        sendActionsForControlEvents(.ValueChanged)
+        sendActions(for: .valueChanged)
         
         return true
     }
     
-    override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         thumbLayer.highlighted = false
     }
 }

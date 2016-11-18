@@ -24,9 +24,9 @@ class GenderFilterView: SingleFilterView {
         self.configure(.All)
     }
     
-    func configure(currentSelection: GenderPrefs) {
+    func configure(_ currentSelection: GenderPrefs) {
         self.setSliderRange(min: 0, max: self.genderOptions.count)
-        if let index: Int = self.genderOptions.indexOf(currentSelection) {
+        if let index: Int = self.genderOptions.index(of: currentSelection) {
             self.slider?.currentValue = Double(index)
         }
 
@@ -45,7 +45,7 @@ class GenderFilterView: SingleFilterView {
         self.label.text = "Gender: \(text)"
     }
     
-    func setSliderSelection(genderPref: String) {
+    func setSliderSelection(_ genderPref: String) {
         for pref in self.genderOptions {
             if pref.rawValue == genderPref {
                 self.configure(pref)

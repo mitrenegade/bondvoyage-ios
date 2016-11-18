@@ -14,7 +14,7 @@ import Parse
 class UserRequest: NSObject {
     class func seed() {
         // private function for testing purposes only
-        PFCloud.callFunctionInBackground("seedTestUsers", withParameters: nil) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "seedTestUsers", withParameters: nil) { (results, error) -> Void in
             if error != nil {
                 print("seedTestUsers error: \(error)")
             }
@@ -27,19 +27,19 @@ class UserRequest: NSObject {
     // MARK: - Match Queries
     
     // query for all users on Parse with given interests
-    class func userQuery(interests: [String], completion: ((results: [PFUser]?, error: NSError?)->Void)) {
+    class func userQuery(_ interests: [String], completion: @escaping ((_ results: [PFUser]?, _ error: NSError?)->Void)) {
         // TODO: call queryUsers; handle nil or unspecified default search criteria
-        PFCloud.callFunctionInBackground("v3queryUsers", withParameters: ["interests": interests]) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "v3queryUsers", withParameters: ["interests": interests]) { (results, error) -> Void in
             print("results: \(results)")
             let users: [PFUser]? = results as? [PFUser]
-            completion(results: users, error: error)
+            completion(users, error as NSError?)
         }
     }
     
-    class func inviteUser(user: PFUser, interests: [String], completion: ((success: Bool, error: NSError?)->Void)) {
-        PFCloud.callFunctionInBackground("inviteUser", withParameters: ["user": user.objectId!, "interests": interests]) { (results, error) -> Void in
+    class func inviteUser(_ user: PFUser, interests: [String], completion: @escaping ((_ success: Bool, _ error: NSError?)->Void)) {
+        PFCloud.callFunction(inBackground: "inviteUser", withParameters: ["user": user.objectId!, "interests": interests]) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
-            completion(success: error == nil, error: error)
+            completion(error == nil, error as NSError?)
         }
     }
 }

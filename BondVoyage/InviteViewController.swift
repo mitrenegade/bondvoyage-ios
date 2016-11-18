@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import PKHUD
 import QMChatViewController
 
 class InviteViewController: UIViewController {
@@ -30,7 +29,7 @@ class InviteViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: #selector(close))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(close))
         self.configureRightNavigationButton()
     }
     
@@ -44,9 +43,9 @@ class InviteViewController: UIViewController {
     }
     
     func configureRightNavigationButton() {
-        let button = UIButton(frame: CGRectMake(0, 0, 40, 40))
-        button.addTarget(self, action: #selector(didClickInviteOrChat), forControlEvents: .TouchUpInside)
-        button.setImage(UIImage(named: "icon150"), forState: .Normal)
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        button.addTarget(self, action: #selector(didClickInviteOrChat), for: .touchUpInside)
+        button.setImage(UIImage(named: "icon150"), for: UIControlState())
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
@@ -57,12 +56,12 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController!.popToRootViewControllerAnimated(true)
+        self.navigationController!.popToRootViewController(animated: true)
     }
     
     func didClickInviteOrChat() {
         print("here")
-        guard let users = self.people where self.currentPage() < users.count else { return }
+        guard let users = self.people, self.currentPage() < users.count else { return }
         let selectedUser: PFUser = users[self.currentPage()]
         
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
@@ -77,19 +76,19 @@ class InviteViewController: UIViewController {
                     return
                 }
                 
-                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatNavigationViewController") as? UINavigationController,
+                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatNavigationViewController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
                     chatVC.dialog = dialog
-                    self?.presentViewController(chatNavigationVC, animated: true, completion: {
+                    self?.present(chatNavigationVC, animated: true, completion: {
                         //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
                     })
                 }
             })
         }    }
     
-    func goToJoinActivity(activity: PFObject) {
+    func goToJoinActivity(_ activity: PFObject) {
         self.activityIndicator.startAnimating()
-        HUD.show(.SystemActivity)
+
         ActivityRequest.joinActivity(activity, suggestedPlace: nil, completion: { (results, error) -> Void in
             
             self.activityIndicator.stopAnimating()
@@ -100,14 +99,10 @@ class InviteViewController: UIViewController {
                     })
                     return
                 }
-                HUD.flash(.Label("There was an error joining the activity."), delay: 2)
             }
             else {
                 self.refresh()
-                HUD.show(.Label("Invitation sent."))
-                HUD.hide(animated: true, completion: { (complete) -> Void in
-                    self.navigationController!.popToRootViewControllerAnimated(true)
-                })
+                self.navigationController!.popToRootViewController(animated: true)
             }
         })
     }
@@ -124,36 +119,36 @@ class InviteViewController: UIViewController {
 
         let width: CGFloat = self.view.frame.size.width
         let height: CGFloat = self.scrollView.frame.size.height
-        self.scrollView.pagingEnabled = true
+        self.scrollView.isPagingEnabled = true
 
         for i in 0 ..< users.count {
             //let activity = self.activities![i]
             let user = users[i]
-            let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("UserDetailsViewController") as! UserDetailsViewController
+            let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user
             
-            controller.willMoveToParentViewController(self)
+            controller.willMove(toParentViewController: self)
             self.addChildViewController(controller)
             self.scrollView.addSubview(controller.view)
-            let frame = CGRectMake(width * CGFloat(i), 0, width, height)
+            let frame = CGRect(x: width * CGFloat(i), y: 0, width: width, height: height)
             controller.view.frame = frame
-            controller.didMoveToParentViewController(self)
+            controller.didMove(toParentViewController: self)
             controller.configureUI() // force resize
         }
-        self.scrollView.contentSize = CGSizeMake(CGFloat(users.count) * width, height)
+        self.scrollView.contentSize = CGSize(width: CGFloat(users.count) * width, height: height)
     }
     
     func refresh() {
         guard let users = self.people else {
-            self.buttonUp.hidden = true
+            self.buttonUp.isHidden = true
             return
         }
         
         if users.count == 0 {
-            self.buttonUp.hidden = true
+            self.buttonUp.isHidden = true
         }
         else {
-            self.buttonUp.hidden = false
+            self.buttonUp.isHidden = false
         }
     }
 }

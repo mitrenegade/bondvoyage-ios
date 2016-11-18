@@ -33,9 +33,9 @@ var BG_CATEGORIES: [CATEGORY: String] = [
 class CategoryFactory: NSObject {
 
     // MARK: - string to CATEGORY/SUBCATEGORY enum types
-    class func categoryForString(string: String) -> CATEGORY? {
+    class func categoryForString(_ string: String) -> CATEGORY? {
         for cat: CATEGORY in CATEGORIES {
-            if cat.rawValue.lowercaseString == string.lowercaseString {
+            if cat.rawValue.lowercased() == string.lowercased() {
                 return cat
             }
         }
@@ -43,9 +43,9 @@ class CategoryFactory: NSObject {
     }
     
     // MARK: background images
-    class func categoryBgImage(category: String) -> UIImage {
+    class func categoryBgImage(_ category: String) -> UIImage {
         for cat: CATEGORY in CATEGORIES {
-            if cat.rawValue.lowercaseString == category.lowercaseString {
+            if cat.rawValue.lowercased() == category.lowercased() {
                 let name = BG_CATEGORIES[cat]!
                 return UIImage(named:"\(name).jpg")!
             }
@@ -54,7 +54,7 @@ class CategoryFactory: NSObject {
     }
 
     // MARK: category titles
-    class func categoryReadableString(category: CATEGORY) -> String {
+    class func categoryReadableString(_ category: CATEGORY) -> String {
         switch category {
         case .Food: return "Food & Casual Drink"
         case .Nightlife: return "Nightlife & Entertainment"
@@ -64,7 +64,7 @@ class CategoryFactory: NSObject {
     }
     
     // MARK: custom search terms
-    class func searchTerms(string: String) -> String? {
+    class func searchTerms(_ string: String) -> String? {
         guard let category = self.categoryForString(string) else { return nil }
         switch category {
         default:
@@ -72,7 +72,7 @@ class CategoryFactory: NSObject {
         }
     }
     
-    class func interestsForCategory(category: CATEGORY) -> String {
+    class func interestsForCategory(_ category: CATEGORY) -> String {
         switch category {
         case .Food:
             return "food"

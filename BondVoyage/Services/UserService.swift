@@ -14,6 +14,6 @@ class UserService: NSObject {
     class func logout() {
         PFUser.logOut()
         QBUserService.sharedInstance.logoutQBUser()
-        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "logout"), object: nil)
     }
 }
