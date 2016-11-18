@@ -40,9 +40,16 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
 
         // check if user currently has an activity
+        self.tableView.isUserInteractionEnabled = false
         if let user = PFUser.current() {
             if let activity = user.value(forKey: "activity") as? Activity {
                 activity.fetchIfNeededInBackground(block: { (result, error) in
+                    guard let expiration = activity.expiration, expiration.timeIntervalSinceNow > 0 else {
+                        // cancel user's current activity
+                        Activity.cancelCurrentActivity(completion: nil)
+                        self.tableView.isUserInteractionEnabled = true
+                        return
+                    }
                     if let category: String = activity.category {
                         self.newCategory = CategoryFactory.categoryForString(category)
                         self.requestActivities()
@@ -59,6 +66,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tableView.isUserInteractionEnabled = true
     }
     
     // MARK: - UITableViewDataSource

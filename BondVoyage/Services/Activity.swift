@@ -71,4 +71,12 @@ extension Activity {
         }
     }
     
+    class func cancelCurrentActivity(completion: ((_ success: Bool, _ error: NSError?)->Void)?) {
+        
+        PFCloud.callFunction(inBackground: "v3cancelActivity", withParameters: nil) { (results, error) -> Void in
+            print("results: \(results) error: \(error)")
+            let success = error == nil
+            completion?(success, error as NSError?)
+        }
+    }
 }

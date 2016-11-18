@@ -54,7 +54,15 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController!.popToRootViewController(animated: true)
+        Activity.cancelCurrentActivity { (success, error) in
+            if !success {
+                print("error: \(error)")
+                // TODO: try again
+            }
+            else {
+                self.navigationController!.popToRootViewController(animated: true)
+            }
+        }
     }
     
     func didClickInviteOrChat() {
