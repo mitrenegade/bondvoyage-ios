@@ -14,7 +14,6 @@ class InviteViewController: UIViewController {
     
     @IBOutlet weak var progressView: ProgressView!
     @IBOutlet weak var bgView: UIImageView!
-    @IBOutlet weak var buttonUp: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -22,8 +21,7 @@ class InviteViewController: UIViewController {
     var didSetupScroll: Bool = false
     
     var category: CATEGORY?
-//    var activities: [PFObject]?
-    var people: [PFUser]?
+    var activities: [Activity]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,13 +54,21 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController!.popToRootViewController(animated: true)
+        Activity.cancelCurrentActivity { (success, error) in
+            if !success {
+                print("error: \(error)")
+                // TODO: try again
+            }
+            else {
+                self.navigationController!.popToRootViewController(animated: true)
+            }
+        }
     }
     
     func didClickInviteOrChat() {
         print("here")
-        guard let users = self.people, self.currentPage() < users.count else { return }
-        let selectedUser: PFUser = users[self.currentPage()]
+        guard let activities = self.activities, self.currentPage() < activities.count else { return }
+        guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "user") as? PFUser else { return }
         
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
             guard let user = user else {
@@ -113,7 +119,7 @@ class InviteViewController: UIViewController {
     }
     
     func setupScroll() {
-        guard let users = self.people else {
+        guard let activities = self.activities else {
             return
         }
 
@@ -121,9 +127,11 @@ class InviteViewController: UIViewController {
         let height: CGFloat = self.scrollView.frame.size.height
         self.scrollView.isPagingEnabled = true
 
-        for i in 0 ..< users.count {
-            //let activity = self.activities![i]
-            let user = users[i]
+        var count = 0
+        for i in 0 ..< activities.count {
+            let activity = activities[i]
+            guard let user = activity.object(forKey: "owner") as? PFUser else { continue }
+            count += 1
             let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user
             
@@ -135,20 +143,19 @@ class InviteViewController: UIViewController {
             controller.didMove(toParentViewController: self)
             controller.configureUI() // force resize
         }
-        self.scrollView.contentSize = CGSize(width: CGFloat(users.count) * width, height: height)
+        self.scrollView.contentSize = CGSize(width: CGFloat(count) * width, height: height)
     }
     
     func refresh() {
-        guard let users = self.people else {
-            self.buttonUp.isHidden = true
+        guard let activities = self.activities else {
             return
         }
         
-        if users.count == 0 {
-            self.buttonUp.isHidden = true
+        if activities.count == 0 {
+            // no users
         }
         else {
-            self.buttonUp.isHidden = false
+            // no users
         }
     }
 }

@@ -19,6 +19,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     var newCategory: CATEGORY?
     
+    var fromTime: NSDate?
+    var toTime: NSDate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,25 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             
             self.setLeftProfileButton()
         }
+
+        // check if user currently has an activity
+        self.tableView.isUserInteractionEnabled = false
+        if let user = PFUser.current() {
+            if let activity = user.value(forKey: "activity") as? Activity {
+                activity.fetchIfNeededInBackground(block: { (result, error) in
+                    guard let expiration = activity.expiration, expiration.timeIntervalSinceNow > 0 else {
+                        // cancel user's current activity
+                        Activity.cancelCurrentActivity(completion: nil)
+                        self.tableView.isUserInteractionEnabled = true
+                        return
+                    }
+                    if let category: String = activity.category {
+                        self.newCategory = CategoryFactory.categoryForString(category)
+                        self.requestActivities()
+                    }
+                })
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +66,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tableView.isUserInteractionEnabled = true
     }
     
     // MARK: - UITableViewDataSource
@@ -101,6 +123,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.datesController = controller
         self.datesController?.delegate = self
         
+        self.fromTime = nil
+        self.toTime = nil
+        
         let topOffset: CGFloat = 40 // keep the "I'm in the mood for" exposed
         var frame = self.view.frame
         frame.origin.y = self.view.frame.size.height
@@ -121,10 +146,26 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func didSelectDates(_ startDate: Date?, endDate: Date?) {
+        guard let category = self.newCategory else { return }
+        
         self.hideDateSelector()
         
         print("dates selected: \(startDate) to \(endDate)")
-        self.requestActivities()
+        self.fromTime = startDate as NSDate?
+        self.toTime = endDate as NSDate?
+        
+        
+        // create an activity
+        Activity.createActivity(category: category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
+            if let error = error {
+                print("error creating activity: \(error)")
+                // TODO: display
+            }
+            else {
+                print("result: \(result)")
+                self.requestActivities()
+            }
+        }
     }
     
     func hideDateSelector() {
@@ -150,45 +191,31 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     // MARK: - Activities
     func requestActivities() {
         guard let category = self.newCategory else { return }
-        let interests = [CategoryFactory.interestsForCategory(category)]
-        UserRequest.userQuery(interests) { (results, error) in
+        
+        // search for other activities
+        Activity.queryActivities(user: nil, category: category.rawValue) { (results, error) in
             self.navigationItem.rightBarButtonItem?.isEnabled = true
-            if let users = results {
-                if users.count > 0 {
-                    print("results \(users)")
-                    self.goToUserBrowser(users)
-                }
-                else {
-                    // no results, no error
-                    var message = "There is no one interested in \(CategoryFactory.categoryReadableString(self.newCategory!)) near you."
-                    if PFUser.current() != nil {
-                        message = "\(message) For the next hour, other people will be able to search for you and invite you to bond."
-                    }
-                    
-                    self.simpleAlert("No activities nearby", message: message, completion: { () -> Void in
-                        self.navigationController?.popToRootViewController(animated: true)
-                    })
-                }
+            if results != nil {
+                self.goToActivities(activities: results)
             }
             else {
                 if error != nil && error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
-                        UserService.logout()
+                        PFUser.logOut()
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "logout"), object: nil)
                     })
                     return
                 }
-                let message = "There was a problem loading matches. Please try again"
+                let message = "There was a problem loading activities. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
         }
     }
     
-    func goToUserBrowser(_ users: [PFUser]) {
+    func goToActivities(activities: [Activity]?) {
         // TODO
         guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController else { return }
-//        let nav = UINavigationController(rootViewController: controller)
-        controller.people = users
-        //self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+        controller.activities = activities
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
