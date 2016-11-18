@@ -2,3 +2,10 @@ Credits go to:
 
 chat by Karthik Srinivas from the Noun Project
 profile by Icon Island from the Noun Project
+
+Resources:
+
+issues after swift 3 upgrade
+
+PFKeychain issue: https://github.com/ParsePlatform/Parse-SDK-iOS-OSX/issues/437
+share keychain: http://stackoverflow.com/questions/38689631/how-to-use-facebook-ios-sdk-on-ios-10/38799196#38799196
