@@ -97,6 +97,8 @@ class ActivityRequest: NSObject {
     // MARK: - convenience calls - uses another ActivityRequest call but does some filtering
     class func getRequestedBonds(_ completion: @escaping ( ([PFObject]?, NSError?) -> Void)) {
         var activities: [PFObject] = [PFObject]()
+        
+        /* TODO
         ActivityRequest.queryActivities(PFUser.current(), categories: nil) { (results, error) -> Void in
             if error != nil {
                 completion(nil, error)
@@ -118,5 +120,6 @@ class ActivityRequest: NSObject {
                 completion(activities, nil)
             }
         }
+        */
     }
 }

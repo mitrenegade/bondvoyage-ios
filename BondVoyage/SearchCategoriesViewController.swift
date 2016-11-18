@@ -146,12 +146,26 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func didSelectDates(_ startDate: Date?, endDate: Date?) {
+        guard let category = self.newCategory else { return }
+        
         self.hideDateSelector()
         
         print("dates selected: \(startDate) to \(endDate)")
         self.fromTime = startDate as NSDate?
         self.toTime = endDate as NSDate?
-        self.requestActivities()
+        
+        
+        // create an activity
+        Activity.createActivity(category: category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
+            if let error = error {
+                print("error creating activity: \(error)")
+                // TODO: display
+            }
+            else {
+                print("result: \(result)")
+                self.requestActivities()
+            }
+        }
     }
     
     func hideDateSelector() {
@@ -177,16 +191,6 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     // MARK: - Activities
     func requestActivities() {
         guard let category = self.newCategory else { return }
-        
-        // create an activity
-        Activity.createActivity(category: category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
-            if let error = error {
-                print("error creating activity: \(error)")
-            }
-            else {
-                print("result: \(result)")
-            }
-        }
         
         // search for other activities
         Activity.queryActivities(user: nil, category: category.rawValue) { (results, error) in
