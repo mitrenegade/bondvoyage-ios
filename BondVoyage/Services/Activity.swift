@@ -28,8 +28,8 @@ extension Activity: PFSubclassing {
 
 extension Activity {
     // User creates a new activity that is available for others to join
-    class func createActivity(category: CATEGORY, city: String, fromTime: NSDate?, toTime: NSDate?, completion: ((result: Activity?, error: NSError?)->Void)) {
-        var params: [String: AnyObject] = ["category": category.rawValue.lowercaseString, "city": city]
+    class func createActivity(category: CATEGORY, city: String, fromTime: NSDate?, toTime: NSDate?, completion: @escaping ((_ result: Activity?, _ error: NSError?)->Void)) {
+        var params: [String: AnyObject] = ["category": category.rawValue.lowercased() as AnyObject, "city": city as AnyObject]
         if let from = fromTime {
             params["fromTime"] = from
         }
@@ -37,37 +37,37 @@ extension Activity {
             params["toTime"] = to
         }
         
-        PFCloud.callFunctionInBackground("v3createActivity", withParameters: params) { (results, error) -> Void in
-            if let results = results as? [NSObject: AnyObject] {
+        PFCloud.callFunction(inBackground: "v3createActivity", withParameters: params) { (results, error) -> Void in
+            if let dict = results as? [String: AnyObject] {
                 print("results: \(results)")
-                if let activity: Activity = results["activity"] as? Activity,  let success = results["success"] as? Bool, let message = results["message"] as? String {
+                if let activity: Activity = dict["activity"] as? Activity,  let success = dict["success"] as? Bool, let message = dict["message"] as? String {
                     print("createActivity resulted in activity \(activity.objectId!), message: \(message)")
-                    PFUser.currentUser()!.setObject(activity, forKey: "activity")
-                    completion(result: activity, error: nil)
+                    PFUser.current()!.setObject(activity, forKey: "activity")
+                    completion(activity, nil)
                 }
                 else {
-                    completion(result: nil, error: nil)
+                    completion(nil, nil)
                 }
             }
             else {
                 print("error \(error)")
-                completion(result: nil, error: error)
+                completion(nil, error as NSError?)
             }
         }
     }
     
-    class func queryActivities(user: PFUser?, category: String?, completion: ((results: [Activity]?, error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, category: String?, completion: @escaping ((_ results: [Activity]?, _ error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
         if category != nil {
-            params["category"] = category
+            params["category"] = category as AnyObject?
         }
         if let user = user, let objectId = user.objectId {
-            params["userId"] = objectId
+            params["userId"] = objectId as AnyObject?
         }
-        PFCloud.callFunctionInBackground("v3queryActivities", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "v3queryActivities", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
-            completion(results: results as? [Activity], error: error)
+            completion(results as? [Activity], error as NSError?)
         }
     }
     

@@ -59,8 +59,8 @@ class InviteViewController: UIViewController {
     
     func didClickInviteOrChat() {
         print("here")
-        guard let activities = self.activities where self.currentPage() < activities.count else { return }
-        guard let selectedUser: PFUser = activities[self.currentPage()].objectForKey("user") as? PFUser else { return }
+        guard let activities = self.activities, self.currentPage() < activities.count else { return }
+        guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "user") as? PFUser else { return }
         
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
             guard let user = user else {
@@ -122,7 +122,7 @@ class InviteViewController: UIViewController {
         var count = 0
         for i in 0 ..< activities.count {
             let activity = activities[i]
-            guard let user = activity.objectForKey("user") as? PFUser else { continue }
+            guard let user = activity.object(forKey: "user") as? PFUser else { continue }
             count += 1
             let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user

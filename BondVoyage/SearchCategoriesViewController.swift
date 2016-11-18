@@ -40,9 +40,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
 
         // check if user currently has an activity
-        if let user = PFUser.currentUser() {
-            if let activity = user.valueForKey("activity") as? Activity {
-                activity.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+        if let user = PFUser.current() {
+            if let activity = user.value(forKey: "activity") as? Activity {
+                activity.fetchIfNeededInBackground(block: { (result, error) in
                     if let category: String = activity.category {
                         self.newCategory = CategoryFactory.categoryForString(category)
                         self.requestActivities()
@@ -141,8 +141,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.hideDateSelector()
         
         print("dates selected: \(startDate) to \(endDate)")
-        self.fromTime = startDate
-        self.toTime = endDate
+        self.fromTime = startDate as NSDate?
+        self.toTime = endDate as NSDate?
         self.requestActivities()
     }
     
@@ -171,7 +171,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         guard let category = self.newCategory else { return }
         
         // create an activity
-        Activity.createActivity(category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
+        Activity.createActivity(category: category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
             if let error = error {
                 print("error creating activity: \(error)")
             }
@@ -181,16 +181,16 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
         
         // search for other activities
-        Activity.queryActivities(nil, category: category.rawValue) { (results, error) in
-            self.navigationItem.rightBarButtonItem?.enabled = true
+        Activity.queryActivities(user: nil, category: category.rawValue) { (results, error) in
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             if results != nil {
-                self.goToActivities(results)
+                self.goToActivities(activities: results)
             }
             else {
                 if error != nil && error!.code == 209 {
                     self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
                         PFUser.logOut()
-                        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "logout"), object: nil)
                     })
                     return
                 }
@@ -202,7 +202,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     func goToActivities(activities: [Activity]?) {
         // TODO
-        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewControllerWithIdentifier("InviteViewController") as? InviteViewController else { return }
+        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController else { return }
         controller.activities = activities
         self.navigationController?.pushViewController(controller, animated: true)
     }
