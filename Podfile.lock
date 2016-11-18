@@ -8,10 +8,10 @@ PODS:
   - Bolts/Tasks (1.8.4)
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.10)
-  - FBSDKCoreKit (4.16.0):
+  - Fabric (1.6.11)
+  - FBSDKCoreKit (4.17.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.16.1):
+  - FBSDKLoginKit (4.17.0):
     - FBSDKCoreKit
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
@@ -24,47 +24,55 @@ PODS:
   - ParseUI (1.2.0):
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
-  - QMChatViewController (0.3.10):
-    - QMChatViewController/Categories (= 0.3.10)
-    - QMChatViewController/KeyboardViewController (= 0.3.10)
-    - QMChatViewController/Protocols (= 0.3.10)
-    - QMChatViewController/Sections (= 0.3.10)
-    - QMChatViewController/Utils (= 0.3.10)
-    - QMChatViewController/Views (= 0.3.10)
+  - QMChatViewController (0.4.0.1):
+    - QMChatViewController/Categories (= 0.4.0.1)
+    - QMChatViewController/Protocols (= 0.4.0.1)
+    - QMChatViewController/QMChatDataSource (= 0.4.0.1)
+    - QMChatViewController/QMChatLocationSnapshotter (= 0.4.0.1)
+    - QMChatViewController/Sections (= 0.4.0.1)
+    - QMChatViewController/Utils (= 0.4.0.1)
+    - QMChatViewController/Views (= 0.4.0.1)
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Categories (0.3.10):
+  - QMChatViewController/Categories (0.4.0.1):
+    - QMChatViewController/QMChatLocationSnapshotter
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Protocols (0.4.0.1):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/QMChatDataSource (0.4.0.1):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/QMChatLocationSnapshotter (0.4.0.1):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Sections (0.4.0.1):
+    - QMChatViewController/QMChatDataSource
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Utils (0.4.0.1):
+    - QMChatViewController/Categories
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Views (0.4.0.1):
+    - QMChatViewController/Categories
+    - QMChatViewController/Protocols
     - QMChatViewController/Utils
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/KeyboardViewController (0.3.10):
-    - QuickBlox (>= 2.0)
-    - SDWebImage (~> 3.6)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Protocols (0.3.10):
-    - QuickBlox (>= 2.0)
-    - SDWebImage (~> 3.6)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Sections (0.3.10):
-    - QuickBlox (>= 2.0)
-    - SDWebImage (~> 3.6)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Utils (0.3.10):
-    - QuickBlox (>= 2.0)
-    - SDWebImage (~> 3.6)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Views (0.3.10):
-    - QMChatViewController/Categories
-    - QMChatViewController/Protocols
-    - QuickBlox (>= 2.0)
-    - SDWebImage (~> 3.6)
-    - TTTAttributedLabel (> 1.13)
-  - QMServices (0.4.4):
+  - QMServices (0.4.5):
     - Bolts (>= 1.5.0)
     - QuickBlox (>= 2.6.5)
-  - QuickBlox (2.8.0.1)
+  - QuickBlox (2.9)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -85,15 +93,15 @@ SPEC CHECKSUMS:
   AsyncImageView: 416e99402e5b1f20571de70ad619ced90f56a7d9
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
-  Fabric: c73f371ee543e3f0b80608f2674750e4910d1669
-  FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
-  FBSDKLoginKit: 469a56cebe2e1ed62b1621d0b155970fd6aac2d8
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FBSDKCoreKit: 30a21d2d7b92984b3d80497113433c00824c35e9
+  FBSDKLoginKit: 42b7129ac0373ca99eaf4cbebf4d07bd42371f59
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
-  QMChatViewController: cb1f6172f794c85be20637c137c5a0b0c5abdb14
-  QMServices: 4e62c3dc9986db0cc3b9e06ae02a06a93429c1b8
-  QuickBlox: 51505b8deed7268c1bfd3139d4e4e9a1e9441d44
+  QMChatViewController: 50dc594e5429ba162c89fa1dfe87668eb3827cde
+  QMServices: 617057b228eb5e41341e50216fc4af2fce3cfa46
+  QuickBlox: 4e071921a5fb4b0ecde1f66c7ce04a70ededc90c
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
