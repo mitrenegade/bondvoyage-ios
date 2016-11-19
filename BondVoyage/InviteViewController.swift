@@ -64,11 +64,24 @@ class InviteViewController: UIViewController {
             }
         }
     }
-    
+
     func didClickInviteOrChat() {
-        print("here")
+        self.inviteToChat()
+    }
+        
+    func inviteToChat() {
+        guard let user = PFUser.current(), let activity = user.value(forKey: "activity") as? Activity else {
+            return
+        }
         guard let activities = self.activities, self.currentPage() < activities.count else { return }
-        guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "user") as? PFUser else { return }
+        guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "owner") as? PFUser else { return }
+        
+        let activityId = activity.objectId
+        Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!)
+    }
+    
+    func goToChat(_ selectedUser: PFUser) {
+        print("here")
         
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
             guard let user = user else {

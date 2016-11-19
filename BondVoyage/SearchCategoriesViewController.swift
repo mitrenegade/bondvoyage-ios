@@ -40,14 +40,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
 
         // check if user currently has an activity
-        self.tableView.isUserInteractionEnabled = false
+        self.tableView.allowsSelection = false
         if let user = PFUser.current() {
             if let activity = user.value(forKey: "activity") as? Activity {
                 activity.fetchIfNeededInBackground(block: { (result, error) in
                     guard let expiration = activity.expiration, expiration.timeIntervalSinceNow > 0 else {
                         // cancel user's current activity
                         Activity.cancelCurrentActivity(completion: nil)
-                        self.tableView.isUserInteractionEnabled = true
+                        self.tableView.allowsSelection = true
                         return
                     }
                     if let category: String = activity.category {
@@ -64,9 +64,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tableView.isUserInteractionEnabled = true
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tableView.allowsSelection = true
     }
     
     // MARK: - UITableViewDataSource
@@ -190,11 +190,15 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     // MARK: - Activities
     func requestActivities() {
-        guard let category = self.newCategory else { return }
+        guard let category = self.newCategory else {
+            self.tableView.allowsSelection = true
+            return
+        }
         
         // search for other activities
         Activity.queryActivities(user: nil, category: category.rawValue) { (results, error) in
             self.navigationItem.rightBarButtonItem?.isEnabled = true
+            self.tableView.allowsSelection = true
             if results != nil {
                 self.goToActivities(activities: results)
             }
@@ -213,7 +217,6 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func goToActivities(activities: [Activity]?) {
-        // TODO
         guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController else { return }
         controller.activities = activities
         self.navigationController?.pushViewController(controller, animated: true)
