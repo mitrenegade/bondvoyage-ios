@@ -121,7 +121,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     // MARK: - Date selector
     func showDateSelector() {
-        guard let controller = UIStoryboard(name: "Activity", bundle: nil).instantiateViewController(withIdentifier: "DatesViewController") as? DatesViewController else {
+        guard let controller = UIStoryboard(name: "Activities", bundle: nil).instantiateViewController(withIdentifier: "DatesViewController") as? DatesViewController else {
             return
         }
         
@@ -222,8 +222,14 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     }
     
     func goToActivities(activities: [Activity]?) {
-        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController else { return }
-        controller.activities = activities
-        self.navigationController?.pushViewController(controller, animated: true)
+        performSegue(withIdentifier: "GoToActivities", sender: activities)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "GoToActivities" {
+            if let controller = segue.destination as? InviteViewController, let activities = sender as? [Activity] {
+                controller.activities = activities
+            }
+        }
     }
 }

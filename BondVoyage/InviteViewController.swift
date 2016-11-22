@@ -77,16 +77,27 @@ class InviteViewController: UIViewController {
         guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "owner") as? PFUser else { return }
         
         let activityId = activity.objectId
-        Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, error) in
-            print("results \(activity?.invitee), my id: \(user.objectId!)")
-            if let invitees = activity?.invitee as? [String], invitees.contains(user.objectId!)  {
-                self.goToChat(selectedUser)
+        Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, conversation, error) in
+            let name = selectedUser.value(forKey: "firstName") as? String ?? selectedUser.value(forKey: "username") as? String ?? "this person"
+            if let activity = activity {
+                print("created activity \(activity.objectId!) with invitees \(activity.invitee)")
+                self.simpleAlert("Invite sent", message: "You have invited \(name) to bond. If accepted, you will be able to chat.")
+            }
+            else if let conversation = conversation {
+                print("Conversation already exists! \(conversation)")
+                let message = "You have matched with \(name). Click to go chat"
+                self.simpleAlert("You have a new bond", message: message, completion: { 
+                    self.goToChat(selectedUser, conversation: conversation)
+                })
             }
         })
     }
     
-    func goToChat(_ selectedUser: PFUser) {
-        print("here")
+    func goToChat(_ selectedUser: PFUser, conversation: Conversation?) {
+        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId else {
+            print("goToChat failed")
+            return
+        }
         
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
             guard let user = user else {
@@ -105,10 +116,17 @@ class InviteViewController: UIViewController {
                     chatVC.dialog = dialog
                     self?.present(chatNavigationVC, animated: true, completion: {
                         //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
+                        // create conversation
+                        if let dialogId = dialog?.id {
+                            print("add dialog to conversation")
+                            conversation?.setValue(dialogId, forKey: "dialogId")
+                            conversation?.saveInBackground()
+                        }
                     })
                 }
             })
-        }    }
+        }
+    }
     
     func goToJoinActivity(_ activity: PFObject) {
         self.activityIndicator.startAnimating()
