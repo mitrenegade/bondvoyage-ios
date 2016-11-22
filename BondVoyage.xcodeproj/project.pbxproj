@@ -36,7 +36,6 @@
 		8ECA14E61DD24E18003DF990 /* QBChatMessage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14E51DD24E18003DF990 /* QBChatMessage+LunrExtensions.swift */; };
 		8ECA14E81DD24E43003DF990 /* UIImage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */; };
 		8ECA14EC1DD29BC6003DF990 /* DatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */; };
-		8ECA14EE1DD29C36003DF990 /* Activity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ECA14ED1DD29C36003DF990 /* Activity.storyboard */; };
 		8ECA14F01DD41732003DF990 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EF1DD41732003DF990 /* Activity.swift */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
 		8ED342701DE3DD3200DA5755 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3426F1DE3DD3200DA5755 /* ConfigurableNavigationController.swift */; };
@@ -128,7 +127,6 @@
 		8ECA14E51DD24E18003DF990 /* QBChatMessage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QBChatMessage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewController.swift; sourceTree = "<group>"; };
-		8ECA14ED1DD29C36003DF990 /* Activity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Activity.storyboard; sourceTree = "<group>"; };
 		8ECA14EF1DD41732003DF990 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = Services/Activity.swift; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
 		8ED3426F1DE3DD3200DA5755 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableNavigationController.swift; sourceTree = "<group>"; };
@@ -240,6 +238,7 @@
 			children = (
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */,
+				8E73665A1CA9F46500F3642E /* InviteViewController.swift */,
 			);
 			name = Activities;
 			sourceTree = "<group>";
@@ -290,7 +289,6 @@
 				8EEF98B11DCE55C900D5BF31 /* Old.storyboard */,
 				8EEF98B31DCE55F800D5BF31 /* Activities.storyboard */,
 				8ECA14E31DD24DCB003DF990 /* Chat.storyboard */,
-				8ECA14ED1DD29C36003DF990 /* Activity.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -414,7 +412,6 @@
 				C518526B1C341A9E00EA2328 /* Settings */,
 				8ECA14E91DD29763003DF990 /* Cities */,
 				8ECA14EA1DD29782003DF990 /* Activities */,
-				8E73665A1CA9F46500F3642E /* InviteViewController.swift */,
 				8ECA14E11DD24D85003DF990 /* ChatViewController.swift */,
 				8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */,
 				8EF20F261DD2107F00BFA659 /* MatchedBondsViewController.swift */,
@@ -548,7 +545,6 @@
 				C55D92561C34412900970123 /* Lato-Bold.ttf in Resources */,
 				F2B0EDC61DC8C0B8005C72EC /* City.storyboard in Resources */,
 				E5508A121C1539CF00D23C26 /* LaunchScreen.storyboard in Resources */,
-				8ECA14EE1DD29C36003DF990 /* Activity.storyboard in Resources */,
 				8EEF98B21DCE55C900D5BF31 /* Old.storyboard in Resources */,
 				C55D92591C34412900970123 /* Lato-Regular.ttf in Resources */,
 				E5508A0F1C1539CF00D23C26 /* Assets.xcassets in Resources */,
