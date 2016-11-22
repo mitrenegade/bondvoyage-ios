@@ -78,7 +78,10 @@ class InviteViewController: UIViewController {
         
         let activityId = activity.objectId
         Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, error) in
-            print("results")
+            print("results \(activity?.invitee), my id: \(user.objectId!)")
+            if let invitees = activity?.invitee as? [String], invitees.contains(user.objectId!)  {
+                self.goToChat(selectedUser)
+            }
         })
     }
     
