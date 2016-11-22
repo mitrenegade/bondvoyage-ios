@@ -285,10 +285,10 @@
 			children = (
 				E5508A0B1C1539CF00D23C26 /* Main.storyboard */,
 				F2B0EDC51DC8C0B8005C72EC /* City.storyboard */,
-				C518526D1C341ACA00EA2328 /* Settings.storyboard */,
-				8EEF98B11DCE55C900D5BF31 /* Old.storyboard */,
 				8EEF98B31DCE55F800D5BF31 /* Activities.storyboard */,
 				8ECA14E31DD24DCB003DF990 /* Chat.storyboard */,
+				C518526D1C341ACA00EA2328 /* Settings.storyboard */,
+				8EEF98B11DCE55C900D5BF31 /* Old.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
