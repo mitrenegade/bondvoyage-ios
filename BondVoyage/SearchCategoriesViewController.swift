@@ -42,20 +42,25 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         // check if user currently has an activity
         self.tableView.allowsSelection = false
         if let user = PFUser.current() {
-            if let activity = user.value(forKey: "activity") as? Activity {
-                activity.fetchIfNeededInBackground(block: { (result, error) in
-                    guard let expiration = activity.expiration, expiration.timeIntervalSinceNow > 0 else {
-                        // cancel user's current activity
-                        Activity.cancelCurrentActivity(completion: nil)
-                        self.tableView.allowsSelection = true
-                        return
-                    }
-                    if let category: String = activity.category {
-                        self.newCategory = CategoryFactory.categoryForString(category)
-                        self.requestActivities()
-                    }
-                })
-            }
+            user.fetchIfNeededInBackground(block: { (results, error) in
+                if let activity = user.value(forKey: "activity") as? Activity {
+                    activity.fetchIfNeededInBackground(block: { (result, error) in
+                        guard let expiration = activity.expiration, expiration.timeIntervalSinceNow > 0 else {
+                            // cancel user's current activity
+                            Activity.cancelCurrentActivity(completion: nil)
+                            self.tableView.allowsSelection = true
+                            return
+                        }
+                        if let category: String = activity.category {
+                            self.newCategory = CategoryFactory.categoryForString(category)
+                            self.requestActivities()
+                        }
+                    })
+                }
+                else {
+                    self.tableView.allowsSelection = true
+                }
+            })
         }
     }
 

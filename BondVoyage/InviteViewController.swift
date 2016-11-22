@@ -77,7 +77,9 @@ class InviteViewController: UIViewController {
         guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "owner") as? PFUser else { return }
         
         let activityId = activity.objectId
-        Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!)
+        Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, error) in
+            print("results")
+        })
     }
     
     func goToChat(_ selectedUser: PFUser) {
