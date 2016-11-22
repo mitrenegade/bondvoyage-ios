@@ -87,13 +87,13 @@ class InviteViewController: UIViewController {
                 print("Conversation already exists! \(conversation)")
                 let message = "You have matched with \(name). Click to go chat"
                 self.simpleAlert("You have a new bond", message: message, completion: { 
-                    self.goToChat(selectedUser)
+                    self.goToChat(selectedUser, conversation: conversation)
                 })
             }
         })
     }
     
-    func goToChat(_ selectedUser: PFUser) {
+    func goToChat(_ selectedUser: PFUser, conversation: Conversation?) {
         guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId else {
             print("goToChat failed")
             return
@@ -119,6 +119,8 @@ class InviteViewController: UIViewController {
                         // create conversation
                         if let dialogId = dialog?.id {
                             print("add dialog to conversation")
+                            conversation?.setValue(dialogId, forKey: "dialogId")
+                            conversation?.saveInBackground()
                         }
                     })
                 }
