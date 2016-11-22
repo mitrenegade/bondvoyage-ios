@@ -29,5 +29,9 @@ extension Conversation {
         self.participantIds = [userId1, userId1]
         self.dialogId = dialogId
     }
+    
+    class func loadConversations(user: PFUser, completion: ((_ results: [Conversation]?, _ error: NSError?)->Void)?) {
+        
+    }
 }
 
