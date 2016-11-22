@@ -13,6 +13,7 @@ class Conversation: PFObject {
     @NSManaged var dialogId: String?
     
     @NSManaged var participantIds: [Any]? // a pair of pfObjectIds
+    @NSManaged var activityIds: [Any]?
 }
 
 extension Conversation: PFSubclassing {

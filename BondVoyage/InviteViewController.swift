@@ -77,10 +77,15 @@ class InviteViewController: UIViewController {
         guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "owner") as? PFUser else { return }
         
         let activityId = activity.objectId
-        Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, error) in
-            print("results \(activity?.invitee), my id: \(user.objectId!)")
-            if let invitees = activity?.invitee as? [String], invitees.contains(user.objectId!)  {
-                self.goToChat(selectedUser)
+        Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, conversation, error) in
+            if let activity = activity {
+                print("results \(activity.invitee), my id: \(user.objectId!)")
+                if let invitees = activity.invitee as? [String], invitees.contains(user.objectId!)  {
+                    self.goToChat(selectedUser)
+                }
+            }
+            else if let conversation = conversation {
+                print("Conversation already exists! \(conversation)")
             }
         })
     }
@@ -110,8 +115,7 @@ class InviteViewController: UIViewController {
                         //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
                         // create conversation
                         if let dialogId = dialog?.id {
-                            let conversation = Conversation(userId1: currentUserId, userId2: selectedUserId, dialogId: dialogId)
-                            conversation.saveInBackground()
+                            print("add dialog to conversation")
                         }
                     })
                 }
