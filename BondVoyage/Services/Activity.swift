@@ -17,6 +17,8 @@ class Activity: PFObject {
     @NSManaged var toTime: NSDate?
     @NSManaged var expiration: NSDate?
     
+    @NSManaged var invitee: [Any]?
+    
     @NSManaged var owner: PFUser?
 }
 
@@ -77,6 +79,16 @@ extension Activity {
             print("results: \(results) error: \(error)")
             let success = error == nil
             completion?(success, error as NSError?)
+        }
+    }
+    
+    class func inviteToJoinActivity(activityId: String, inviteeId: String, completion: ((_ activity: Activity?, _ error: NSError?) -> Void)?) {
+        // activityId: own activity to add invitee
+        // inviteeId: user to invite to chat/join chat
+        let params: [String: String] = ["activityId": activityId, "inviteeId": inviteeId]
+        PFCloud.callFunction(inBackground: "v3inviteToJoinActivity", withParameters: params) { (results, error) -> Void in
+            print("results: \(results) error: \(error)")
+            completion?(results as! Activity?, error as NSError?)
         }
     }
 }
