@@ -39,6 +39,8 @@
 		8ECA14F01DD41732003DF990 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EF1DD41732003DF990 /* Activity.swift */; };
 		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
 		8ED342701DE3DD3200DA5755 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3426F1DE3DD3200DA5755 /* ConfigurableNavigationController.swift */; };
+		8ED342721DE3E3C300DA5755 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED342711DE3E3C300DA5755 /* ChatListViewController.swift */; };
+		8ED342751DE3E4AA00DA5755 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED342741DE3E4AA00DA5755 /* Conversation.swift */; };
 		8EDE33671DC55E4E000D95E7 /* Credits in Resources */ = {isa = PBXBuildFile; fileRef = 8EDE33661DC55E4E000D95E7 /* Credits */; };
 		8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */; };
 		8EEF98B21DCE55C900D5BF31 /* Old.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EEF98B11DCE55C900D5BF31 /* Old.storyboard */; };
@@ -130,6 +132,8 @@
 		8ECA14EF1DD41732003DF990 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = Services/Activity.swift; sourceTree = "<group>"; };
 		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
 		8ED3426F1DE3DD3200DA5755 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableNavigationController.swift; sourceTree = "<group>"; };
+		8ED342711DE3E3C300DA5755 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		8ED342741DE3E4AA00DA5755 /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		8EDE33661DC55E4E000D95E7 /* Credits */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Credits; path = ../Credits; sourceTree = "<group>"; };
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
 		8EEF98B11DCE55C900D5BF31 /* Old.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Old.storyboard; sourceTree = "<group>"; };
@@ -247,8 +251,18 @@
 			isa = PBXGroup;
 			children = (
 				8ECA14EF1DD41732003DF990 /* Activity.swift */,
+				8ED342741DE3E4AA00DA5755 /* Conversation.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		8ED342731DE3E3CC00DA5755 /* Chats */ = {
+			isa = PBXGroup;
+			children = (
+				8ED342711DE3E3C300DA5755 /* ChatListViewController.swift */,
+				8ECA14E11DD24D85003DF990 /* ChatViewController.swift */,
+			);
+			name = Chats;
 			sourceTree = "<group>";
 		};
 		AC1698441C1C7A9C00E3DAAE /* DataSource */ = {
@@ -412,7 +426,7 @@
 				C518526B1C341A9E00EA2328 /* Settings */,
 				8ECA14E91DD29763003DF990 /* Cities */,
 				8ECA14EA1DD29782003DF990 /* Activities */,
-				8ECA14E11DD24D85003DF990 /* ChatViewController.swift */,
+				8ED342731DE3E3CC00DA5755 /* Chats */,
 				8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */,
 				8EF20F261DD2107F00BFA659 /* MatchedBondsViewController.swift */,
 				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
@@ -658,10 +672,12 @@
 				8ECA14F01DD41732003DF990 /* Activity.swift in Sources */,
 				8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
+				8ED342721DE3E3C300DA5755 /* ChatListViewController.swift in Sources */,
 				AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */,
 				8E9B14021CA95F0D005701EE /* CategoryCell.swift in Sources */,
 				8E30E6DB1DCF84AF004C4F55 /* SessionService.swift in Sources */,
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
+				8ED342751DE3E4AA00DA5755 /* Conversation.swift in Sources */,
 				8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */,
 				8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */,
 				8E73665B1CA9F46500F3642E /* InviteViewController.swift in Sources */,

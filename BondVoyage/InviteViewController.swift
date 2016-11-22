@@ -86,7 +86,10 @@ class InviteViewController: UIViewController {
     }
     
     func goToChat(_ selectedUser: PFUser) {
-        print("here")
+        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId else {
+            print("goToChat failed")
+            return
+        }
         
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
             guard let user = user else {
@@ -105,10 +108,16 @@ class InviteViewController: UIViewController {
                     chatVC.dialog = dialog
                     self?.present(chatNavigationVC, animated: true, completion: {
                         //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
+                        // create conversation
+                        if let dialogId = dialog?.id {
+                            let conversation = Conversation(userId1: currentUserId, userId2: selectedUserId, dialogId: dialogId)
+                            conversation.saveInBackground()
+                        }
                     })
                 }
             })
-        }    }
+        }
+    }
     
     func goToJoinActivity(_ activity: PFObject) {
         self.activityIndicator.startAnimating()
