@@ -159,6 +159,8 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.fromTime = startDate as NSDate?
         self.toTime = endDate as NSDate?
         
+        self.simpleAlert("Activity search coming soon", message: "Search and finding others for this activity is not yet implemented.")
+        return;
         
         // create an activity
         Activity.createActivity(category: category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
