@@ -45,7 +45,7 @@ class MatchedBondsViewController: RequestedBondsViewController {
                 self.activities.append(contentsOf: results!)
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
                 if self.activities.count == 0 {
-                    self.labelNoBonds.text = "There are currently no matched bonds for you."
+                    self.labelNoBonds.text = "There are currently no chat messages for you."
                     self.labelNoBonds.isHidden = false
                 }
                 self.tableView.reloadData()

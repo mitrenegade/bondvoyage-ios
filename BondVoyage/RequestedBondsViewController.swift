@@ -50,7 +50,7 @@ class RequestedBondsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh() {
-        
+        self.setupWithCompletion(nil)
     }
     
     func refreshNotifications() {
