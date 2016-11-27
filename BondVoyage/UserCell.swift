@@ -64,13 +64,13 @@ class UserCell: UITableViewCell {
                         //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                     else {
-                        self.imagePhoto.image = UIImage(named: "profile-icon")
+                        self.imagePhoto.image = UIImage(named: "profile")
                     }
                 }
             })
         }
         else {
-            self.imagePhoto.image = UIImage(named: "profile-icon")
+            self.imagePhoto.image = UIImage(named: "profile")
         }
     }
 }

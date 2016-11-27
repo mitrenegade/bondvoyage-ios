@@ -113,7 +113,7 @@ class UserDetailsViewController: UIViewController {
             //self.scrollViewContainer.imageURL = NSURL(string: photo.url!)
         }
         else {
-            self.scrollViewContainer.image = UIImage(named: "profile-icon")
+            self.scrollViewContainer.image = UIImage(named: "profile")
         }
 
         if let firstName = user!.value(forKey: "firstName") as? String {

@@ -57,6 +57,9 @@ class ConversationCell: UITableViewCell {
                 if let photoUrl = user.photoUrl, let url = URL(string: photoUrl) {
                     self.imagePhoto.sd_setImage(with: url)
                 }
+                else {
+                    self.imagePhoto.image = UIImage(named: "profile")
+                }
                 
                 if let date = conversation.updatedAt {
                     let dateString = self.dateFormatter.string(from: date)

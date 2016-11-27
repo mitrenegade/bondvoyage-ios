@@ -34,6 +34,8 @@ class ChatListViewController: UIViewController {
         imageView.center = CGPoint(x: UIScreen.main.bounds.size.width / 2, y: 22)
         self.navigationController!.navigationBar.addSubview(imageView)
         self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
+        
+        self.setLeftProfileButton()
 
         // Do any additional setup after loading the view.
         self.loadConversations()
@@ -60,7 +62,7 @@ class ChatListViewController: UIViewController {
                     }
                 }
                 self.conversationSections.sort(by: { (a, b) -> Bool in
-                    return a < b
+                    return a > b
                 })
             }
             print("conversations loaded \(results?.count)")
@@ -105,7 +107,16 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 84
     }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionName = self.conversationSections[section]
+        let conversationsFromDay = conversations?.filter { (c) -> Bool in
+            c.dateString == sectionName
+        }
+        return conversationsFromDay?.count ?? 0
+    }
     
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell")! as! ConversationCell
         cell.adjustTableViewCellSeparatorInsets(cell)
@@ -115,16 +126,12 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
         let conversationsFromDay = conversations.filter { (c) -> Bool in
             c.dateString == sectionName
         }.sorted { (c1, c2) -> Bool in
-            c1.updatedAt! < c2.updatedAt!
+            c1.updatedAt! > c2.updatedAt!
         }
         let conversation: Conversation = conversationsFromDay[indexPath.row]
 
         cell.configureCellForConversation(conversation)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.conversations?.count ?? 0
     }
     
     // MARK: - UITableViewDelegate
@@ -136,8 +143,14 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        guard let conversations = self.conversations, indexPath.row < conversations.count else { return }
-        let conversation: Conversation = conversations[indexPath.row]
+        guard let conversations = self.conversations, indexPath.section < conversationSections.count else  { return }
+        let sectionName = self.conversationSections[indexPath.section]
+        let conversationsFromDay = conversations.filter { (c) -> Bool in
+            c.dateString == sectionName
+            }.sorted { (c1, c2) -> Bool in
+                c1.updatedAt! > c2.updatedAt!
+        }
+        let conversation: Conversation = conversationsFromDay[indexPath.row]
         
         self.tableView.isUserInteractionEnabled = false
         //self.goToChat(conversation)
