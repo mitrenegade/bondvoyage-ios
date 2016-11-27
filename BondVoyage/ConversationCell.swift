@@ -25,7 +25,7 @@ class ConversationCell: UITableViewCell {
 
     var dateFormatter: DateFormatter {
         let df = DateFormatter()
-        df.dateFormat = "MM/dd"
+        df.dateFormat = "h:mm a"
         return df
     }
 

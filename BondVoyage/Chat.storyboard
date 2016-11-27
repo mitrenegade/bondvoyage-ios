@@ -101,7 +101,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="e2L-C8-fAV"/>
                                                         <constraint firstAttribute="width" constant="67" id="y1g-kV-KLZ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>

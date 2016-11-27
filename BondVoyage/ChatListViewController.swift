@@ -21,7 +21,7 @@ class ChatListViewController: UIViewController {
     var isSubscribed: Bool = false
 
     var conversations: [Conversation]?
-
+    var conversationSections: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +51,20 @@ class ChatListViewController: UIViewController {
         query.whereKey("participantIds", contains: userId)
         query.findObjectsInBackground { (results, error) in
             self.conversations = results
+            self.conversationSections.removeAll()
+            if let conversations = self.conversations, conversations.count > 0 {
+                for conversation in conversations {
+                    let dateString = conversation.dateString
+                    if !self.conversationSections.contains(dateString) {
+                        self.conversationSections.append(dateString)
+                    }
+                }
+                self.conversationSections.sort(by: { (a, b) -> Bool in
+                    return a < b
+                })
+            }
             print("conversations loaded \(results?.count)")
             self.tableView.reloadData()
-            
             self.subscribeToUpdates()
         }
     }
@@ -84,7 +95,11 @@ class ChatListViewController: UIViewController {
 extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return conversationSections.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return conversationSections[section]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -95,8 +110,14 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell")! as! ConversationCell
         cell.adjustTableViewCellSeparatorInsets(cell)
 
-        guard let conversations = self.conversations, indexPath.row < conversations.count else { return cell }
-        let conversation: Conversation = conversations[indexPath.row]
+        guard let conversations = self.conversations, indexPath.section < conversationSections.count else  { return cell }
+        let sectionName = self.conversationSections[indexPath.section]
+        let conversationsFromDay = conversations.filter { (c) -> Bool in
+            c.dateString == sectionName
+        }.sorted { (c1, c2) -> Bool in
+            c1.updatedAt! < c2.updatedAt!
+        }
+        let conversation: Conversation = conversationsFromDay[indexPath.row]
 
         cell.configureCellForConversation(conversation)
         return cell
