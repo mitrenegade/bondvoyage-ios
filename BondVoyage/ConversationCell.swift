@@ -67,10 +67,8 @@ class ConversationCell: UITableViewCell {
                 self.messageLabel.text = ""
                 if let dialogId = conversation.dialogId {
                     SessionService.sharedInstance.loadDialogMessages(dialogId: dialogId, completion: { (success, messages) in
-                        if success {
-                            if let message = messages?.first, let text = message.text {
-                                self.messageLabel.text = "\"\(text)\""
-                            }
+                        if let message = messages?.first, let text = message.text {
+                            self.messageLabel.text = "\"\(text)\""
                         }
                     })
                 }

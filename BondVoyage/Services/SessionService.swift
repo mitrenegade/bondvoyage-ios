@@ -48,7 +48,8 @@ class SessionService: QMServicesManager {
         }
         else {
             // create new dialog
-            self.chatService.createGroupChatDialog(withName: name, photo: nil, occupants: users) { (response, dialog) in
+            self.chatService.createPrivateChatDialog(withOpponent: user) { (response, dialog) in
+//            self.chatService.createGroupChatDialog(withName: name, photo: nil, occupants: users) { (response, dialog) in
                 if let dialog = dialog {
                     completion(true, dialog)
                 }
@@ -59,15 +60,10 @@ class SessionService: QMServicesManager {
         }
     }
     
-    func loadDialogMessages(dialogId: String,  completion: @escaping ((_ success: Bool, _ messages: [QBChatMessage]?) -> Void)) {
-        self.chatService.earlierMessages(withChatDialogID: dialogId) { (response, messages) in
-            print("messages: \(messages)")
-            if let messages = messages {
-                completion(true, messages)
-            }
-            else {
-                completion(false, nil)
-            }
+    func loadDialogMessages(dialogId: String,  completion: @escaping ((_ response: QBResponse, _ messages: [QBChatMessage]?) -> Void)) {
+        self.chatService.messages(withChatDialogID: dialogId) { (response, messages) in
+            print("messages for dialogId \(dialogId): \(messages)")
+            completion(response, messages)
         }
     }
     

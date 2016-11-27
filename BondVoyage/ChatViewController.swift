@@ -111,8 +111,8 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         
         SessionService.sharedInstance.currentDialogID = dialog.id!
         updateTitle()
-        if (storedMessages()?.count > 0 && chatSectionManager.totalMessagesCount == 0) {
-            chatSectionManager.add(storedMessages()!)
+        if (storedMessages()?.count > 0 && chatDataSource.messagesCount() == 0) {
+            chatDataSource.add(storedMessages()!)
         }
         
         loadMessages()
@@ -196,14 +196,14 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     func loadMessages() {
         // Retrieving messages for chat dialog ID.
         guard let currentDialogID = dialog.id else { return }
-        SessionService.sharedInstance.chatService.messages(withChatDialogID: currentDialogID) { [weak self] response, messages in
+        SessionService.sharedInstance.loadDialogMessages(dialogId: currentDialogID) { [weak self] response, messages in
             guard let strongSelf = self, response.error == nil else {
                 self?.simpleAlert("There was an error retrieving your messages", defaultMessage: nil, error: response.error as? NSError)
                 return
             }
             
             if messages?.count > 0 {
-                strongSelf.chatSectionManager.add(messages)
+                strongSelf.chatDataSource.add(messages)
             }
         }
     }
@@ -246,7 +246,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         message.dialogID = dialog.id
         message.dateSent = Date()
         
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async { [weak self] () -> Void in
+        DispatchQueue.global().async { [weak self] () -> Void in
             guard let strongSelf = self else { return }
             var newImage : UIImage! = image
             if strongSelf.imagePickerViewController.sourceType == UIImagePickerControllerSourceType.camera {
@@ -281,7 +281,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
                         
                         // perform local attachment message deleting if error
                         SessionService.sharedInstance.chatService.deleteMessageLocally(message)
-                        self?.chatSectionManager.delete(message)
+                        self?.chatDataSource.delete(message)
                 }
             }
         }
@@ -400,7 +400,7 @@ extension ChatViewController: QMChatCellDelegate {
     // Removes size from cache for item to allow cell expand and show read/delivered IDS or unexpand cell
     func chatCellDidTapContainer(_ cell: QMChatCell!) {
         let indexPath = collectionView?.indexPath(for: cell)
-        guard let currentMessageID = chatSectionManager.message(for: indexPath).id else { return }
+        guard let currentMessageID = chatDataSource.message(for: indexPath).id else { return }
         
         if detailedCells.contains(currentMessageID) {
             detailedCells.remove(currentMessageID)
@@ -414,7 +414,7 @@ extension ChatViewController: QMChatCellDelegate {
     
     func chatCell(_ cell: QMChatCell!, didTapAtPosition position: CGPoint) {}
     
-    func chatCell(_ cell: QMChatCell!, didPerformAction action: Selector, withSender sender: AnyObject!) {}
+    func chatCell(_ cell: QMChatCell!, didPerformAction action: Selector!, withSender sender: Any!) {}
     
     func chatCell(_ cell: QMChatCell!, didTapOn result: NSTextCheckingResult) {
         switch result.resultType {
@@ -475,7 +475,7 @@ extension ChatViewController: QMChatCellDelegate {
 extension ChatViewController {
     override func collectionView(_ collectionView: QMChatCollectionView!, dynamicSizeAt indexPath: IndexPath!, maxWidth: CGFloat) -> CGSize {
         var size = CGSize.zero
-        guard let message = chatSectionManager.message(for: indexPath) else { return size }
+        guard let message = chatDataSource.message(for: indexPath) else { return size }
         
         let messageCellClass: AnyClass! = viewClass(forItem: message)
         
@@ -498,7 +498,7 @@ extension ChatViewController {
     
     override func collectionView(_ collectionView: QMChatCollectionView!, minWidthAt indexPath: IndexPath!) -> CGFloat {
         var size = CGSize.zero
-        guard let item = chatSectionManager.message(for: indexPath) else { return 0 }
+        guard let item = chatDataSource.message(for: indexPath) else { return 0 }
         
         if detailedCells.contains(item.id!) {
             let str = bottomLabelAttributedString(forItem: item)
@@ -527,7 +527,7 @@ extension ChatViewController {
         layoutModel.spaceBetweenTextViewAndBottomLabel = 5
         layoutModel.maxWidthMarginSpace = 20.0
         
-        guard let item = chatSectionManager.message(for: indexPath) else {
+        guard let item = chatDataSource.message(for: indexPath) else {
             return layoutModel
         }
         
@@ -568,7 +568,7 @@ extension ChatViewController {
                 chatCell.containerView?.bgColor = UIColor(red: 10.0/255.0, green: 95.0/255.0, blue: 255.0/255.0, alpha: 1.0)
             }
             
-            let message = chatSectionManager.message(for: indexPath)
+            let message = chatDataSource.message(for: indexPath)
             if let attachment = message?.attachments?.first {
                 var keysToRemove: [String] = []
                 let enumerator = attachmentCellsMap.keyEnumerator()
@@ -618,7 +618,7 @@ extension ChatViewController {
     
     // Allows to copy text from QMChatIncomingCell and QMChatOutgoingCell
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any!) -> Bool {
-        guard let item = chatSectionManager.message(for: indexPath) else { return false }
+        guard let item = chatDataSource.message(for: indexPath) else { return false }
         
         let viewClass: AnyClass = self.viewClass(forItem: item)! as AnyClass
         
@@ -635,7 +635,7 @@ extension ChatViewController {
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any!) {
         // guard action == #selector(NSObject.copy(_:)) else { return }
         
-        let item = chatSectionManager.message(for: indexPath)
+        let item = chatDataSource.message(for: indexPath)
         let viewClass : AnyClass = self.viewClass(forItem: item!)! as AnyClass
         
         if viewClass === QMChatAttachmentIncomingCell.self ||
@@ -665,7 +665,7 @@ extension ChatViewController {
             SessionService.sharedInstance.chatService.loadEarlierMessages(withChatDialogID: dialogID).continue({ [weak self] task in
                 guard let strongSelf = self else { return nil }
                 if (task.result?.count > 0) {
-                    strongSelf.chatSectionManager.add(task.result as! [QBChatMessage]!)
+                    strongSelf.chatDataSource.add(task.result as! [QBChatMessage]!)
                 }
                 
                 return nil
@@ -673,7 +673,7 @@ extension ChatViewController {
         }
         
         // marking message as read if needed
-        if let message = chatSectionManager.message(for: indexPath) {
+        if let message = chatDataSource.message(for: indexPath) {
             sendReadStatusForMessage(message)
         }
         
@@ -686,14 +686,14 @@ extension ChatViewController {
 extension ChatViewController: QMChatServiceDelegate {
     func chatService(_ chatService: QMChatService, didLoadMessagesFromCache messages: [QBChatMessage], forDialogID dialogID: String) {
         if dialog.id == dialogID {
-            chatSectionManager.add(messages)
+            chatDataSource.add(messages)
         }
     }
     
     func chatService(_ chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         if dialog.id == dialogID {
             // Insert message received from XMPP or self sent
-            chatSectionManager.add(message)
+            chatDataSource.add(message)
         }
     }
     
@@ -706,14 +706,14 @@ extension ChatViewController: QMChatServiceDelegate {
     
     func chatService(_ chatService: QMChatService, didUpdate message: QBChatMessage, forDialogID dialogID: String) {
         if dialog.id == dialogID {
-            chatSectionManager.update(message)
+            chatDataSource.update(message)
         }
         
     }
     
     func chatService(_ chatService: QMChatService, didUpdate messages: [QBChatMessage], forDialogID dialogID: String) {
         if dialog.id == dialogID {
-            chatSectionManager.update(messages)
+            chatDataSource.update(messages)
         }
         
     }
@@ -724,7 +724,7 @@ extension ChatViewController: QMChatAttachmentServiceDelegate {
     func chatAttachmentService(_ chatAttachmentService: QMChatAttachmentService, didChange status: QMMessageAttachmentStatus, for message: QBChatMessage) {
         if status != QMMessageAttachmentStatus.notLoaded {
             if message.dialogID == dialog.id {
-                chatSectionManager.update(message)
+                chatDataSource.update(message)
             }
         }
     }
@@ -739,7 +739,7 @@ extension ChatViewController: QMChatAttachmentServiceDelegate {
         guard message.dialogID == dialog.id else { return }
         var cell = attachmentCellsMap.object(forKey: message.id as AnyObject?)
         if cell == nil && progress < 1.0 {
-            let indexPath = chatSectionManager.indexPath(for: message)
+            let indexPath = chatDataSource.indexPath(for: message)
             cell = collectionView.cellForItem(at: indexPath!) as? QMChatAttachmentCell
             attachmentCellsMap.setObject(cell, forKey: message.id as AnyObject?)
         }
