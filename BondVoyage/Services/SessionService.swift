@@ -42,6 +42,18 @@ class SessionService: QMServicesManager {
         }
     }
     
+    func loadDialogMessages(dialogId: String,  completion: @escaping ((_ success: Bool, _ messages: [QBChatMessage]?) -> Void)) {
+        self.chatService.earlierMessages(withChatDialogID: dialogId) { (response, messages) in
+            print("messages: \(messages)")
+            if let messages = messages {
+                completion(true, messages)
+            }
+            else {
+                completion(false, nil)
+            }
+        }
+    }
+    
     // MARK: Refresh user session
     func refreshChatSession(_ completion: ((_ success: Bool) -> Void)?) {
         // if not connected to QBChat. For example at startup
