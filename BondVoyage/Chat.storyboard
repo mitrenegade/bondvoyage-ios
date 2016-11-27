@@ -84,15 +84,15 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95k-jz-TgY">
                                                     <rect key="frame" x="72" y="14" width="220" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWh-5T-4Bp" userLabel="Message Label">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWh-5T-4Bp" userLabel="Message Label">
                                                     <rect key="frame" x="72" y="41" width="295" height="27"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="27" id="H2c-xr-A12"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-2R-4Ah" userLabel="Time Label">
@@ -101,7 +101,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="e2L-C8-fAV"/>
                                                         <constraint firstAttribute="width" constant="67" id="y1g-kV-KLZ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-MediumItalic" family="Helvetica Neue" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -124,6 +124,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="imagePhoto" destination="pZQ-13-yDf" id="tuT-9O-uvr"/>
+                                            <outlet property="messageLabel" destination="hWh-5T-4Bp" id="dlD-RM-mQc"/>
                                             <outlet property="timeLabel" destination="bI7-2R-4Ah" id="r0K-0S-Jv2"/>
                                             <outlet property="titleLabel" destination="95k-jz-TgY" id="K43-hz-hKR"/>
                                         </connections>

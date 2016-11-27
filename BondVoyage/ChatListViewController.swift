@@ -132,7 +132,9 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
         let conversationsFromDay = conversations.filter { (c) -> Bool in
             c.dateString == sectionName
         }.sorted { (c1, c2) -> Bool in
-            c1.updatedAt! > c2.updatedAt!
+            guard c1.updatedAt != nil else { return false }
+            guard c2.updatedAt != nil else { return true }
+            return c1.updatedAt! > c2.updatedAt!
         }
         let conversation: Conversation = conversationsFromDay[indexPath.row]
 

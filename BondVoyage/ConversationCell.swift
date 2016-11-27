@@ -34,10 +34,8 @@ class ConversationCell: UITableViewCell {
             return
         }
         guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId else { return }
-        print("all userids: \(userIds)")
         if let index = userIds.index(of: currentUserId) {
             userIds.remove(at: index)
-            print("other userId: \(userIds)")
         }
         guard userIds.count > 0, let userId = userIds.first else { return }
         
@@ -65,6 +63,16 @@ class ConversationCell: UITableViewCell {
                     let dateString = self.dateFormatter.string(from: date)
                     self.timeLabel.text = dateString
                 }
+                
+                self.messageLabel.text = ""
+                if let dialogId = conversation.dialogId {
+                    SessionService.sharedInstance.loadDialogMessages(dialogId: dialogId, completion: { (success, messages) in
+                        if let message = messages?.first, let text = message.text {
+                            self.messageLabel.text = "\"\(text)\""
+                        }
+                    })
+                }
+
             }
             else {
                 print("no user found")

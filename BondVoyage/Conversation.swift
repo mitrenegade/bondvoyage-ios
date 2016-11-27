@@ -14,6 +14,9 @@ class Conversation: PFObject {
     
     @NSManaged var participantIds: [Any]? // a pair of pfObjectIds
     @NSManaged var activityIds: [Any]?
+
+    @NSManaged var category: String?
+    @NSManaged var city: String?
 }
 
 extension Conversation: PFSubclassing {

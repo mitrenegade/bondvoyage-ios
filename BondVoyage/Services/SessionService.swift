@@ -31,14 +31,39 @@ class SessionService: QMServicesManager {
     var currentDialogID = ""
     
     // MARK: Chat session
-    func startChatWithUser(_ user: QBUUser, completion: @escaping ((_ success: Bool, _ dialog: QBChatDialog?) -> Void)) {
-        self.chatService.createPrivateChatDialog(withOpponent: user) { (response, dialog) in
-            if let dialog = dialog {
-                completion(true, dialog)
+    func startChatWithUser(_ user: QBUUser,_ conversation: Conversation, completion: @escaping ((_ success: Bool, _ dialog: QBChatDialog?) -> Void)) {
+        let name = conversation.objectId!
+        guard let currentUser = QBSession.current().currentUser else {
+            print("cannot start chat if not logged in")
+            completion(false, nil)
+            return
+        }
+        
+        let users = [user, currentUser]
+        if let dialogId = conversation.dialogId {
+            // join existing dialog
+            self.chatService.loadDialog(withID: dialogId, completion: { (dialog) in
+                completion(dialog != nil, dialog)
+            })
+        }
+        else {
+            // create new dialog
+            self.chatService.createPrivateChatDialog(withOpponent: user) { (response, dialog) in
+//            self.chatService.createGroupChatDialog(withName: name, photo: nil, occupants: users) { (response, dialog) in
+                if let dialog = dialog {
+                    completion(true, dialog)
+                }
+                else {
+                    completion(false, nil)
+                }
             }
-            else {
-                completion(false, nil)
-            }
+        }
+    }
+    
+    func loadDialogMessages(dialogId: String,  completion: @escaping ((_ response: QBResponse, _ messages: [QBChatMessage]?) -> Void)) {
+        self.chatService.messages(withChatDialogID: dialogId) { (response, messages) in
+            print("messages for dialogId \(dialogId): \(messages)")
+            completion(response, messages)
         }
     }
     

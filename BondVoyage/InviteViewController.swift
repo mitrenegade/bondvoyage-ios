@@ -80,11 +80,9 @@ class InviteViewController: UIViewController {
         Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, conversation, error) in
             let name = selectedUser.value(forKey: "firstName") as? String ?? selectedUser.value(forKey: "username") as? String ?? "this person"
             if let activity = activity {
-                print("created activity \(activity.objectId!) with invitees \(activity.invitee)")
                 self.simpleAlert("Invite sent", message: "You have invited \(name) to bond. If accepted, you will be able to chat.")
             }
             else if let conversation = conversation {
-                print("Conversation already exists! \(conversation)")
                 let message = "You have matched with \(name). Click to go chat"
                 self.simpleAlert("You have a new bond", message: message, completion: { 
                     self.goToChat(selectedUser, conversation: conversation)
@@ -94,7 +92,7 @@ class InviteViewController: UIViewController {
     }
     
     func goToChat(_ selectedUser: PFUser, conversation: Conversation?) {
-        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId else {
+        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId, let conversation = conversation else {
             print("goToChat failed")
             return
         }
@@ -104,7 +102,7 @@ class InviteViewController: UIViewController {
                 print("no user")
                 return
             }
-            SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+            SessionService.sharedInstance.startChatWithUser(user, conversation, completion: { (success, dialog) in
                 guard success else {
                     print("Could not start chat")
                     self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this person", error: nil, completion: nil)
@@ -114,13 +112,14 @@ class InviteViewController: UIViewController {
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatNavigationViewController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
                     chatVC.dialog = dialog
+                    chatVC.conversation = conversation
                     self?.present(chatNavigationVC, animated: true, completion: {
                         //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
                         // create conversation
                         if let dialogId = dialog?.id {
                             print("add dialog to conversation")
-                            conversation?.setValue(dialogId, forKey: "dialogId")
-                            conversation?.saveInBackground()
+                            conversation.setValue(dialogId, forKey: "dialogId")
+                            conversation.saveInBackground()
                         }
                     })
                 }
