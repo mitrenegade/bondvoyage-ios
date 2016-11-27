@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>31</string>
+	<string>32</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -94,8 +94,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Bondvoyage uses your camera for taking profile pictures.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>BondVoyage needs to know your location to find activities.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Bondvoyage uses your photo library for selecting profile pictures.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Light.ttf</string>
