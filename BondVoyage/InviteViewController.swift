@@ -80,11 +80,9 @@ class InviteViewController: UIViewController {
         Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, conversation, error) in
             let name = selectedUser.value(forKey: "firstName") as? String ?? selectedUser.value(forKey: "username") as? String ?? "this person"
             if let activity = activity {
-                print("created activity \(activity.objectId!) with invitees \(activity.invitee)")
                 self.simpleAlert("Invite sent", message: "You have invited \(name) to bond. If accepted, you will be able to chat.")
             }
             else if let conversation = conversation {
-                print("Conversation already exists! \(conversation)")
                 let message = "You have matched with \(name). Click to go chat"
                 self.simpleAlert("You have a new bond", message: message, completion: { 
                     self.goToChat(selectedUser, conversation: conversation)

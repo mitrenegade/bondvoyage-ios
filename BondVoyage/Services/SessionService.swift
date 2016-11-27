@@ -40,12 +40,21 @@ class SessionService: QMServicesManager {
         }
         
         let users = [user, currentUser]
-        self.chatService.createGroupChatDialog(withName: name, photo: nil, occupants: users) { (response, dialog) in
-            if let dialog = dialog {
-                completion(true, dialog)
-            }
-            else {
-                completion(false, nil)
+        if let dialogId = conversation.dialogId {
+            // join existing dialog
+            self.chatService.loadDialog(withID: dialogId, completion: { (dialog) in
+                completion(dialog != nil, dialog)
+            })
+        }
+        else {
+            // create new dialog
+            self.chatService.createGroupChatDialog(withName: name, photo: nil, occupants: users) { (response, dialog) in
+                if let dialog = dialog {
+                    completion(true, dialog)
+                }
+                else {
+                    completion(false, nil)
+                }
             }
         }
     }
