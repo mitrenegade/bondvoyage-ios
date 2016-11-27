@@ -88,11 +88,11 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 84
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell")! as! UserCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell")! as! ConversationCell
         cell.adjustTableViewCellSeparatorInsets(cell)
 
         guard let conversations = self.conversations, indexPath.row < conversations.count else { return cell }

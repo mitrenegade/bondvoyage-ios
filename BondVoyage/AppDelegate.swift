@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // register parse subclasses
         Activity.registerSubclass()
         Conversation.registerSubclass()
+        User.registerSubclass()
 
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpened(launchOptions: launchOptions)

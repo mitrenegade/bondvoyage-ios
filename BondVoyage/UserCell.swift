@@ -19,11 +19,7 @@ class UserCell: UITableViewCell {
     
     var shadowLayer: CALayer?
     var activity: PFObject?
-    
-    func configureCellForConversation(_ conversation: Conversation) {
-        return
-    }
-    
+        
     func configureCellForActivity(_ activity: PFObject) {
         self.imagePhoto.crossfadeDuration = 0
         
