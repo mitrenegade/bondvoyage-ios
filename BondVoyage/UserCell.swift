@@ -15,10 +15,11 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var viewFrame: UIView!
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
     
     var shadowLayer: CALayer?
     var activity: PFObject?
-    
+        
     func configureCellForActivity(_ activity: PFObject) {
         self.imagePhoto.crossfadeDuration = 0
         
@@ -63,13 +64,13 @@ class UserCell: UITableViewCell {
                         //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                     else {
-                        self.imagePhoto.image = UIImage(named: "profile-icon")
+                        self.imagePhoto.image = UIImage(named: "profile")
                     }
                 }
             })
         }
         else {
-            self.imagePhoto.image = UIImage(named: "profile-icon")
+            self.imagePhoto.image = UIImage(named: "profile")
         }
     }
 }

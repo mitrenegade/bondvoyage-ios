@@ -95,7 +95,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
                         //self.imagePhoto.imageURL = NSURL(string: photoURL)
                     }
                     else {
-                        self.imagePhoto.image = UIImage(named: "profile-icon")
+                        self.imagePhoto.image = UIImage(named: "profile")
                     }
                 }
             })

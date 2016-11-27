@@ -71,7 +71,7 @@ extension UIViewController {
                     imageView.setValue(URL(string: photoURL), forKey: "imageURL")
                 }
                 else {
-                    imageView.image = UIImage(named: "profile-icon")
+                    imageView.image = UIImage(named: "profile")
                 }
             }
         })
