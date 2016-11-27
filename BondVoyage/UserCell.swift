@@ -15,9 +15,14 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var viewFrame: UIView!
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
     
     var shadowLayer: CALayer?
     var activity: PFObject?
+    
+    func configureCellForConversation(_ conversation: Conversation) {
+        return
+    }
     
     func configureCellForActivity(_ activity: PFObject) {
         self.imagePhoto.crossfadeDuration = 0

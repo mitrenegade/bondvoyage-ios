@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sTt-RH-1Ke">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sTt-RH-1Ke">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -29,18 +29,18 @@
             </objects>
             <point key="canvasLocation" x="-1010" y="-895"/>
         </scene>
-        <!--Search-->
+        <!--Activities-->
         <scene sceneID="4eW-yU-7io">
             <objects>
                 <navigationController id="xPb-CS-Ee1" customClass="ConfigurableNavigationController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="icon-profile" id="IPc-wf-V01">
+                    <tabBarItem key="tabBarItem" title="Activities" image="icon-star" id="IPc-wf-V01">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fQO-2A-gFZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fQO-2A-gFZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -88,18 +88,18 @@
             </objects>
             <point key="canvasLocation" x="-1722" y="-880"/>
         </scene>
-        <!--Matches-->
+        <!--Messages-->
         <scene sceneID="RGX-Mb-jiF">
             <objects>
                 <navigationController id="SLi-Ju-8E8" customClass="ConfigurableNavigationController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Matches" image="icon-star" id="Y2d-j6-VUZ">
+                    <tabBarItem key="tabBarItem" title="Messages" image="icon-profile" id="Y2d-j6-VUZ">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.18288590599999999" green="0.76179739930000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="c84-3G-sgJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c84-3G-sgJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
