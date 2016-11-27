@@ -53,22 +53,26 @@ class ChatListViewController: UIViewController {
         query.whereKey("participantIds", contains: userId)
         query.findObjectsInBackground { (results, error) in
             self.conversations = results
-            self.conversationSections.removeAll()
-            if let conversations = self.conversations, conversations.count > 0 {
-                for conversation in conversations {
-                    let dateString = conversation.dateString
-                    if !self.conversationSections.contains(dateString) {
-                        self.conversationSections.append(dateString)
-                    }
-                }
-                self.conversationSections.sort(by: { (a, b) -> Bool in
-                    return a > b
-                })
-            }
-            print("conversations loaded \(results?.count)")
+            self.refreshConversationSections()
             self.tableView.reloadData()
             self.subscribeToUpdates()
         }
+    }
+    
+    func refreshConversationSections() {
+        self.conversationSections.removeAll()
+        if let conversations = self.conversations, conversations.count > 0 {
+            for conversation in conversations {
+                let dateString = conversation.dateString
+                if !self.conversationSections.contains(dateString) {
+                    self.conversationSections.append(dateString)
+                }
+            }
+            self.conversationSections.sort(by: { (a, b) -> Bool in
+                return a > b
+            })
+        }
+        print("conversation sections \(self.conversationSections.count)")
     }
 
     func subscribeToUpdates() {
@@ -82,12 +86,14 @@ class ChatListViewController: UIViewController {
                     for c in conversations {
                         if c.objectId == object.objectId {
                             self.conversations!.remove(at: conversations.index(of: c)!)
-                            self.conversations!.append(object)
                         }
                     }
+                    self.conversations!.append(object)
                 }
                 DispatchQueue.main.async(execute: {
                     print("received update for conversations: \(object.objectId!)")
+                    self.refreshConversationSections()
+                    self.tableView.reloadData()
                 })
             })
         isSubscribed = true
