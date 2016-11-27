@@ -94,7 +94,7 @@ class InviteViewController: UIViewController {
     }
     
     func goToChat(_ selectedUser: PFUser, conversation: Conversation?) {
-        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId else {
+        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId, let conversation = conversation else {
             print("goToChat failed")
             return
         }
@@ -104,7 +104,7 @@ class InviteViewController: UIViewController {
                 print("no user")
                 return
             }
-            SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+            SessionService.sharedInstance.startChatWithUser(user, conversation, completion: { (success, dialog) in
                 guard success else {
                     print("Could not start chat")
                     self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this person", error: nil, completion: nil)
@@ -114,13 +114,14 @@ class InviteViewController: UIViewController {
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatNavigationViewController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
                     chatVC.dialog = dialog
+                    chatVC.conversation = conversation
                     self?.present(chatNavigationVC, animated: true, completion: {
                         //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
                         // create conversation
                         if let dialogId = dialog?.id {
                             print("add dialog to conversation")
-                            conversation?.setValue(dialogId, forKey: "dialogId")
-                            conversation?.saveInBackground()
+                            conversation.setValue(dialogId, forKey: "dialogId")
+                            conversation.saveInBackground()
                         }
                     })
                 }

@@ -53,6 +53,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     }
     var dialog: QBChatDialog!
     var recipient: QBUUser?
+    var conversation: Conversation?
     
     lazy var imagePickerViewController : UIImagePickerController = {
         let imagePickerViewController = UIImagePickerController()
@@ -171,7 +172,12 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     
     func updateTitle() {
         if dialog.type != QBChatDialogType.private {
-            title = dialog.name
+            if let category = conversation?.category?.capitalized, let city = conversation?.city {
+                title = "\(category) in \(city)"
+            }
+            else {
+                title = "New chat"
+            }
         } else {
             if let recipient = QBUserService.cachedUserWithId(UInt(dialog.recipientID)) {
                 title = recipient.fullName
@@ -694,7 +700,7 @@ extension ChatViewController: QMChatServiceDelegate {
     func chatService(_ chatService: QMChatService, didUpdateChatDialogInMemoryStorage chatDialog: QBChatDialog) {
         if dialog.type != QBChatDialogType.private && dialog.id == chatDialog.id {
             dialog = chatDialog
-            title = dialog.name
+            self.updateTitle()
         }
     }
     

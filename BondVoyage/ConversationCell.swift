@@ -64,6 +64,7 @@ class ConversationCell: UITableViewCell {
                     self.timeLabel.text = dateString
                 }
                 
+                self.messageLabel.text = ""
                 if let dialogId = conversation.dialogId {
                     SessionService.sharedInstance.loadDialogMessages(dialogId: dialogId, completion: { (success, messages) in
                         if success {
@@ -73,6 +74,7 @@ class ConversationCell: UITableViewCell {
                         }
                     })
                 }
+
             }
             else {
                 print("no user found")

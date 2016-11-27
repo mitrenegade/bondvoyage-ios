@@ -31,8 +31,16 @@ class SessionService: QMServicesManager {
     var currentDialogID = ""
     
     // MARK: Chat session
-    func startChatWithUser(_ user: QBUUser, completion: @escaping ((_ success: Bool, _ dialog: QBChatDialog?) -> Void)) {
-        self.chatService.createPrivateChatDialog(withOpponent: user) { (response, dialog) in
+    func startChatWithUser(_ user: QBUUser,_ conversation: Conversation, completion: @escaping ((_ success: Bool, _ dialog: QBChatDialog?) -> Void)) {
+        let name = conversation.objectId!
+        guard let currentUser = QBSession.current().currentUser else {
+            print("cannot start chat if not logged in")
+            completion(false, nil)
+            return
+        }
+        
+        let users = [user, currentUser]
+        self.chatService.createGroupChatDialog(withName: name, photo: nil, occupants: users) { (response, dialog) in
             if let dialog = dialog {
                 completion(true, dialog)
             }
