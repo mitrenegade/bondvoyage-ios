@@ -15,9 +15,15 @@ enum CityName: String {
     case Other
 }
 
+protocol CityViewDelegate: class {
+    func didFinishSelectCity()
+}
+
 class CityViewController: UIViewController {
 
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
+    weak var delegate: CityViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "CITIES"
@@ -65,7 +71,7 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.tableView.frame.size.height - 20) / 3
+        return (self.tableView.frame.size.height) / 3
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -90,8 +96,7 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
                 self.simpleAlert("Could not set city", defaultMessage: "We could not update your city to \(city.rawValue)", error: error)
             }
             else {
-                let nav = self.navigationController as? ActivitiesNavigationController
-                nav?.loadDefaultRootViewController()
+                self.delegate?.didFinishSelectCity()
             }
         }
     }

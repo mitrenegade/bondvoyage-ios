@@ -18,11 +18,14 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var scrollViewContainer: AsyncImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
     @IBOutlet weak var aboutMeLabel: UILabel!
     @IBOutlet weak var countriesLabel: UILabel!
+    @IBOutlet weak var occupationLabel: UILabel!
     @IBOutlet weak var languagesLabel: UILabel!
+    @IBOutlet weak var educationLabel: UILabel!
     @IBOutlet weak var groupsLabel: UILabel!
     @IBOutlet weak var nameView: UIView!
     @IBOutlet weak var interestsView: UIView!
@@ -53,11 +56,6 @@ class UserDetailsViewController: UIViewController {
             self.navigationController!.navigationBar.barTintColor = Constants.lightBlueColor()
             self.title = "My Profile"
         }
-        
-        self.nameLabel!.layer.shadowOpacity = 1
-        self.nameLabel!.layer.shadowRadius = 2
-        self.nameLabel!.layer.shadowColor = UIColor.black.cgColor
-        self.nameLabel!.layer.shadowOffset = CGSize(width: 1, height: 1)
         
         self.view!.backgroundColor = UIColor.clear
         
@@ -93,9 +91,9 @@ class UserDetailsViewController: UIViewController {
     }
 
     func configureDetailsForUser() {
-        var user: PFUser? = selectedUser
+        var user: User? = selectedUser as? User
         if self.selectedUser == nil {
-            user = self.invitingUser
+            user = self.invitingUser as? User
         }
         if user == nil {
             return
@@ -116,6 +114,14 @@ class UserDetailsViewController: UIViewController {
             self.scrollViewContainer.image = UIImage(named: "profile")
         }
 
+        if let city = user!.city, !city.isEmpty {
+            self.cityLabel.text = city
+            self.cityLabel.isHidden = false
+        }
+        else {
+            self.cityLabel.isHidden = true
+        }
+        
         if let firstName = user!.value(forKey: "firstName") as? String {
             self.nameLabel.text = "\(firstName)"
         }
@@ -188,11 +194,26 @@ class UserDetailsViewController: UIViewController {
             self.countriesLabel.text = nil
         }
 
+        if let occupation = user!.value(forKey: "occupation") as? String {
+            self.occupationLabel.attributedText = "Occupation: \(occupation)".attributedString(occupation, size: 17)
+        }
+        else {
+            self.occupationLabel.text = nil
+        }
+        
+
         if let languages = user!.value(forKey: "languages") as? String {
             self.languagesLabel.attributedText = "Languages: \(languages)".attributedString(languages, size: 17)
         }
         else {
             self.languagesLabel.text = nil
+        }
+        
+        if let education = user!.value(forKey: "education") as? String {
+            self.educationLabel.attributedText = "Education: \(education)".attributedString(education, size: 17)
+        }
+        else {
+            self.educationLabel.text = nil
         }
     
         if let group = user!.value(forKey: "group") as? String, let g = Group(rawValue:group) {
