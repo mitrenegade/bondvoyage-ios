@@ -17,7 +17,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YFO-oQ-R8i" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="TwF-61-JAd" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VRv-rR-ITY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="VRv-rR-ITY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -41,7 +41,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBs-sj-rhw">
-                                <rect key="frame" x="94" y="20" width="188" height="501"/>
+                                <rect key="frame" x="94" y="64" width="188" height="501"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMj-Qy-Ad9">
                                         <rect key="frame" x="66" y="4" width="57" height="63"/>
@@ -114,7 +114,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="RRh-ob-OjB" firstAttribute="top" secondItem="VYK-vz-wb0" secondAttribute="bottom" constant="8" id="2KO-jc-ZdV"/>
                                     <constraint firstItem="VYK-vz-wb0" firstAttribute="height" secondItem="btD-jC-May" secondAttribute="height" id="6zV-lI-xCb"/>
@@ -150,7 +150,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="gBs-sj-rhw" firstAttribute="width" secondItem="KhT-88-nHZ" secondAttribute="width" multiplier="0.5" id="JS2-wL-Pv7"/>
                             <constraint firstItem="gBs-sj-rhw" firstAttribute="topMargin" secondItem="F2p-xU-ux2" secondAttribute="bottom" constant="8" id="MU6-Pc-qmC"/>
@@ -192,7 +192,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where should we visit next?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSH-t5-qL3">
-                                <rect key="frame" x="16" y="61" width="343" height="21"/>
+                                <rect key="frame" x="16" y="105" width="343" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="bbK-ZG-Hmo"/>
                                 </constraints>
@@ -201,7 +201,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter city" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hbR-3C-Luq">
-                                <rect key="frame" x="16" y="107" width="343" height="30"/>
+                                <rect key="frame" x="16" y="151" width="343" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="bqv-zc-jSE"/>
                                 </constraints>
@@ -210,7 +211,8 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ES-Px-xHt">
-                                <rect key="frame" x="16" y="162" width="343" height="30"/>
+                                <rect key="frame" x="16" y="206" width="343" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="bTb-3s-dMO"/>
                                 </constraints>
@@ -219,7 +221,8 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="59H-be-NaC">
-                                <rect key="frame" x="16" y="217" width="343" height="30"/>
+                                <rect key="frame" x="16" y="261" width="343" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="GDr-5N-0Hm"/>
                                 </constraints>
@@ -244,7 +247,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="hbR-3C-Luq" firstAttribute="leading" secondItem="kDi-vG-fA0" secondAttribute="leading" constant="16" id="5D7-NQ-S0Y"/>
                             <constraint firstItem="SSH-t5-qL3" firstAttribute="top" secondItem="FCC-R5-eQU" secondAttribute="bottom" constant="41" id="9m8-54-ceo"/>
@@ -293,7 +296,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KgW-iD-wfc">
-                                            <rect key="frame" x="-1" y="33" width="376" height="35"/>
+                                            <rect key="frame" x="-0.5" y="33" width="375" height="35"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="25"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
