@@ -7,6 +7,13 @@
 //
 
 import UIKit
+import Parse
+
+enum CityName: String {
+    case Boston
+    case Athens
+    case Other
+}
 
 class CityViewController: UIViewController {
 
@@ -16,14 +23,13 @@ class CityViewController: UIViewController {
         self.title = "CITIES"
         // Do any additional setup after loading the view.
         self.tableView.separatorStyle = .none
-        
+        self.tableView.isScrollEnabled = false
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 }
 
 extension CityViewController: UITableViewDelegate, UITableViewDataSource {
@@ -39,8 +45,8 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
 
     func nameForRow(row: Int) -> String {
         switch(row) {
-        case 0: return "Boston"
-        case 1: return "Athens"
+        case 0: return CityName.Boston.rawValue
+        case 1: return CityName.Athens.rawValue
         default: return "Not Listed?\nRequest New City"
         }
     }
@@ -59,15 +65,34 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return (self.tableView.frame.size.height - 20) / 3
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch(indexPath.row) {
-        case 0: print("tapped boston")
-        case 1: print("tapped athens")
-        case 2: print("push new city screen")
+        case 0:
+            self.setCity(city: .Boston)
+        case 1:
+            self.setCity(city: .Athens)
+        case 2:
+            print("push new city screen")
+            self.performSegue(withIdentifier: "toSuggestCity", sender: nil)
         default: print("other")
+        }
+    }
+    
+    func setCity(city: CityName) {
+        print("selected city \(city.rawValue)")
+        guard let user = PFUser.current() as? User else { return }
+        user.city = city.rawValue
+        user.saveInBackground { (success, error) in
+            if let error = error as? NSError {
+                self.simpleAlert("Could not set city", defaultMessage: "We could not update your city to \(city.rawValue)", error: error)
+            }
+            else {
+                let nav = self.navigationController as? ActivitiesNavigationController
+                nav?.loadDefaultRootViewController()
+            }
         }
     }
 }

@@ -16,6 +16,7 @@
 		8E30E6DB1DCF84AF004C4F55 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30E6DA1DCF84AF004C4F55 /* SessionService.swift */; };
 		8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */; };
 		8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */; };
+		8E4F78621DF3619800BFAEC1 /* ActivitiesNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F78611DF3619800BFAEC1 /* ActivitiesNavigationController.swift */; };
 		8E6CD7771CAC720C00A556F9 /* JoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6CD7761CAC720C00A556F9 /* JoinCell.swift */; };
 		8E73665B1CA9F46500F3642E /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E73665A1CA9F46500F3642E /* InviteViewController.swift */; };
 		8E91D4641C5D03F900C6D406 /* ActivitiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */; };
@@ -109,6 +110,7 @@
 		8E30E6DA1DCF84AF004C4F55 /* SessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFObject+Activity.swift"; sourceTree = "<group>"; };
 		8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8E4F78611DF3619800BFAEC1 /* ActivitiesNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesNavigationController.swift; sourceTree = "<group>"; };
 		8E6CD7761CAC720C00A556F9 /* JoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinCell.swift; sourceTree = "<group>"; };
 		8E707BAD1DDF3FB900658434 /* BondVoyage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BondVoyage.entitlements; sourceTree = "<group>"; };
 		8E73665A1CA9F46500F3642E /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
@@ -243,9 +245,9 @@
 		8ECA14E91DD29763003DF990 /* Cities */ = {
 			isa = PBXGroup;
 			children = (
+				F26F02381DC958D0003EADFA /* CityViewController.swift */,
 				F26F023A1DC95EB0003EADFA /* SuggestCityViewController.swift */,
 				F289222B1DCB5D1D000D2E83 /* SubmitCityViewController.swift */,
-				F26F02381DC958D0003EADFA /* CityViewController.swift */,
 			);
 			name = Cities;
 			sourceTree = "<group>";
@@ -253,6 +255,7 @@
 		8ECA14EA1DD29782003DF990 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				8E4F78611DF3619800BFAEC1 /* ActivitiesNavigationController.swift */,
 				8E9FDFCD1C4FC854006532B0 /* SearchCategoriesViewController.swift */,
 				8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */,
 				8E73665A1CA9F46500F3642E /* InviteViewController.swift */,
@@ -707,6 +710,7 @@
 				C5566EE81C3E105F007C22F3 /* UITableViewCell+Utils.swift in Sources */,
 				8ECA14E21DD24D85003DF990 /* ChatViewController.swift in Sources */,
 				8ECA14EC1DD29BC6003DF990 /* DatesViewController.swift in Sources */,
+				8E4F78621DF3619800BFAEC1 /* ActivitiesNavigationController.swift in Sources */,
 				8E0B353A1D7C63AB008872FD /* QBUserService.swift in Sources */,
 				8E0B353C1D7C6898008872FD /* UserService.swift in Sources */,
 				8E6CD7771CAC720C00A556F9 /* JoinCell.swift in Sources */,

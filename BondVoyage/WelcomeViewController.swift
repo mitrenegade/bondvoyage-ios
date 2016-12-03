@@ -41,21 +41,12 @@ class WelcomeViewController: UIViewController, PFLogInViewControllerDelegate, PF
     }
     
     func goToLogin() {
-//        let loginViewController = LoginViewController()
-//        loginViewController.fields = [.usernameAndPassword, .logInButton, .passwordForgotten, .signUpButton, .facebook]
-//        loginViewController.emailAsUsername = true
-//        loginViewController.delegate = self
-//        loginViewController.signUpController?.delegate = self
-//        self.present(loginViewController, animated: false, completion: nil)
-        // let cityVC = CityViewController()
-        //self.present(cityVC, animated: false, completion: nil)
-
-        let storyboard : UIStoryboard = UIStoryboard(name: "City", bundle: nil)
-        let vc : CityViewController = storyboard.instantiateViewController(withIdentifier: "CityViewController") as! CityViewController
-
-        let navigationController = UINavigationController(rootViewController: vc)
-
-        self.present(navigationController, animated: true, completion: nil)
+        let loginViewController = LoginViewController()
+        loginViewController.fields = [.usernameAndPassword, .logInButton, .passwordForgotten, .signUpButton, .facebook]
+        loginViewController.emailAsUsername = true
+        loginViewController.delegate = self
+        loginViewController.signUpController?.delegate = self
+        self.present(loginViewController, animated: false, completion: nil)
     }
 
     // MARK: ParseUI
