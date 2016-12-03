@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SuggestCityViewController: UIViewController {
 
@@ -36,7 +37,12 @@ class SuggestCityViewController: UIViewController {
     
     @IBAction func didTapButton(_ sender: UIButton) {
         if sender != btnOther {
-            selectedCity = (sender.titleLabel?.text)!
+            if let city = sender.titleLabel?.text {
+                self.performSegue(withIdentifier: "toSubmitCity", sender: city)
+            }
+        }
+        else {
+            self.performSegue(withIdentifier: "toSubmitCity", sender: nil)
         }
     }
     
@@ -46,8 +52,8 @@ class SuggestCityViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let newCityCtlr = segue.destination as! SubmitCityViewController
-        newCityCtlr.selectedCity = self.selectedCity
+        let controller = segue.destination as! SubmitCityViewController
+        controller.selectedCity = sender as? String
     }
     
 

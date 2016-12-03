@@ -12,10 +12,26 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="19K-tS-eFH">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YFO-oQ-R8i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="TwF-61-JAd" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VRv-rR-ITY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="f67-QF-LUL" kind="relationship" relationship="rootViewController" id="7lx-H8-5uJ"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="585" y="-2346"/>
+        </scene>
         <!--Request City-->
         <scene sceneID="oGv-tu-e4m">
             <objects>
-                <viewController id="f67-QF-LUL" customClass="SuggestCityViewController" sceneMemberID="viewController">
+                <viewController id="f67-QF-LUL" customClass="SuggestCityViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="F2p-xU-ux2"/>
                         <viewControllerLayoutGuide type="bottom" id="gGz-KY-Ccd"/>
@@ -25,10 +41,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBs-sj-rhw">
-                                <rect key="frame" x="94" y="64" width="188" height="501"/>
+                                <rect key="frame" x="94" y="20" width="188" height="501"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMj-Qy-Ad9">
-                                        <rect key="frame" x="70" y="4" width="49" height="63"/>
+                                        <rect key="frame" x="66" y="4" width="57" height="63"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Denver">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -37,7 +54,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btD-jC-May">
-                                        <rect key="frame" x="68" y="75" width="52" height="63"/>
+                                        <rect key="frame" x="64" y="75" width="60" height="63"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="London">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -46,7 +64,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RRh-ob-OjB">
-                                        <rect key="frame" x="59" y="217" width="70" height="63"/>
+                                        <rect key="frame" x="56" y="217" width="77" height="63"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Las Vegas">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -55,7 +74,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYK-vz-wb0">
-                                        <rect key="frame" x="67" y="146" width="55" height="63"/>
+                                        <rect key="frame" x="63" y="146" width="63" height="63"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Phoenix">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -64,7 +84,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UR7-lA-cR2">
-                                        <rect key="frame" x="65" y="359" width="58" height="63"/>
+                                        <rect key="frame" x="62" y="359" width="65" height="63"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Portland">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -73,7 +94,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HjE-2m-lzq">
-                                        <rect key="frame" x="62" y="288" width="64" height="63"/>
+                                        <rect key="frame" x="58" y="288" width="73" height="63"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Charlotte">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -82,7 +104,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QgT-Bh-RC4">
-                                        <rect key="frame" x="71" y="430" width="46" height="63"/>
+                                        <rect key="frame" x="68" y="430" width="53" height="63"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Tampa">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -117,7 +140,8 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cS7-7j-QkR">
-                                <rect key="frame" x="120" y="617" width="136" height="30"/>
+                                <rect key="frame" x="112" y="611" width="152" height="36"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="Don't see your city?">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -166,17 +190,93 @@
                     <view key="view" contentMode="scaleToFill" id="kDi-vG-fA0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where should we visit next?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSH-t5-qL3">
+                                <rect key="frame" x="16" y="61" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="bbK-ZG-Hmo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter city" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hbR-3C-Luq">
+                                <rect key="frame" x="16" y="107" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="bqv-zc-jSE"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ES-Px-xHt">
+                                <rect key="frame" x="16" y="162" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="bTb-3s-dMO"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="59H-be-NaC">
+                                <rect key="frame" x="16" y="217" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="GDr-5N-0Hm"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="XuS-EY-So2" id="n2m-sG-AvV"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yl6-tm-04y">
+                                <rect key="frame" x="111" y="611" width="152" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="152" id="6OB-GY-2VK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Vote!">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapButtonWithSender:" destination="XuS-EY-So2" eventType="touchUpInside" id="fYa-GR-y4D"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hbR-3C-Luq" firstAttribute="leading" secondItem="kDi-vG-fA0" secondAttribute="leading" constant="16" id="5D7-NQ-S0Y"/>
+                            <constraint firstItem="SSH-t5-qL3" firstAttribute="top" secondItem="FCC-R5-eQU" secondAttribute="bottom" constant="41" id="9m8-54-ceo"/>
+                            <constraint firstItem="1ES-Px-xHt" firstAttribute="top" secondItem="hbR-3C-Luq" secondAttribute="bottom" constant="25" id="AZL-rz-uYd"/>
+                            <constraint firstItem="59H-be-NaC" firstAttribute="top" secondItem="1ES-Px-xHt" secondAttribute="bottom" constant="25" id="BWO-7J-VtA"/>
+                            <constraint firstItem="59H-be-NaC" firstAttribute="leading" secondItem="kDi-vG-fA0" secondAttribute="leading" constant="16" id="BbL-Gz-Zna"/>
+                            <constraint firstAttribute="trailing" secondItem="hbR-3C-Luq" secondAttribute="trailing" constant="16" id="NN0-GP-VnF"/>
+                            <constraint firstItem="ijz-kg-LHH" firstAttribute="top" secondItem="Yl6-tm-04y" secondAttribute="bottom" constant="20" id="ShA-gg-NhJ"/>
+                            <constraint firstAttribute="trailing" secondItem="1ES-Px-xHt" secondAttribute="trailing" constant="16" id="TkR-6b-nYO"/>
+                            <constraint firstItem="hbR-3C-Luq" firstAttribute="top" secondItem="SSH-t5-qL3" secondAttribute="bottom" constant="25" id="gDh-JX-JXp"/>
+                            <constraint firstItem="1ES-Px-xHt" firstAttribute="leading" secondItem="kDi-vG-fA0" secondAttribute="leading" constant="16" id="gbJ-1K-mZr"/>
+                            <constraint firstAttribute="trailing" secondItem="59H-be-NaC" secondAttribute="trailing" constant="16" id="gxw-BZ-PEU"/>
+                            <constraint firstItem="SSH-t5-qL3" firstAttribute="trailing" secondItem="kDi-vG-fA0" secondAttribute="trailingMargin" id="pMh-if-f1e"/>
+                            <constraint firstItem="SSH-t5-qL3" firstAttribute="leading" secondItem="kDi-vG-fA0" secondAttribute="leadingMargin" id="sSy-Nr-bGT"/>
+                            <constraint firstItem="Yl6-tm-04y" firstAttribute="centerX" secondItem="kDi-vG-fA0" secondAttribute="centerX" id="vVH-dO-9Ra"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="constraintButton" destination="ShA-gg-NhJ" id="hxT-SZ-2Jb"/>
+                        <outlet property="inputCity" destination="hbR-3C-Luq" id="V3I-1U-GmU"/>
+                        <outlet property="inputEmail" destination="59H-be-NaC" id="DJD-0z-eXe"/>
+                        <outlet property="inputName" destination="1ES-Px-xHt" id="sJi-ha-vf2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HL7-v3-9kJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2026" y="-2346"/>
+            <point key="canvasLocation" x="2024.8" y="-2346.4767616191907"/>
         </scene>
-        <!--Item-->
+        <!--CityViewController-->
         <scene sceneID="WZ0-nt-oNG">
             <objects>
-                <viewController storyboardIdentifier="CityViewController" id="PFS-8B-qak" customClass="CityViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CityViewController" title="CityViewController" id="PFS-8B-qak" customClass="CityViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="kgy-y3-TaA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -193,7 +293,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KgW-iD-wfc">
-                                            <rect key="frame" x="-0.5" y="33" width="375" height="34.5"/>
+                                            <rect key="frame" x="-1" y="33" width="376" height="35"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="25"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -221,12 +321,12 @@
                     <tabBarItem key="tabBarItem" title="Item" id="hSN-k0-dBg"/>
                     <connections>
                         <outlet property="tableView" destination="kgy-y3-TaA" id="Aak-xt-Hqm"/>
-                        <segue destination="f67-QF-LUL" kind="show" identifier="toSuggestCity" id="G3S-5Z-lfy"/>
+                        <segue destination="TwF-61-JAd" kind="presentation" identifier="toSuggestCity" id="ZJT-TX-JVI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D7p-CY-7kG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="497" y="-2337"/>
+            <point key="canvasLocation" x="-282" y="-2346"/>
         </scene>
     </scenes>
 </document>

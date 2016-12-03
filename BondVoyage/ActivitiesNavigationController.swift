@@ -19,7 +19,7 @@ class ActivitiesNavigationController: ConfigurableNavigationController {
     
     override func loadDefaultRootViewController() {
         let user = PFUser.current() as? User
-        if let city = user?.city {
+        if let city = user?.city, !city.isEmpty {
             super.loadDefaultRootViewController()
         }
         else {
