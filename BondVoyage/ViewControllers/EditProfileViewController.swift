@@ -24,6 +24,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBOutlet weak var inputOccupation: UITextField!
     @IBOutlet weak var inputEducation: UITextField!
     @IBOutlet weak var inputLanguages: UITextField!
+    @IBOutlet weak var inputWith: UITextField!
     
     @IBOutlet weak var imagePhoto: AsyncImageView!
     @IBOutlet weak var buttonPhoto: UIButton!
@@ -33,6 +34,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     
     var pickerBirthYear: UIPickerView = UIPickerView()
     var pickerGender: UIPickerView = UIPickerView()
+    var pickerWith: UIPickerView = UIPickerView()
     
     var isSignup: Bool = false
     var selectedPhoto: UIImage?
@@ -47,8 +49,10 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     var keyboardDoneButtonView: UIToolbar = UIToolbar()
     var cancelEditing: Bool = false
     var gender: Gender?
+    var group: Group?
 
     var genderOptions: [Gender] = [Gender.Male, Gender.Female, Gender.Other]
+    var withOptions: [Group] = [.Solo, .SignificantOther, .Family, .Friends]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +81,11 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         pickerGender.dataSource = self
         self.inputGender.inputView = pickerGender
 
+        // picker for with
+        pickerWith.delegate = self
+        pickerWith.dataSource = self
+        self.inputWith.inputView = pickerWith
+        
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
@@ -172,6 +181,9 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         if pickerView == self.pickerGender {
             return 4 // select, MFO
         }
+        else if pickerView == self.pickerWith {
+            return 5
+        }
         return 80 // years
     }
     
@@ -183,6 +195,12 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
                 return "Select a gender"
             }
             return genderOptions[row-1].rawValue
+        }
+        else if pickerView == self.pickerWith {
+            if row == 0 {
+                return "Select one"
+            }
+            return withOptions[row-1].rawValue
         }
         else {
             if row == 0 {
@@ -204,6 +222,15 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             else {
                 self.gender = genderOptions[row-1]
                 self.inputGender.text = self.gender?.rawValue
+            }
+        }
+        else if pickerView == self.pickerWith {
+            if row == 0 {
+                self.group = nil
+            }
+            else {
+                self.group = withOptions[row-1]
+                self.inputWith.text = self.group?.rawValue
             }
         }
         else {
@@ -309,6 +336,9 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             user!.setValue(self.gender!.rawValue.lowercased(), forKey: "gender")
         }
         
+        if self.group != nil {
+            user!.setValue(self.group!.rawValue, forKey: "group")
+        }
         
         user!.saveInBackground(block: { (success, error) -> Void in
             if success {

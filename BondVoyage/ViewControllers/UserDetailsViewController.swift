@@ -23,7 +23,9 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var interestsLabel: UILabel!
     @IBOutlet weak var aboutMeLabel: UILabel!
     @IBOutlet weak var countriesLabel: UILabel!
+    @IBOutlet weak var occupationLabel: UILabel!
     @IBOutlet weak var languagesLabel: UILabel!
+    @IBOutlet weak var educationLabel: UILabel!
     @IBOutlet weak var groupsLabel: UILabel!
     @IBOutlet weak var nameView: UIView!
     @IBOutlet weak var interestsView: UIView!
@@ -192,11 +194,26 @@ class UserDetailsViewController: UIViewController {
             self.countriesLabel.text = nil
         }
 
+        if let occupation = user!.value(forKey: "occupation") as? String {
+            self.occupationLabel.attributedText = "Occupation: \(occupation)".attributedString(occupation, size: 17)
+        }
+        else {
+            self.occupationLabel.text = nil
+        }
+        
+
         if let languages = user!.value(forKey: "languages") as? String {
             self.languagesLabel.attributedText = "Languages: \(languages)".attributedString(languages, size: 17)
         }
         else {
             self.languagesLabel.text = nil
+        }
+        
+        if let education = user!.value(forKey: "education") as? String {
+            self.educationLabel.attributedText = "Education: \(education)".attributedString(education, size: 17)
+        }
+        else {
+            self.educationLabel.text = nil
         }
     
         if let group = user!.value(forKey: "group") as? String, let g = Group(rawValue:group) {
