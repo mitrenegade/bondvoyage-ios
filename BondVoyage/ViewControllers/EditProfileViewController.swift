@@ -93,7 +93,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         let close: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.done, target: self, action: #selector(EditProfileViewController.endEditing))
         let flex: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([close, flex, button], animated: true)
-        for input: UITextField in [inputName, inputGender, inputBirthYear, inputOccupation, inputEducation, inputLanguages] {
+        for input: UITextField in [inputName, inputGender, inputBirthYear, inputOccupation, inputEducation, inputLanguages, inputWith] {
             input.inputAccessoryView = keyboardDoneButtonView
         }
         
@@ -200,6 +200,9 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             if row == 0 {
                 return "Select one"
             }
+            else if withOptions[row-1] == .SignificantOther {
+                return "Significant other"
+            }
             return withOptions[row-1].rawValue
         }
         else {
@@ -230,7 +233,12 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             }
             else {
                 self.group = withOptions[row-1]
-                self.inputWith.text = self.group?.rawValue
+                if withOptions[row-1] == .SignificantOther {
+                    self.inputWith.text = "Significant other"
+                }
+                else {
+                    self.inputWith.text = self.group?.rawValue
+                }
             }
         }
         else {
