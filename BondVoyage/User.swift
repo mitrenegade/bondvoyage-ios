@@ -13,6 +13,7 @@ class User: PFUser {
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
     @NSManaged var gender: String?
+    @NSManaged var city: String?
     @NSManaged var education: String?
     @NSManaged var occupation: String?
     @NSManaged var about: String?

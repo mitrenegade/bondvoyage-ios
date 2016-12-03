@@ -15,6 +15,10 @@ class ConfigurableNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.loadDefaultRootViewController()
+    }
+    
+    func loadDefaultRootViewController() {
         // Do any additional setup after loading the view.
         if let storyboardName = rootStoryboardName {
             let storyboard = UIStoryboard(name: storyboardName, bundle: nil)

@@ -32,7 +32,7 @@
         <!--Activities-->
         <scene sceneID="4eW-yU-7io">
             <objects>
-                <navigationController id="xPb-CS-Ee1" customClass="ConfigurableNavigationController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="xPb-CS-Ee1" customClass="ActivitiesNavigationController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Activities" image="icon-star" id="IPc-wf-V01">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
@@ -99,7 +99,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c84-3G-sgJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="c84-3G-sgJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
