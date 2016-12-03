@@ -9,34 +9,34 @@
 import UIKit
 import Parse
 
-class ActivitiesNavigationController: ConfigurableNavigationController {
+class ActivitiesNavigationController: ConfigurableNavigationController, CityViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-    
-    override func loadDefaultRootViewController() {
         let user = PFUser.current() as? User
         if let city = user?.city, !city.isEmpty {
-            super.loadDefaultRootViewController()
+            return // city exists
         }
         else {
             // Do any additional setup after loading the view.
             let storyboard = UIStoryboard(name: "City", bundle: nil)
-            if let controller = storyboard.instantiateInitialViewController() {
-                self.setViewControllers([controller], animated: false)
+            if let controller = storyboard.instantiateInitialViewController() as? CityViewController {
+                controller.delegate = self
+                self.present(controller, animated: true, completion: nil)
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
+    func didFinishSelectCity() {
+        self.dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

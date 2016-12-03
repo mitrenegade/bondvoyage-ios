@@ -29,6 +29,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBOutlet weak var buttonPhoto: UIButton!
     @IBOutlet weak var buttonAbout: UIButton!
     
+    @IBOutlet weak var inputCity: UITextField!
+    
     var pickerBirthYear: UIPickerView = UIPickerView()
     var pickerGender: UIPickerView = UIPickerView()
     
@@ -87,7 +89,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         }
         
         if PFUser.current() != nil {
-            let user: PFUser = PFUser.current()!
+            let user: PFUser = PFUser.current() as! User
             user.fetchInBackground(block: { (result, error) -> Void in
                 if result != nil {
                     if let photoURL: String = result!.value(forKey: "photoUrl") as? String {
@@ -126,6 +128,10 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
                     self.gender = .Other
                 }
                 self.inputGender.text = self.gender?.rawValue
+            }
+            
+            if let city = user.object(forKey: "city") as? String, !city.isEmpty {
+                self.inputCity.text = city
             }
         }
         
@@ -222,6 +228,11 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == self.inputCity {
+            self.selectCity()
+            return false
+        }
+        
         self.currentInput = textField
         let view: UIView = self.currentInput!.superview!
         var rect: CGRect = view.frame
@@ -422,15 +433,18 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             self.performSegue(withIdentifier: "toAboutMe", sender: self)
         }
     }
-    
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension EditProfileViewController: CityViewDelegate {
+    func selectCity() {
+        let storyboard = UIStoryboard(name: "City", bundle: nil)
+        if let controller = storyboard.instantiateInitialViewController() as? CityViewController {
+            controller.delegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
     }
-    */
 
+    func didFinishSelectCity() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
