@@ -432,13 +432,13 @@
 				8ED3426F1DE3DD3200DA5755 /* ConfigurableNavigationController.swift */,
 				8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */,
 				8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */,
+				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 				C518526B1C341A9E00EA2328 /* Settings */,
 				8ECA14E91DD29763003DF990 /* Cities */,
 				8ECA14EA1DD29782003DF990 /* Activities */,
 				8ED342731DE3E3CC00DA5755 /* Chats */,
 				8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */,
 				8EF20F261DD2107F00BFA659 /* MatchedBondsViewController.swift */,
-				E5FF8BE51C40BA020080C195 /* UserDetailsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

@@ -18,6 +18,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var scrollViewContainer: AsyncImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
     @IBOutlet weak var interestsLabel: UILabel!
     @IBOutlet weak var aboutMeLabel: UILabel!
@@ -54,11 +55,6 @@ class UserDetailsViewController: UIViewController {
             self.title = "My Profile"
         }
         
-        self.nameLabel!.layer.shadowOpacity = 1
-        self.nameLabel!.layer.shadowRadius = 2
-        self.nameLabel!.layer.shadowColor = UIColor.black.cgColor
-        self.nameLabel!.layer.shadowOffset = CGSize(width: 1, height: 1)
-        
         self.view!.backgroundColor = UIColor.clear
         
         NotificationCenter.default.addObserver(self, selector: #selector(UserDetailsViewController.configureDetailsForUser), name: NSNotification.Name(rawValue: "profile:updated"), object: nil)
@@ -93,9 +89,9 @@ class UserDetailsViewController: UIViewController {
     }
 
     func configureDetailsForUser() {
-        var user: PFUser? = selectedUser
+        var user: User? = selectedUser as? User
         if self.selectedUser == nil {
-            user = self.invitingUser
+            user = self.invitingUser as? User
         }
         if user == nil {
             return
@@ -116,6 +112,14 @@ class UserDetailsViewController: UIViewController {
             self.scrollViewContainer.image = UIImage(named: "profile")
         }
 
+        if let city = user!.city, !city.isEmpty {
+            self.cityLabel.text = city
+            self.cityLabel.isHidden = false
+        }
+        else {
+            self.cityLabel.isHidden = true
+        }
+        
         if let firstName = user!.value(forKey: "firstName") as? String {
             self.nameLabel.text = "\(firstName)"
         }
