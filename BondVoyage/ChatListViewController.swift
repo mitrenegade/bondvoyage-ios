@@ -23,6 +23,8 @@ class ChatListViewController: UIViewController {
     var conversations: [Conversation]?
     var conversationSections: [String] = [String]()
     
+    var users:[Conversation: User] = [Conversation: User]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -126,6 +128,7 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell")! as! ConversationCell
         cell.adjustTableViewCellSeparatorInsets(cell)
+        cell.delegate = self
 
         guard let conversations = self.conversations, indexPath.section < conversationSections.count else  { return cell }
         let sectionName = self.conversationSections[indexPath.section]
@@ -160,13 +163,22 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         let conversation: Conversation = conversationsFromDay[indexPath.row]
         
-        self.tableView.isUserInteractionEnabled = false
-        //self.goToChat(conversation)
+        if let user = self.users[conversation] {
+            self.goToChat(user, conversation: conversation)
+        }
+        else {
+            conversation.queryOtherUser { (user, error) in
+                guard let user = user, error == nil else {
+                    return
+                }
+                self.didGetUser(user: user, forConversation: conversation)
+                self.goToChat(user, conversation: conversation)
+            }
+        }
     }
     
     func goToChat(_ selectedUser: PFUser, conversation: Conversation?) {
-        /*
-        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId else {
+        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId, let conversation = conversation else {
             print("goToChat failed")
             return
         }
@@ -176,7 +188,7 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
                 print("no user")
                 return
             }
-            SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+            SessionService.sharedInstance.startChatWithUser(user, conversation, completion: { (success, dialog) in
                 guard success else {
                     print("Could not start chat")
                     self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this person", error: nil, completion: nil)
@@ -186,18 +198,19 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatNavigationViewController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
                     chatVC.dialog = dialog
+                    chatVC.conversation = conversation
                     self?.present(chatNavigationVC, animated: true, completion: {
-                        //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
-                        // create conversation
-                        if let dialogId = dialog?.id {
-                            print("add dialog to conversation")
-                            conversation?.setValue(dialogId, forKey: "dialogId")
-                            conversation?.saveInBackground()
-                        }
                     })
                 }
             })
         }
-        */
+    }
+    
+
+}
+
+extension ChatListViewController: ConversationCellDelegate {
+    func didGetUser(user: User, forConversation conversation: Conversation) {
+        users[conversation] = user
     }
 }
