@@ -18,6 +18,9 @@ class InviteViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    
+    @IBOutlet weak var noActivitiesView: UILabel!
+    
     var didSetupScroll: Bool = false
     
     var category: CATEGORY?
@@ -29,6 +32,10 @@ class InviteViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(close))
         self.configureRightNavigationButton()
+        
+        let categoryString = self.category == nil ? "your activity" : CategoryFactory.categoryReadableString(self.category!)
+        self.noActivitiesView.text = "No one is currently available. When people search for \(categoryString) they will appear here."
+        self.noActivitiesView.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -187,6 +194,7 @@ class InviteViewController: UIViewController {
             controller.configureUI() // force resize
         }
         self.scrollView.contentSize = CGSize(width: CGFloat(count) * width, height: height)
+        self.refresh()
     }
     
     func refresh() {
@@ -196,9 +204,13 @@ class InviteViewController: UIViewController {
         
         if activities.count == 0 {
             // no users
+            self.noActivitiesView.isHidden = false
+            self.navigationItem.rightBarButtonItem?.customView?.alpha = 0.25
         }
         else {
-            // no users
+            // users exist
+            self.noActivitiesView.isHidden = true
+            self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
         }
     }
 }
