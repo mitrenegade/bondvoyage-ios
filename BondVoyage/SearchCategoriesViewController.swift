@@ -228,6 +228,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         if segue.identifier == "GoToActivities" {
             if let controller = segue.destination as? InviteViewController, let activities = sender as? [Activity] {
                 controller.activities = activities
+                controller.category = self.newCategory
             }
         }
     }

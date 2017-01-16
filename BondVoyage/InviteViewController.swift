@@ -18,6 +18,9 @@ class InviteViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    
+    @IBOutlet weak var noActivitiesView: UILabel!
+    
     var didSetupScroll: Bool = false
     
     var category: CATEGORY?
@@ -29,6 +32,10 @@ class InviteViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(close))
         self.configureRightNavigationButton()
+        
+        let categoryString = self.category == nil ? "your activity" : CategoryFactory.categoryReadableString(self.category!)
+        self.noActivitiesView.text = "No one is currently available. When people search for \(categoryString) they will appear here."
+        self.noActivitiesView.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,15 +61,23 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
-        Activity.cancelCurrentActivity { (success, error) in
-            if !success {
-                print("error: \(error)")
-                // TODO: try again
+        let title = "End search?"
+        let categoryString = self.category == nil ? "" : "for \(CategoryFactory.categoryReadableString(self.category!)) "
+        let message = "You will no longer be matched \(categoryString)if you go back. You can start another search at any time."
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "End", style: .default, handler: { (action) in
+            Activity.cancelCurrentActivity { (success, error) in
+                if !success {
+                    print("error: \(error)")
+                    // TODO: try again
+                }
+                else {
+                    self.navigationController!.popToRootViewController(animated: true)
+                }
             }
-            else {
-                self.navigationController!.popToRootViewController(animated: true)
-            }
-        }
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 
     func didClickInviteOrChat() {
@@ -179,6 +194,7 @@ class InviteViewController: UIViewController {
             controller.configureUI() // force resize
         }
         self.scrollView.contentSize = CGSize(width: CGFloat(count) * width, height: height)
+        self.refresh()
     }
     
     func refresh() {
@@ -188,9 +204,13 @@ class InviteViewController: UIViewController {
         
         if activities.count == 0 {
             // no users
+            self.noActivitiesView.isHidden = false
+            self.navigationItem.rightBarButtonItem?.customView?.alpha = 0.25
         }
         else {
-            // no users
+            // users exist
+            self.noActivitiesView.isHidden = true
+            self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
         }
     }
 }
