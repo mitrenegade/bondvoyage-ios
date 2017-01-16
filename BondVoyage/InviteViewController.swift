@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import QMChatViewController
+import ParseLiveQuery
 
 class InviteViewController: UIViewController {
     
@@ -21,6 +22,11 @@ class InviteViewController: UIViewController {
     
     @IBOutlet weak var noActivitiesView: UILabel!
     
+    // live query for Parse objects
+    let liveQueryClient = ParseLiveQuery.Client()
+    var subscription: Subscription<Activity>?
+    var isSubscribed: Bool = false
+
     var didSetupScroll: Bool = false
     
     var category: CATEGORY?
@@ -212,5 +218,34 @@ class InviteViewController: UIViewController {
             self.noActivitiesView.isHidden = true
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
         }
+    }
+}
+
+// live query
+extension InviteViewController {
+    func subscribeToUpdates() {
+        guard let user = PFUser.current(), let userId = user.objectId else { return }
+        guard let query: PFQuery<Activity> = Activity.query() as? PFQuery<Activity> else { return }
+        guard let categoryString = self.category?.rawValue else { return }
+        
+        query.whereKey("category", equalTo: categoryString)
+        
+        self.subscription = liveQueryClient.subscribe(query)
+            .handle(Event.updated, { (_, object) in
+                if let activities = self.activities {
+                    for a in activities {
+                        if a.objectId == object.objectId {
+                            self.activities!.remove(at: activities.index(of: a)!)
+                        }
+                    }
+                    self.activities!.append(object)
+                }
+                DispatchQueue.main.async(execute: {
+                    print("received update for conversations: \(object.objectId!)")
+                    
+                    // TODO: refresh pagingViewController
+                })
+            })
+        isSubscribed = true
     }
 }
