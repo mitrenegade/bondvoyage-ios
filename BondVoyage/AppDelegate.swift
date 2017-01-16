@@ -201,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func warnForRemoteNotificationRegistrationFailure() {
-        let alert = UIAlertController(title: "Change notification settings?", message: "Push notifications are disabled, so you can't receive notifications from trainers. Would you like to go to the Settings to update them?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Change notification settings?", message: "Push notifications are disabled, so you can't receive notifications. Would you like to go to the Settings to update them?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (action) -> Void in
             print("go to settings")

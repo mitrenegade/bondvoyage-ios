@@ -54,15 +54,23 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
-        Activity.cancelCurrentActivity { (success, error) in
-            if !success {
-                print("error: \(error)")
-                // TODO: try again
+        let title = "End search?"
+        let categoryString = self.category == nil ? "" : "for \(CategoryFactory.categoryReadableString(self.category!)) "
+        let message = "You will no longer be matched \(categoryString)if you go back. You can start another search at any time."
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "End", style: .default, handler: { (action) in
+            Activity.cancelCurrentActivity { (success, error) in
+                if !success {
+                    print("error: \(error)")
+                    // TODO: try again
+                }
+                else {
+                    self.navigationController!.popToRootViewController(animated: true)
+                }
             }
-            else {
-                self.navigationController!.popToRootViewController(animated: true)
-            }
-        }
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 
     func didClickInviteOrChat() {
