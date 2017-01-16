@@ -20,7 +20,7 @@ class InviteViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
     var didSetupScroll: Bool = false
-    var pagingController: CachedPagingViewController! = CachedPagingViewController()
+    var pagingController: CachedPagingViewController! = CachedPagingViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     var currentPage: Int = -1
     
     @IBOutlet weak var noActivitiesView: UILabel!
@@ -46,6 +46,8 @@ class InviteViewController: UIViewController {
         self.noActivitiesView.isHidden = true
         
         self.view.insertSubview(pagingController.view, belowSubview: noActivitiesView)
+        
+        self.subscribeToUpdates()
     }
     
     override func viewDidLayoutSubviews() {
@@ -234,11 +236,11 @@ class InviteViewController: UIViewController {
             // users exist
             self.noActivitiesView.isHidden = true
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
-
+            
             guard let controller = self.pagingController.controllerAt(index: self.currentPage) else {
                 return
             }
-            self.pagingController.setViewControllers([controller as! UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
+            self.pagingController.setViewControllers([controller as! UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
         }
     }
 }
@@ -256,9 +258,30 @@ extension InviteViewController {
         guard let query: PFQuery<Activity> = Activity.query() as? PFQuery<Activity> else { return }
         guard let categoryString = self.category?.rawValue else { return }
         
-        query.whereKey("category", equalTo: categoryString)
+        query.whereKey("category", equalTo: categoryString.lowercased())
+        
+        // TODO: filter out owner = self, which can't be done because owner is a pointer
+//        query.whereKey("owner.objectId", notEqualTo: userId)
         
         self.subscription = liveQueryClient.subscribe(query)
+            .handle(Event.created) { _, object in
+                self.activities!.append(object)
+                do {
+                    try object.fetchOwnerInBackground()
+                }
+                catch let e as NSException {
+                    print("\(e)")
+                }
+                catch {
+                    print("error")
+                }
+                DispatchQueue.main.async(execute: {
+                    print("received update for conversations: \(object.objectId!)")
+                    
+                    self.pagingController.activities = self.activities
+                    self.refresh()
+                })
+            }
             .handle(Event.updated, { (_, object) in
                 if let activities = self.activities {
                     for a in activities {
@@ -266,12 +289,16 @@ extension InviteViewController {
                             self.activities!.remove(at: activities.index(of: a)!)
                         }
                     }
-                    self.activities!.append(object)
+                    
+                    if object.status == "active", let expiration = object.expiration, expiration.timeIntervalSinceNow > 0 {
+                        self.activities!.append(object)
+                    }
                 }
                 DispatchQueue.main.async(execute: {
-                    print("received update for conversations: \(object.objectId!)")
+                    print("received update for activity: \(object.objectId!)")
                     
-                    // TODO: refresh pagingViewController
+                    self.pagingController.activities = self.activities
+                    self.refresh()
                 })
             })
         isSubscribed = true

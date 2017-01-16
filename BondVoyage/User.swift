@@ -44,3 +44,22 @@ extension User {
     }
 }
 
+var userCache: [String: User] = [String: User]()
+extension User {
+    class func withId(objectId: String, completion: @escaping ((User?)->Void)) {
+        if let result = userCache[objectId] {
+            completion(result)
+            return
+        }
+        
+        let query = User.query()
+        query?.getObjectInBackground(withId: objectId, block: { (result, error) in
+            if let user = result as? User {
+                userCache[objectId] = user
+                completion(user)
+            }
+            completion(nil)
+        })
+    }
+}
+

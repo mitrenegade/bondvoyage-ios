@@ -26,7 +26,7 @@ class CachedPagingViewController: UIPageViewController {
     var cachedPagingDelegate: CachedPagingViewControllerDelegate?
     
     var activePage: PagedViewController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,16 +43,15 @@ class CachedPagingViewController: UIPageViewController {
         }
         else {
  */
-            guard let activities = self.activities, index < activities.count else { return nil }
-            let activity = activities[index]
-            guard let user = activity.object(forKey: "owner") as? PFUser else { return nil }
-
-            let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
-            controller.selectedUser = user
+        guard let activities = self.activities, index < activities.count else { return nil }
+        let activity = activities[index]
+        
+        let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
         controller.page = index
-
-//            self.pages[index] = controller
-            
+        
+        controller.selectedUser = activity.owner
+        //            self.pages[index] = controller
+        
             return controller
 //        }
     }
