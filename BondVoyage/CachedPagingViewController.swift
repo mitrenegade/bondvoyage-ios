@@ -10,7 +10,11 @@ import UIKit
 import Parse
 
 protocol CachedPagingViewControllerDelegate {
-    func activePageChanged(page: Int)
+    func activePageChanged(index: Int)
+}
+
+protocol PagedViewController {
+    var page: Int { get set }
 }
 
 class CachedPagingViewController: UIPageViewController {
@@ -21,14 +25,16 @@ class CachedPagingViewController: UIPageViewController {
     var activities: [Activity]?
     var cachedPagingDelegate: CachedPagingViewControllerDelegate?
     
-    var currentPage: Int = -1
-    var activePage: UIViewController?
+    var activePage: PagedViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.delegate = self
+        self.dataSource = self
     }
     
-    func controllerAt(index: Int) -> UIViewController? {
+    func controllerAt(index: Int) -> PagedViewController? {
         guard index >= 0 else { return nil }
         
         /*
@@ -43,6 +49,7 @@ class CachedPagingViewController: UIPageViewController {
 
             let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             controller.selectedUser = user
+        controller.page = index
 
 //            self.pages[index] = controller
             
@@ -55,13 +62,14 @@ extension CachedPagingViewController: UIPageViewControllerDelegate, UIPageViewCo
 
     // MARK: UIPageViewControllerDelegate
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        activePage = pendingViewControllers.last
+        activePage = pendingViewControllers.last as? PagedViewController
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if !completed {
             if previousViewControllers.last != nil {
-                self.cachedPagingDelegate?.activePageChanged(page: currentPage)
+                let currentPage = activePage?.page ?? 0
+                self.cachedPagingDelegate?.activePageChanged(index: currentPage)
             }
         }
     }
@@ -70,8 +78,9 @@ extension CachedPagingViewController: UIPageViewControllerDelegate, UIPageViewCo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var previousController: UIViewController?
         
+        let currentPage = activePage?.page ?? 0
         if currentPage > 0 {
-            previousController = controllerAt(index: currentPage - 1)
+            previousController = controllerAt(index: currentPage - 1) as? UIViewController
         }
         
         return previousController
@@ -80,8 +89,9 @@ extension CachedPagingViewController: UIPageViewControllerDelegate, UIPageViewCo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         var nextController: UIViewController?
         
+        let currentPage = activePage?.page ?? 0
         if currentPage >= 0 && currentPage + 1 < self.activities?.count ?? 0 {
-            nextController = controllerAt(index: currentPage + 1)
+            nextController = controllerAt(index: currentPage + 1) as? UIViewController
         }
         
         return nextController

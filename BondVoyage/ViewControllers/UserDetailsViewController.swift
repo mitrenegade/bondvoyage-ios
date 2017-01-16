@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import AsyncImageView
 
-class UserDetailsViewController: UIViewController {
+class UserDetailsViewController: UIViewController, PagedViewController {
 
     var selectedUser: PFUser?
     var invitingUser: PFUser?
@@ -35,6 +35,9 @@ class UserDetailsViewController: UIViewController {
     var relevantInterests: [String]?
     var invitingActivity: PFObject?
 
+    // MARK: PagedViewController
+    var page: Int = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

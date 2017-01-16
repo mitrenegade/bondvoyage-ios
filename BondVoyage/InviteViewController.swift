@@ -19,6 +19,9 @@ class InviteViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    var didSetupScroll: Bool = false
+    var pagingController: CachedPagingViewController! = CachedPagingViewController()
+    var currentPage: Int = -1
     
     @IBOutlet weak var noActivitiesView: UILabel!
     
@@ -27,7 +30,6 @@ class InviteViewController: UIViewController {
     var subscription: Subscription<Activity>?
     var isSubscribed: Bool = false
 
-    var didSetupScroll: Bool = false
     
     var category: CATEGORY?
     var activities: [Activity]?
@@ -42,6 +44,8 @@ class InviteViewController: UIViewController {
         let categoryString = self.category == nil ? "your activity" : CategoryFactory.categoryReadableString(self.category!)
         self.noActivitiesView.text = "No one is currently available. When people search for \(categoryString) they will appear here."
         self.noActivitiesView.isHidden = true
+        
+        self.view.insertSubview(pagingController.view, belowSubview: noActivitiesView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -94,8 +98,8 @@ class InviteViewController: UIViewController {
         guard let user = PFUser.current(), let activity = user.value(forKey: "activity") as? Activity else {
             return
         }
-        guard let activities = self.activities, self.currentPage() < activities.count else { return }
-        guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "owner") as? PFUser else { return }
+        guard let activities = self.activities, self.currentPage < activities.count else { return }
+        guard let selectedUser: PFUser = activities[self.currentPage].object(forKey: "owner") as? PFUser else { return }
         
         let activityId = activity.objectId
         Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, conversation, error) in
@@ -169,16 +173,19 @@ class InviteViewController: UIViewController {
         })
     }
 
+    /*
     func currentPage() -> Int {
         let page = Int(floor(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
         return page
     }
+ */
     
     func setupScroll() {
         guard let activities = self.activities else {
             return
         }
 
+        /*
         let width: CGFloat = self.view.frame.size.width
         let height: CGFloat = self.scrollView.frame.size.height
         self.scrollView.isPagingEnabled = true
@@ -200,6 +207,16 @@ class InviteViewController: UIViewController {
             controller.configureUI() // force resize
         }
         self.scrollView.contentSize = CGSize(width: CGFloat(count) * width, height: height)
+        */
+        self.pagingController.view.frame = self.scrollView.frame
+        self.scrollView.removeFromSuperview()
+        
+        self.pagingController.activities = self.activities
+        self.pagingController.cachedPagingDelegate = self
+        
+        if let activities = self.activities, activities.count > 0 {
+            self.currentPage = 0
+        }
         self.refresh()
     }
     
@@ -217,7 +234,18 @@ class InviteViewController: UIViewController {
             // users exist
             self.noActivitiesView.isHidden = true
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
+
+            guard let controller = self.pagingController.controllerAt(index: self.currentPage) else {
+                return
+            }
+            self.pagingController.setViewControllers([controller as! UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
         }
+    }
+}
+
+extension InviteViewController: CachedPagingViewControllerDelegate {
+    func activePageChanged(index: Int) {
+        self.currentPage = index
     }
 }
 
