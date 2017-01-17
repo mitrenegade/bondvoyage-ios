@@ -18,6 +18,7 @@
 		8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */; };
 		8E4E10BB1E2D6A8700A6330D /* CachedPagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4E10BA1E2D6A8700A6330D /* CachedPagingViewController.swift */; };
 		8E4F78621DF3619800BFAEC1 /* ActivitiesNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F78611DF3619800BFAEC1 /* ActivitiesNavigationController.swift */; };
+		8E680EE51E2E4DCE00CBE77C /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E680EE41E2E4DCE00CBE77C /* ActivityService.swift */; };
 		8E6CD7771CAC720C00A556F9 /* JoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6CD7761CAC720C00A556F9 /* JoinCell.swift */; };
 		8E73665B1CA9F46500F3642E /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E73665A1CA9F46500F3642E /* InviteViewController.swift */; };
 		8E91D4641C5D03F900C6D406 /* ActivitiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */; };
@@ -41,7 +42,6 @@
 		8ECA14E81DD24E43003DF990 /* UIImage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */; };
 		8ECA14EC1DD29BC6003DF990 /* DatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */; };
 		8ECA14F01DD41732003DF990 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14EF1DD41732003DF990 /* Activity.swift */; };
-		8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */; };
 		8ED342701DE3DD3200DA5755 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3426F1DE3DD3200DA5755 /* ConfigurableNavigationController.swift */; };
 		8ED342721DE3E3C300DA5755 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED342711DE3E3C300DA5755 /* ChatListViewController.swift */; };
 		8ED342751DE3E4AA00DA5755 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED342741DE3E4AA00DA5755 /* Conversation.swift */; };
@@ -49,8 +49,6 @@
 		8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */; };
 		8EEF98B21DCE55C900D5BF31 /* Old.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EEF98B11DCE55C900D5BF31 /* Old.storyboard */; };
 		8EEF98B41DCE55F800D5BF31 /* Activities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EEF98B31DCE55F800D5BF31 /* Activities.storyboard */; };
-		8EF20F271DD2107F00BFA659 /* MatchedBondsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF20F261DD2107F00BFA659 /* MatchedBondsViewController.swift */; };
-		8EF20F291DD210A300BFA659 /* RequestedBondsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */; };
 		AC1698461C1C7AB200E3DAAE /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1698451C1C7AB200E3DAAE /* UserRequest.swift */; };
 		AC75B88E1C232C5F00D74F8E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC75B88D1C232C5F00D74F8E /* Constants.swift */; };
 		C518526E1C341ACA00EA2328 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C518526D1C341ACA00EA2328 /* Settings.storyboard */; };
@@ -113,6 +111,7 @@
 		8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E4E10BA1E2D6A8700A6330D /* CachedPagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedPagingViewController.swift; sourceTree = "<group>"; };
 		8E4F78611DF3619800BFAEC1 /* ActivitiesNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesNavigationController.swift; sourceTree = "<group>"; };
+		8E680EE41E2E4DCE00CBE77C /* ActivityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		8E6CD7761CAC720C00A556F9 /* JoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinCell.swift; sourceTree = "<group>"; };
 		8E707BAD1DDF3FB900658434 /* BondVoyage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BondVoyage.entitlements; sourceTree = "<group>"; };
 		8E73665A1CA9F46500F3642E /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
@@ -138,7 +137,6 @@
 		8ECA14E71DD24E43003DF990 /* UIImage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		8ECA14EB1DD29BC6003DF990 /* DatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewController.swift; sourceTree = "<group>"; };
 		8ECA14EF1DD41732003DF990 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = Services/Activity.swift; sourceTree = "<group>"; };
-		8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
 		8ED3426F1DE3DD3200DA5755 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableNavigationController.swift; sourceTree = "<group>"; };
 		8ED342711DE3E3C300DA5755 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		8ED342741DE3E4AA00DA5755 /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -146,8 +144,6 @@
 		8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
 		8EEF98B11DCE55C900D5BF31 /* Old.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Old.storyboard; sourceTree = "<group>"; };
 		8EEF98B31DCE55F800D5BF31 /* Activities.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Activities.storyboard; sourceTree = "<group>"; };
-		8EF20F261DD2107F00BFA659 /* MatchedBondsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchedBondsViewController.swift; sourceTree = "<group>"; };
-		8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestedBondsViewController.swift; sourceTree = "<group>"; };
 		AC1698451C1C7AB200E3DAAE /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		AC75B88D1C232C5F00D74F8E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B6C28C4717CC4A89C2110871 /* Pods-BondVoyage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BondVoyage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BondVoyage/Pods-BondVoyage.debug.xcconfig"; sourceTree = "<group>"; };
@@ -240,6 +236,7 @@
 				8E0B35391D7C63AB008872FD /* QBUserService.swift */,
 				8E30E6DA1DCF84AF004C4F55 /* SessionService.swift */,
 				8E0B353B1D7C6898008872FD /* UserService.swift */,
+				8E680EE41E2E4DCE00CBE77C /* ActivityService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -289,7 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				AC1698451C1C7AB200E3DAAE /* UserRequest.swift */,
-				8ECE75E01C7D1F5700302246 /* ActivityRequest.swift */,
 				8EE391FC1C5D657D003DF922 /* CategoryFactory.swift */,
 			);
 			name = DataSource;
@@ -440,8 +436,6 @@
 				8ECA14E91DD29763003DF990 /* Cities */,
 				8ECA14EA1DD29782003DF990 /* Activities */,
 				8ED342731DE3E3CC00DA5755 /* Chats */,
-				8EF20F281DD210A300BFA659 /* RequestedBondsViewController.swift */,
-				8EF20F261DD2107F00BFA659 /* MatchedBondsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -669,6 +663,7 @@
 				F26F02391DC958D0003EADFA /* CityViewController.swift in Sources */,
 				F289222C1DCB5D1D000D2E83 /* SubmitCityViewController.swift in Sources */,
 				8ED342701DE3DD3200DA5755 /* ConfigurableNavigationController.swift in Sources */,
+				8E680EE51E2E4DCE00CBE77C /* ActivityService.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
 				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
 				C5566EE61C3E1040007C22F3 /* UIViewController+Utils.swift in Sources */,
@@ -676,7 +671,6 @@
 				F26F023B1DC95EB0003EADFA /* SuggestCityViewController.swift in Sources */,
 				8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */,
 				8EBEDADB1C440B15002DDA70 /* BVSlider.swift in Sources */,
-				8EF20F291DD210A300BFA659 /* RequestedBondsViewController.swift in Sources */,
 				E5C836641C38BEB9003BD54F /* SingleFilterView.swift in Sources */,
 				8E4E10BB1E2D6A8700A6330D /* CachedPagingViewController.swift in Sources */,
 				8E9C88391C8F3346005B09F2 /* DistanceFilterView.swift in Sources */,
@@ -703,9 +697,7 @@
 				8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */,
 				8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */,
 				E5C836671C38BEF5003BD54F /* RangeFilterView.swift in Sources */,
-				8EF20F271DD2107F00BFA659 /* MatchedBondsViewController.swift in Sources */,
 				C5E094381C3703CA00CABC51 /* EditProfileViewController.swift in Sources */,
-				8ECE75E11C7D1F5700302246 /* ActivityRequest.swift in Sources */,
 				8E24D9D51CAEB5B8008B4520 /* BVTabBarController.swift in Sources */,
 				8EE391FD1C5D657D003DF922 /* CategoryFactory.swift in Sources */,
 				8ECA14E61DD24E18003DF990 /* QBChatMessage+LunrExtensions.swift in Sources */,

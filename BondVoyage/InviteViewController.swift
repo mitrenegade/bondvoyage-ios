@@ -154,27 +154,6 @@ class InviteViewController: UIViewController {
         }
     }
     
-    func goToJoinActivity(_ activity: PFObject) {
-        self.activityIndicator.startAnimating()
-
-        ActivityRequest.joinActivity(activity, suggestedPlace: nil, completion: { (results, error) -> Void in
-            
-            self.activityIndicator.stopAnimating()
-            if error != nil {
-                if error != nil && error!.code == 209 {
-                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to join activities.", completion: { () -> Void in
-                        UserService.logout()
-                    })
-                    return
-                }
-            }
-            else {
-                self.refresh()
-                self.navigationController!.popToRootViewController(animated: true)
-            }
-        })
-    }
-
     /*
     func currentPage() -> Int {
         let page = Int(floor(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
