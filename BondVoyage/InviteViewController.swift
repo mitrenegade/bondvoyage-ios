@@ -294,7 +294,7 @@ extension InviteViewController {
                         }
                     }
                     
-                    if object.status == "active", let expiration = object.expiration, expiration.timeIntervalSinceNow > 0 {
+                    if object.status == "active" /*, let expiration = object.expiration, expiration.timeIntervalSinceNow > 0*/ {
                         self.activities!.append(object)
                     }
                 }
