@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import AsyncImageView
 
-class UserDetailsViewController: UIViewController {
+class UserDetailsViewController: UIViewController, PagedViewController {
 
     var selectedUser: PFUser?
     var invitingUser: PFUser?
@@ -35,19 +35,24 @@ class UserDetailsViewController: UIViewController {
     var relevantInterests: [String]?
     var invitingActivity: PFObject?
 
+    // MARK: PagedViewController
+    var page: Int = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.nameView.isHidden = true
         self.interestsView.isHidden = true
         
-        if self.selectedUser != nil {
-            self.selectedUser!.fetchInBackground(block: { (user, error) -> Void in
+        if let user = self.selectedUser {
+            print("user \(user)")
+            
+            user.fetchInBackground(block: { (_, error) -> Void in
                 self.configureDetailsForUser()
             })
         }
-        else if self.invitingUser != nil {
-            self.invitingUser!.fetchInBackground(block: { (user, error) -> Void in
+        else if let user = self.invitingUser {
+            user.fetchInBackground(block: { (_, error) -> Void in
                 self.configureDetailsForUser()
             })
         }

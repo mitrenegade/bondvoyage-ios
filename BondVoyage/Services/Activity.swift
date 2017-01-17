@@ -29,6 +29,21 @@ extension Activity: PFSubclassing {
 }
 
 extension Activity {
+    // owner is a pointer and if ParseLiveQuery is used, it does not get included as a PFObject
+    func fetchOwnerInBackground(completion: ((_ isNew: Bool)->Void)?) throws {
+        if let type = self.owner?["__type"] as? String, type == "Pointer" {
+            if let objectId = self.owner?["objectId"] as? String {
+                print("owner objectId: \(objectId)")
+                
+                User.withId(objectId: objectId, completion: { (user, isNew) in
+                    self.owner = user
+                    completion?(isNew)
+                })
+            }
+        }
+    }
+}
+extension Activity {
     // User creates a new activity that is available for others to join
     class func createActivity(category: CATEGORY, city: String, fromTime: NSDate?, toTime: NSDate?, completion: @escaping ((_ result: Activity?, _ error: NSError?)->Void)) {
         var params: [String: AnyObject] = ["category": category.rawValue.lowercased() as AnyObject, "city": city as AnyObject]

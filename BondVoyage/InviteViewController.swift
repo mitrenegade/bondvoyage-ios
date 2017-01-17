@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import QMChatViewController
+import ParseLiveQuery
 
 class InviteViewController: UIViewController {
     
@@ -18,10 +19,17 @@ class InviteViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var constraintContentWidth: NSLayoutConstraint!
+    var didSetupScroll: Bool = false
+    var pagingController: CachedPagingViewController! = CachedPagingViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    var currentPage: Int = -1
     
     @IBOutlet weak var noActivitiesView: UILabel!
     
-    var didSetupScroll: Bool = false
+    // live query for Parse objects
+    let liveQueryClient = ParseLiveQuery.Client()
+    var subscription: Subscription<Activity>?
+    var isSubscribed: Bool = false
+
     
     var category: CATEGORY?
     var activities: [Activity]?
@@ -36,6 +44,10 @@ class InviteViewController: UIViewController {
         let categoryString = self.category == nil ? "your activity" : CategoryFactory.categoryReadableString(self.category!)
         self.noActivitiesView.text = "No one is currently available. When people search for \(categoryString) they will appear here."
         self.noActivitiesView.isHidden = true
+        
+        self.view.insertSubview(pagingController.view, belowSubview: noActivitiesView)
+        
+        self.subscribeToUpdates()
     }
     
     override func viewDidLayoutSubviews() {
@@ -88,8 +100,8 @@ class InviteViewController: UIViewController {
         guard let user = PFUser.current(), let activity = user.value(forKey: "activity") as? Activity else {
             return
         }
-        guard let activities = self.activities, self.currentPage() < activities.count else { return }
-        guard let selectedUser: PFUser = activities[self.currentPage()].object(forKey: "owner") as? PFUser else { return }
+        guard let activities = self.activities, self.currentPage < activities.count else { return }
+        guard let selectedUser: PFUser = activities[self.currentPage].object(forKey: "owner") as? PFUser else { return }
         
         let activityId = activity.objectId
         Activity.inviteToJoinActivity(activityId: activityId!, inviteeId: selectedUser.objectId!, completion:{ (activity, conversation, error) in
@@ -163,16 +175,19 @@ class InviteViewController: UIViewController {
         })
     }
 
+    /*
     func currentPage() -> Int {
         let page = Int(floor(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
         return page
     }
+ */
     
     func setupScroll() {
         guard let activities = self.activities else {
             return
         }
 
+        /*
         let width: CGFloat = self.view.frame.size.width
         let height: CGFloat = self.scrollView.frame.size.height
         self.scrollView.isPagingEnabled = true
@@ -194,6 +209,16 @@ class InviteViewController: UIViewController {
             controller.configureUI() // force resize
         }
         self.scrollView.contentSize = CGSize(width: CGFloat(count) * width, height: height)
+        */
+        self.pagingController.view.frame = self.scrollView.frame
+        self.scrollView.removeFromSuperview()
+        
+        self.pagingController.activities = self.activities
+        self.pagingController.cachedPagingDelegate = self
+        
+        if let activities = self.activities, activities.count > 0 {
+            self.currentPage = 0
+        }
         self.refresh()
     }
     
@@ -211,6 +236,75 @@ class InviteViewController: UIViewController {
             // users exist
             self.noActivitiesView.isHidden = true
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
+            
+            guard let controller = self.pagingController.controllerAt(index: self.currentPage) else {
+                return
+            }
+            self.pagingController.setViewControllers([controller as! UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
         }
+    }
+}
+
+extension InviteViewController: CachedPagingViewControllerDelegate {
+    func activePageChanged(index: Int) {
+        self.currentPage = index
+    }
+}
+
+// live query
+extension InviteViewController {
+    func subscribeToUpdates() {
+        guard let user = PFUser.current(), let userId = user.objectId else { return }
+        guard let query: PFQuery<Activity> = Activity.query() as? PFQuery<Activity> else { return }
+        guard let categoryString = self.category?.rawValue else { return }
+        
+        query.whereKey("category", equalTo: categoryString.lowercased())
+        
+        // TODO: filter out owner = self, which can't be done because owner is a pointer
+//        query.whereKey("owner.objectId", notEqualTo: userId)
+        
+        self.subscription = liveQueryClient.subscribe(query)
+            .handle(Event.created) { _, object in
+                self.activities!.append(object)
+                self.pagingController.activities = self.activities
+                do {
+                    try object.fetchOwnerInBackground(completion: { isNew in
+                        self.pagingController.activities = self.activities
+                        
+                        if isNew {
+                            // if the user was just fetched, then the existing PagingViewController will not load it correctly, and we must force a refresh
+                            DispatchQueue.main.async(execute: {
+                                self.refresh()
+                            })
+                        }
+                    })
+                }
+                catch let e as NSException {
+                    print("\(e)")
+                }
+                catch {
+                    print("error")
+                }
+            }
+            .handle(Event.updated, { (_, object) in
+                if let activities = self.activities {
+                    for a in activities {
+                        if a.objectId == object.objectId {
+                            self.activities!.remove(at: activities.index(of: a)!)
+                        }
+                    }
+                    
+                    if object.status == "active", let expiration = object.expiration, expiration.timeIntervalSinceNow > 0 {
+                        self.activities!.append(object)
+                    }
+                }
+                DispatchQueue.main.async(execute: {
+                    print("received update for activity: \(object.objectId!)")
+                    
+                    self.pagingController.activities = self.activities
+                    self.refresh()
+                })
+            })
+        isSubscribed = true
     }
 }
