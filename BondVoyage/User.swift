@@ -57,8 +57,11 @@ extension User {
             if let user = result as? User {
                 userCache[objectId] = user
                 completion(user)
+                return
             }
-            completion(nil)
+            else {
+                completion(nil)
+            }
         })
     }
 }

@@ -279,7 +279,6 @@ extension InviteViewController {
                     print("received update for conversations: \(object.objectId!)")
                     
                     self.pagingController.activities = self.activities
-                    self.refresh()
                 })
             }
             .handle(Event.updated, { (_, object) in
