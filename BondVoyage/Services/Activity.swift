@@ -30,13 +30,14 @@ extension Activity: PFSubclassing {
 
 extension Activity {
     // owner is a pointer and if ParseLiveQuery is used, it does not get included as a PFObject
-    func fetchOwnerInBackground() throws {
+    func fetchOwnerInBackground(completion: ((_ isNew: Bool)->Void)?) throws {
         if let type = self.owner?["__type"] as? String, type == "Pointer" {
             if let objectId = self.owner?["objectId"] as? String {
                 print("owner objectId: \(objectId)")
                 
-                User.withId(objectId: objectId, completion: { (user) in
+                User.withId(objectId: objectId, completion: { (user, isNew) in
                     self.owner = user
+                    completion?(isNew)
                 })
             }
         }

@@ -266,8 +266,17 @@ extension InviteViewController {
         self.subscription = liveQueryClient.subscribe(query)
             .handle(Event.created) { _, object in
                 self.activities!.append(object)
+                self.pagingController.activities = self.activities
                 do {
-                    try object.fetchOwnerInBackground()
+                    try object.fetchOwnerInBackground(completion: { isNew in
+                        self.pagingController.activities = self.activities
+                        
+                        if isNew {
+                            DispatchQueue.main.async(execute: {
+                                self.refresh()
+                            })
+                        }
+                    })
                 }
                 catch let e as NSException {
                     print("\(e)")
@@ -275,11 +284,6 @@ extension InviteViewController {
                 catch {
                     print("error")
                 }
-                DispatchQueue.main.async(execute: {
-                    print("received update for conversations: \(object.objectId!)")
-                    
-                    self.pagingController.activities = self.activities
-                })
             }
             .handle(Event.updated, { (_, object) in
                 if let activities = self.activities {

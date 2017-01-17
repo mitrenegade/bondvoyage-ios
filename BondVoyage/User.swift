@@ -46,9 +46,9 @@ extension User {
 
 var userCache: [String: User] = [String: User]()
 extension User {
-    class func withId(objectId: String, completion: @escaping ((User?)->Void)) {
+    class func withId(objectId: String, completion: @escaping ((User?, _ isNew: Bool)->Void)) {
         if let result = userCache[objectId] {
-            completion(result)
+            completion(result, false)
             return
         }
         
@@ -56,11 +56,11 @@ extension User {
         query?.getObjectInBackground(withId: objectId, block: { (result, error) in
             if let user = result as? User {
                 userCache[objectId] = user
-                completion(user)
+                completion(user, true)
                 return
             }
             else {
-                completion(nil)
+                completion(nil, true)
             }
         })
     }
