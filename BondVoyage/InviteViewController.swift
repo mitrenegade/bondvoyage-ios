@@ -272,6 +272,7 @@ extension InviteViewController {
                         self.pagingController.activities = self.activities
                         
                         if isNew {
+                            // if the user was just fetched, then the existing PagingViewController will not load it correctly, and we must force a refresh
                             DispatchQueue.main.async(execute: {
                                 self.refresh()
                             })
