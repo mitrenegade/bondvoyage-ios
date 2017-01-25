@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 protocol DatesViewDelegate: class {
     func didSelectDates(_ startDate: Date?, endDate: Date?)
@@ -25,6 +26,10 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
     
     weak var currentInput: UITextField?
     @IBOutlet weak var constraintCenterOffset: NSLayoutConstraint!
+    
+    // City
+    @IBOutlet weak var labelCity: UILabel!
+    @IBOutlet weak var buttonCity: UIButton!
     
     weak var delegate: DatesViewDelegate?
     
@@ -59,6 +64,8 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
         
         inputFrom.inputView = fromDatePicker
         inputTo.inputView = toDatePicker
+        
+        self.refreshCity()
     }
     
     override func didReceiveMemoryWarning() {
@@ -133,5 +140,33 @@ class DatesViewController: UIViewController, UITextFieldDelegate {
             })
         }
     }
+}
+
+// MARK: City
+extension DatesViewController: CityViewDelegate {
+    func refreshCity() {
+        let user = PFUser.current() as? User
+        if let city = user?.city, !city.isEmpty {
+            self.labelCity.text = city
+            self.labelCity.isHidden = false
+            self.buttonCity.isHidden = false
+        }
+        else {
+            self.labelCity.isHidden = true
+            self.buttonCity.isHidden = true
+        }
+    }
     
+    @IBAction func didClickCity(_ sender: AnyObject?) {
+        let storyboard = UIStoryboard(name: "City", bundle: nil)
+        if let controller = storyboard.instantiateInitialViewController() as? CityViewController {
+            controller.delegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+
+    func didFinishSelectCity() {
+        self.refreshCity()
+        self.dismiss(animated: true, completion: nil)
+    }
 }

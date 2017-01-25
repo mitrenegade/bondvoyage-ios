@@ -30,9 +30,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="550-Vq-RKL">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAK-fU-sCm">
+                            <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAK-fU-sCm">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No one is currently available. When people search for your activity they will appear here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Gs-jL-lBR">
                                 <rect key="frame" x="16" y="296" width="343" height="74"/>
@@ -45,7 +45,7 @@
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4AA-lW-CT1" firstAttribute="centerY" secondItem="tTJ-R8-n70" secondAttribute="centerY" id="31a-cK-VQF"/>
                             <constraint firstItem="MAK-fU-sCm" firstAttribute="top" secondItem="tTJ-R8-n70" secondAttribute="topMargin" id="4RF-si-JN0"/>
@@ -315,6 +315,26 @@
                                                     <constraint firstAttribute="width" constant="240" id="gHA-4A-zer"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZQV-IT-Wly">
+                                                <rect key="frame" x="8" y="373" width="259" height="39"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="39" id="8aa-Rr-b4Q"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UJ-C4-qf2">
+                                                <rect key="frame" x="8" y="405" width="259" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="zHa-Ji-lrk"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                                <state key="normal" title="Change"/>
+                                                <connections>
+                                                    <action selector="didClickCity:" destination="fev-Qc-HcS" eventType="touchUpInside" id="nw2-Gx-eEa"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.78431373829999995" green="0.90196079019999997" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -323,14 +343,20 @@
                                             <constraint firstItem="34N-AA-XzX" firstAttribute="centerX" secondItem="AAo-0J-R1r" secondAttribute="centerX" id="5YF-pv-jhF"/>
                                             <constraint firstAttribute="trailing" secondItem="rp4-7L-C1q" secondAttribute="trailing" constant="32" id="6jf-aE-62l"/>
                                             <constraint firstItem="rp4-7L-C1q" firstAttribute="top" secondItem="34N-AA-XzX" secondAttribute="bottom" constant="1" id="92n-DO-VXp"/>
+                                            <constraint firstAttribute="trailing" secondItem="5UJ-C4-qf2" secondAttribute="trailing" constant="8" id="Bdx-og-1Aa"/>
                                             <constraint firstItem="eBc-qa-hvx" firstAttribute="top" secondItem="rp4-7L-C1q" secondAttribute="bottom" constant="1" id="Hbm-4F-Iwq"/>
                                             <constraint firstItem="qHU-5h-O5t" firstAttribute="centerY" secondItem="AAo-0J-R1r" secondAttribute="centerY" id="K8h-Gv-Fyo"/>
                                             <constraint firstItem="lmx-l8-dQl" firstAttribute="top" secondItem="eBc-qa-hvx" secondAttribute="bottom" id="Mti-k8-42E"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZQV-IT-Wly" secondAttribute="trailing" constant="8" id="QW6-OY-gS1"/>
                                             <constraint firstItem="34N-AA-XzX" firstAttribute="top" secondItem="AAo-0J-R1r" secondAttribute="top" constant="5" id="Uso-f1-M6G"/>
                                             <constraint firstItem="qHU-5h-O5t" firstAttribute="top" secondItem="1at-Y6-UWu" secondAttribute="bottom" constant="1" id="XJe-yE-iFg"/>
                                             <constraint firstAttribute="trailing" secondItem="qHU-5h-O5t" secondAttribute="trailing" id="cvD-VD-fIB"/>
+                                            <constraint firstItem="ZQV-IT-Wly" firstAttribute="leading" secondItem="AAo-0J-R1r" secondAttribute="leading" constant="8" id="flJ-G2-pho"/>
+                                            <constraint firstItem="5UJ-C4-qf2" firstAttribute="leading" secondItem="AAo-0J-R1r" secondAttribute="leading" constant="8" id="foc-qO-Gsd"/>
                                             <constraint firstItem="lmx-l8-dQl" firstAttribute="centerX" secondItem="AAo-0J-R1r" secondAttribute="centerX" id="gED-w2-gLe"/>
+                                            <constraint firstItem="5UJ-C4-qf2" firstAttribute="top" secondItem="ZQV-IT-Wly" secondAttribute="bottom" constant="-7" id="lM0-NT-CDT"/>
                                             <constraint firstItem="1at-Y6-UWu" firstAttribute="top" secondItem="lmx-l8-dQl" secondAttribute="bottom" constant="1" id="m4o-Rc-pqN"/>
+                                            <constraint firstItem="ZQV-IT-Wly" firstAttribute="top" secondItem="qHU-5h-O5t" secondAttribute="bottom" constant="8" id="mH8-kk-oPI"/>
                                             <constraint firstItem="eBc-qa-hvx" firstAttribute="height" secondItem="34N-AA-XzX" secondAttribute="height" id="pM0-O2-Ivy"/>
                                             <constraint firstItem="1at-Y6-UWu" firstAttribute="centerX" secondItem="AAo-0J-R1r" secondAttribute="centerX" id="wcA-ka-mdD"/>
                                             <constraint firstItem="rp4-7L-C1q" firstAttribute="leading" secondItem="AAo-0J-R1r" secondAttribute="leading" constant="32" id="wrP-wR-EVd"/>
@@ -361,14 +387,16 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonCity" destination="5UJ-C4-qf2" id="gOw-bz-Zbe"/>
                         <outlet property="constraintCenterOffset" destination="K8h-Gv-Fyo" id="0bZ-ZE-dVN"/>
                         <outlet property="inputFrom" destination="0AG-dV-Tqk" id="73I-pJ-8d0"/>
                         <outlet property="inputTo" destination="fan-6L-DJt" id="q4j-PG-mOY"/>
+                        <outlet property="labelCity" destination="ZQV-IT-Wly" id="fjL-wH-d7B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AiO-q7-fzn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1580" y="-212"/>
+            <point key="canvasLocation" x="1580" y="-212.74362818590706"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="eIa-HG-upb">
