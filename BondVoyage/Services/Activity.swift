@@ -59,7 +59,6 @@ extension Activity {
                 print("results: \(results)")
                 if let activity: Activity = dict["activity"] as? Activity,  let success = dict["success"] as? Bool, let message = dict["message"] as? String {
                     print("createActivity resulted in activity \(activity.objectId!), message: \(message)")
-                    PFUser.current()!.setObject(activity, forKey: "activity")
                     completion(activity, nil)
                 }
                 else {
@@ -73,11 +72,11 @@ extension Activity {
         }
     }
     
-    class func queryActivities(user: PFUser?, category: String?, completion: @escaping ((_ results: [Activity]?, _ error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, category: CATEGORY?, completion: @escaping ((_ results: [Activity]?, _ error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
-        if category != nil {
-            params["category"] = category as AnyObject?
+        if let cat = category {
+            params["category"] = cat.rawValue.lowercased() as AnyObject?
         }
         if let user = user, let objectId = user.objectId {
             params["userId"] = objectId as AnyObject?

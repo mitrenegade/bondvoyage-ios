@@ -41,24 +41,44 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
 
         // check if user currently has an activity
         self.tableView.allowsSelection = false
-        guard let user = PFUser.current() as? User else { return }
+        self.userHasActiveActivityForCategory(category: nil) { (activity) in
+            if let activity = activity, let categoryString = activity.category {
+                self.newCategory = CategoryFactory.categoryForString(categoryString)
+                self.tableView.allowsSelection = false
+                self.requestActivities()
+            }
+            else {
+                self.tableView.allowsSelection = true
+            }
+        }
+    }
+    
+    func userHasActiveActivityForCategory(category: CATEGORY?, completion: @escaping ((Activity?)->Void)) {
+        guard let user = PFUser.current() as? User else {
+            completion(nil)
+            return
+        }
         user.fetchIfNeededInBackground(block: { (results, error) in
-            Activity.queryActivities(user: user, category: nil, completion: { (results, error) in
+            if let error = error {
+                completion(nil)
+                return
+            }
+            
+            Activity.queryActivities(user: user, category: category, completion: { (results, error) in
                 if let activities = results, activities.count > 0 {
                     for activity in activities {
                         guard let expiration = activity.expiration, let status = activity.status, expiration.timeIntervalSinceNow > 0, status == "active" else {
                             continue
                         }
                         if let category: String = activity.category {
-                            self.newCategory = CategoryFactory.categoryForString(category)
-                            self.requestActivities()
+                            completion(activity)
                             return
                         }
                     }
-                    self.tableView.allowsSelection = true
+                    completion(nil)
                 }
                 else {
-                    self.tableView.allowsSelection = true
+                    completion(nil)
                 }
             })
         })
@@ -115,8 +135,15 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     func selectCategory(_ category: CATEGORY) {
         self.newCategory = category
-        
-        self.showDateSelector()
+        self.userHasActiveActivityForCategory(category: category) { (activity) in
+            if let activity = activity {
+                // go directly to activities for existing activity
+                self.requestActivities()
+            }
+            else {
+                self.showDateSelector()
+            }
+        }
     }
     
     // MARK: - Date selector
@@ -160,7 +187,13 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.toTime = endDate as NSDate?
         
         // create an activity
-        Activity.createActivity(category: category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
+        var city = "Boston"
+        let user = PFUser.current() as? User
+        if let userCity = user?.city, !userCity.isEmpty {
+            city = userCity
+        }
+        
+        Activity.createActivity(category: category, city: city, fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
             if let error = error {
                 print("error creating activity: \(error)")
                 if error.code == 209 {
@@ -208,7 +241,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
         
         // search for other activities
-        Activity.queryActivities(user: nil, category: category.rawValue) { (results, error) in
+        Activity.queryActivities(user: nil, category: category) { (results, error) in
             self.navigationItem.rightBarButtonItem?.isEnabled = true
             self.tableView.allowsSelection = true
             if results != nil {
