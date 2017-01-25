@@ -54,12 +54,11 @@ extension Activity {
             params["toTime"] = to
         }
         
-        PFCloud.callFunction(inBackground: "v3createActivity", withParameters: params) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "v4createOrUpdateActivity", withParameters: params) { (results, error) -> Void in
             if let dict = results as? [String: AnyObject] {
                 print("results: \(results)")
                 if let activity: Activity = dict["activity"] as? Activity,  let success = dict["success"] as? Bool, let message = dict["message"] as? String {
                     print("createActivity resulted in activity \(activity.objectId!), message: \(message)")
-                    PFUser.current()!.setObject(activity, forKey: "activity")
                     completion(activity, nil)
                 }
                 else {
@@ -73,11 +72,11 @@ extension Activity {
         }
     }
     
-    class func queryActivities(user: PFUser?, category: String?, completion: @escaping ((_ results: [Activity]?, _ error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, category: CATEGORY?, completion: @escaping ((_ results: [Activity]?, _ error: NSError?)->Void)) {
         
         var params: [String: AnyObject] = [String: AnyObject]()
-        if category != nil {
-            params["category"] = category as AnyObject?
+        if let cat = category {
+            params["category"] = cat.rawValue.lowercased() as AnyObject?
         }
         if let user = user, let objectId = user.objectId {
             params["userId"] = objectId as AnyObject?
@@ -88,9 +87,9 @@ extension Activity {
         }
     }
     
-    class func cancelCurrentActivity(completion: ((_ success: Bool, _ error: NSError?)->Void)?) {
+    class func cancelActivityForCategory(category: CATEGORY, completion: ((_ success: Bool, _ error: NSError?)->Void)?) {
         
-        PFCloud.callFunction(inBackground: "v3cancelActivity", withParameters: nil) { (results, error) -> Void in
+        PFCloud.callFunction(inBackground: "v4cancelActivity", withParameters: ["category": category.rawValue.lowercased()]) { (results, error) -> Void in
             print("results: \(results) error: \(error)")
             let success = error == nil
             completion?(success, error as NSError?)

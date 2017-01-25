@@ -73,13 +73,20 @@ class InviteViewController: UIViewController {
     }
     
     func close() {
+        guard let category = self.category else {
+            self.navigationController!.popToRootViewController(animated: true)
+            return
+        }
+        
         let title = "End search?"
-        let categoryString = self.category == nil ? "" : "for \(CategoryFactory.categoryReadableString(self.category!)) "
-        let message = "You will no longer be matched \(categoryString)if you go back. You can start another search at any time."
+        let message = "Do you want to cancel this activity? You will no longer be matched for \(CategoryFactory.categoryReadableString(category)) if you cancel. Otherwise, you will be searchable for 24 hours."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "End", style: .default, handler: { (action) in
-            Activity.cancelCurrentActivity { (success, error) in
+        alert.addAction(UIAlertAction(title: "Keep Browsing", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "New Search", style: .default, handler: { (action) in
+            self.navigationController!.popToRootViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel Activity", style: .default, handler: { (action) in
+            Activity.cancelActivityForCategory(category: category) { (success, error) in
                 if !success {
                     print("error: \(error)")
                     // TODO: try again
@@ -154,34 +161,6 @@ class InviteViewController: UIViewController {
         }
     }
     
-    func goToJoinActivity(_ activity: PFObject) {
-        self.activityIndicator.startAnimating()
-
-        ActivityRequest.joinActivity(activity, suggestedPlace: nil, completion: { (results, error) -> Void in
-            
-            self.activityIndicator.stopAnimating()
-            if error != nil {
-                if error != nil && error!.code == 209 {
-                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to join activities.", completion: { () -> Void in
-                        UserService.logout()
-                    })
-                    return
-                }
-            }
-            else {
-                self.refresh()
-                self.navigationController!.popToRootViewController(animated: true)
-            }
-        })
-    }
-
-    /*
-    func currentPage() -> Int {
-        let page = Int(floor(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
-        return page
-    }
- */
-    
     func setupScroll() {
         guard let activities = self.activities else {
             return
@@ -231,15 +210,23 @@ class InviteViewController: UIViewController {
             // no users
             self.noActivitiesView.isHidden = false
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 0.25
+            
+            self.currentPage = -1
+            self.pagingController.view.isHidden = true
         }
         else {
             // users exist
             self.noActivitiesView.isHidden = true
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
             
+            if self.currentPage == -1 {
+                self.currentPage = 0
+            }
+            
             guard let controller = self.pagingController.controllerAt(index: self.currentPage) else {
                 return
             }
+            self.pagingController.view.isHidden = false
             self.pagingController.setViewControllers([controller as! UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
         }
     }
@@ -278,33 +265,46 @@ extension InviteViewController {
                             })
                         }
                     })
-                }
-                catch let e as NSException {
-                    print("\(e)")
-                }
-                catch {
-                    print("error")
+                } catch {
+                    print("error in do try")
                 }
             }
-            .handle(Event.updated, { (_, object) in
+            .handle(Event.updated) { _, object in
                 if let activities = self.activities {
                     for a in activities {
                         if a.objectId == object.objectId {
                             self.activities!.remove(at: activities.index(of: a)!)
                         }
                     }
-                    
-                    if object.status == "active", let expiration = object.expiration, expiration.timeIntervalSinceNow > 0 {
-                        self.activities!.append(object)
+                }
+                
+                if object.status == "active" /*, let expiration = object.expiration, expiration.timeIntervalSinceNow > 0*/ {
+                    do {
+                        try object.fetchOwnerInBackground(completion: { isNew in
+                            self.activities!.append(object)
+                            DispatchQueue.main.async(execute: {
+                                print("received update for activity: \(object.objectId!) owner \(object.owner)")
+                                
+                                self.pagingController.activities = self.activities
+                                self.refresh()
+                            })
+                        })
+                    } catch {
+                        print("error in do try")
                     }
                 }
-                DispatchQueue.main.async(execute: {
-                    print("received update for activity: \(object.objectId!)")
-                    
-                    self.pagingController.activities = self.activities
-                    self.refresh()
-                })
-            })
+                else {
+                    DispatchQueue.main.async(execute: {
+                        print("received update for activity: \(object.objectId!) owner \(object.owner)")
+                        
+                        self.pagingController.activities = self.activities
+                        self.refresh()
+                    })
+                }
+            }
+            .handle(Event.deleted) { _, object in
+                print("here")
+            }
         isSubscribed = true
     }
 }

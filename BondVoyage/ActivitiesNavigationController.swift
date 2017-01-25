@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class ActivitiesNavigationController: ConfigurableNavigationController, CityViewDelegate {
+class ActivitiesNavigationController: ConfigurableNavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,14 +21,13 @@ class ActivitiesNavigationController: ConfigurableNavigationController, CityView
         }
         else {
             /* RELEASE 0.6.1: do not show city
- 
+             */
             // Do any additional setup after loading the view.
             let storyboard = UIStoryboard(name: "City", bundle: nil)
             if let controller = storyboard.instantiateInitialViewController() as? CityViewController {
                 controller.delegate = self
                 self.present(controller, animated: true, completion: nil)
             }
-            */
         }
     }
     
@@ -36,18 +35,10 @@ class ActivitiesNavigationController: ConfigurableNavigationController, CityView
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+}
+
+extension ActivitiesNavigationController: CityViewDelegate {
     func didFinishSelectCity() {
         self.dismiss(animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
