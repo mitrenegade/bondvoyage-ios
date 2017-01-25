@@ -53,19 +53,7 @@ class BVTabBarController: UITabBarController {
     
     func refreshNotifications() {
         // NOT USED
-        ActivityService.queryMatchedActivities(PFUser.current()) { (results, error) in
-            if error != nil {
-                return
-            }
-            self.refreshBadgeCount(.tab_MATCHED_BONDS, activities: results)
-        }
-        
-        ActivityService.getRequestedBonds { (results, error) in
-            if error != nil {
-                return
-            }
-            self.refreshBadgeCount(.tab_REQUESTED_BONDS, activities: results)
-        }
+            self.refreshBadgeCount(.tab_REQUESTED_BONDS, activities: [])
     }
 
     func refreshBadgeCount(_ tabIndex: BVTabIndex, activities: [PFObject]?) {

@@ -41,27 +41,27 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
 
         // check if user currently has an activity
         self.tableView.allowsSelection = false
-        if let user = PFUser.current() {
-            user.fetchIfNeededInBackground(block: { (results, error) in
-                if let activity = user.value(forKey: "activity") as? Activity {
-                    activity.fetchIfNeededInBackground(block: { (result, error) in
-                        guard let expiration = activity.expiration, expiration.timeIntervalSinceNow > 0 else {
-                            // cancel user's current activity
-                            Activity.cancelCurrentActivity(completion: nil)
-                            self.tableView.allowsSelection = true
-                            return
+        guard let user = PFUser.current() as? User else { return }
+        user.fetchIfNeededInBackground(block: { (results, error) in
+            Activity.queryActivities(user: user, category: nil, completion: { (results, error) in
+                if let activities = results, activities.count > 0 {
+                    for activity in activities {
+                        guard let expiration = activity.expiration, let status = activity.status, expiration.timeIntervalSinceNow > 0, status == "active" else {
+                            continue
                         }
                         if let category: String = activity.category {
                             self.newCategory = CategoryFactory.categoryForString(category)
                             self.requestActivities()
+                            return
                         }
-                    })
+                    }
+                    self.tableView.allowsSelection = true
                 }
                 else {
                     self.tableView.allowsSelection = true
                 }
             })
-        }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -163,7 +163,15 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         Activity.createActivity(category: category, city: "Boston", fromTime: self.fromTime, toTime: self.toTime) { (result, error) in
             if let error = error {
                 print("error creating activity: \(error)")
-                // TODO: display
+                if error.code == 209 {
+                    self.simpleAlert("Please log in again", message: "You have been logged out. Please log in again to browse activities.", completion: { () -> Void in
+                        PFUser.logOut()
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "logout"), object: nil)
+                    })
+                    return
+                }
+                let message = "There was a problem loading activities. Please try again"
+                self.simpleAlert("Could not select category", defaultMessage: message, error: error)
             }
             else {
                 print("result: \(result)")

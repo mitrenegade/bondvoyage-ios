@@ -18,7 +18,6 @@
 		8E406E6D1C7E3DB000E6F77C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */; };
 		8E4E10BB1E2D6A8700A6330D /* CachedPagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4E10BA1E2D6A8700A6330D /* CachedPagingViewController.swift */; };
 		8E4F78621DF3619800BFAEC1 /* ActivitiesNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F78611DF3619800BFAEC1 /* ActivitiesNavigationController.swift */; };
-		8E680EE51E2E4DCE00CBE77C /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E680EE41E2E4DCE00CBE77C /* ActivityService.swift */; };
 		8E6CD7771CAC720C00A556F9 /* JoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6CD7761CAC720C00A556F9 /* JoinCell.swift */; };
 		8E73665B1CA9F46500F3642E /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E73665A1CA9F46500F3642E /* InviteViewController.swift */; };
 		8E91D4641C5D03F900C6D406 /* ActivitiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91D4631C5D03F900C6D406 /* ActivitiesCell.swift */; };
@@ -111,7 +110,6 @@
 		8E406E6C1C7E3DB000E6F77C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E4E10BA1E2D6A8700A6330D /* CachedPagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedPagingViewController.swift; sourceTree = "<group>"; };
 		8E4F78611DF3619800BFAEC1 /* ActivitiesNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesNavigationController.swift; sourceTree = "<group>"; };
-		8E680EE41E2E4DCE00CBE77C /* ActivityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		8E6CD7761CAC720C00A556F9 /* JoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinCell.swift; sourceTree = "<group>"; };
 		8E707BAD1DDF3FB900658434 /* BondVoyage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BondVoyage.entitlements; sourceTree = "<group>"; };
 		8E73665A1CA9F46500F3642E /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 				8E0B35391D7C63AB008872FD /* QBUserService.swift */,
 				8E30E6DA1DCF84AF004C4F55 /* SessionService.swift */,
 				8E0B353B1D7C6898008872FD /* UserService.swift */,
-				8E680EE41E2E4DCE00CBE77C /* ActivityService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -663,7 +660,6 @@
 				F26F02391DC958D0003EADFA /* CityViewController.swift in Sources */,
 				F289222C1DCB5D1D000D2E83 /* SubmitCityViewController.swift in Sources */,
 				8ED342701DE3DD3200DA5755 /* ConfigurableNavigationController.swift in Sources */,
-				8E680EE51E2E4DCE00CBE77C /* ActivityService.swift in Sources */,
 				E5508A081C1539CF00D23C26 /* AppDelegate.swift in Sources */,
 				E5C8366D1C3B4F92003BD54F /* BaseFilterView.swift in Sources */,
 				C5566EE61C3E1040007C22F3 /* UIViewController+Utils.swift in Sources */,
