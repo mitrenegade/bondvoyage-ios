@@ -252,6 +252,10 @@ extension InviteViewController {
         
         self.subscription = liveQueryClient.subscribe(query)
             .handle(Event.created) { _, object in
+                if let owner = object.owner, let ownerId = owner["objectId"] as? String, ownerId == userId {
+                    return
+                }
+
                 self.activities!.append(object)
                 self.pagingController.activities = self.activities
                 do {
@@ -270,6 +274,10 @@ extension InviteViewController {
                 }
             }
             .handle(Event.updated) { _, object in
+                if let owner = object.owner, let ownerId = owner["objectId"] as? String, ownerId == userId {
+                    return
+                }
+                
                 if let activities = self.activities {
                     for a in activities {
                         if a.objectId == object.objectId {
@@ -303,6 +311,9 @@ extension InviteViewController {
                 }
             }
             .handle(Event.deleted) { _, object in
+                if let owner = object.owner, let ownerId = owner["objectId"] as? String, ownerId == userId {
+                    return
+                }
                 print("here")
             }
         isSubscribed = true
