@@ -43,9 +43,14 @@ extension Bond {
                 bond.category = category.rawValue.lowercased()
                 bond.saveInBackground(block: { (success, error) in
                     if success {
-                        self.createConversationForBond(bond: bond, userId: inviteeId, completion: { (conversation, error) in
-                            completion?(bond, conversation, error)
-                        })
+                        if let accepted = bond.accepted, accepted.contains(userId) && accepted.contains(inviteeId) {
+                            self.createConversationForBond(bond: bond, userId: inviteeId, completion: { (conversation, error) in
+                                completion?(nil, conversation, error)
+                            })
+                        }
+                        else {
+                            completion?(bond, nil, error as? NSError)
+                        }
                     }
                     else {
                         completion?(nil, nil, error as? NSError)
