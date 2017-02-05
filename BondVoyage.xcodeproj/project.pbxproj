@@ -12,6 +12,7 @@
 		8E0B353A1D7C63AB008872FD /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B35391D7C63AB008872FD /* QBUserService.swift */; };
 		8E0B353C1D7C6898008872FD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B353B1D7C6898008872FD /* UserService.swift */; };
 		8E19458F1C60752500C3EC41 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */; };
+		8E1F63EE1E46B335004E8723 /* Bond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63ED1E46B335004E8723 /* Bond.swift */; };
 		8E24D9D51CAEB5B8008B4520 /* BVTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */; };
 		8E30E6DB1DCF84AF004C4F55 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30E6DA1DCF84AF004C4F55 /* SessionService.swift */; };
 		8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */; };
@@ -104,6 +105,7 @@
 		8E0B35391D7C63AB008872FD /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
 		8E0B353B1D7C6898008872FD /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8E19458E1C60752500C3EC41 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		8E1F63ED1E46B335004E8723 /* Bond.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bond.swift; sourceTree = "<group>"; };
 		8E24D9D41CAEB5B8008B4520 /* BVTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BVTabBarController.swift; sourceTree = "<group>"; };
 		8E30E6DA1DCF84AF004C4F55 /* SessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		8E39C21A1C7E704B00C9B995 /* PFObject+Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFObject+Activity.swift"; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				8ECA14EF1DD41732003DF990 /* Activity.swift */,
+				8E1F63ED1E46B335004E8723 /* Bond.swift */,
 				8ED342741DE3E4AA00DA5755 /* Conversation.swift */,
 				8E07EB4E1DEA75660061351B /* User.swift */,
 			);
@@ -675,6 +678,7 @@
 				8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */,
 				E5FF8BE61C40BA020080C195 /* UserDetailsViewController.swift in Sources */,
 				8ECA14F01DD41732003DF990 /* Activity.swift in Sources */,
+				8E1F63EE1E46B335004E8723 /* Bond.swift in Sources */,
 				8E39C21B1C7E704B00C9B995 /* PFObject+Activity.swift in Sources */,
 				C5E0943A1C37236B00CABC51 /* AboutMeViewController.swift in Sources */,
 				8ED342721DE3E3C300DA5755 /* ChatListViewController.swift in Sources */,
