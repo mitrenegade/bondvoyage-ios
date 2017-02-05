@@ -71,6 +71,10 @@ extension CachedPagingViewController: UIPageViewControllerDelegate, UIPageViewCo
                 self.cachedPagingDelegate?.activePageChanged(index: currentPage)
             }
         }
+        else {
+            let currentPage = activePage?.page ?? 0
+            self.cachedPagingDelegate?.activePageChanged(index: currentPage)
+        }
     }
     
     // MARK: UIPageViewControllerDataSource

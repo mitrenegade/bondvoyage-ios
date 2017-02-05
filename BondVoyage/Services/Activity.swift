@@ -95,25 +95,4 @@ extension Activity {
             completion?(success, error as NSError?)
         }
     }
-    
-    class func inviteToJoinActivity(activityId: String, inviteeId: String, completion: ((_ activity: Activity?, _ conversation: Conversation?, _ error: NSError?) -> Void)?) {
-        // activityId: own activity to add invitee
-        // inviteeId: user to invite to chat/join chat
-        let params: [String: String] = ["activityId": activityId, "inviteeId": inviteeId]
-        PFCloud.callFunction(inBackground: "v3inviteToJoinActivity", withParameters: params) { (results, error) -> Void in
-            print("results: \(results) error: \(error)")
-            if let error = error as? NSError {
-                print("Error \(error)")
-                completion?(nil, nil, error)
-            }
-            else if let activity = results as? Activity {
-                print("Activity returned \(activity)")
-                completion?(activity, nil, nil)
-            }
-            else if let conversation = results as? Conversation {
-                print("Conversation already created \(conversation)")
-                completion?(nil, conversation, nil)
-            }
-        }
-    }
 }
