@@ -23,7 +23,7 @@ extension Bond: PFSubclassing {
 
 extension Bond {
     
-    class func inviteToBond(category: CATEGORY, inviteeId: String, completion: ((_ bond: Bond?, _ error: NSError?) -> Void)?) {
+    class func inviteToBond(category: CATEGORY, inviteeId: String, completion: ((_ bond: Bond?, _ conversation: Conversation?, _ error: NSError?) -> Void)?) {
 
         guard let user = PFUser.current(), let userId = user.objectId else { return }
         guard let query: PFQuery<Bond> = Bond.query() as? PFQuery<Bond> else { return }
@@ -43,18 +43,32 @@ extension Bond {
                 bond.category = category.rawValue.lowercased()
                 bond.saveInBackground(block: { (success, error) in
                     if success {
-                        completion?(bond, nil)
+                        self.createConversationForBond(bond: bond, userId: inviteeId, completion: { (conversation, error) in
+                            completion?(bond, conversation, error)
+                        })
                     }
                     else {
-                        completion?(nil, error as? NSError)
+                        completion?(nil, nil, error as? NSError)
                     }
                 })
             }
             else {
                 print("error: \(error)")
-                completion?(nil, error as? NSError)
+                completion?(nil, nil, error as? NSError)
             }
         }
 
+    }
+    
+    class func createConversationForBond(bond: Bond, userId: String, completion: ((_ conversation: Conversation?, _ error: NSError?) -> Void)?) {
+        
+        PFCloud.callFunction(inBackground: "v4createConversationForBond", withParameters: ["userId": userId, "bondId": bond.objectId!]) { (results, error) -> Void in
+            if let conversation = results as? Conversation {
+                completion?(conversation, nil)
+            }
+            else {
+                completion?(nil, error as? NSError)
+            }
+        }
     }
 }

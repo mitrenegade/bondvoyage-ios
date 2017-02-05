@@ -110,16 +110,18 @@ class InviteViewController: UIViewController {
         guard let selectedUser: PFUser = activities[self.currentPage].object(forKey: "owner") as? PFUser, let inviteeId = selectedUser.objectId else { return }
         guard let category = self.category else { return }
         
-        Bond.inviteToBond(category: category, inviteeId: inviteeId) { (result, error) in
+        Bond.inviteToBond(category: category, inviteeId: inviteeId) { (bond, conversation, error) in
             let name = selectedUser.value(forKey: "firstName") as? String ?? selectedUser.value(forKey: "username") as? String ?? "this person"
-            if let bond = result {
-                self.simpleAlert("Invite sent", message: "You have invited \(name) to bond. If accepted, you will be able to chat.")
-            }
-            else { //if let conversation = conversation {
+            if let conversation = conversation {
                 let message = "You have matched with \(name). Click to go chat"
                 self.simpleAlert("You have a new bond", message: message, completion: {
-                    //self.goToChat(selectedUser, conversation: conversation)
+                    self.goToChat(selectedUser, conversation: conversation)
                 })
+            } else if let bond = bond {
+                self.simpleAlert("Invite sent", message: "You have invited \(name) to bond. If accepted, you will be able to chat.")
+            } else {
+                print("error: \(error)")
+                self.simpleAlert("Could not invite \(name)", defaultMessage: "There was an error inviting \(name) to bond.", error: error)
             }
         }
     }
