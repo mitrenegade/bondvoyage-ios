@@ -174,7 +174,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }) 
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideDateSelector))
-        self.headerView.addGestureRecognizer(tap)
+        self.view.addGestureRecognizer(tap)
     }
     
     func didSelectDates(_ startDate: Date?, endDate: Date?) {
@@ -226,9 +226,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
             controller.removeFromParentViewController()
             self.datesController = nil
         }) 
-        if let recognizers = self.headerView.gestureRecognizers {
+        if let recognizers = self.view.gestureRecognizers {
             for recognizer in recognizers {
-                self.headerView.removeGestureRecognizer(recognizer)
+                self.view.removeGestureRecognizer(recognizer)
             }
         }
     }
