@@ -153,6 +153,9 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     
     // MARK: - Date selector
     func showDateSelector() {
+        guard self.datesController == nil else {
+            return
+        }
         guard let controller = UIStoryboard(name: "Activities", bundle: nil).instantiateViewController(withIdentifier: "DatesViewController") as? DatesViewController else {
             return
         }

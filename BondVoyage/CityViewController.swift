@@ -26,7 +26,6 @@ class CityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "CITIES"
         // Do any additional setup after loading the view.
         self.tableView.separatorStyle = .none
         self.tableView.isScrollEnabled = false
