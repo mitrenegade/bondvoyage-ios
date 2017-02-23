@@ -167,29 +167,6 @@ class InviteViewController: UIViewController {
             return
         }
 
-        /*
-        let width: CGFloat = self.view.frame.size.width
-        let height: CGFloat = self.scrollView.frame.size.height
-        self.scrollView.isPagingEnabled = true
-
-        var count = 0
-        for i in 0 ..< activities.count {
-            let activity = activities[i]
-            guard let user = activity.object(forKey: "owner") as? PFUser else { continue }
-            count += 1
-            let controller: UserDetailsViewController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
-            controller.selectedUser = user
-            
-            controller.willMove(toParentViewController: self)
-            self.addChildViewController(controller)
-            self.scrollView.addSubview(controller.view)
-            let frame = CGRect(x: width * CGFloat(i), y: 0, width: width, height: height)
-            controller.view.frame = frame
-            controller.didMove(toParentViewController: self)
-            controller.configureUI() // force resize
-        }
-        self.scrollView.contentSize = CGSize(width: CGFloat(count) * width, height: height)
-        */
         self.pagingController.view.frame = self.scrollView.frame
         self.scrollView.removeFromSuperview()
         

@@ -16,6 +16,7 @@ class UserDetailsViewController: UIViewController, PagedViewController {
     
     @IBOutlet weak var scrollViewContainer: AsyncImageView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var activityLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var genderAndAgeLabel: UILabel!
@@ -32,13 +33,21 @@ class UserDetailsViewController: UIViewController, PagedViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var relevantInterests: [String]?
-    var invitingActivity: PFObject?
+    var invitingActivity: Activity?
 
     // MARK: PagedViewController
     var page: Int = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let activity = self.invitingActivity  {
+            let activityString = activity.categoryString ?? "something"
+            self.activityLabel.text = "Looking for \(activityString)\nin \(activity.city ?? "anywhere")"
+        }
+        else {
+            self.activityLabel.isHidden = true
+        }
         
         self.nameView.isHidden = true
         self.interestsView.isHidden = true
@@ -144,26 +153,7 @@ class UserDetailsViewController: UIViewController, PagedViewController {
             return
         }
 
-        if self.invitingActivity != nil {
-            self.invitingActivity!.fetchInBackground(block: { (object, error) -> Void in
-                if let categories: [String] = self.invitingActivity!.object(forKey: "categories") as? [String] {
-                    var str = self.stringFromArray(categories)
-                    if self.selectedUser != nil {
-                        self.interestsLabel.attributedText = "Interests: \(str)".attributedString(str, size: 17)
-                    }
-                    else {
-                        let categoryString = categories[0]
-                        if let category = CategoryFactory.categoryForString(categoryString) {
-                            str = CategoryFactory.categoryReadableString(category)
-                        }
-                        self.interestsLabel.attributedText = "Wants to bond over: \(str)".attributedString(str, size: 17) // todo: load match and set this to match category
-                    }
-                }
-            })
-        }
-        else {
-            self.interestsLabel.text = nil
-        }
+        self.interestsLabel.text = nil
 
         if let about = user.value(forKey: "about") as? String {
             self.aboutMeLabel.attributedText = "About me: \(about)".attributedString(about, size: 17)

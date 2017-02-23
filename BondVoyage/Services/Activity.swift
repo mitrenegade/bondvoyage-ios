@@ -42,6 +42,15 @@ extension Activity {
             }
         }
     }
+    
+    var categoryString: String? {
+        get {
+            if let category = self.category, let cat = CategoryFactory.categoryForString(category) {
+                return "\(CategoryFactory.categoryReadableString(cat))"
+            }
+            return nil
+        }
+    }
 }
 extension Activity {
     // User creates a new activity that is available for others to join
