@@ -56,5 +56,8 @@ class SuggestCityViewController: UIViewController {
         controller.selectedCity = sender as? String
     }
     
-
+    @IBAction func cancel(_ sender: AnyObject?) {
+        print("cancel")
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
 }

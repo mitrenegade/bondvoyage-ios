@@ -43,7 +43,11 @@ class SubmitCityViewController: UIViewController, UITextFieldDelegate {
         self.submitCity()
     }
     
-    
+    @IBAction func cancel(_ sender: AnyObject?) {
+        print("cancel")
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+
     func submitCity() {
         let name = self.inputName.text!
         let email = self.inputEmail.text!.lowercased()

@@ -36,6 +36,11 @@ class CityViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func cancel(_ sender: AnyObject?) {
+        print("cancel")
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension CityViewController: UITableViewDelegate, UITableViewDataSource {
