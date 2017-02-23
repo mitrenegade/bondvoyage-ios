@@ -18,6 +18,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
     var datesController: DatesViewController?
     
     var newCategory: CATEGORY?
+    var currentActivity: Activity?
     
     var fromTime: NSDate?
     var toTime: NSDate?
@@ -44,10 +45,12 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.userHasActiveActivityForCategory(category: nil) { (activity) in
             if let activity = activity, let categoryString = activity.category {
                 self.newCategory = CategoryFactory.categoryForString(categoryString)
+                self.currentActivity = activity
                 self.tableView.allowsSelection = false
                 self.requestActivities()
             }
             else {
+                self.currentActivity = nil
                 self.tableView.allowsSelection = true
             }
         }
@@ -64,7 +67,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
                 return
             }
             
-            Activity.queryActivities(user: user, category: category, completion: { (results, error) in
+            Activity.queryActivities(user: user, category: category, city: nil, completion: { (results, error) in
                 if let activities = results, activities.count > 0 {
                     for activity in activities {
                         guard let expiration = activity.expiration, let status = activity.status, expiration.timeIntervalSinceNow > 0, status == "active" else {
@@ -138,9 +141,11 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         self.userHasActiveActivityForCategory(category: category) { (activity) in
             if let activity = activity {
                 // go directly to activities for existing activity
+                self.currentActivity = activity
                 self.requestActivities()
             }
             else {
+                self.currentActivity = nil
                 self.showDateSelector()
             }
         }
@@ -205,9 +210,12 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
                 }
                 let message = "There was a problem loading activities. Please try again"
                 self.simpleAlert("Could not select category", defaultMessage: message, error: error)
+                
+                self.currentActivity = nil
             }
             else {
                 print("result: \(result)")
+                self.currentActivity = result
                 self.requestActivities()
             }
         }
@@ -241,7 +249,7 @@ class SearchCategoriesViewController: UIViewController, UITableViewDataSource, U
         }
         
         // search for other activities
-        Activity.queryActivities(user: nil, category: category) { (results, error) in
+        Activity.queryActivities(user: nil, category: category, city: self.currentActivity?.city) { (results, error) in
             self.navigationItem.rightBarButtonItem?.isEnabled = true
             self.tableView.allowsSelection = true
             if results != nil {
