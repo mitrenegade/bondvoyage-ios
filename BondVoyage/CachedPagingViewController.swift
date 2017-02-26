@@ -50,6 +50,7 @@ class CachedPagingViewController: UIPageViewController {
         controller.page = index
         
         controller.selectedUser = activity.owner
+        controller.invitingActivity = activity
         //            self.pages[index] = controller
         
             return controller

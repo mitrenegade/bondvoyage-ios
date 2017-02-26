@@ -20,13 +20,11 @@ class ActivitiesNavigationController: ConfigurableNavigationController {
             return // city exists
         }
         else {
-            /* RELEASE 0.6.1: do not show city
-             */
             // Do any additional setup after loading the view.
             let storyboard = UIStoryboard(name: "City", bundle: nil)
-            if let controller = storyboard.instantiateInitialViewController() as? CityViewController {
+            if let nav = storyboard.instantiateInitialViewController() as? UINavigationController, let controller = nav.viewControllers[0] as? CityViewController {
                 controller.delegate = self
-                self.present(controller, animated: true, completion: nil)
+                self.present(nav, animated: true, completion: nil)
             }
         }
     }

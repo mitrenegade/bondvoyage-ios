@@ -42,6 +42,15 @@ extension Activity {
             }
         }
     }
+    
+    var categoryString: String? {
+        get {
+            if let category = self.category, let cat = CategoryFactory.categoryForString(category) {
+                return "\(CategoryFactory.categoryReadableString(cat))"
+            }
+            return nil
+        }
+    }
 }
 extension Activity {
     // User creates a new activity that is available for others to join
@@ -72,14 +81,17 @@ extension Activity {
         }
     }
     
-    class func queryActivities(user: PFUser?, category: CATEGORY?, completion: @escaping ((_ results: [Activity]?, _ error: NSError?)->Void)) {
+    class func queryActivities(user: PFUser?, category: CATEGORY?, city: String?, completion: @escaping ((_ results: [Activity]?, _ error: NSError?)->Void)) {
         
-        var params: [String: AnyObject] = [String: AnyObject]()
+        var params: [String: Any] = [String: Any]()
         if let cat = category {
-            params["category"] = cat.rawValue.lowercased() as AnyObject?
+            params["category"] = cat.rawValue.lowercased()
         }
         if let user = user, let objectId = user.objectId {
-            params["userId"] = objectId as AnyObject?
+            params["userId"] = objectId
+        }
+        if let city = city {
+            params["city"] = city
         }
         PFCloud.callFunction(inBackground: "v3queryActivities", withParameters: params) { (results, error) -> Void in
             print("results: \(results) error: \(error)")

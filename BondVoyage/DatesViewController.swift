@@ -159,9 +159,9 @@ extension DatesViewController: CityViewDelegate {
     
     @IBAction func didClickCity(_ sender: AnyObject?) {
         let storyboard = UIStoryboard(name: "City", bundle: nil)
-        if let controller = storyboard.instantiateInitialViewController() as? CityViewController {
+        if let nav = storyboard.instantiateInitialViewController() as? UINavigationController, let controller = nav.viewControllers[0] as? CityViewController {
             controller.delegate = self
-            self.present(controller, animated: true, completion: nil)
+            self.present(nav, animated: true, completion: nil)
         }
     }
 

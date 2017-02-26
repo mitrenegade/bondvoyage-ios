@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PFS-8B-qak">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TwF-61-JAd">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -15,18 +15,18 @@
         <!--Navigation Controller-->
         <scene sceneID="19K-tS-eFH">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YFO-oQ-R8i" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="TwF-61-JAd" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="VRv-rR-ITY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="f67-QF-LUL" kind="relationship" relationship="rootViewController" id="7lx-H8-5uJ"/>
+                        <segue destination="PFS-8B-qak" kind="relationship" relationship="rootViewController" id="3A8-dD-Tnz"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YFO-oQ-R8i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="585" y="-2346"/>
+            <point key="canvasLocation" x="-575" y="-2346"/>
         </scene>
         <!--Request City-->
         <scene sceneID="oGv-tu-e4m">
@@ -179,7 +179,7 @@
             </objects>
             <point key="canvasLocation" x="1324" y="-2346"/>
         </scene>
-        <!--Submit City View Controller-->
+        <!--Vote-->
         <scene sceneID="kFG-JI-don">
             <objects>
                 <viewController id="XuS-EY-So2" customClass="SubmitCityViewController" customModule="BondVoyage" customModuleProvider="target" sceneMemberID="viewController">
@@ -265,6 +265,7 @@
                             <constraint firstItem="Yl6-tm-04y" firstAttribute="centerX" secondItem="kDi-vG-fA0" secondAttribute="centerX" id="vVH-dO-9Ra"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Vote" id="MEv-DM-eDd"/>
                     <connections>
                         <outlet property="constraintButton" destination="ShA-gg-NhJ" id="hxT-SZ-2Jb"/>
                         <outlet property="inputCity" destination="hbR-3C-Luq" id="V3I-1U-GmU"/>
@@ -274,7 +275,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HL7-v3-9kJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2024.8" y="-2346.4767616191907"/>
+            <point key="canvasLocation" x="2164" y="-2346"/>
         </scene>
         <!--CityViewController-->
         <scene sceneID="WZ0-nt-oNG">
@@ -322,14 +323,21 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="hSN-k0-dBg"/>
+                    <navigationItem key="navigationItem" title="Cities" id="OhJ-xI-8ya">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="J5A-qR-acp">
+                            <connections>
+                                <action selector="cancel:" destination="PFS-8B-qak" id="QcP-2J-Z9l"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="kgy-y3-TaA" id="Aak-xt-Hqm"/>
-                        <segue destination="TwF-61-JAd" kind="presentation" identifier="toSuggestCity" id="ZJT-TX-JVI"/>
+                        <segue destination="f67-QF-LUL" kind="show" identifier="toSuggestCity" id="cab-Fb-rup"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D7p-CY-7kG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-282" y="-2346"/>
+            <point key="canvasLocation" x="295" y="-2346"/>
         </scene>
     </scenes>
 </document>

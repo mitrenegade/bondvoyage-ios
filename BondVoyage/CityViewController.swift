@@ -26,7 +26,6 @@ class CityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "CITIES"
         // Do any additional setup after loading the view.
         self.tableView.separatorStyle = .none
         self.tableView.isScrollEnabled = false
@@ -35,6 +34,11 @@ class CityViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func cancel(_ sender: AnyObject?) {
+        print("cancel")
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 
