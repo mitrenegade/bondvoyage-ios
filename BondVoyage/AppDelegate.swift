@@ -13,6 +13,7 @@ import FBSDKCoreKit
 import ParseUI
 import ParseFacebookUtilsV4
 import Quickblox
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -210,8 +211,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.topViewController()!.present(alert, animated: true, completion: nil)
     }
 
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        print("notification received: \(userInfo)")
+    func application(_ application: UIApplication, didReceiveRemoteNotification data: [AnyHashable : Any]) {
+        print("notification received: \(data)")
         /* format:
         [aps: {
         alert = "test push 2";
@@ -261,12 +262,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         ]
         */
-        if let _ = userInfo["from"] as? [AnyHashable: Any] {
+        
+        /*
+        if let _ = data["from"] as? [AnyHashable: Any] {
             self.goToHandleNotification(userInfo)
         }
         else if let _ = userInfo["invitationStatus"] {
             self.goToHandleNotification(userInfo)
         }
+        */
         
         // always cause the feed to reload
         NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)

@@ -34,6 +34,7 @@
 		8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */; };
 		8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */; };
 		8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDAE01C4423FC002DDA70 /* GroupSizeFilterView.swift */; };
+		8EC239A01E6366AA00EE6B40 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC2399F1E6366AA00EE6B40 /* UserNotifications.framework */; };
 		8EC310AF1C7BAFCA00992E7A /* LocationPhiladelphia.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */; };
 		8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4E2441CAB11E400FC071A /* UserCell.swift */; };
 		8ECA14E21DD24D85003DF990 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA14E11DD24D85003DF990 /* ChatViewController.swift */; };
@@ -129,6 +130,7 @@
 		8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderFilterView.swift; sourceTree = "<group>"; };
 		8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeRangeFilterView.swift; sourceTree = "<group>"; };
 		8EBEDAE01C4423FC002DDA70 /* GroupSizeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSizeFilterView.swift; sourceTree = "<group>"; };
+		8EC2399F1E6366AA00EE6B40 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LocationPhiladelphia.gpx; sourceTree = "<group>"; };
 		8EC4E2441CAB11E400FC071A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8ECA14E11DD24D85003DF990 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC239A01E6366AA00EE6B40 /* UserNotifications.framework in Frameworks */,
 				8E9515171C605F83007F8BCB /* FBSDKShareKit.framework in Frameworks */,
 				8E9515151C605F82007F8BCB /* FBSDKCoreKit.framework in Frameworks */,
 				8E9515161C605F83007F8BCB /* FBSDKLoginKit.framework in Frameworks */,
@@ -212,6 +215,7 @@
 		29A4A41598D70F96FD1D17F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8EC2399F1E6366AA00EE6B40 /* UserNotifications.framework */,
 				8E9515121C605F82007F8BCB /* FBSDKCoreKit.framework */,
 				8E9515131C605F82007F8BCB /* FBSDKLoginKit.framework */,
 				8E9515141C605F82007F8BCB /* FBSDKShareKit.framework */,
