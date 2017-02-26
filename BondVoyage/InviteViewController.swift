@@ -104,11 +104,21 @@ class InviteViewController: UIViewController {
         
     func inviteToChat() {
         guard let user = PFUser.current() else {
+            self.simpleAlert("Unable to chat", message: "Please log out and log back in, and try again.")
             return
         }
-        guard let activities = self.activities, self.currentPage < activities.count else { return }
-        guard let selectedUser: PFUser = activities[self.currentPage].object(forKey: "owner") as? PFUser, let inviteeId = selectedUser.objectId else { return }
-        guard let category = self.category else { return }
+        guard let activities = self.activities, self.currentPage < activities.count else {
+            self.simpleAlert("Unable to chat", message: "There was an issue loading this activity.")
+            return
+        }
+        guard let selectedUser: PFUser = activities[self.currentPage].object(forKey: "owner") as? PFUser, let inviteeId = selectedUser.objectId else {
+            self.simpleAlert("Unable to chat", message: "Could not load the user to be invited.")
+            return
+        }
+        guard let category = self.category else {
+            self.simpleAlert("Unable to chat", message: "Invalid category. Please cancel your activity and try again.")
+            return
+        }
         
         Bond.inviteToBond(category: category, inviteeId: inviteeId) { (bond, conversation, error) in
             let name = selectedUser.value(forKey: "firstName") as? String ?? selectedUser.value(forKey: "username") as? String ?? "this person"
