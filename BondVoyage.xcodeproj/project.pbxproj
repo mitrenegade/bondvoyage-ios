@@ -34,6 +34,7 @@
 		8EBEDADD1C442290002DDA70 /* GenderFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */; };
 		8EBEDADF1C442362002DDA70 /* AgeRangeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */; };
 		8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEDAE01C4423FC002DDA70 /* GroupSizeFilterView.swift */; };
+		8EC01F211E63CEDF00AF8B3D /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC01F201E63CEDF00AF8B3D /* PushService.swift */; };
 		8EC239A01E6366AA00EE6B40 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC2399F1E6366AA00EE6B40 /* UserNotifications.framework */; };
 		8EC310AF1C7BAFCA00992E7A /* LocationPhiladelphia.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */; };
 		8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4E2441CAB11E400FC071A /* UserCell.swift */; };
@@ -130,6 +131,7 @@
 		8EBEDADC1C442290002DDA70 /* GenderFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderFilterView.swift; sourceTree = "<group>"; };
 		8EBEDADE1C442362002DDA70 /* AgeRangeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeRangeFilterView.swift; sourceTree = "<group>"; };
 		8EBEDAE01C4423FC002DDA70 /* GroupSizeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSizeFilterView.swift; sourceTree = "<group>"; };
+		8EC01F201E63CEDF00AF8B3D /* PushService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		8EC2399F1E6366AA00EE6B40 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8EC310AE1C7BAFCA00992E7A /* LocationPhiladelphia.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LocationPhiladelphia.gpx; sourceTree = "<group>"; };
 		8EC4E2441CAB11E400FC071A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 		8E0B35361D7C6371008872FD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8EC01F201E63CEDF00AF8B3D /* PushService.swift */,
 				8E0B35391D7C63AB008872FD /* QBUserService.swift */,
 				8E30E6DA1DCF84AF004C4F55 /* SessionService.swift */,
 				8E0B353B1D7C6898008872FD /* UserService.swift */,
@@ -690,6 +693,7 @@
 				8E9B14021CA95F0D005701EE /* CategoryCell.swift in Sources */,
 				8E30E6DB1DCF84AF004C4F55 /* SessionService.swift in Sources */,
 				8EBEDAE11C4423FC002DDA70 /* GroupSizeFilterView.swift in Sources */,
+				8EC01F211E63CEDF00AF8B3D /* PushService.swift in Sources */,
 				8ED342751DE3E4AA00DA5755 /* Conversation.swift in Sources */,
 				8EC4E2451CAB11E400FC071A /* UserCell.swift in Sources */,
 				8E9FDFCE1C4FC854006532B0 /* SearchCategoriesViewController.swift in Sources */,

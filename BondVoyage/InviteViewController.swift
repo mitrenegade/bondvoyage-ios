@@ -142,6 +142,8 @@ class InviteViewController: UIViewController {
             return
         }
         
+        return;
+            
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
             guard let user = user else {
                 print("no user")

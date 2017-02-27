@@ -55,11 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Test: seed with recommendations. Only do this once
         //RecommendationRequest.seed()
         
-        // reenable push. for ios8, isRegisteredForRemoteNotifications doesn't get reset when the app is deleted.
-        if PFUser.current() != nil && self.hasPushEnabled() {
-            self.initializeNotificationServices()
-        }
-        
         // Fabric
         Fabric.with([Crashlytics.self])
         
@@ -131,151 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return self.topViewController(rootViewController.presentedViewController!)
     }
     
-    // MARK: - Push
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // Store the deviceToken in the current Installation and save it to Parse
-
-        let installation = PFInstallation.current()
-        installation?.setDeviceTokenFrom(deviceToken)
-        if PFUser.current() != nil {
-            let userId: String = PFUser.current()!.objectId!
-            let channel: String = "channel\(userId)"
-            installation?.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
-            
-            // TEST: global channel
-            let global: String = "channelGlobal"
-            installation?.addUniqueObject(global, forKey: "channels")
-        }
-        installation?.saveInBackground()
-
-        let channels = installation?.object(forKey: "channels")
-        print("installation registered for remote notifications: token \(deviceToken) channel \(channels)")
-    }
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("failed: error \(error)")
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "push:enable:failed"), object: nil)
-    }
-
-    // MARK: Push
-    func hasPushEnabled() -> Bool {
-        if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            return false
-        }
-        let settings = UIApplication.shared.currentUserNotificationSettings
-        if (settings?.types.contains(.alert) == true){
-            return true
-        }
-        else {
-            return false
-        }
-    }
-
-    func registerForRemoteNotifications() {
-        if let timestamp: Date = UserDefaults.standard.object(forKey: "push:request:defer:timestamp") as? Date {
-            if Date().timeIntervalSince(timestamp) < 1*24*3600 {
-                return
-            }
-        }
-        
-        let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Not now", style: .cancel, handler: { (action) -> Void in
-            UserDefaults.standard.set(Date(), forKey: "push:request:defer:timestamp")
-            UserDefaults.standard.synchronize()
-        }))
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-            self.initializeNotificationServices()
-        }))
-        self.topViewController()!.present(alert, animated: true, completion: nil)
-    }
-    
-    func initializeNotificationServices() -> Void {
-        // http://www.intertech.com/Blog/push-notifications-tutorial-for-ios-9/#ixzz3xXcQVOIC
-        let settings = UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(settings)
-        
-        // This is an asynchronous method to retrieve a Device Token
-        // Callbacks are in AppDelegate.swift
-        // Success = didRegisterForRemoteNotificationsWithDeviceToken
-        // Fail = didFailToRegisterForRemoteNotificationsWithError
-        UIApplication.shared.registerForRemoteNotifications()
-    }
-    
-    func warnForRemoteNotificationRegistrationFailure() {
-        let alert = UIAlertController(title: "Change notification settings?", message: "Push notifications are disabled, so you can't receive notifications. Would you like to go to the Settings to update them?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (action) -> Void in
-            print("go to settings")
-            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
-        }))
-        self.topViewController()!.present(alert, animated: true, completion: nil)
-    }
-
-    func application(_ application: UIApplication, didReceiveRemoteNotification data: [AnyHashable : Any]) {
-        print("notification received: \(data)")
-        /* format:
-        [aps: {
-        alert = "test push 2";
-        sound = default;
-        }]
-        
-        // With info:
-        [
-        [from: {
-        objectId = Xpqevj9iZY;
-        }, parsePushId: 2LP23eaIpL, fromMatch: {
-        categories =     (
-        museums
-        );
-        createdAt = "2016-01-23T22:37:32.208Z";
-        inviteTo =     {
-        "__type" = Pointer;
-        className = Match;
-        objectId = dvWIDtvWng;
-        };
-        objectId = ILtTAMoK6V;
-        status = pending;
-        updatedAt = "2016-01-23T22:37:41.144Z";
-        user =     {
-        "__type" = Pointer;
-        className = "_User";
-        objectId = Xpqevj9iZY;
-        };
-        }, toMatch: {
-        categories =     (
-        museums
-        );
-        createdAt = "2016-01-23T22:37:20.969Z";
-        inviteFrom =     {
-        "__type" = Pointer;
-        className = Match;
-        objectId = ILtTAMoK6V;
-        };
-        objectId = dvWIDtvWng;
-        status = pending;
-        updatedAt = "2016-01-23T22:37:41.143Z";
-        user =     {
-        "__type" = Pointer;
-        className = "_User";
-        objectId = KaxEQenlcS;
-        };
-        }
-        ]
-        */
-        
-        /*
-        if let _ = data["from"] as? [AnyHashable: Any] {
-            self.goToHandleNotification(userInfo)
-        }
-        else if let _ = userInfo["invitationStatus"] {
-            self.goToHandleNotification(userInfo)
-        }
-        */
-        
-        // always cause the feed to reload
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
-    }
-    
     // MARK: - Logging/analytics
     func logUser() {
         // TODO: Use the current user's information
@@ -301,6 +151,98 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    // MARK: - Utils
+    func isValidEmail(_ testStr:String) -> Bool {
+        // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+    
+    // MARK: Redirect
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+}
+
+// MARK: Push
+extension AppDelegate {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        PushService().registerParsePushSubscription(deviceToken) { (success) in
+            print("push subscription success: \(success)")
+            //self.notify(NotificationType.Push.Registered.rawValue, object: nil, userInfo: nil)
+        }
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Push failed to register with error \(error)")
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "push:enable:failed"), object: nil)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        print("my push is: \(userInfo)")
+        if application.applicationState == UIApplicationState.inactive {
+            print("Inactive")
+        }
+        
+        // todo: handle
+        // always cause the feed to reload
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
+    }
+    
+    // MARK: Push utils
+    func hasPushEnabled() -> Bool {
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            return false
+        }
+        let settings = UIApplication.shared.currentUserNotificationSettings
+        if (settings?.types.contains(.alert) == true){
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func promptForRemoteNotifications() {
+        if let timestamp: Date = UserDefaults.standard.object(forKey: "push:request:defer:timestamp") as? Date {
+            if Date().timeIntervalSince(timestamp) < 1*24*3600 {
+                return
+            }
+        }
+        
+        let alert = UIAlertController(title: "Please enable bond invitations", message: "Push notifications are needed in order to bond. To ensure that you can receive these invitations, please click Yes in the next popup.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Not now", style: .cancel, handler: { (action) -> Void in
+            UserDefaults.standard.set(Date(), forKey: "push:request:defer:timestamp")
+            UserDefaults.standard.synchronize()
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            self.initializeNotificationServices()
+        }))
+        self.topViewController()!.present(alert, animated: true, completion: nil)
+    }
+    
+    func initializeNotificationServices() -> Void {
+        /*
+        // http://www.intertech.com/Blog/push-notifications-tutorial-for-ios-9/#ixzz3xXcQVOIC
+        let settings = UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
+        
+        // This is an asynchronous method to retrieve a Device Token
+        // Callbacks are in AppDelegate.swift
+        // Success = didRegisterForRemoteNotificationsWithDeviceToken
+        // Fail = didFailToRegisterForRemoteNotificationsWithError
+        UIApplication.shared.registerForRemoteNotifications()
+        */
+        PushService().enablePushNotifications({ (success) in
+            if !success {
+                //self.simpleAlert("There was an error enabling push", defaultMessage: nil, error: nil, completion: nil)
+            }
+        })
+
+    }
+
     // MARK: - Notification
     func goToHandleNotification(_ info: [AnyHashable: Any]) {
         var userId: String = ""
@@ -320,18 +262,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: go to match tab
     }
 
-    // MARK: - Utils
-    func isValidEmail(_ testStr:String) -> Bool {
-        // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
-        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-        
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
-    }
-    
-    // MARK: Redirect
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
-    }
 }
-
