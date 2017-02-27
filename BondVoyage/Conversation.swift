@@ -30,6 +30,13 @@ extension Conversation {
         
     }
     
+    class func withId(objectId: String, completion: @escaping ((Conversation?)->Void)) {
+        let query = Conversation.query()
+        query?.getObjectInBackground(withId: objectId, block: { (result, error) in
+            completion(result as? Conversation)
+        })
+    }
+
     private var dateFormatter: DateFormatter {
         let df = DateFormatter()
         df.dateFormat = "MMM d, yyyy"

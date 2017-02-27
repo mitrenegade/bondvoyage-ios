@@ -29,8 +29,7 @@ extension Bond {
         guard let query: PFQuery<Bond> = Bond.query() as? PFQuery<Bond> else { return }
         
         query.whereKey("category", equalTo: category.rawValue.lowercased())
-        query.whereKey("invited", contains: inviteeId)
-        query.whereKey("invited", contains: userId)
+        query.whereKey("invited", containsAllObjectsIn: [inviteeId, userId])
         query.findObjectsInBackground { (results, error) in
             if let results = results {
                 let bond = results.count == 0 ? Bond() : results[0]

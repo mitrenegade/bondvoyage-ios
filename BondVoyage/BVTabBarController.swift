@@ -36,7 +36,7 @@ class BVTabBarController: UITabBarController {
         if PFUser.current() != nil && !self.promptedForPush {
             if !self.appDelegate().hasPushEnabled() {
                 // prompt for it
-                self.appDelegate().registerForRemoteNotifications()
+                self.appDelegate().promptForRemoteNotifications()
             }
             else {
                 // reregister

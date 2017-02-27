@@ -21,7 +21,7 @@ let PARSE_APP_ID: String = "CgME1GrgMhiBQInE72auuNajzaCnhFRtqoyFbGIg"
 let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
 let PARSE_SERVER_URL = "https://bondvoyage-server.herokuapp.com/parse"
 let PARSE_CLIENT_KEY = "unused"
-let PARSE_LOCAL: Bool = true
+let PARSE_LOCAL: Bool = false
 
 let QB_APP_ID: UInt = 46441
 let QB_AUTH_KEY = "Mw99rUvp7ApXAjS"
@@ -126,3 +126,14 @@ extension String {
     }
     
 }
+
+struct Platform {
+    static let isSimulator: Bool = {
+        var isSim = false
+        #if arch(i386) || arch(x86_64)
+            isSim = true
+        #endif
+        return isSim
+    }()
+}
+

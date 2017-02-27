@@ -10,7 +10,4 @@
 @import SystemConfiguration;
 @import MobileCoreServices;
 
-//#import <Quickblox/Quickblox.h>
-//#import <QuickBlox/QBPushNotificationsEnums.h>
-
 #endif /* Bridging_Header_h */
