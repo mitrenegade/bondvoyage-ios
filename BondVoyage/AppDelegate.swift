@@ -182,11 +182,16 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         print("my push is: \(userInfo)")
+        UIApplication.shared.applicationIconBadgeNumber = 0
         if application.applicationState == UIApplicationState.inactive {
             print("Inactive")
         }
         
-        // todo: handle
+        guard let fromId = userInfo["fromId"], let conversationId = userInfo["conversationId"] else { return }
+        
+        // handle
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "push:received"), object: nil, userInfo: ["fromId": fromId, "conversationId": conversationId])
+
         // always cause the feed to reload
         NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
     }
@@ -242,24 +247,4 @@ extension AppDelegate {
         })
 
     }
-
-    // MARK: - Notification
-    func goToHandleNotification(_ info: [AnyHashable: Any]) {
-        var userId: String = ""
-        if let userDict: [AnyHashable: Any] = info["from"] as? [AnyHashable: Any] {
-            userId = userDict["objectId"] as! String
-        }
-        else if let userDict: [AnyHashable: Any] = info["invitedUser"] as? [AnyHashable: Any] {
-            userId = userDict["objectId"] as! String
-        }
-        
-        var activityId: String = ""
-        if let fromMatchDict: [AnyHashable: Any] = info["activity"] as? [AnyHashable: Any] {
-            let fromMatchId: String = fromMatchDict["objectId"] as! String
-            activityId = fromMatchId
-        }
-        
-        // TODO: go to match tab
-    }
-
 }

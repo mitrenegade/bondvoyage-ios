@@ -46,6 +46,7 @@ class InviteViewController: UIViewController {
         
         self.view.insertSubview(pagingController.view, belowSubview: noActivitiesView)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePush(_:)), name: NSNotification.Name(rawValue: "push:received"), object: nil)
         self.subscribeToUpdates()
     }
     
@@ -56,6 +57,10 @@ class InviteViewController: UIViewController {
             didSetupScroll = true
             self.setupScroll()
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func configureRightNavigationButton() {
@@ -137,13 +142,11 @@ class InviteViewController: UIViewController {
     }
     
     func goToChat(_ selectedUser: PFUser, conversation: Conversation?) {
-        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let selectedUserId = selectedUser.objectId, let conversation = conversation else {
+        guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let conversation = conversation else {
             print("goToChat failed")
             return
         }
         
-        return;
-            
         QBUserService.getQBUUserFor(selectedUser) { [weak self] user in
             guard let user = user else {
                 print("no user")
@@ -307,5 +310,24 @@ extension InviteViewController {
                 print("here")
             }
         isSubscribed = true
+    }
+}
+
+// MARK: Push
+extension InviteViewController {
+    func handlePush(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let userId = userInfo["fromId"] as? String, let conversationId = userInfo["conversationId"] as? String else {
+            return
+        }
+        
+        User.withId(objectId: userId) { (user, success) in
+            if let pfUser = user as? PFUser {
+                Conversation.withId(objectId: conversationId, completion: { (result) in
+                    if let conversation = result {
+                        self.goToChat(pfUser, conversation: conversation)
+                    }
+                })
+            }
+        }
     }
 }
