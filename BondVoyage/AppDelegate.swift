@@ -72,6 +72,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QBSettings.setAccountKey(QB_ACCOUNT_KEY)
         QBSettings.setAuthSecret(QB_AUTH_SECRET)
         
+        
+        for family in UIFont.familyNames {
+            print(family)
+            for name in UIFont.fontNames(forFamilyName: family) {
+                print(name)
+            }
+        }
         return true
     }
 

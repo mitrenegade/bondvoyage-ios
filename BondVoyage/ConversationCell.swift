@@ -47,6 +47,12 @@ class ConversationCell: UITableViewCell {
             }
             let name = user.displayString
             self.titleLabel.text = name
+            if conversation.isUnread {
+                self.titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+            }
+            else {
+                self.titleLabel.font = UIFont(name: "HelveticaNeue", size: 17)
+            }
             
             if let photoUrl = user.photoUrl, let url = URL(string: photoUrl) {
                 self.imagePhoto.sd_setImage(with: url)

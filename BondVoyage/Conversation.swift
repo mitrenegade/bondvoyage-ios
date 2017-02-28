@@ -66,7 +66,13 @@ extension Conversation {
     
     var lastMessage: String {
         // todo
-        return "Hello"
+        //return "Hello"
+        return ""
+    }
+    
+    var isUnread: Bool {
+        guard let user = PFUser.current() as? User, let userId = user.objectId, let unreadIds = self.unreadIds as? [String] else { return false }
+        return unreadIds.contains(userId)
     }
 
     func queryOtherUser(completion: @escaping ((_ user: User?, _ error: NSError?) -> Void)) {
