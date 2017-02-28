@@ -13,10 +13,12 @@ class Conversation: PFObject {
     @NSManaged var dialogId: String?
     
     @NSManaged var participantIds: [Any]? // a pair of pfObjectIds
+    @NSManaged var unreadIds: [Any]? // userId in here will see this as a newly updated conversation
     @NSManaged var activityIds: [Any]?
 
     @NSManaged var category: String?
     @NSManaged var city: String?
+    
 }
 
 extension Conversation: PFSubclassing {
@@ -26,8 +28,18 @@ extension Conversation: PFSubclassing {
 }
 
 extension Conversation {
-    class func loadConversations(user: PFUser, completion: ((_ results: [Conversation]?, _ error: NSError?)->Void)?) {
-        
+    class func queryConversations(unread: Bool = false, completion: ((_ results: [Conversation]?, _ error: NSError?)->Void)?) {
+        print("Load chats")
+        guard let user = PFUser.current() as? User, let userId = user.objectId else { return }
+        guard let query: PFQuery<Conversation> = Conversation.query() as? PFQuery<Conversation> else { return }
+        query.whereKey("participantIds", contains: userId)
+        if unread {
+            query.whereKey("unreadIds", contains: userId)
+        }
+        query.findObjectsInBackground { (results, error) in
+            completion?(results, error as? NSError)
+        }
+
     }
     
     class func withId(objectId: String, completion: @escaping ((Conversation?)->Void)) {

@@ -10,9 +10,8 @@ import UIKit
 import Parse
 
 enum BVTabIndex: Int {
-    case tab_CATEGORIES = 0
-    case  tab_REQUESTED_BONDS = 1
-    case tab_MATCHED_BONDS = 2
+    case browser = 0
+    case  messages = 1
 }
 
 let TAB_NOTIFICATION_AGE = TimeInterval(-24*60*60)
@@ -52,48 +51,16 @@ class BVTabBarController: UITabBarController {
     }
     
     func refreshNotifications() {
-        // NOT USED
-            self.refreshBadgeCount(.tab_REQUESTED_BONDS, activities: [])
-    }
+        let tabBarItem = self.tabBar.items![BVTabIndex.messages.rawValue]
+        tabBarItem.badgeValue = nil
 
-    func refreshBadgeCount(_ tabIndex: BVTabIndex, activities: [PFObject]?) {
-        if tabIndex != .tab_REQUESTED_BONDS && tabIndex != .tab_MATCHED_BONDS {
-            return
-        }
-        let tabBarItem = self.tabBar.items![tabIndex.rawValue]
-        if activities == nil {
-            tabBarItem.badgeValue = nil
-            return
-        }
-
-        var key: String
-        if tabIndex == .tab_REQUESTED_BONDS {
-            key = "requestedBond:seen:"
-        }
-        else {
-            key = "matchedBond:seen:"
-        }
-        var ct = 0
-        for activity: PFObject in activities! {
-            let id = activity.objectId!
-            let newkey = "\(key)\(id)"
-            if UserDefaults.standard.object(forKey: newkey) != nil && UserDefaults.standard.object(forKey: newkey) as! Bool == true {
-                continue
+        Conversation.queryConversations(unread: true) { (results, error) in
+            if let conversations = results {
+                let ct = conversations.count
+                if ct > 0 {
+                    tabBarItem.badgeValue = "\(ct)"
+                }
             }
-            
-            // don't show notifications if they are more than a day old
-            let created = activity.object(forKey: "time") as! Date
-            if created.timeIntervalSinceNow <= TAB_NOTIFICATION_AGE {
-                continue
-            }
-            ct = ct + 1
-        }
-        
-        if ct > 0 {
-            tabBarItem.badgeValue = "\(ct)"
-        }
-        else {
-            tabBarItem.badgeValue = nil
         }
     }
 }

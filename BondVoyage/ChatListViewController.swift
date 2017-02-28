@@ -50,14 +50,16 @@ class ChatListViewController: UIViewController {
     
     func loadConversations() {
         print("Load chats")
-        guard let user = PFUser.current(), let userId = user.objectId else { return }
-        guard let query: PFQuery<Conversation> = Conversation.query() as? PFQuery<Conversation> else { return }
-        query.whereKey("participantIds", contains: userId)
-        query.findObjectsInBackground { (results, error) in
-            self.conversations = results
-            self.refreshConversationSections()
-            self.tableView.reloadData()
-            self.subscribeToUpdates()
+        Conversation.queryConversations(unread: false) {(results, error) in
+            if let error = error {
+                self.simpleAlert("Error loading messages", defaultMessage: "There was an error loading your previous conversations.", error: error)
+            }
+            else {
+                self.conversations = results
+                self.refreshConversationSections()
+                self.tableView.reloadData()
+                self.subscribeToUpdates()
+            }
         }
     }
     
