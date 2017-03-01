@@ -329,6 +329,10 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
                 if let error = error {
                     self?.simpleAlert("Error", defaultMessage: nil, error: error as NSError?)
                 }
+                else {
+                    self?.conversation?.lastMessage = message.text
+                    self?.conversation?.saveEventually()
+                }
         }
         
         finishSendingMessage(animated: true)

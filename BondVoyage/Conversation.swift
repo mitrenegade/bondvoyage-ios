@@ -19,6 +19,7 @@ class Conversation: PFObject {
     @NSManaged var category: String?
     @NSManaged var city: String?
     
+    @NSManaged var lastMessage: String?
 }
 
 extension Conversation: PFSubclassing {
@@ -42,13 +43,7 @@ extension Conversation {
         }
         return dateFormatter.string(from: date)
     }
-    
-    var lastMessage: String {
-        // todo
-        //return "Hello"
-        return ""
-    }
-    
+        
     var isUnread: Bool {
         guard let user = PFUser.current() as? User, let userId = user.objectId, let unreadIds = self.unreadIds as? [String] else { return false }
         return unreadIds.contains(userId)

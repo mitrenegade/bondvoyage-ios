@@ -67,8 +67,8 @@ class ConversationCell: UITableViewCell {
             }
             
             self.messageLabel.text = ""
-            if conversation.lastMessage != nil {
-                self.messageLabel.text = "\"\(conversation.lastMessage)\""
+            if let lastMessage = conversation.lastMessage {
+                self.messageLabel.text = "\"\(lastMessage)\""
             }
             else {
                 if let dialogId = conversation.dialogId {
