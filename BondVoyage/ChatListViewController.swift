@@ -50,14 +50,16 @@ class ChatListViewController: UIViewController {
     
     func loadConversations() {
         print("Load chats")
-        guard let user = PFUser.current(), let userId = user.objectId else { return }
-        guard let query: PFQuery<Conversation> = Conversation.query() as? PFQuery<Conversation> else { return }
-        query.whereKey("participantIds", contains: userId)
-        query.findObjectsInBackground { (results, error) in
-            self.conversations = results
-            self.refreshConversationSections()
-            self.tableView.reloadData()
-            self.subscribeToUpdates()
+        Conversation.queryConversations(unread: false) {(results, error) in
+            if let error = error {
+                self.simpleAlert("Error loading messages", defaultMessage: "There was an error loading your previous conversations.", error: error)
+            }
+            else {
+                self.conversations = results
+                self.refreshConversationSections()
+                self.tableView.reloadData()
+                self.subscribeToUpdates()
+            }
         }
     }
     
@@ -199,7 +201,15 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
                     let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
                     chatVC.dialog = dialog
                     chatVC.conversation = conversation
+                    chatVC.parseUser = selectedUser as? User
                     self?.present(chatNavigationVC, animated: true, completion: {
+                        if let user = PFUser.current(), let userId = user.objectId, let unread = conversation.unreadIds as? [String], let index = unread.index(of: userId) {
+                            conversation.unreadIds?.remove(at: index)
+                            conversation.saveEventually({ (success, error) in
+                                NotificationCenter.default.post(name: NSNotification.Name("conversations:updated"), object: nil, userInfo: nil)
+                                self?.tableView.reloadData()
+                            })
+                        }
                     })
                 }
             })

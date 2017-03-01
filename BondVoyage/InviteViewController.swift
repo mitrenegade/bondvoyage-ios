@@ -130,7 +130,7 @@ class InviteViewController: UIViewController {
             if let conversation = conversation {
                 let message = "You have matched with \(name). Click to go chat"
                 self.simpleAlert("You have a new bond", message: message, completion: {
-                    self.goToChat(selectedUser, conversation: conversation)
+                    self.goToChat(selectedUser, conversation: conversation, isNewConversation: true)
                 })
             } else if let bond = bond {
                 self.simpleAlert("Invite sent", message: "You have invited \(name) to bond. If accepted, you will be able to chat.")
@@ -141,7 +141,7 @@ class InviteViewController: UIViewController {
         }
     }
     
-    func goToChat(_ selectedUser: PFUser, conversation: Conversation?) {
+    func goToChat(_ selectedUser: PFUser, conversation: Conversation?, isNewConversation: Bool = false ) {
         guard let currentUser = PFUser.current(), let currentUserId = currentUser.objectId, let conversation = conversation else {
             print("goToChat failed")
             return
@@ -165,6 +165,10 @@ class InviteViewController: UIViewController {
                     chatVC.conversation = conversation
                     self?.present(chatNavigationVC, animated: true, completion: {
                         //QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
+                        if isNewConversation {
+                            chatVC.systemMessageForNewConversation(conversation: conversation)
+                        }
+                        
                         // create conversation
                         if let dialogId = dialog?.id {
                             print("add dialog to conversation")
