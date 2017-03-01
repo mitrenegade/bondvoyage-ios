@@ -200,7 +200,7 @@ extension AppDelegate {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "push:received"), object: nil, userInfo: ["fromId": fromId, "conversationId": conversationId])
 
         // always cause the feed to reload
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "activity:updated"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "conversations:updated"), object: nil)
     }
     
     // MARK: Push utils

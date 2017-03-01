@@ -26,7 +26,7 @@ class BVTabBarController: UITabBarController {
 
         // Do any additional setup after loading the view.
         self.refreshNotifications()
-        NotificationCenter.default.addObserver(self, selector: #selector(BVTabBarController.refreshNotifications), name: NSNotification.Name(rawValue: "activity:updated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(BVTabBarController.refreshNotifications), name: NSNotification.Name(rawValue: "conversations:updated"), object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
