@@ -28,27 +28,6 @@ extension Conversation: PFSubclassing {
 }
 
 extension Conversation {
-    class func queryConversations(unread: Bool = false, completion: ((_ results: [Conversation]?, _ error: NSError?)->Void)?) {
-        print("Load chats")
-        guard let user = PFUser.current() as? User, let userId = user.objectId else { return }
-        guard let query: PFQuery<Conversation> = Conversation.query() as? PFQuery<Conversation> else { return }
-        query.whereKey("participantIds", contains: userId)
-        if unread {
-            query.whereKey("unreadIds", contains: userId)
-        }
-        query.findObjectsInBackground { (results, error) in
-            completion?(results, error as? NSError)
-        }
-
-    }
-    
-    class func withId(objectId: String, completion: @escaping ((Conversation?)->Void)) {
-        let query = Conversation.query()
-        query?.getObjectInBackground(withId: objectId, block: { (result, error) in
-            completion(result as? Conversation)
-        })
-    }
-
     private var dateFormatter: DateFormatter {
         let df = DateFormatter()
         df.dateFormat = "MMM d, yyyy"
@@ -73,6 +52,37 @@ extension Conversation {
     var isUnread: Bool {
         guard let user = PFUser.current() as? User, let userId = user.objectId, let unreadIds = self.unreadIds as? [String] else { return false }
         return unreadIds.contains(userId)
+    }
+
+    var categoryString: String? {
+        get {
+            if let category = self.category, let cat = CategoryFactory.categoryForString(category) {
+                return "\(CategoryFactory.categoryReadableString(cat))"
+            }
+            return nil
+        }
+    }
+}
+extension Conversation {
+    class func queryConversations(unread: Bool = false, completion: ((_ results: [Conversation]?, _ error: NSError?)->Void)?) {
+        print("Load chats")
+        guard let user = PFUser.current() as? User, let userId = user.objectId else { return }
+        guard let query: PFQuery<Conversation> = Conversation.query() as? PFQuery<Conversation> else { return }
+        query.whereKey("participantIds", contains: userId)
+        if unread {
+            query.whereKey("unreadIds", contains: userId)
+        }
+        query.findObjectsInBackground { (results, error) in
+            completion?(results, error as? NSError)
+        }
+        
+    }
+    
+    class func withId(objectId: String, completion: @escaping ((Conversation?)->Void)) {
+        let query = Conversation.query()
+        query?.getObjectInBackground(withId: objectId, block: { (result, error) in
+            completion(result as? Conversation)
+        })
     }
 
     func queryOtherUser(completion: @escaping ((_ user: User?, _ error: NSError?) -> Void)) {

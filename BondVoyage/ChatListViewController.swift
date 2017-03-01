@@ -201,11 +201,13 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
                     let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
                     chatVC.dialog = dialog
                     chatVC.conversation = conversation
+                    chatVC.parseUser = selectedUser as? User
                     self?.present(chatNavigationVC, animated: true, completion: {
                         if let user = PFUser.current(), let userId = user.objectId, let unread = conversation.unreadIds as? [String], let index = unread.index(of: userId) {
                             conversation.unreadIds?.remove(at: index)
                             conversation.saveEventually({ (success, error) in
                                 NotificationCenter.default.post(name: NSNotification.Name("conversations:updated"), object: nil, userInfo: nil)
+                                self?.tableView.reloadData()
                             })
                         }
                     })

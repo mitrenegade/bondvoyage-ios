@@ -46,6 +46,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     var attachmentCellsMap: NSMapTable<AnyObject, AnyObject>!
     var detailedCells: Set<String> = []
     var typingTimer: Timer?
+    var parseUser: User?
     var popoverController: UIViewController? {
         didSet {
             popoverController?.modalPresentationStyle = .popover
@@ -171,24 +172,29 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     // MARK: Update
     
     func updateTitle() {
-        if dialog.type != QBChatDialogType.private {
-            if let category = conversation?.category?.capitalized, let city = conversation?.city {
+        if let recipient = QBUserService.cachedUserWithId(UInt(dialog.recipientID)) {
+            self.recipient = recipient
+        }
+            
+        if let recipient = QBUserService.cachedUserWithId(UInt(dialog.recipientID)), let name = recipient.fullName {
+            title = name
+        }
+        else if let recipient = parseUser, recipient.displayString != "unnamed" {
+            title = recipient.displayString
+        }
+        else if let category = conversation?.category?.capitalized {
+            if let city = conversation?.city {
                 title = "\(category) in \(city)"
             }
             else {
-                title = "New chat"
-            }
-        } else {
-            if let recipient = QBUserService.cachedUserWithId(UInt(dialog.recipientID)) {
-                title = recipient.fullName
-                self.recipient = recipient
-            }
-            else {
-                self.title = "New Chat"
+                title = category
             }
         }
+        else {
+            self.title = "New Chat"
+        }
     }
-        
+    
     func storedMessages() -> [QBChatMessage]? {
         return SessionService.sharedInstance.chatService.messagesMemoryStorage.messages(withDialogID: dialog.id!)
     }
@@ -849,5 +855,29 @@ extension ChatViewController {
     
     func sendStopTyping() -> Void {
         dialog.sendUserStoppedTyping()
+    }
+}
+
+// MARK: System messages
+extension ChatViewController {
+    func systemMessageForNewConversation(conversation: Conversation) {
+        if let categoryString = conversation.categoryString {
+            let text = "Let's chat about \(categoryString)"
+            self.sendSystemMessage(text: text)
+        }
+        else {
+            let text = "Let's chat"
+            self.sendSystemMessage(text: text)
+        }
+    }
+    
+    func sendSystemMessage(text: String) {
+        let message = QBChatMessage()
+        message.text = text
+        message.markable = true
+        message.dateSent = Date()
+        
+        sendMessage(message)
+        
     }
 }
