@@ -15,7 +15,7 @@
         <scene sceneID="hmb-sJ-e10">
             <objects>
                 <navigationController storyboardIdentifier="ChatNavigationViewController" id="guA-42-OjK" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EX5-9k-cQY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EX5-9k-cQY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -82,10 +82,10 @@
                                                         <constraint firstAttribute="width" constant="50" id="l9y-qj-TRd"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95k-jz-TgY">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95k-jz-TgY">
                                                     <rect key="frame" x="72" y="14" width="220" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
+                                                    <attributedString key="attributedText"/>
+                                                    <color key="highlightedColor" red="1" green="0.77866275497821413" blue="0.03903316828585035" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWh-5T-4Bp" userLabel="Message Label">
                                                     <rect key="frame" x="72" y="41" width="295" height="27"/>
