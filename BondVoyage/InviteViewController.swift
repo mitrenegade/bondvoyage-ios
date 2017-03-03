@@ -175,6 +175,10 @@ class InviteViewController: UIViewController {
                             conversation.setValue(dialogId, forKey: "dialogId")
                             conversation.saveInBackground()
                         }
+
+                        conversation.toggleUnread(false, completion: { (success, error) in
+                            print("conversation changed to read: \(success)")
+                        })
                     })
                 }
             })
@@ -325,11 +329,18 @@ extension InviteViewController {
         }
         
         User.withId(objectId: userId) { (user, success) in
-            if let pfUser = user as? PFUser {
+            if let user = user {
                 Conversation.withId(objectId: conversationId, completion: { (result) in
                     if let conversation = result {
-                        self.goToChat(pfUser, conversation: conversation)
+                        var categoryString = ""
+                        if let string = conversation.categoryString {
+                            categoryString = " over \(string)"
+                        }
+                        self.simpleAlert("You have a new message", message: "You have a new message from \(user.displayString) to bond\(categoryString)", completion: {
+                            self.goToChat(user, conversation: conversation)
+                        })
                     }
+                    NotificationCenter.default.post(name: NSNotification.Name("conversations:updated"), object: nil, userInfo: nil)
                 })
             }
         }

@@ -46,11 +46,21 @@ class ConversationCell: UITableViewCell {
                 return
             }
             let name = user.displayString
-            self.titleLabel.text = name
             if conversation.isUnread {
+                var attributes = [NSForegroundColorAttributeName: UIColor.init(red: 255.0/255.0, green: 199.0/255.0, blue: 10.0/255.0, alpha: 1),NSFontAttributeName:UIFont(name: "HelveticaNeue-Italic", size: 12)]
+                let attributedString = NSMutableAttributedString(string: "\(name)  new", attributes: attributes)
+
+                let range = (name as NSString).range(of: name)
+                let otherAttrs = [NSForegroundColorAttributeName: UIColor.black,NSFontAttributeName:UIFont(name: "Helvetica-Bold", size: 17)]
+                
+                attributedString.addAttributes(otherAttrs, range: range)
+
+                self.titleLabel.attributedText = attributedString
                 self.titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
             }
             else {
+                self.titleLabel.attributedText = nil
+                self.titleLabel.text = name
                 self.titleLabel.font = UIFont(name: "HelveticaNeue", size: 17)
             }
             

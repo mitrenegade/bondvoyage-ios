@@ -60,6 +60,12 @@ class BVTabBarController: UITabBarController {
                 if ct > 0 {
                     tabBarItem.badgeValue = "\(ct)"
                 }
+                else {
+                    tabBarItem.badgeValue = nil
+                }
+            }
+            else {
+                tabBarItem.badgeValue = nil
             }
         }
     }

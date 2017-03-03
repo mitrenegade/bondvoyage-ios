@@ -57,6 +57,19 @@ extension Conversation {
             return nil
         }
     }
+    
+    func toggleUnread(_ shouldBeUnread: Bool, completion: ((_ success: Bool, _ error: NSError?)->Void)?) {
+        guard let user = PFUser.current(), let userId = user.objectId else { return }
+        if shouldBeUnread {
+            self.unreadIds?.append(userId)
+        }
+        else if let unread = self.unreadIds as? [String], let index = unread.index(of: userId) {
+            self.unreadIds?.remove(at: index)
+        }
+        self.saveInBackground { (success, error) in
+            completion?(success, error as? NSError)
+        }
+    }
 }
 extension Conversation {
     class func queryConversations(unread: Bool = false, completion: ((_ results: [Conversation]?, _ error: NSError?)->Void)?) {
